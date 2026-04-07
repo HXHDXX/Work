@@ -8,7 +8,7 @@
 
 | 模块 | 描述 | 摘要路径 |
 |------|------|---------|
-<!-- Add modules here as knowledge is ingested -->
+| infra | 项目基础设施、工具链配置、知识管理策略 | `./modules/infra.md` |
 
 ## 全局主题
 
