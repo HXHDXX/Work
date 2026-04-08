@@ -9,6 +9,7 @@
 | 模块 | 描述 | 摘要路径 |
 |------|------|---------|
 | infra | 项目基础设施、工具链配置、知识管理策略 | `./modules/infra.md` |
+| cpp-env | C++ 开发环境配置：GCC/Docker/Qt/调试分析 | `./modules/cpp-env.md` |
 
 ## 全局主题
 

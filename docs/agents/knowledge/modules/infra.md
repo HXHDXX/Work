@@ -1,12 +1,13 @@
 # Infra
 
-> Last updated: 2026-04-07
+> Last updated: 2026-04-08
 
 ## Overview
 - 项目基础设施与工具链配置
-- Key files: `./AGENTS.md`, `./.opencode/skills/project-compound/SKILL.md`, `./docs/agents/knowledge/`
+- Key files: `./AGENTS.md`, `./plan.md`, `./.opencode/skills/project-compound/SKILL.md`, `./docs/agents/knowledge/`
 - Git remote: `git@github.com:HXHDXX/Work.git` (origin, master)
 - Dependencies: opencode runtime (`.opencode/node_modules/`, 不提交)
+- See also: [[cpp-env]]
 
 ## Decisions
 
@@ -35,6 +36,21 @@
 - **Approach:** 三层结构 — AGENTS.md(清单) → docs/agents/(说明) → knowledge/modules/(详情)
 - **When to reuse:** 任何需要 agent 知识管理的项目
 
+## Roadmap
+
+### 项目路线图 (2026-04-08)
+- Source: `./plan.md`
+- Phase 1: OSM pbf 实时渲染服务 (Windows/Android) — **已完成**
+- Phase 2: 跨平台 Qt 应用开发环境 — **已完成**
+- Phase 3: 编译 OSM 数据到 MVT — **已完成**
+- Phase 4: 引入封装 native 地图引擎 — **进行中**
+- Phase 5: Demo 应用显示矢量瓦片数据 — **准备中**
+- Phase 6: 跨平台插件总线系统 + 跨平台 GIS server — **准备中**
+- 技术栈: Qt / C++ / OSM / MVT / Docker / native 地图引擎
+- See also: [[cpp-env]]
+
 ## Open Questions
 - 是否需要 `.github/` CI/CD 配置？
 - 项目实际业务代码结构尚未确定
+- Phase 4 native 地图引擎选型？
+- Phase 6 插件总线系统的接口设计？
