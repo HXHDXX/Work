@@ -3,4 +3,5 @@
 3. 编译 osm 数据到 mvt - 完成!
 4. 引入封装 native 地图引擎 - 实施中*
 5. 建立 demo 应用，显示矢量瓦片数据 - 准备中？
-6. 建立跨平台插件总线系统，在此基础上引入跨平台gis server - 准备中？
+6. 建立跨平台插件运行时：HXPluginRuntime - 实施中*
+7. 在HXPluginRuntime基础上引入跨平台gis server - 准备中？
