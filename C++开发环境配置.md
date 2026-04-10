@@ -100,7 +100,7 @@ sudo snap install clion --classic #CLion安装
 
 内网机器使用QtCreator
 
-QtCreater15：https://download.qt.io/official_releases/qtcreator/15.0/15.0.0/qt-creator-opensource-linux-x86_64-15.0.0.run
+QtCreater：https://download.qt.io/official_releases/qtcreator/latest/
 
 ##### 安装Makrdown编辑器
 
