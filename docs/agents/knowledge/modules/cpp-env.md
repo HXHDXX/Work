@@ -1,11 +1,11 @@
 # C++ Dev Environment
 
-> Last updated: 2026-04-08
+> Last updated: 2026-04-10
 
 ## Overview
 - C++ 开发环境完整配置指南（Ubuntu 22.04）
 - Key files: `./C++开发环境配置.md`
-- IDE: CLion（联网）/ QtCreator15（内网）
+- IDE: CLion（联网）/ QtCreator（内网，latest 版本）
 - 构建容器: `code-compiler` (Docker, `linux_gcc_cl:v1.3`)
 - 跨平台 Qt SDK: `/opt/qt5-x86_64-gl`
 - 跨平台第三方库: `/opt/cross-library/`
@@ -73,7 +73,7 @@
 
 ### IDE 配置
 - CLion: snap 安装，推荐插件 AceJump / IdeaVim / IdeaVimExtension / IdeaVim-EasyMotion
-- QtCreator15: 离线安装包，支持 Docker 设备
+- QtCreator: 离线安装包（latest），支持 Docker 设备
 - Markdown: typora（收费）或 typora-alanzanattadev（免费）
 
 ### 静态分析

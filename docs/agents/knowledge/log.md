@@ -17,6 +17,10 @@
 - 路线图拆分：Phase 7 (GIS server 基于 HXPluginRuntime) 暂停，新增 Phase 8 单独引入跨平台 GIS server，直接在3588设备上实施
 - Types: Decision, Module Info
 
+## [2026-04-10] ingest | cpp-env
+- QtCreator 下载链接改为 latest 通用地址，不再固定版本号
+- Types: Module Info
+
 ## [2026-04-08] ingest | cpp-env
 - 从 `C++开发环境配置.md` 提取知识：GCC9 兼容方案、Docker buildx 跨平台构建、ASAN+ASLR 调试策略、valgrind 工具链、Core Dump 分析流程、CH340 驱动 bug、Git 分支合并流程
 - Types: Decision, Strategy, Bug Experience, Module Info
