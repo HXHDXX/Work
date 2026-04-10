@@ -4,4 +4,5 @@
 4. 引入封装 native 地图引擎 - 实施中*
 5. 建立 demo 应用，显示矢量瓦片数据 - 实施中*
 6. 建立跨平台插件运行时：HXPluginRuntime - 暂停，目标改为先在3588设备上运行测试地图$
-7. 在HXPluginRuntime基础上引入跨平台gis server - 准备中？
+7. 在HXPluginRuntime基础上引入跨平台gis server - 暂停，目标改为先在3588设备上运行测试地图$
+8. 单独引入跨平台gis server - 先在3588设备上运行测试地图，实施中*
