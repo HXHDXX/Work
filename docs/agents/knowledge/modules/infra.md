@@ -1,6 +1,6 @@
 # Infra
 
-> Last updated: 2026-04-08
+> Last updated: 2026-04-10
 
 ## Overview
 - 项目基础设施与工具链配置
@@ -38,16 +38,23 @@
 
 ## Roadmap
 
-### 项目路线图 (2026-04-08)
+### 项目路线图 (2026-04-08, updated 2026-04-10)
 - Source: `./plan.md`
 - Phase 1: OSM pbf 实时渲染服务 (Windows/Android) — **已完成**
 - Phase 2: 跨平台 Qt 应用开发环境 — **已完成**
 - Phase 3: 编译 OSM 数据到 MVT — **已完成**
 - Phase 4: 引入封装 native 地图引擎 — **进行中**
-- Phase 5: Demo 应用显示矢量瓦片数据 — **准备中**
-- Phase 6: 跨平台插件总线系统 + 跨平台 GIS server — **准备中**
+- Phase 5: Demo 应用显示矢量瓦片数据 — **进行中** (从准备中升级)
+- Phase 6: HXPluginRuntime — **暂停**，目标改为先在3588设备上运行测试地图
+- Phase 7: 跨平台 GIS server (原 Phase 6 后半) — **准备中**
 - 技术栈: Qt / C++ / OSM / MVT / Docker / native 地图引擎
 - See also: [[cpp-env]]
+
+### 路线图策略调整：3588 设备优先 (2026-04-10)
+- **Chosen:** 暂停 HXPluginRuntime 跨平台插件运行时，优先在 3588 设备上运行测试地图
+- **Alternatives:** 继续推进 HXPluginRuntime / 先完成通用 demo 再上设备
+- **Reason:** 需要在实际硬件上验证地图引擎能力，降低后期集成风险
+- **Tradeoff:** HXPluginRuntime 推迟，跨平台能力延后
 
 ## Open Questions
 - 是否需要 `.github/` CI/CD 配置？
