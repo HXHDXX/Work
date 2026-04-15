@@ -311,6 +311,13 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 根据每个 agent 的职责，在 ~/.config/opencode/oh-my-openagent.json 中为其配置合适的 superpowers skills
 ```
 
+###### 改进Agent环境、学习Agent协作
+
+```shell
+https://github.com/forrestchang/andrej-karpathy-skills
+https://github.com/shanraisshan/claude-code-best-practice
+```
+
 ##### 代码静态分析
 
 ```shell
