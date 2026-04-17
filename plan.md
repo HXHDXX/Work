@@ -10,6 +10,7 @@
 9. 集成地图控件与gis server，实现离线地图渲染测试程序，计划中？
 10. 在Linux下搭建Qt-Android开发环境 - 完成！
 11. 基于Linux下Qt-Android开发环境，使用MapLibre-Native-Qt+HXGISServer开发离线地图显示Demo - 完成!
+12. 实现全球底图和区域地图的数据结合 - 实施中*
 
 
 待改进
