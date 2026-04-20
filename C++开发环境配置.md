@@ -311,8 +311,12 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 根据每个 agent 的职责，在 ~/.config/opencode/oh-my-openagent.json 中为其配置合适的 superpowers skills
 ```
 
+###### 修正中文提示与英文Skill激活失败问题
+
+在OpenCode中输入
+
 ```shell
-列出当前所有 Skill，请为每个 Skill 添加中文描述和中文触发词
+列出当前所有的 Skill。请为每个 Skill 的 description 字段补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词）
 ```
 
 ###### 改进Agent环境、学习Agent协作
