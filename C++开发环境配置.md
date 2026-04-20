@@ -312,7 +312,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 ```
 
 ```shell
-列出当前所有 Skill，请为每个 Skill 添加中文描述(description)
+列出当前所有 Skill，请为每个 Skill 添加中文描述和中文触发词
 ```
 
 ###### 改进Agent环境、学习Agent协作
