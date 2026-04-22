@@ -27,6 +27,7 @@
 3. HXNativeApp关联HXMapWidgetNative
 4. HXPluginRuntime引入Template的更新cross-library、打包能力和新skill
 5. 引入HXPluginRuntime的情况下，实现HXMapWidgetNative的消息总线
+6. OSMDataCompiler 更新技能llmwiki\zhongwen, update doc, 总结构件打包的doc
 
 HXNativeApp/HXCefApp/HXMapWidgetCef
 
