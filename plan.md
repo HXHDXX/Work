@@ -1,3 +1,11 @@
+四月份的工作============================
+0. 下载OSM全球0-9级PNG地图 - 实施中*
+1. 建立跨平台插件运行时：HXPluginRuntime - 计划中?
+2. 建立Linux\麒麟插件运行时Shell：HXPluginShell - 计划中?
+3. 在HXPluginShell基础上引入跨平台gis server - 计划中?
+4. 优化全球底图的中国合规和10段线 - 计划中?
+
+三月份的工作============================
 0. 下载OSM全球0-9级PNG地图 - 实施中*
 1. OSM pbf 实时渲染服务开发初版：windows\android - 完成一版，后期优化!
 2. 建立跨平台 Qt 应用开发环境 - 完成!
@@ -6,8 +14,8 @@
 5. 建立 demo 应用，显示矢量瓦片数据 - 完成！
 6. 建立跨平台插件运行时：HXPluginRuntime - 暂停，目标改为先在3588设备上运行测试地图$
 7. 在HXPluginRuntime基础上引入跨平台gis server - 暂停，目标改为先在3588设备上运行测试地图$
-8. 单独引入跨平台gis server - 先在3588设备上运行测试地图，实施中*
-9. 集成地图控件与gis server，实现离线地图渲染测试程序，计划中？
+8. 单独引入跨平台gis server - 先在3588设备上运行测试地图, 完成!
+9. 集成地图控件与gis server，实现离线地图渲染测试程序，完成!
 10. 在Linux下搭建Qt-Android开发环境 - 完成！
 11. 基于Linux下Qt-Android开发环境，使用MapLibre-Native-Qt+HXGISServer开发离线地图显示Demo - 完成!
 12. 实现全球底图和区域地图的数据结合 - 完成！
