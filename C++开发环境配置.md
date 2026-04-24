@@ -10,13 +10,16 @@ Ubuntu 22.04
 
 ```shell
 sudo apt install -y \
-	build-essential pkg-config \
+	build-essential clangd pkg-config \
 	cmake ninja-build lcov \
 	git repo \
+	gdb valgrind \
+	jq miller ripgrep fd-find btop entr \
 	libgl1-mesa-dev libglu1-mesa-dev \
 	'^libxcb.*-dev' libxcb-xinerama0 libx11-xcb-dev \
 	libxkbcommon-dev libxkbcommon-x11-dev \
 	libxi-dev libxrender-dev
+npm install -g @ast-grep/cli
 sudo apt install -y docker.io docker-compose docker-clean
 sudo gpasswd -a $USER docker
 #以下为可选性能分析工具
