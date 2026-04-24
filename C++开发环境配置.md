@@ -319,6 +319,12 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 列出当前所有的 Skill。请为每个 Skill 的 description 字段补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词）
 ```
 
+###### Context压缩
+
+```shell
+https://github.com/mksglu/context-mode
+```
+
 ###### 改进Agent环境、学习Agent协作
 
 ```shell
