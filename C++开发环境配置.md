@@ -24,7 +24,6 @@ sudo apt install -y docker.io docker-compose docker-clean
 sudo gpasswd -a $USER docker
 #以下为可选性能分析工具
 sudo apt install linux-tools-common linux-tools-generic linux-tools-`uname -r`
-sudo apt install valgrind
 sudo snap install kcachegrind
 ```
 
