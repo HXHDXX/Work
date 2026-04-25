@@ -12,7 +12,7 @@ Ubuntu 22.04
 sudo apt install -y \
 	build-essential clangd pkg-config \
 	cmake ninja-build lcov \
-	git repo \
+	git git-lfs repo \
 	gdb valgrind \
 	jq miller ripgrep fd-find btop entr \
 	libgl1-mesa-dev libglu1-mesa-dev \
