@@ -2,10 +2,11 @@
 0. 下载OSM全球0-9级PNG地图 - 完成!
 1. 下载OSM阿尔及利亚10-14级PNG地图 - 实施中*
 2. 优化全球底图的中国合规和10段线 - 完成!
-3. 优化地图渲染效果 - 实施中*
-4. 建立跨平台插件运行时：HXPluginRuntime - 计划中?
-5. 建立Linux\麒麟插件运行时Shell：HXPluginShell - 计划中?
-6. 在HXPluginShell基础上引入跨平台gis server - 计划中?
+3. 优化地图渲染效果 - 完成！
+4. 处理地图构建警告 - 实施中*
+5. 建立跨平台插件运行时：HXPluginRuntime - 计划中?
+6. 建立Linux\麒麟插件运行时Shell：HXPluginShell - 计划中?
+7. 在HXPluginShell基础上引入跨平台gis server - 计划中?
 
 三月份的工作============================
 0. 下载OSM全球0-9级PNG地图 - 实施中*
