@@ -318,13 +318,19 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 在OpenCode中输入
 
 ```shell
-列出当前所有的 Skill。请为每个 Skill 的 description 字段补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词）
+列出当前所有的 Skill。请为每个 Skill 的 description 字段补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词），并测试是否能够正常激活
 ```
 
 ###### Context压缩
 
 ```shell
 https://github.com/mksglu/context-mode
+```
+
+###### 代码图谱
+
+```shell
+https://github.com/abhigyanpatwari/GitNexus
 ```
 
 ###### 改进Agent环境、学习Agent协作
