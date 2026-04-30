@@ -5,8 +5,8 @@
 2. 优化地图渲染效果 - 完成！
 3. 处理地图构建警告 - 完成！
 4. 建立跨平台插件运行时：HXPluginRuntime - 完成！
-5. 建立Linux\麒麟插件运行时Shell：HXRuntimeShell - 计划中?
-6. 在HXPluginShell基础上引入跨平台gis server - 计划中?
+5. 建立Linux\麒麟插件运行时Shell：HXPRShell - 计划中?
+6. 在HXPRShell基础上引入跨平台gis server - 计划中?
 7. 法语 tts引擎调研 - 计划中？
 
 应用开发:
