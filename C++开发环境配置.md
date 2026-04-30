@@ -340,6 +340,35 @@ https://github.com/forrestchang/andrej-karpathy-skills
 https://github.com/shanraisshan/claude-code-best-practice
 ```
 
+###### AoE
+
+```shell
+# 使用 ubuntu:22.04 镜像进行编译
+docker run --rm -it \
+  -v "$(pwd)":/work \
+  -w /work \
+  ubuntu:22.04 \
+  /bin/bash -c "
+    apt-get update && \
+    apt-get install -y curl build-essential pkg-config libssl-dev cmake git && \
+    # 安装 Rust
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
+    source \$HOME/.cargo/env && \
+    # 强制绕过那个 memcmp 检查错误
+    export AWS_LC_SYS_NO_AR=1 && \
+    export FORCE_AWS_LC_SYS_BUILTIN=1 && \
+    # 开始构建
+    cargo build --release
+  "
+  
+# 修正权限并移动
+sudo chown $(whoami):$(whoami) target/release/aoe
+mv target/release/aoe ~/.local/bin/
+
+# 再次验证
+aoe --version
+```
+
 ##### 代码静态分析
 
 ```shell
