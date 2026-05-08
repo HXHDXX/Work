@@ -11,7 +11,7 @@
 4. 建立跨平台插件运行时：HXPluginRuntime - 完成！
 5. 建立Linux\麒麟插件运行时Shell：HXPRShell - 计划中?
 6. 在HXPRShell基础上引入跨平台gis server - 计划中?
-7. 法语 tts引擎调研 - 计划中？
+7. 法语 tts引擎调研 - 实施中*
 
 应用开发:
 1. 下载OSM全球0-9级PNG地图 - 完成!
