@@ -8,7 +8,7 @@
 2. 优化地图渲染效果 - 完成！
 3. 处理地图构建警告 - 完成！
 4. 建立跨平台插件运行时：HXPluginRuntime - 完成！
-5. 建立Linux\麒麟插件运行时Shell：HXPRShell - 计划中?
+5. 建立Linux\麒麟插件运行时Shell：HXPRShell - 完成!
 6. 在HXPRShell基础上引入跨平台gis server - 计划中?
 7. 法语 tts引擎调研 - 完成，支持中文、英语、法语、阿拉伯语、波斯语、俄语六种语言(需要换模型)！
 
@@ -37,12 +37,6 @@
 
 
 待改进
-1. ZMQClient代码通过AI检测一边，尤其是stop的作用，是否是线程安全
-2. HXNativeApp/HXCEFApp引入Template的更新cross-library、打包能力和新skill
-3. HXNativeApp关联HXMapWidgetNative
-4. HXPluginRuntime引入Template的更新cross-library、打包能力和新skill
-5. 引入HXPluginRuntime的情况下，实现HXMapWidgetNative的消息总线
-6. OSMDataCompiler 更新技能llmwiki\zhongwen, update doc, 总结构件打包的doc
-
-HXNativeApp/HXCefApp/HXMapWidgetCef
+1. HXMapWidgetCef 在 HXNativeApp 的应用
+2. HXCefApp 应用架构开发
 
