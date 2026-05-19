@@ -277,11 +277,11 @@ curl -fsSL https://opencode.ai/install | bash
 
 ###### oh-my-opencode插件安装
 
+在OpenCode中输入
+
 ```shell
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt install nodejs -y
-npm i -g bun --registry https://registry.npmmirror.com
-bunx oh-my-openagent install
+Install and configure oh-my-openagent by following the instructions here:
+https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
 ```
 
 ###### 配置OpenCode
@@ -325,12 +325,6 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 
 ```shell
 https://github.com/mksglu/context-mode
-```
-
-###### 代码图谱
-
-```shell
-https://github.com/abhigyanpatwari/GitNexus
 ```
 
 ###### 改进Agent环境、学习Agent协作
