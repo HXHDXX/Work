@@ -265,104 +265,6 @@ sudo sysctl vm.mmap_rnd_bits=30
 
 *系统默认是32，改为30即可*
 
-##### OpenCode
-
-HXAppPlatform、HXProjectTemplate均已经使用AGENTS.md支持OpenCode开发
-
-###### OpenCode 安装
-
-```shell
-curl -fsSL https://opencode.ai/install | bash
-```
-
-###### oh-my-opencode插件安装
-
-在OpenCode中输入
-
-```shell
-Install and configure oh-my-openagent by following the instructions here:
-https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
-```
-
-###### 配置OpenCode
-
-```shell
-/connect 连接购买的模型服务
-/models 选择使用的模型
-
-#查看OpenCode支持的模型
-opencode models
-
-#修改omo使用的模型
-vim ~/.config/opencode/oh-my-openagent.json #建议使用GLM5.1作为Sisyphus使用的LLM
-```
-
-###### 安装Superpowers Skill
-
-在OpenCode中输入
-
-```shell
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
-```
-
-###### 融合OMO和Superpowers
-
-在OpenCode中输入
-
-```shell
-根据每个 agent 的职责，在 ~/.config/opencode/oh-my-openagent.json 中为其配置合适的 superpowers skills
-```
-
-###### 修正中文提示与英文Skill激活失败问题
-
-在OpenCode中输入
-
-```shell
-列出当前所有的 Skill。请为每个 Skill 的 description 字段补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词），并测试所有 Skill 是否能够正常激活
-```
-
-###### Context压缩
-
-```shell
-https://github.com/mksglu/context-mode
-```
-
-###### 改进Agent环境、学习Agent协作
-
-```shell
-https://github.com/forrestchang/andrej-karpathy-skills
-https://github.com/shanraisshan/claude-code-best-practice
-```
-
-###### AoE
-
-```shell
-# 使用 ubuntu:22.04 镜像进行编译
-docker run --rm -it \
-  -v "$(pwd)":/work \
-  -w /work \
-  ubuntu:22.04 \
-  /bin/bash -c "
-    apt-get update && \
-    apt-get install -y curl build-essential pkg-config libssl-dev cmake git && \
-    # 安装 Rust
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    source \$HOME/.cargo/env && \
-    # 强制绕过那个 memcmp 检查错误
-    export AWS_LC_SYS_NO_AR=1 && \
-    export FORCE_AWS_LC_SYS_BUILTIN=1 && \
-    # 开始构建
-    cargo build --release
-  "
-  
-# 修正权限并移动
-sudo chown $(whoami):$(whoami) target/release/aoe
-mv target/release/aoe ~/.local/bin/
-
-# 再次验证
-aoe --version
-```
-
 ##### 代码静态分析
 
 ```shell
@@ -460,5 +362,74 @@ valgrind --tool=helgrind --log-file=log ./demo --license=./license.dat --navi_da
 
 ```shell
 valgrind --tool=massif --log-file=log ./demo --license=./license.dat --navi_data=./navi_data --plugins=./libs/plugins --breakpad=./apps/crash_log --rw_data=./apps
+```
+
+##### OpenCode
+
+HXAppPlatform、HXProjectTemplate均已经使用AGENTS.md支持OpenCode开发
+
+###### OpenCode 安装
+
+```shell
+curl -fsSL https://opencode.ai/install | bash
+```
+
+###### oh-my-opencode插件安装
+
+在OpenCode中输入
+
+```shell
+Install and configure oh-my-openagent by following the instructions here:
+https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
+```
+
+###### 配置OpenCode
+
+```shell
+/connect 连接购买的模型服务
+/models 选择使用的模型
+
+#查看OpenCode支持的模型
+opencode models
+
+#修改omo使用的模型
+vim ~/.config/opencode/oh-my-openagent.json #建议使用GLM5.1作为Sisyphus使用的LLM
+```
+
+###### 安装Superpowers Skill
+
+在OpenCode中输入
+
+```shell
+Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+```
+
+###### 融合OMO和Superpowers
+
+在OpenCode中输入
+
+```shell
+根据每个 agent 的职责，在 ~/.config/opencode/oh-my-openagent.json 中为其配置合适的 superpowers skills
+```
+
+###### 修正中文提示与英文Skill激活失败问题
+
+在OpenCode中输入
+
+```shell
+列出当前所有的 Skill。请为每个 Skill 的 description 字段补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词），并测试所有 Skill 是否能够正常激活
+```
+
+###### Context整理
+
+```shell
+https://github.com/mksglu/context-mode
+```
+
+###### 改进Agent环境、学习Agent协作
+
+```shell
+https://github.com/forrestchang/andrej-karpathy-skills
+https://github.com/shanraisshan/claude-code-best-practice
 ```
 
