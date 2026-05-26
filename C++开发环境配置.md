@@ -69,6 +69,7 @@ HXAppPlatform - Qt应用开发
 ```shell
 mkdir HXAppPlatform && cd HXAppPlatform
 repo init -u ssh://git@192.168.1.100:2222/HXHDXX/app-platform-manifest.git -b master
+repo forall -c 'git lfs pull'
 ```
 
 <!--Repo管理私有库-->
@@ -80,6 +81,7 @@ export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
 cd ~/workspace
 # 重新初始化
 repo init -u <MANIFEST_GIT_URL> -m <manifest.xml> -b <commit-sha>
+repo forall -c 'git lfs pull'
 ```
 
 ###### 构建容器
