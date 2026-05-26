@@ -77,7 +77,7 @@
 - Markdown: typora（收费）或 typora-alanzanattadev（免费）
 
 ### 静态分析
-- `./container/build.sh check` 执行代码静态分析
+- 项目构建/验证命令执行代码静态分析（具体命令待项目构建系统确定后补充）
 
 ## Open Questions
 - 构建容器 `linux_gcc_cl` 的 Dockerfile 是否需要纳入版本管理？

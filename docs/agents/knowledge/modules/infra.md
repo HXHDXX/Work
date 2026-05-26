@@ -64,17 +64,10 @@
 - **Tradeoff:** Phase 7 和 Phase 8 后续可能需要合并/对齐架构
 
 ### AGENTS.md 扩展：行为准则与验证规则 (2026-05-26)
-> **Superseded by:** AGENTS.md 精简：移除库与验证 section (2026-05-26)
-- **Chosen:** AGENTS.md 从纯清单扩展为包含行为准则、上下文沙盒策略、目录结构、库优先级、Worktree 规则、验证命令的完整入口文档
-- **Alternatives:** 保持精简清单 / 各规则散落在不同文档
-- **Reason:** 新增的 ctx_search/ctx_execute 沙盒机制需要明确规则；验证命令需要统一避免混乱；行为准则避免 agent 盲目执行
-- **Tradeoff:** AGENTS.md 变长，但通过 `> 详细:` 链接保持渐进披露
-- **新增规则:**
-  - 行为准则：澄清意图、深度调研、简单优先、精准修改、验证先行、Trivial 豁免(≤1文件且≤20行)
-  - 上下文沙盒：默认粗筛(ctx_search/ctx_execute_file, 98%压缩率)，按需放行，禁用原生 curl/find/grep
-  - 验证：统一命令 `./container/build.sh check`（ASAN + clang-tidy）
-  - 库优先级：C++ 标准库 → 开源库(`./cross-library-examples/`) → 私有库(`./libs/`)
-  - Worktree：`.worktrees/<分支名>`，命名 `feature/` | `fix/`，完成后清理
+> **Superseded by:** AGENTS.md 精简：移除库与验证 section，删除占位目录 (2026-05-26)
+- AGENTS.md 曾扩展为包含行为准则、沙盒策略、目录结构、库优先级、Worktree 规则、验证命令的完整入口
+- 后因"库"和"验证" section 不适合放在入口清单层，已精简回核心行为准则
+- "库"和"验证"的具体规则下沉至 `./docs/agents/core/structure.md`；`container/`、`libs/`、`cross-library-examples/` 目录已删除
 
 ### AGENTS.md 精简：移除库与验证 section，删除占位目录 (2026-05-26)
 - **Chosen:** 从 AGENTS.md 删除"库"和"验证"两个 section；删除不再需要的 `container/`、`cross-library-examples/`、`libs/` 占位目录
@@ -85,44 +78,7 @@
 
 ## Directory Audit (2026-05-26)
 
-### 当前实际目录结构
-```
-./
-├── .git/
-├── .opencode/
-├── AGENTS.md
-├── docs/
-│   └── agents/
-│       ├── index.md
-│       ├── core/
-│       │   ├── principles.md
-│       │   ├── context-strategy.md
-│       │   └── structure.md
-│       ├── writing-guide.md
-│       └── knowledge/
-│           ├── knowledge-index.md
-│           ├── log.md
-│           └── modules/
-│               ├── cpp-env.md
-│               └── infra.md
-├── pics/
-├── plan.md
-├── C++开发环境配置.md
-├── Qt-Android开发环境配置.md
-├── gammaray_remote_debug.md
-├── 产品体系构想.md
-└── 遥感地形图路线规划技术方案.md
-```
-
-### AGENTS.md 引用路径状态（2026-05-26）
-| 路径 | 用途 | 状态 |
-|------|------|------|
-| `./docs/agents/index.md` | 元规则详细说明 | ✅ 已提交 |
-| `./docs/agents/core/principles.md` | 核心原则与行为准则 | ✅ 已提交 |
-| `./docs/agents/core/context-strategy.md` | 上下文沙盒策略 | ✅ 已提交 |
-| `./docs/agents/core/structure.md` | 项目目录结构 | ✅ 已提交 |
-| `./docs/agents/writing-guide.md` | 文档编写规范 | ✅ 已提交 |
-| `./.worktrees/` | Git worktree 目录 | 未创建(正常，按需) |
+当前项目为纯文档/知识库结构，无业务代码目录。所有 AGENTS.md `> 详细:` 引用的路径均已提交。唯一按需目录 `.worktrees/` 尚未创建（正常）。详见 `./docs/agents/core/structure.md`。
 
 ## Open Questions
 - 是否需要 `.github/` CI/CD 配置？
