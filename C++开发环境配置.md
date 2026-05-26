@@ -29,26 +29,6 @@ sudo snap install kcachegrind
 
 **此步操作后需要重新启动电脑*
 
-###### docker buildx跨平台安装配置说明（用于x86_64/arm64服务端容器构建）
-
-安装docker buildx
-
-```shell
-sudo apt install docker-buildx
-```
-
-支持跨平台构建器
-
-```shell
-docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-```
-
-跨平台运行器
-
-```shell
-docker run --platform=linux/arm64 --rm arm64v8/ubuntu uname -m
-```
-
 ###### 解决GCC 11兼容问题
 
 Ubuntu 22.04默认安装GCC11，该版本对GCC8构建的absl、sqlite_orm等库可能存在不兼容问题，解决方案是使用GCC9替换GCC11
@@ -63,35 +43,6 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 \
 sudo update-alternatives --install /usr/bin/cpp cpp /usr/bin/cpp-9 90
 ```
 
-###### 解决连接CH340 GPS模块失败问题
-
-1. 下载并安装最新CH340驱动：https://www.wch.cn/downloads/file/177.html?time=2024-04-21%2018:34:31&code=A75HCuwCkpdyZlnlyj15y8LLgHACtzvA1BpVW6FW
-
-   ```shell
-   cd CH341SER_LINUX/driver
-   make
-   sudo make install
-   ```
-
-2. 卸载brltty
-
-   ```shell
-   sudo apt remove brltty
-   ```
-
-3. 查看USB转串口设备
-
-   ```shell
-   lsusb
-   ls /dev | grep USB
-   ```
-
-4. 安装串口工具
-
-   ```shell
-   sudo apt install cutecom
-   ```
-
 ##### 安装CLion / QtCreator
 
 联网机器使用CLion
@@ -104,33 +55,55 @@ sudo snap install clion --classic #CLion安装
 
 QtCreater：https://download.qt.io/official_releases/qtcreator/latest/
 
-##### 安装Makrdown编辑器
-
-```shell
-sudo snap install typora #收费
-#或
-sudo snap install typora-alanzanattadev #免费
-```
-
 ##### 开发资源
 
 ###### 跨平台项目
 
+HXProjectTemplate - 共享库、插件开发
+
 HXAppPlatform - Qt应用开发
 
-HXProjectTemplate - 共享库、插件开发
+同步HXAppPlatform版本库
+
+```shell
+mkdir HXAppPlatform && cd HXAppPlatform
+repo init -u ssh://git@192.168.1.100:2222/HXHDXX/app-platform-manifest.git -b master
+```
+
+<!--Repo管理私有库-->
+
+```shell
+# 确保环境变量仍然设置
+export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
+# 进入工作目录（空目录或已清理的目录）
+cd ~/workspace
+# 重新初始化
+repo init -u <MANIFEST_GIT_URL> -m <manifest.xml> -b <commit-sha>
+```
 
 ###### 构建容器
 
 code-compiler
 
+```shell
+cd code-compiler && ./load.sh
+```
+
 ###### 跨平台Qt SDK
 
-cross-library.tar - /opt/cross-library/
+cross-library.tar
+
+```shell
+sudo tar -xf cross-library.tar -C /
+```
 
 ###### 跨平台开源库
 
-qt5-x86_64-gl.tar.gz - /opt/qt5-x86_64-gl
+qt5-x86_64-gl.tar
+
+```shell
+sudo tar -xf qt5-x86_64-gl.tar -C /
+```
 
 ##### CLion使用构建容器配置
 
@@ -138,27 +111,13 @@ qt5-x86_64-gl.tar.gz - /opt/qt5-x86_64-gl
 
 ###### 配置本地容器
 
-1. 下载跨平台第三方库：/opt/cross-library
+Settings -> Build, Execution, Deployment -> Toolchains -> "+" Docker -> Image: linux_gcc_cl:v1.3
 
-   ```shell
-   sudo tar -xf cross-library.tar -C /
-   ```
+Settings -> Build, Execution, Deployment -> Toolchains -> "+" Docker -> Container Settings -> Volume bindings: 
 
-2. 加载构建容器
-
-   ```shell
-   cd code-compiler && ./load.sh
-   ```
-
-3. 设定构建容器
-
-   Settings -> Build, Execution, Deployment -> Toolchains -> "+" Docker -> Image: linux_gcc_cl:v1.3
-
-   Settings -> Build, Execution, Deployment -> Toolchains -> "+" Docker -> Container Settings -> Volume bindings: 
-
-   | Host path          | Container path     | Read-only |
-   | ------------------ | ------------------ | --------- |
-   | /opt/cross-library | /opt/cross-library | &check;   |
+| Host path          | Container path     | Read-only |
+| ------------------ | ------------------ | --------- |
+| /opt/cross-library | /opt/cross-library | &check;   |
 
 ###### CLion推荐插件
 
@@ -167,18 +126,6 @@ AceJump / IdeaVim / IdeaVimExtension / IdeaVim-EasyMotion
 ##### QtCreator15使用构建容器配置
 
 参考：https://doc.qt.io/qtcreator/creator-adding-docker-devices.html
-
-##### 使用跨平台Qt SDK
-
-Qt桌面应用开发时，可以使用系统默认编译链，同时使用跨平台Qt SDK：
-
-1. 下载跨平台Qt SDK：/opt/qt5-x86_64-gl
-
-   ```shell
-   sudo tar -xf qt5-x86_64-gl.tar.gz -C /opt
-   ```
-
-2. 修改项目的 CMAKE_PREFIX_PATH 为跨平台 Qt SDK 的安装路径：/opt/qt5-x86_64-gl
 
 ##### GammaRay分析Qt程序
 
@@ -233,19 +180,6 @@ git merge feature --ff-only
    ```
 
    解决完所有冲突后，保存您的更改，并关闭 Meld，Git 会自动标记这些文件的冲突为已解决。
-
-##### Repo管理私有库
-
-```shell
-# 确保环境变量仍然设置
-export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
-
-# 进入工作目录（空目录或已清理的目录）
-cd ~/workspace
-
-# 重新初始化
-repo init -u <MANIFEST_GIT_URL> -m <manifest.xml> -b <commit-sha>
-```
 
 ##### ASAN调试
 
