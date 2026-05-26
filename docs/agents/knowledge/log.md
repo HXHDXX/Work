@@ -6,6 +6,13 @@
 ## Log
 
 ## [2026-05-26] lint + ingest | infra
+- 删除 container/, cross-library-examples/, libs/ 占位目录（无实际内容）
+- 更新 structure.md：移除目录树、代码依赖表、布局检查中对这三个目录的引用
+- 更新 infra.md：Directory Audit 移除已删目录，Open Questions 移除 build.sh 相关条目
+- 更新精简决策记录：补充目录删除信息
+- Types: Decision, Module Info
+
+## [2026-05-26] lint + ingest | infra
 - AGENTS.md 精简：移除"库"和"验证" section，规则下沉至 structure.md
 - infra.md lint：旧决策标记 Superseded，新增精简决策记录
 - Directory Audit 更新：反映提交后的实际目录（含 container/, libs/, cross-library-examples/, docs/agents/core/）

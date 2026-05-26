@@ -76,14 +76,14 @@
   - 库优先级：C++ 标准库 → 开源库(`./cross-library-examples/`) → 私有库(`./libs/`)
   - Worktree：`.worktrees/<分支名>`，命名 `feature/` | `fix/`，完成后清理
 
-### AGENTS.md 精简：移除库与验证 section (2026-05-26)
-- **Chosen:** 从 AGENTS.md 删除"库"和"验证"两个 section，将具体规则下沉到 `./docs/agents/core/structure.md`
-- **Alternatives:** 保留在 AGENTS.md / 完全删除不保留
-- **Reason:** AGENTS.md 应保持为核心行为准则入口；库优先级和验证命令属于工具链细节，不适合放在入口清单层
-- **Tradeoff:** 新 agent 需要多读一层文档才能了解库规则和验证流程
+### AGENTS.md 精简：移除库与验证 section，删除占位目录 (2026-05-26)
+- **Chosen:** 从 AGENTS.md 删除"库"和"验证"两个 section；删除不再需要的 `container/`、`cross-library-examples/`、`libs/` 占位目录
+- **Alternatives:** 保留空目录占位 / 仅删除 AGENTS.md section
+- **Reason:** 这些目录是上次扩展时创建的骨架，无实际内容；AGENTS.md 不再引用它们，保留会造成混淆
+- **Tradeoff:** 后续如需这些目录需重新创建
 - **Supersedes:** AGENTS.md 扩展：行为准则与验证规则 (2026-05-26)
 
-## Directory Audit (2026-05-26, updated)
+## Directory Audit (2026-05-26)
 
 ### 当前实际目录结构
 ```
@@ -91,10 +91,6 @@
 ├── .git/
 ├── .opencode/
 ├── AGENTS.md
-├── container/
-│   └── build.sh
-├── cross-library-examples/
-│   └── README.md
 ├── docs/
 │   └── agents/
 │       ├── index.md
@@ -109,8 +105,6 @@
 │           └── modules/
 │               ├── cpp-env.md
 │               └── infra.md
-├── libs/
-│   └── README.md
 ├── pics/
 ├── plan.md
 ├── C++开发环境配置.md
@@ -120,7 +114,7 @@
 └── 遥感地形图路线规划技术方案.md
 ```
 
-### AGENTS.md 引用路径状态（2026-05-26 updated）
+### AGENTS.md 引用路径状态（2026-05-26）
 | 路径 | 用途 | 状态 |
 |------|------|------|
 | `./docs/agents/index.md` | 元规则详细说明 | ✅ 已提交 |
@@ -128,9 +122,6 @@
 | `./docs/agents/core/context-strategy.md` | 上下文沙盒策略 | ✅ 已提交 |
 | `./docs/agents/core/structure.md` | 项目目录结构 | ✅ 已提交 |
 | `./docs/agents/writing-guide.md` | 文档编写规范 | ✅ 已提交 |
-| `./libs/` | 私有库目录 | ✅ 已提交(含 README) |
-| `./cross-library-examples/` | 开源库使用示例 | ✅ 已提交(含 README) |
-| `./container/build.sh` | 统一构建验证脚本 | ✅ 已提交(骨架，待接入 CMake 项目) |
 | `./.worktrees/` | Git worktree 目录 | 未创建(正常，按需) |
 
 ## Open Questions
@@ -138,4 +129,3 @@
 - 项目实际业务代码结构尚未确定
 - Phase 4 native 地图引擎选型？
 - Phase 6 插件总线系统的接口设计？
-- `./container/build.sh` 需要在接入 CMake 项目后补充实际构建逻辑
