@@ -5,6 +5,12 @@
 
 ## Log
 
+## [2026-05-26] lint + ingest | infra
+- AGENTS.md 精简：移除"库"和"验证" section，规则下沉至 structure.md
+- infra.md lint：旧决策标记 Superseded，新增精简决策记录
+- Directory Audit 更新：反映提交后的实际目录（含 container/, libs/, cross-library-examples/, docs/agents/core/）
+- Types: Decision, Module Info
+
 ## [2026-05-26] ingest | infra
 - AGENTS.md 扩展：新增行为准则、上下文沙盒策略、目录结构、库优先级、Worktree 规则、验证命令等 6 个小节
 - 目录审计：AGENTS.md 引用的 8 个路径中 7 个尚未创建（docs/agents/index.md, docs/agents/core/*.md, writing-guide.md, libs/, cross-library-examples/, container/build.sh）
