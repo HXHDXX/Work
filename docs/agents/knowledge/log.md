@@ -5,6 +5,16 @@
 
 ## Log
 
+## [2026-05-26] ingest | infra
+- AGENTS.md 扩展：新增行为准则、上下文沙盒策略、目录结构、库优先级、Worktree 规则、验证命令等 6 个小节
+- 目录审计：AGENTS.md 引用的 8 个路径中 7 个尚未创建（docs/agents/index.md, docs/agents/core/*.md, writing-guide.md, libs/, cross-library-examples/, container/build.sh）
+- Types: Decision, Module Info
+
+## [2026-05-26] ingest | infra
+- 创建 AGENTS.md 引用的全部缺失路径：docs/agents/index.md, docs/agents/core/{principles,context-strategy,structure}.md, docs/agents/writing-guide.md, libs/README.md, cross-library-examples/README.md, container/build.sh
+- container/build.sh 为骨架脚本，支持 check(ASAN/Debug) 和 linux 命令，待接入实际 CMake 项目
+- Types: Decision, Module Info
+
 ## [2026-04-08] ingest | infra
 - 从 `plan.md` 提取项目路线图：6 阶段计划（OSM 渲染→Qt 环境→MVT 编译→native 地图引擎→demo 应用→插件总线+GIS server）
 - Types: Strategy, Module Info

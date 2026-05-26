@@ -41,23 +41,10 @@
 - 跨模块调用、引入第三方依赖前必读
 - 提交代码前用于验证布局合规性必读
 
-### 库
-- 优先: C++ 标准库
-- 开源库: 参考 `./cross-library-examples/`（可用库及使用方式）
-- 私有库: `./libs/`（项目级私有库，按需创建）
-
 ### Worktree 规则
 - 目录: `.worktrees/<分支名>`
 - 分支命名: `feature/<功能名>` | `fix/<问题名>`
 - 完成后清理 worktree，保证线性历史
-
-### 验证
-- 代码修改后必须通过构建验证
-- **调试与检查统一命令：`./container/build.sh check`（默认 ASAN + clang-tidy）**
-  - 禁止直接使用 `./container/build.sh linux` 或其他平台命令做验证
-  - 如需其他模式显式声明：`./container/build.sh check Debug`（Valgrind）、`./container/build.sh check ASAN`
-- 所有警告必须修复
-- 关键重构需在 `ctx_execute` 沙盒中通过单元测试验证
 
 ### 知识查询与沉淀
 > 详细: `./docs/agents/knowledge/knowledge-index.md`
