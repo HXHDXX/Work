@@ -91,20 +91,9 @@ HXAppPlatform - Qt应用开发
 同步HXAppPlatform版本库
 
 ```shell
+export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' #可选，repo国内镜像
 mkdir HXAppPlatform && cd HXAppPlatform
 repo init -u ssh://git@192.168.1.100:2222/HXHDXX/app-platform-manifest.git -b master
-repo forall -c 'git lfs pull'
-```
-
-<!--Repo管理私有库-->
-
-```shell
-# 确保环境变量仍然设置
-export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
-# 进入工作目录（空目录或已清理的目录）
-cd ~/workspace
-# 重新初始化
-repo init -u <MANIFEST_GIT_URL> -m <manifest.xml> -b <commit-sha>
 repo sync
 repo forall -c 'git lfs pull'
 ```
