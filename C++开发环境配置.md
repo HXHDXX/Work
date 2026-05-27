@@ -105,6 +105,7 @@ export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
 cd ~/workspace
 # 重新初始化
 repo init -u <MANIFEST_GIT_URL> -m <manifest.xml> -b <commit-sha>
+repo sync
 repo forall -c 'git lfs pull'
 ```
 
