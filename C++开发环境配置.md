@@ -95,6 +95,7 @@ export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' #可选，re
 mkdir HXAppPlatform && cd HXAppPlatform
 repo init -u ssh://git@192.168.1.100:2222/HXHDXX/app-platform-manifest.git -b master
 repo sync
+repo start master --all
 repo forall -c 'git lfs pull'
 ```
 
