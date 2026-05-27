@@ -58,6 +58,30 @@ QtCreater：https://download.qt.io/official_releases/qtcreator/latest/
 
 ##### 开发资源
 
+###### 构建容器
+
+code-compiler
+
+```shell
+cd code-compiler && ./load.sh
+```
+
+###### 跨平台Qt SDK
+
+cross-library.tar
+
+```shell
+sudo tar -xf cross-library.tar -C /
+```
+
+###### 跨平台开源库
+
+qt5-x86_64-gl.tar
+
+```shell
+sudo tar -xf qt5-x86_64-gl.tar -C /
+```
+
 ###### 跨平台项目
 
 HXProjectTemplate - 共享库、插件开发
@@ -84,28 +108,12 @@ repo init -u <MANIFEST_GIT_URL> -m <manifest.xml> -b <commit-sha>
 repo forall -c 'git lfs pull'
 ```
 
-###### 构建容器
-
-code-compiler
+构建并运行Qt应用
 
 ```shell
-cd code-compiler && ./load.sh
-```
-
-###### 跨平台Qt SDK
-
-cross-library.tar
-
-```shell
-sudo tar -xf cross-library.tar -C /
-```
-
-###### 跨平台开源库
-
-qt5-x86_64-gl.tar
-
-```shell
-sudo tar -xf qt5-x86_64-gl.tar -C /
+cd HXAppPlatform/HXNativeApp
+./container/build.sh linux-x86_64
+(cd ./hx-native-app-linux/x86_64 && ./hx-native-app)
 ```
 
 ##### CLion使用构建容器配置
@@ -132,7 +140,7 @@ AceJump / IdeaVim / IdeaVimExtension / IdeaVim-EasyMotion
 
 ##### GammaRay分析Qt程序
 
-1. 下载GammaRay3.1.0(基于Qt5.15.12)：/opt/gammaray-3.1.0
+1. lib-GammaRay
 
 2. 临时授权Yama安全模块支持附加非子进程调试能力
 
@@ -143,7 +151,7 @@ AceJump / IdeaVim / IdeaVimExtension / IdeaVim-EasyMotion
 3. 执行
 
    ```shell
-   /opt/gammaray-3.1.0/bin/gammaray
+   HXAppPlatform/lib-GammaRay/x86_64/bin/gammaray
    ```
 
 ##### Git分支合并流程
