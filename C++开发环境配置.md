@@ -104,6 +104,13 @@ repo forall -c 'git lfs pull'
 ```shell
 cd HXAppPlatform/HXNativeApp
 ./container/build.sh linux-x86_64
+
+# 地图数据存储在：<应用程序根目录>/data/map_data
+# ftp上下载地图数据
+mkdir ./hx-native-app-linux/x86_64/data
+tar -xf algeria-mvt-data.tar -C ./hx-native-app-linux/x86_64/data
+mv ./hx-native-app-linux/x86_64/data/algeria-mvt-data ./hx-native-app-linux/x86_64/data/map_data
+
 (cd ./hx-native-app-linux/x86_64 && ./hx-native-app)
 ```
 
