@@ -19,7 +19,6 @@ sudo apt install -y \
 	'^libxcb.*-dev' libxcb-xinerama0 libx11-xcb-dev \
 	libxkbcommon-dev libxkbcommon-x11-dev \
 	libxi-dev libxrender-dev
-git lfs install
 npm install -g @ast-grep/cli
 sudo apt install -y docker.io docker-compose docker-clean
 sudo gpasswd -a $USER docker
