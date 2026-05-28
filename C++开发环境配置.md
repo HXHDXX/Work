@@ -18,7 +18,8 @@ sudo apt install -y \
 	libgl1-mesa-dev libglu1-mesa-dev \
 	'^libxcb.*-dev' libxcb-xinerama0 libx11-xcb-dev \
 	libxkbcommon-dev libxkbcommon-x11-dev \
-	libxi-dev libxrender-dev
+	libxi-dev libxrender-dev \
+	filezilla
 npm install -g @ast-grep/cli
 sudo apt install -y docker.io docker-compose docker-clean
 sudo gpasswd -a $USER docker
