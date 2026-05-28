@@ -5,6 +5,13 @@
 
 ## Log
 
+## [2026-05-28] lint | 全局
+- AGENTS.md：修复已删除目录引用（`./cross-library-examples/` → `/opt/cross-library/`、`./libs/` → CMake 结构组织、新增构建脚本位置说明）
+- context-strategy.md：同步 `ctx_batch_execute` 工具路由和沙盒断言
+- principles.md：同步 AGENTS.md 措辞（"验证贯穿始终"合并两条、"先理解再行动"拆分静态/动态、Trivial 豁免补充禁止连续拆分和构建验证）
+- infra.md：路线图从 Phase 4-8 更新到 Phase 1-24（与 plan.md 同步）；旧路线图决策标记 Superseded
+- Types: Module Info, Decision
+
 ## [2026-05-26] lint | infra, cpp-env, docs
 - AGENTS.md 精简：移除"库"和"验证" section → 下沉至 structure.md
 - 删除 container/, cross-library-examples/, libs/ 占位目录（无实际内容）
