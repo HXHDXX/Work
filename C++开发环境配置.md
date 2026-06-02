@@ -19,7 +19,8 @@ sudo apt install -y \
 	'^libxcb.*-dev' libxcb-xinerama0 libx11-xcb-dev \
 	libxkbcommon-dev libxkbcommon-x11-dev \
 	libxi-dev libxrender-dev \
-	filezilla imagemagick
+	filezilla imagemagick lua5.1 luarocks
+sudo luarocks install luacheck
 npm install -g @ast-grep/cli
 sudo apt install -y docker.io docker-compose docker-clean
 sudo gpasswd -a $USER docker
