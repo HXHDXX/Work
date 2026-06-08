@@ -1,6 +1,6 @@
 # Infra
 
-> Last updated: 2026-05-28
+> Last updated: 2026-06-08
 
 ## Overview
 - 项目基础设施与工具链配置
@@ -35,6 +35,11 @@
 - **Problem:** Agent 上下文有限，不能一次加载所有项目知识
 - **Approach:** 三层结构 — AGENTS.md(清单) → docs/agents/(说明) → knowledge/modules/(详情)
 - **When to reuse:** 任何需要 agent 知识管理的项目
+
+### 跨项目知识借鉴策略 (2026-06-08)
+- **Problem:** 参考外部/兄弟项目时容易盲目复制逻辑，忽略目标项目的设计上下文
+- **Approach:** 必须首先对目标项目 `./docs` 执行 ingest + query，理解其设计意图后再借鉴；AGENTS.md 和知识库均有对应规则
+- **When to reuse:** 任何涉及外部项目依赖或参考的场景
 
 ## Roadmap
 
@@ -79,11 +84,24 @@
 - "库"和"验证"的具体规则下沉至 `./docs/agents/core/structure.md`；`container/`、`libs/`、`cross-library-examples/` 目录已删除
 
 ### AGENTS.md 精简：移除库与验证 section，删除占位目录 (2026-05-26)
-- **Chosen:** 从 AGENTS.md 删除"库"和"验证"两个 section；删除不再需要的 `container/`、`cross-library-examples/`、`libs/` 占位目录
-- **Alternatives:** 保留空目录占位 / 仅删除 AGENTS.md section
-- **Reason:** 这些目录是上次扩展时创建的骨架，无实际内容；AGENTS.md 不再引用它们，保留会造成混淆
-- **Tradeoff:** 后续如需这些目录需重新创建
-- **Supersedes:** AGENTS.md 扩展：行为准则与验证规则 (2026-05-26)
+> **Superseded by:** AGENTS.md 依赖路径恢复与 Worktree 命名规范扩展 (2026-06-08)
+- 从 AGENTS.md 删除"库"和"验证"两个 section；删除 `container/`、`cross-library-examples/`、`libs/` 占位目录
+- 后因依赖目录实际需要，路径已恢复
+
+### AGENTS.md 依赖路径恢复与 Worktree 命名规范扩展 (2026-06-08)
+- **Chosen:**
+  - 依赖库路径恢复为 `./cross-library-examples/` 和 `./libs/`（反转 05-26 删除决策）
+  - Worktree 命名从简单 `feature/<名>` 改为防冲突公式 `../${REPO}__wt-${TYPE}-${NAME}__${MMDDHHMM}`
+  - Worktree 必须签出到 Repo 同级父目录（物理拓扑对齐）
+  - 多 Agent 并发时追加 4 位随机 Hash
+  - 线性历史采用 Rebase + `--ff-only`，级联清理用 `git worktree remove --force`
+  - 新增"跨项目静态"检索规则：参考外部项目必须先检索其 `./docs`
+  - 编译验证命令修正为 `./container/build.sh check [Debug|ASAN]`
+  - Context-Mode section 格式统一（粗筛/放行/对焦/沙盒/拦截/断言/工具路由）
+- **Alternatives:** 继续使用旧的简单 Worktree 命名 / 不做跨项目 docs 检索约束
+- **Reason:** 旧命名易冲突且缺少物理拓扑保障；跨项目借鉴需规范化；依赖路径恢复因后续开发需要
+- **Tradeoff:** Worktree 命名变长但可读性更强；多一层跨项目 docs 检索增加前期成本
+- **Supersedes:** AGENTS.md 精简：移除库与验证 section，删除占位目录 (2026-05-26)
 
 ## Directory Audit (2026-05-26)
 

@@ -5,6 +5,12 @@
 
 ## Log
 
+## [2026-06-08] ingest | infra
+- AGENTS.md 完善：依赖路径恢复（`./cross-library-examples/`、`./libs/`）、Worktree 防冲突命名规范（物理拓扑对齐+时间戳+Hash）、新增跨项目静态检索规则、编译验证命令修正、Context-Mode 格式统一
+- infra.md 决策记录：依赖路径恢复与 Worktree 命名规范扩展 (2026-06-08)，Supersedes 05-26 精简决策
+- 新增策略：跨项目知识借鉴策略
+- Types: Decision, Strategy, Module Info
+
 ## [2026-05-28] lint | 全局
 - AGENTS.md：修复已删除目录引用（`./cross-library-examples/` → `/opt/cross-library/`、`./libs/` → CMake 结构组织、新增构建脚本位置说明）
 - context-strategy.md：同步 `ctx_batch_execute` 工具路由和沙盒断言
