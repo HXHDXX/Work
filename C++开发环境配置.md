@@ -348,20 +348,12 @@ vim ~/.config/opencode/oh-my-openagent.json #建议使用GLM5.1作为Sisyphus使
 Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
 ```
 
-###### 融合OMO和Superpowers
-
-在OpenCode中输入
-
-```shell
-根据每个 agent 的职责，在 ~/.config/opencode/oh-my-openagent.json 中为其配置合适的 superpowers skills
-```
-
 ###### 修正中文提示与英文Skill激活失败问题
 
 在OpenCode中输入
 
 ```shell
-列出当前所有的 Skill。请为每个 Skill 的 description 字段补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词），并测试所有 Skill 是否能够正常激活
+为了使中文对话也能够激活 Skills，为每个 Skill 补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词），并测试所有 Skill 是否能够正常激活
 ```
 
 ###### Context整理
