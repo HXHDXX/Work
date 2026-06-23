@@ -346,6 +346,8 @@ vim ~/.config/opencode/oh-my-openagent.json #建议使用GLM5.1作为Sisyphus使
 
 ```shell
 Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+
+装完插件后，把 superpowers 缓存里的各 skill 目录逐个软链到 `~/.config/opencode/skills/`（该路径须已在 `opencode.json` 的 `skills.paths` 中声明），然后完全重启 OpenCode 并开新会话，superpowers skills 才能被 `skill` 工具和 `/` 斜杠激活。superpowers 升级后软链可能失效，重建即可。
 ```
 
 ###### 修正中文提示与英文Skill激活失败问题

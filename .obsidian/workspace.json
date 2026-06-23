@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "fe330921b4b2b2ea",
+        "id": "243031ce14caf18b",
         "type": "tabs",
         "children": [
           {
-            "id": "1a1727cad4f3f5d8",
+            "id": "c377a4b6acfaa768",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "plan.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "plan"
+              "title": "新标签页"
             }
           }
         ]
@@ -180,8 +176,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 407.5,
-    "collapsed": true
+    "width": 407.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -196,9 +191,10 @@
       "opencode-obsidian:OpenCode": false
     }
   },
-  "active": "1a1727cad4f3f5d8",
+  "active": "c377a4b6acfaa768",
   "lastOpenFiles": [
     "C++开发环境配置.md",
+    "plan.md",
     "2026-06-16.md",
     "未命名.base",
     "未命名.canvas"
