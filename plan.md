@@ -5,13 +5,13 @@
 2. 配置git服务器，并同步版本库 - 完成!
 
 基础引擎：
-1. HXMapWidgetNative & HXPRShell 跨进程地图接口完善 - 实施中*，正在做单元测试
+1. HXMapWidgetNative & HXPRShell 跨进程地图接口完善 - 全量API封装完成！今后随项目优化
 2. POI检索引擎开发 - 暂停*?
 3. GJB-9121 背景数据编译 - 实施中*，完成数据解析，正在调试样式
 4. 基于OSM数据的规划引擎及数据编译 - 计划中？
-5. 尝试在HXMapWidgetNative中引入类似mapbox-gl-draw的地图绘制和编辑地理要素能力 - 计划中？
-6. 使用OSM构建路径规划数据
-7. 开发路径规划模块
+5. 尝试在HXMapWidgetNative中引入类似mapbox-gl-draw的地图绘制和编辑地理要素能力 - 完成！
+6. 使用OSM构建路径规划数据 - 完成北京数据编译
+7. 开发路径规划模块 - 完成！下周融入麒麟应用
 
 应用开发:
 1. 麒麟应用 HXNativeApp 开发 - 完成！今后持续开发
