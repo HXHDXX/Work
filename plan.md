@@ -4,7 +4,7 @@
 1. 专利文档 - 持续优化
 
 基础引擎：
-1. HXMapWidgetNative & HXPRShell 跨进程地图接口完善 - 出 HXMapDraw API（点线面编辑绘制）外，其他全部测试通过
+1. HXMapWidgetNative & HXPRShell 跨进程地图接口完善 - 除 HXMapDraw API（点线面编辑绘制）外，其他全部测试通过
 2. 联合图编译 - 计划中？
 3. 基于OSM数据的规划引擎及数据编译 - 完成!
 4. 路径规划模块融入麒麟应用 - 完成！
