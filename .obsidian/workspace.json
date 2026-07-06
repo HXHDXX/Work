@@ -11,10 +11,14 @@
             "id": "c377a4b6acfaa768",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "C++开发环境配置.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "C++开发环境配置"
             }
           }
         ]
@@ -74,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "45dd6a799fe4aa82",
@@ -176,7 +181,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 407.5
+    "width": 407.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
