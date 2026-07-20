@@ -1,0 +1,62 @@
+工作日报 2026-07-19（周日）
+================================================
+
+【今日要点】两条主线，共 22 次提交：
+1. GJB 样式 7 模式系统落地（day/night/导航 × 双产品）
+2. HXSpatialMeasure 空间测量模块从 0 启动（plan.md #15 落地）
+
+
+一、GJB 样式 7 模式系统
+------------------------------------------------
+仓库：OSMDataCompiler | 11 commits | +20711/-4629（多为生成式样式 JSON）
+
+要点：
+1. 7 模式体系：{day, night, day-navigation, night-navigation}
+   × {GJB9121, GJB-SMS-LHZZ}（3 GJB 模式 + 4 OSM 模式）
+2. 21 图层跨模式一致，颜色映射派生（normal→background/theme 自动生成）
+3. GJB-SMS-LHZZ 图层整合 79→59，修复表达式 BUG
+4. 7×21=147 层完整诊断：0 Critical/Important，5 Minor
+5. POI z14 密度收紧（rank<=5）+ 铁路色柔化
+6. 修复图层渲染顺序 + theme text-color
+7. Code Review 修复 3 Important + 4 Minor
+8. 沉淀 POI 优先级 + 渐进显示策略 + catch-all 知识
+
+
+二、HXSpatialMeasure 空间测量模块（新项目启动）
+------------------------------------------------
+仓库：HXSpatialMeasure | 11 commits | +12175/-307
+对应 plan.md「15. 空间测量模块 - 计划中？」→ 今日落地
+
+要点：
+1. 项目从 HXProjectTemplate 脚手架初始化，剥除模板 C API
+2. 链接 PROJ / GeographicLib / Eigen / nlohmann-json / GDAL / CGAL
+3. dispatch 核心路由 + JSON 信封 {ok, trace_id, result|error} + 错误映射
+4. v1.0 七大测量函数：distance(直接/测地/水平/垂直) +
+   area(平面/测地) + crs_transform
+5. v1.5 地形感知函数：distance_surface + area_surface + volume_cutfill
+6. volume_stockpile（共用 volume_common.h）并接入插件集成
+7. DEM 模块：WCS 客户端（网络地形拉取）+ LRU 缓存 + 错误映射
+8. demo CLI：version / --benchmark / 错误路径，退出码 0/1/2
+9. 测试体系：~18 个测试文件，KAT + benchmark + DEM/几何 fixtures +
+   mock WCS server + wave2/wave3 分波测试
+
+
+三、关键决策
+------------------------------------------------
+1. 样式 7 模式用「normal 派生」而非各自独立维护，保证一致性
+2. SMS-LHZZ 图层 79→59 精简，消除冗余
+3. 测量函数分波迭代：v1.0 平面/测地 → v1.5 地形感知 → volume 扩展
+4. DEM 走 WCS 客户端 + 本地 LRU 缓存，平衡网络延迟与数据新鲜度
+
+
+明日待续
+------------------------------------------------
+1. GJB 样式 7 模式渲染实测（各模式截图验证）
+2. HXSpatialMeasure wave2/wave3 测试补全 + 性能基线
+3. 全国区域数据编译跑通（07-18 待续项）
+
+
+================================================
+数据来源：OSMDataCompiler + HXSpatialMeasure git log（2026-07-19）、
+knowledge log、gjb-9121.md / gjb-sms-lhzz.md / library-integration.md、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

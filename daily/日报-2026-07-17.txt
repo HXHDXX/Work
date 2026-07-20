@@ -1,0 +1,63 @@
+工作日报 2026-07-17（周五）
+================================================
+
+【今日要点】三条主线并行，共 36 次提交，修复 3 个生产缺陷。
+
+
+一、GJB9121 电子导航图编译与渲染调优（主战场）
+------------------------------------------------
+仓库：OSMDataCompiler | 20 commits | +1687/-1212 行
+
+要点：
+1. MVT 字段瘦身：GJB_KEYS 62→11 核心字段，MBTiles 217→158MB（-27%）
+2. PBF tag 全量分类（86 种 key）
+3. 修复 2 个数据 BUG：双重 field_ 前缀（21 万废 tag）、立交 6488 要素不可见
+4. GJB8023 国军标配色合规（铁路/植被/居民地/隧道/建筑）
+5. 27 个样式图层分级显示，覆盖率 37%→90%+
+6. 白屏 4 阶段根因修复（source 名/sprite 路由/冗余 setStyle/3 语法错误）
+7. 首次成功渲染：25KB 白屏 → 521KB 地图
+8. 4 个 skill 文档同步更新
+
+
+二、NMEA/RDSS 总线服务集成测试与缺陷修复
+------------------------------------------------
+仓库：HXNativeApp + HXNmeaParser + HXRdssSendingQueue + 2 lib-*
+16 commits | +1103 行
+
+要点：
+1. 总线级 Python 测试框架从 0 搭建，覆盖扩展到 45 passed / 5 xfailed
+   - broker 无条件绑 tcp 24943/24944，REQ 注入 + SUB 观察，免 mock
+   - service 激活用 qDebug 日志缝
+2. 修复 subscriber 根因 Bug：从 root 读 tx_type → 永远空 → RDSS 状态机
+   永不推进（卡 st=0 超时 -1）。改从 payload["fields"] 读取
+3. 修复 move() 哨兵值 Bug：queue_id=0 被 <=0 误判为哨兵，移到队首静默失败
+4. NmeaParser schema 漂移修复 + ZTI 严格键集守卫测试（140 行）
+5. send() 加 freq 参数，与 verify() API 对称
+6. 插件修复后 un-xfail 4 个状态机测试，按审计 C1-C5/I1-I8 强化全部断言
+7. lib-HXRdssSendingQueue 初始化、lib-HXNmeaParser 发布 dev 分发包
+
+
+三、HX GIS 产品线介绍 H5 单页文档（并行计划）
+------------------------------------------------
+计划：.sisyphus/plans/hx-gis-promo-h5.md（37KB）| 02:31 启动
+
+要点：
+1. 3 个并行 explore agent 调研三大产品线（导航软件/SDK/数据编译）
+2. 产出 6 屏文案 + 17 行 claims 审计可追溯证据表
+3. 关键护栏：协议内部数字(102/73/39/Lf1-4)、未背书资质、规模数字、
+   广告法风险词 一律不出现；麒麟 V10 只写"适配"不写"认证"
+4. 交付自包含 index.html（零外部依赖，兼容麒麟/Chrome≥90/微信）
+5. Playwright 多轮验证全过（多视口 375/768/1920/3840、light theme、
+   离线、对比度、guardrail 审计）
+
+
+明日待续
+------------------------------------------------
+1. OSMDataCompiler：水系/POI 渲染调优
+2. NMEA/RDSS：剩余 5 xfail 状态机端到端补全
+3. H5 文档：用户补充资质/规模数字后定稿
+
+
+================================================
+数据来源：/Workspace + /HXAppPlatform 全量 git log、各库 knowledge、
+.sisyphus 计划与证据、opencode 会话
