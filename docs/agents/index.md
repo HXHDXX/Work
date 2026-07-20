@@ -10,7 +10,8 @@ docs/agents/
 ├── core/                 ← 核心规则
 │   ├── principles.md     ← 原则与行为准则
 │   ├── context-strategy.md ← 上下文与沙盒策略
-│   └── structure.md      ← 项目目录结构规范
+│   ├── structure.md      ← 项目目录结构规范
+│   └── harness-reflection.md ← Harness 反思与复利
 ├── writing-guide.md      ← 文档编写规范
 └── knowledge/            ← 知识库（project-compound 管理）
     ├── knowledge-index.md

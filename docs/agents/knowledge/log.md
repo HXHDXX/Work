@@ -5,6 +5,12 @@
 
 ## Log
 
+## [2026-07-20] ingest | agent-guidelines
+- 新增 harness 反思与复利机制：AGENTS.md 新节 + core/harness-reflection.md 详情（适配 Work 文档项目，将"构建验证链"维度改为"文档验证链"）+ index.md 目录树更新 + writing-guide.md 维护规则
+- 业务知识进 project-compound，元层提案进 harness-reflection.md，兑现后 ingest 入 agent-guidelines Decisions
+- Cross-ref: [[infra]]
+- Types: Decision
+
 ## [2026-06-08] ingest | infra
 - AGENTS.md 完善：依赖路径恢复（`./cross-library-examples/`、`./libs/`）、Worktree 防冲突命名规范（物理拓扑对齐+时间戳+Hash）、新增跨项目静态检索规则、编译验证命令修正、Context-Mode 格式统一
 - infra.md 决策记录：依赖路径恢复与 Worktree 命名规范扩展 (2026-06-08)，Supersedes 05-26 精简决策

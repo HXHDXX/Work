@@ -43,6 +43,7 @@
 - 说明通过 `> 详细:` 链接指向 Layer 2
 - 不放代码示例、不放详细解释
 - 新增小节必须创建对应的 Layer 2 文档
+- `harness-reflection.md` 变更时同步更新 AGENTS.md 的 `### harness 反思与复利` 节和 `./docs/agents/index.md` 目录树
 
 ## docs/agents/ 说明页（Layer 2）
 

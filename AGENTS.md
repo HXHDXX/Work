@@ -50,3 +50,12 @@
 - 功能迭代后，必须通过 `project-compound ingest` 更新知识库
 - 任务完成后，必须在当前分支生命周期内归档记录核心决策、技术策略与 Bug 经验（非 trivial 变更必选）
 <!-- 来源: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f -->
+
+### harness 反思与复利
+> 详细: `./docs/agents/core/harness-reflection.md`
+- 触发：非 trivial 任务完成后，先 project-compound ingest 项目知识，再反思 harness；失败/中止任务同样触发（聚焦 harness 何处使任务更难）
+- 反思维度：Skill 体验 / AGENTS.md 规则 / Hook·MCP 机制 / 文档验证链
+- 记录：观察 + 结构化提案（位置/现状→提案/理由/状态；风险可选）追加到 `./docs/agents/core/harness-reflection.md` 的 Backlog 小节
+- 兑现：同类任务开始前必须 query Backlog 继承未兑现提案；提案兑现后 `status: done` 并 ingest 入 `agent-guidelines` 为 Decision
+- 门槛：一次性摩擦/显而易见本地修/已被规则覆盖 → 不入 backlog；无提案亦合法，禁止编造
+- 治理：去重(grep-before-write)、僵尸防治(折叠进 lint 周期)、元提案路由用户
