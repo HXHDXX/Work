@@ -1,0 +1,84 @@
+工作日报 2026-07-20（周一）
+================================================
+
+【今日要点】三条主线 + 一条 agent 基建，共 35 次提交：
+1. HXSpatialMeasure 跨平台固化与插件化（主战场）
+2. OSMDataCompiler POI 样式 + overzoom
+3. Harness 反思与复利机制跨 8 仓库铺开
+plan.md：#14 测试联合图 / #15 空间测量模块 由「计划中」→「实施中」
+
+
+一、HXSpatialMeasure 跨平台固化与插件化（主战场）
+------------------------------------------------
+仓库：HXSpatialMeasure + lib-HXSpatialMeasure | 19 commits | +1440/-6440
+
+【测试加固 10:01–11:13】
+1. 综合审计修复：语义 BUG + 覆盖率 + golden values
+2. 修复 8 处 clang-tidy warning（死代码 / INFINITY→HUGE_VAL /
+   use-auto / narrowing）
+3. BUILD_TESTING 门控：12 个 SDK 交叉编译脚本传 -DBUILD_TESTING=OFF
+4. 清理 test/bld-kat stale artifacts，fixture 路径改 CMake 编译期注入
+
+【插件化重构 13:41】
+5. 采纳 plugin- 前缀命名约定（对齐 HXNmeaParser），重命名 cmake /
+   test / demo / docker / src 树 → plugin-HXSpatialMeasure/
+6. 新增公共 API 头 plugin-HXSpatialMeasure.h（448 行，typed C API，
+   version/create/destroy 三件套 + Doxygen）
+7. 头文件文档化 HXPluginRuntime ZMQ/HTTP 路由命令
+
+【跨平台构建修复 14:32–15:18】5 个平台
+8. linux x86_64：GeographicLib SYSTEM_PROCESSOR（x86_64→x86-64）
+9. OH arm64-v8a：SYSTEM_PROCESSOR（aarch64→armv8-a）
+10. Windows：localtime_r→localtime_s 平台切换（参数顺序相反）
+11. 补全 7 平台完整对照矩阵（已全部验证匹配）
+
+【功能与发布 16:07–18:52】
+12. CRS 增强：area / transform_info / PROJ-error + normalize 修复
+13. lib-HXSpatialMeasure 发布 v3555038 预编译二进制
+
+
+二、OSMDataCompiler POI 样式 + overzoom
+------------------------------------------------
+仓库：OSMDataCompiler | 4 commits | +337/-60
+
+要点：
+1. GJB-SMS-LHZZ 启用 z15-z19 overzoom（7 个样式）+ package.sh 3→7
+2. POI 提前到 z10 显示（poi-z11 minzoom 11→10）
+3. text-field 表达式改用 ["get","name:latin"]
+4. 全部 POI 路由到统一 'poi' 图层 + z10 起显示标签
+
+
+三、Harness 反思与复利机制（跨仓库 agent 基建）
+------------------------------------------------
+8 仓库同步铺开：HXGISServer / OSMDataCompiler / HXRdssSendingQueue /
+Work / HXPluginRuntime / ZMQClient / HXNmeaParser / HXRouteServer
+
+要点：
+1. 新增 docs/agents/core/harness-reflection.md（~92 行）+ AGENTS.md
+2. 机制：任务完成后对 harness（元层）反思，把单次体验转化为
+   AGENTS.md / skill / hook 改进提案
+3. 四维度引导：Skill 体验 / AGENTS.md 规则 / Hook-MCP / 文档验证链
+4. 顺序约束：先 project-compound ingest，再 harness-reflection
+   （先固化业务知识，再处理元层；提案兑现后回流 agent-guidelines.md）
+
+
+四、关键决策
+------------------------------------------------
+1. plugin- 前缀命名约定 + ${PROJECT_NAME} 自动传播
+2. BUILD_TESTING 门控：交叉编译 SDK 关测试，check 默认 ON 保测试
+3. 7 平台 SYSTEM_PROCESSOR 严格匹配 GeographicLib config（连字符敏感）
+4. localtime_r/s 用 #ifdef _WIN32 inline 切换
+5. fixture 路径用 CMake compile definition 注入，替硬编码绝对路径
+
+
+明日待续
+------------------------------------------------
+1. HXSpatialMeasure 剩余平台二进制发布（android/mips/oh/windows）
+2. 全国区域 GJB 数据编译跑通
+3. 测试联合图（#14）继续推进
+
+
+================================================
+数据来源：HXSpatialMeasure / OSMDataCompiler / 8 仓 git log（2026-07-20）、
+knowledge log、harness-reflection.md、Work/plan.md、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
