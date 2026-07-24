@@ -1,0 +1,81 @@
+工作日报 2026-07-23（周四）
+================================================
+
+【今日要点】主工作：HXGeoConverter GIS 格式转换模块（新项目全日实现）
+次工作：HXGISServer 路由文档修正
+共 17 次提交（HXGeoConverter 16 + lib-HXGeoConverter 1 + HXGISServer 1）
+
+
+一、HXGeoConverter GIS 格式转换模块（主工作）
+------------------------------------------------
+仓库：HXGeoConverter + lib-HXGeoConverter（新项目）
+对应 GIS 数据编译服务线，+1446/-178
+
+【初始化与设计 09:39–10:24】
+1. 从 HXProjectTemplate 初始化 → HXGeoConverter
+2. 设计文档：shp/mif→GeoJSON、GeoTIFF→MBTiles 双向转换
+3. 实现计划文档
+4. 集成 GDAL（pkgconfig）+ 转换测试数据
+
+【核心功能实现 10:51–12:32】
+5. vector_to_geojson：shp/mif → GeoJSON（EPSG:4326）
+6. geotiff_to_mbtiles：GeoTIFF → MBTiles PNG（TMS/EPSG:3857）
+7. 终审修复：options 判空、C ABI 异常防护、zoom 注释修正
+
+【测试强化 15:01–16:21】
+8. API 测试覆盖：zoom 边界/配对/越界、TMS 行序、真实重投影、
+   err 契约、PNG 魔数
+9. fixture 同步：修正 gen-test-data.sh 与 sample.tif 漂移
+10. 新增 GBK 中文 shapefile fixture（无 .cpg、LDID 中和为 ISO-8859-1）
+
+【GBK 编码修复 16:27–16:36】
+11. vector_to_geojson 新增 src_encoding 参数，修复无标记 GBK 乱码
+12. 沉淀 src_encoding 决策与 LDID 中和教训
+
+【跨平台与发布 17:01–17:29】
+13. demo mkdir 兼容 Windows（_WIN32 分支省略 mode 参数）
+14. lib-HXGeoConverter 发布四平台预编译二进制（android/linux/oh/windows）
+
+【知识沉淀】
+- geo-conversion 模块知识 + harness 反思提案
+- 实证修正：proj.db 内嵌 libproj.a，零运行时数据依赖
+- 测试判别子设计与 fixture 同步策略
+
+
+二、HXGISServer 路由文档修正（次工作）
+------------------------------------------------
+仓库：HXGISServer | 1 commit
+- docs(routes): 修正 MBTiles 路由 XYZ/TMS 坐标系标注反转
+
+
+三、关键决策
+------------------------------------------------
+1. 双转换路径：矢量 shp/mif→GeoJSON + 栅格 GeoTIFF→MBTiles
+2. src_encoding 参数：应对无 .cpg 标记的 GBK 中文 shapefile
+   （LDID 被 GDAL 中和为 ISO-8859-1，须显式指定源编码）
+3. proj.db 内嵌 libproj.a：零运行时数据依赖，简化部署
+4. C ABI 异常防护：跨语言边界 catch 所有异常
+
+
+四、本周回顾（07-17 至 07-23）
+------------------------------------------------
+- 07-17 GJB9121 首次渲染 + NMEA/RDSS 总线测试
+- 07-18 GJB9121 全国化编译 + Valhalla 路由准备
+- 07-19 GJB 样式 7 模式 + HXSpatialMeasure 启动
+- 07-20 HXSpatialMeasure 跨平台固化 + Harness 机制
+- 07-21 HXNativeApp 引入空间测量 + 离线大模型
+- 07-22 HXNavigation 驾车引导插件设计
+- 07-23 HXGeoConverter GIS 格式转换模块全日实现
+
+
+明日待续
+------------------------------------------------
+1. HXNavigation 核心引擎实现（状态机 + 三层匹配）
+2. HXGeoConverter 矢量/栅格转换实测验证
+3. 全国区域 GJB 数据编译跑通
+
+
+================================================
+数据来源：HXGeoConverter + HXGISServer git log（2026-07-23）、
+geo-conversion.md / geo-converter-design.md、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

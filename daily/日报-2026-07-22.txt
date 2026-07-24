@@ -1,0 +1,64 @@
+工作日报 2026-07-22（周三）
+================================================
+
+【今日要点】主工作：HXNavigation 驾车导航引导插件启动 + 设计
+次工作：plan.md 项目计划大整理
+共 4 次提交（HXNavigation 2 + Work 2）
+
+
+一、HXNavigation 驾车导航引导插件（主工作）
+------------------------------------------------
+仓库：HXNavigation（新项目，对应 plan.md #18）| 2 commits | +244/-172
+
+【脚手架初始化 09:49】
+1. 从 HXProjectTemplate 初始化，重命名为 plugin-HXNavigation 约定
+   （CMake / container / demo / src 树 + 公共 API 头）
+
+【设计文档 18:59】docs/superpowers/specs/2026-07-22-driving-guidance-design.md（196 行，状态：待评审）
+2. 三层匹配算法：
+   - L0 输入门控（有效/跳点/静止/航向可信四道门，逐帧）
+   - L1 位置投影（midgard PointLL::Project 窗口扫描 + 航向过滤 + 距离决选）
+   - L2 导航位置（单调性强制 along 只增不减，回退重锚定）
+   - L3 引导查询 + 偏航裁决（off-route 唯一权威：强签名快通道 + 10s 模糊滑窗）
+3. 三状态机：Approach（前置引导）/ OnRoute（核心引导）/ FinalLeg（后续引导）
+4. 引导事件协议：/navigation/guidance 总线发布，7 类事件
+   （started/guidance/progress/off_route/route_offset/signal_lost/arrived）
+5. 选型调研：midgard 投影（等距圆柱近似，百米内误差<1%）；
+   meili/GEOS/Boost.Geometry 均排除
+6. 数据来源：订阅 HXNmeaParser 的 /nmea/RMC 定位，
+   经 HXRouteServer 规划路线，valhalla maneuver（44 类转向 + 三级语音）
+7. YAGNI 范围：本期仅核心引导闭环；偏航只发事件不自动重规划；
+   不做 map-matching 到路网；不做模拟模式
+
+
+二、plan.md 项目计划大整理
+------------------------------------------------
+今日 plan.md 序号重排 + 状态更新：
+
+1. 已完成项序号上移合并（#10→#16 集中）
+2. #17 电子导航图编译 —— 实施中*
+3. #18 驾车导航引导模块 —— 实施中*（即上文 HXNavigation）
+4. #19 搭建文档知识库 —— 计划中
+
+
+三、本周回顾（07-17 至 07-22）
+------------------------------------------------
+- 07-17 GJB9121 首次渲染 + NMEA/RDSS 总线测试 0→45 例
+- 07-18 GJB9121 全国化编译 + Valhalla 路由准备
+- 07-19 GJB 样式 7 模式系统 + HXSpatialMeasure 从 0 启动
+- 07-20 HXSpatialMeasure 跨平台固化 + Harness 反思机制铺开
+- 07-21 HXNativeApp 引入 HXSpatialMeasure + 离线大模型
+- 07-22 HXNavigation 驾车引导插件启动 + 设计文档
+
+
+明日待续
+------------------------------------------------
+1. HXNavigation 设计评审 + 核心引擎实现（状态机 + 三层匹配）
+2. 全国区域 GJB 数据编译跑通
+3. 搭建文档知识库（#19）
+
+
+================================================
+数据来源：HXNavigation git log（4b7a67c/e169770）、
+driving-guidance-design.md 设计文档、Work/plan.md（5dcae2d）、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
