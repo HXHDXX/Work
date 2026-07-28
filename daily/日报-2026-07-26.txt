@@ -1,0 +1,89 @@
+工作日报 2026-07-26（周日）
+================================================
+
+【今日要点】三主线，共 15 次提交：
+1. ProductDesign 产品设计仓库启动（MSC-26-RW033，主工作）
+2. HXNavigation guidance 收官 + zmq_client 重构
+3. 跨仓 sanitizer 构建修复（HXNmeaParser + HXRdssSendingQueue）
+
+
+一、ProductDesign 产品设计仓库启动（主工作）
+------------------------------------------------
+仓库：ProductDesign（新仓）| MSC-26-RW033 任务 | 7 commits
+
+【背景】10.4 寸车机卫星导航设备产品设计（冰灰色，1024×768 触摸，
+北斗/GPS/GLONASS/Galileo 多星座，shp/geotiff 地图，WGS84+北撒哈拉
+1959 UTM，1:2.5万/5万/20万比例尺，导航/航迹/目标点/语音引导）
+
+【交付物（建立中）】
+1. Requirements r0：屏幕/外观/地图/卫星导航功能需求
+2. Requirements r1：界面需求（侧边栏）
+3. DesignPlan：产品设计路线（含 H5 原型最终步骤）
+4. PRD / HMI-Spec / IA-Navigation / TaskAnalysis / VV-Plan / Wireframes
+   （产品需求 / 人机交互 / 信息架构 / 任务分析 / 验证确认 / 线框图）
+5. 4 份 ADR：GNSS 优先级、侧边栏 vs Tabs、坐标显示、主题色（冰灰）
+6. prototype/ 原型目录
+7. AGENTS.md + 知识库骨架（docs/agents/knowledge）
+   - 优化 AGENTS.md（修复自引用、精简重组）
+
+
+二、HXNavigation guidance 收官 + zmq_client 重构
+------------------------------------------------
+仓库：HXNavigation | 4 commits | +878/-176
+
+【guidance 收官知识沉淀 12:45–12:59】
+1. guidance 模块知识收官：5 决策 + 1 策略 + 9 Bug 经验 + backlog 刷新
+2. Bug 经验典型：冷启动首帧误报 signal-lost、坐标对 (lat,lon) vs
+   (lng,lat) 顺序相反、tap_rmc 死代码致录制空
+3. Open Questions：多线程 TSan 缺失、真实路线默认配置回归、
+   hx_plugin_create/destroy 无 try/catch
+4. lint 修正（libzmq 决策理由 / guidance 入链 / 索引分类）
+
+【zmq_client 重构 14:18–14:23】
+5. raw libzmq → zmq_client 封装，对齐兄弟项目约定（HXNmeaParser 等）
+6. 双加载方式地址选择语义（asan/release 两套 .so）
+7. libs/zmq_client/ 入仓（README + 头 + asan/release .so 二进制）
+8. nmea_subscriber / guidance_publisher / plugin 全部改用 zmq_client
+
+
+三、跨仓 sanitizer 构建修复
+------------------------------------------------
+HXNmeaParser 3 commits + HXRdssSendingQueue 1 commit
+
+要点：
+1. -fno-sanitize=function 仅 clang 有效（g++ 拒绝），
+   用 Clang-only generator expr 守卫
+2. check 默认 ASAN（构建类型未显式指定时）
+3. 知识沉淀 sanitizer/check build-type bug + harness backlog
+
+
+四、关键决策
+------------------------------------------------
+1. 产品设计独立成仓（ProductDesign），与工程仓分离
+2. MSC-26-RW033 采用 ADR 驱动（已立 4 决策记录）
+3. HXNavigation 改用 zmq_client 封装（统一总线访问约定）
+4. sanitizer flag 按编译器条件启用（clang/g++ 差异隔离）
+
+
+五、本周回顾（07-20 至 07-26）
+------------------------------------------------
+- 07-20 HXSpatialMeasure 跨平台固化 + Harness 机制
+- 07-21 HXNativeApp 引入空间测量 + 离线大模型
+- 07-22 HXNavigation 驾车引导插件设计
+- 07-23 HXGeoConverter GIS 格式转换模块实现
+- 07-24 maplibre 性能优化 + ORI 解析器
+- 07-25 HXNavigation 引擎全量实现 + RDSS EPQ/GBQ
+- 07-26 ProductDesign 产品设计启动 + guidance 收官 + zmq_client 重构
+
+
+明日待续
+------------------------------------------------
+1. MSC-26-RW033 产品设计文档完善（PRD/HMI/线框图定稿）
+2. HXNavigation 多线程 TSan 并发验证
+3. 全国区域 GJB 数据编译跑通
+
+
+================================================
+数据来源：ProductDesign / HXNavigation / HXNmeaParser / HXRdssSendingQueue
+git log（2026-07-26）、guidance.md 知识模块、MSC-26-RW033 需求文档、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

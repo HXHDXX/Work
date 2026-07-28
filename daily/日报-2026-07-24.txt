@@ -1,0 +1,81 @@
+工作日报 2026-07-24（周五）
+================================================
+
+【今日要点】四条主线，共 12 次提交：
+1. maplibre 地图渲染性能优化（CPU 50%→近零空闲）
+2. HXNmeaParser 新增 ORI 姿态解析 + GGA 全字段
+3. HXNavigation 驾车引导设计深化（实现计划 1054 行）
+4. HXGISServer 路由文档（昨日延续）
+
+
+一、maplibre 地图渲染性能优化（主工作）
+------------------------------------------------
+仓库：maplibre-native-qt-test | 3 commits | +149 行
+
+三处性能修复（定位跟随场景 CPU 占用高根因）：
+1. needsRendering 节流到 30fps：原先直连同步 repaint，vsync 不 capped
+   跑到 ~160fps、占 ~50% GUI 线程 CPU；改走 33ms 定时门，仅 dirty 时
+   update()，封顶 30fps 且空闲零开销
+2. 动画定时器收敛即停：30fps m_animTimer 插值完成后不停止 + 每帧无变化
+   也调 safeSetCoordinate/bearing，静态 GPS 仍强制 30 次/秒重渲染；
+   改为动画 settle 即停 + 值未变跳过 map 变更
+3. follow 路径启用手势渲染模式：FixedFollowing 缺 setGestureInProgress，
+   走昂贵非手势渲染路径（symbol 交叉淡入重武装 needsRendering ~10x/帧）；
+   补手势门控 → 走与手动平移同等的廉价 still-render 路径
+
+
+二、HXNmeaParser ORI 姿态解析 + GGA 全字段
+------------------------------------------------
+仓库：HXNmeaParser | 5 commits | +213 行
+
+要点：
+1. feat(parser): 新增 ORI orientation 解析器（姿态语句）
+2. GGA 全字段补全 + dual-metadata 兼容（新旧元数据并存）
+3. Doxygen 头文档更新（ORI + GGA 全字段 + 双元数据）
+4. fix(review): 恢复 knowledge 标题 + clamp ORI time fraction
+5. fix(test): 修正 zmq_client 库路径，验证 241/241 ctest 全绿
+
+
+三、HXNavigation 驾车引导设计深化
+------------------------------------------------
+仓库：HXNavigation | 4 commits（specs+plans）
+实现计划文档扩展至 1054 行
+
+要点：
+1. MatchArbiter：统一裁决器 + 偏航中速通道
+2. 模拟器场景测试与录制回放回归机制
+3. 路线 JSON 改 valhalla HTTP 原生格式（弃自定格式）
+4. 双格式（自定 vs 原生）对比后明确选用 valhalla 原生格式
+
+
+四、关键决策
+------------------------------------------------
+1. 地图渲染统一封顶 30fps + 空闲零开销（render gate + 动画收敛即停）
+2. 定位跟随复用手势渲染路径（与手动平移同路径，避免昂贵 symbol 重算）
+3. NMEA dual-metadata 兼容：新老元数据并存，平滑过渡
+4. HXNavigation 路线格式回归 valhalla 原生（减少自维护转换层）
+
+
+五、本周回顾（07-17 至 07-24）
+------------------------------------------------
+- 07-17 GJB9121 首次渲染 + NMEA/RDSS 总线测试
+- 07-18 GJB9121 全国化编译 + Valhalla 路由准备
+- 07-19 GJB 样式 7 模式 + HXSpatialMeasure 启动
+- 07-20 HXSpatialMeasure 跨平台固化 + Harness 机制
+- 07-21 HXNativeApp 引入空间测量 + 离线大模型
+- 07-22 HXNavigation 驾车引导插件设计
+- 07-23 HXGeoConverter GIS 格式转换模块实现
+- 07-24 maplibre 性能优化 + ORI 解析器 + 导引设计深化
+
+
+明日待续
+------------------------------------------------
+1. HXNavigation 核心引擎实现（MatchArbiter + 三层匹配）
+2. ORI 姿态数据接入应用（定位跟随增强）
+3. 全国区域 GJB 数据编译跑通
+
+
+================================================
+数据来源：maplibre-native-qt-test / HXNmeaParser / HXNavigation
+git log（2026-07-24）、commit body、driving-guidance 实现计划、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

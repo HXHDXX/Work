@@ -1,0 +1,101 @@
+工作日报 2026-07-27（周一）
+================================================
+
+【今日要点】三主线，共 28 次提交：
+1. MSC-26-RW033 产品设计全量文档化（主战场，+3523 行）
+2. TitanNavi 导航应用移植 + 性能优化
+3. 跨仓热路径日志降噪（HXGISServer/HXRdssSendingQueue/HXPluginRuntime）
+
+
+一、MSC-26-RW033 产品设计全量文档化（主战场）
+------------------------------------------------
+仓库：ProductDesign | 19 commits | +3523 行
+昨日建立的文档骨架今日全部定稿成体系
+
+【产品设计文档全集】
+1. PRD：FR-001~026 功能需求 + NFR-001~007 非功能需求
+2. HMI-Spec：HMI-1xx~7xx 人机交互规范（含冰灰主题）
+3. IA-Navigation：5 页面信息架构 + 4 状态机导航模型
+4. TaskAnalysis：S1~S4 操作场景任务分析
+5. VV-Plan：需求→测试映射 + 冻结清单
+6. Wireframes：5 页线框图 + 标记浮层 + 设置弹窗
+7. InterfaceDataSpec：GNSS/地图/航迹/语音/车速接口与数据规范
+8. UI-Dev-Spec：UI-1xx~8xx 界面开发细则
+9. r0 新增外观要求（冰灰色）
+
+【7 份 ADR（架构决策记录）】
+- adr-001 北斗优先策略
+- adr-002 侧边栏 vs 标签页
+- adr-003 WGS84/UTM 双坐标显示
+- adr-004 界面主题色呼应冰灰外观
+- adr-005 GNSS/惯组二进制接口
+- adr-006 超比例尺数字放大策略
+- adr-007 车速来源（GNSS 主 + 惯组备份）
+
+【H5 原型】
+10. prototype/index.html：1024×768 单文件零依赖 H5 设计原型（998 行）
+
+【流程基建】
+11. 产品设计流程指南（跨项目流程层 10 节）
+12. product-design-flow skill（激活层指向指南）
+13. 追溯校验脚本 validate-traceability.sh（5 项校验/纯 bash 零依赖）
+14. 知识沉淀：MSC-26-RW033 模块 + infra 能力 + repo-conventions
+
+
+二、TitanNavi 导航应用移植 + 性能优化
+------------------------------------------------
+仓库：TitanNavi | 5 commits + 大量在制
+
+【移植 14:54–15:30】
+1. 启用 Linux x86_64 编译
+
+【性能优化 19:02】（同 maplibre-native-qt-test 07-24 手法）
+2. 缓存 UI 更新 + 降低模拟频率
+3. qDebug 日志经 QLoggingCategory 过滤静默
+4. 导航 signal handler 内禁用 TTS 播放（避免阻塞）
+5. 在制：locationindicatormanager（+101，render gate 复用）、
+   mapcontainer（+63）、Navigation 多文件
+
+
+三、跨仓热路径日志降噪
+------------------------------------------------
+HXGISServer + HXRdssSendingQueue + HXPluginRuntime | 3 commits
+
+要点：
+1. HXPluginRuntime：zmq_service + http_service 消息总线热路径日志静默
+   （高频每帧/每消息日志拖慢总线）
+2. HXGISServer / HXRdssSendingQueue：同步降噪
+3. 统一策略：热路径默认静默，调试按 category 开启
+
+
+四、关键决策
+------------------------------------------------
+1. MSC-26-RW033 产品设计全套文档一次成稿（PRD→HMI→VV 闭环）
+2. ADR-007 车速来源：GNSS 主 + 惯组备份（冗余可靠）
+3. ADR-006 超比例尺：数字放大（不重新采图）
+4. TitanNavi 复用 maplibre-native-qt-test 的 render gate 性能手法
+5. 热路径日志统一降噪（按 category 而非全关）
+
+
+五、本周回顾（07-21 至 07-27）
+------------------------------------------------
+- 07-21 HXNativeApp 引入空间测量 + 离线大模型
+- 07-22 HXNavigation 驾车引导插件设计
+- 07-23 HXGeoConverter GIS 格式转换模块实现
+- 07-24 maplibre 性能优化 + ORI 解析器
+- 07-25 HXNavigation 引擎全量实现 + RDSS EPQ/GBQ
+- 07-26 ProductDesign 启动 + guidance 收官 + zmq_client 重构
+- 07-27 MSC-26-RW033 产品设计全量文档 + TitanNavi 性能优化
+
+
+明日待续
+------------------------------------------------
+1. MSC-26-RW033 H5 原型评审 + 追溯校验跑通
+2. TitanNavi 在制文件收敛 + 性能基线
+3. 全国区域 GJB 数据编译跑通
+
+
+================================================
+数据来源：ProductDesign / TitanNavi / HXGISServer / HXRdssSendingQueue /
+HXPluginRuntime git log（2026-07-27）、MSC-26-RW033 文档集、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

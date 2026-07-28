@@ -1,0 +1,105 @@
+工作日报 2026-07-25（周六）
+================================================
+
+【今日要点】主战场：HXNavigation 驾车引导核心引擎全量实现（+4999 行）
+次：RDSS EPQ/GBQ 命令扩展 + 跨仓数值线格式修复
+共 47 次提交（HXNavigation 30 + HXRdssSendingQueue 12 + HXNmeaParser 5）
+
+
+一、HXNavigation 驾车引导核心引擎全量实现（主战场）
+------------------------------------------------
+仓库：HXNavigation | 30 commits | +4999/-34
+07-22 设计 → 07-24 计划深化 → 今日从 spec 到工作代码全量落地
+
+【骨架与模型 15:30–16:20】
+1. 接入 Catch2 测试骨架
+2. GuidanceConfig + 基础类型（阈值集中 constexpr）
+3. RouteModel 路线模型（polyline6 解码 + 段长前缀和 cum_len）
+4. street_names 安全访问 + seam 契约注释
+
+【三层匹配 + 状态机 16:22–19:10】
+5. L1 RouteScanner 候选扫描器（几何枚举 + midgard 投影）
+6. MatchArbiter 映射裁决器（候选→导航位置）
+7. L2 NavTracker 状态维护（along 单调性强制）
+8. L3 ManeuverCursor 游标三级触发（pre/alert/post）
+9. L3 OffrouteClassifier 偏航裁决单一权威（强签名 + 10s 滑窗）
+10. L0 InputGate 输入门控（有效/跳点/静止/航向四道门）
+11. GuidanceEngine 状态机（Approach/OnRoute/FinalLeg）+ NmeaSimulator
+
+【接线与集成 20:01–21:50】
+12. GuidanceRecorder 引导录制与回放（回归机制）
+13. RouteFetcher cpr 路线拉取（HXRouteServer HTTP）
+14. NmeaSubscriber 总线订阅 /nmea/RMC
+15. GuidancePublisher 总线发布 /navigation/guidance（7 事件）
+16. RPC 接线 + 插件生命周期（plugin-HXNavigation.cpp）
+
+【评审修复 19:25–22:44】
+17. 多轮修复：PointLL (lng,lat) 顺序、approach jump gate reset、
+    NmeaSimulator meter→degree、长途规模路线回归、arrived 断言
+18. merge-blocking review（C1/I1-I4）+ 6 independent fixes（I1-I6）
+
+【测试体系】15 个 Catch2 测试文件
+- guidance_config/engine/recorder、input_gate、maneuver_cursor、
+  match_arbiter、nav_tracker、nmea_parse、offroute_classifier、
+  route_fetcher/model/scanner/regression
+
+
+二、RDSS EPQ/GBQ 命令扩展（HXRdssSendingQueue）
+------------------------------------------------
+仓库：HXRdssSendingQueue | 12 commits | +684/-37
+
+要点：
+1. refactor: bdcommand_type 从硬编码 TCQ 泛化为可配置（M1-M4）
+2. feat: EPQ + GBQ 命令分发路由与发布方法（M5-M6，新增两种报文类型）
+3. fix: EPQ/GBQ content 字段可选 + 多包校验仅限 TCQ
+4. fix: EPQ/GBQ 字段校验 + validate 前填充 extra_params
+5. 🔴 数值线格式修复：字段原经 std::to_string 字符串化（丢精度），
+   改为 JSON 数值直发（emit numeric fields/EPQ params as numbers）
+6. fix: EPQ dispatch 显式类型转换（避免 nlohmann type_error）
+7. fix: ns() lambda 用 sstream 保双精度
+8. test: EPQ/GBQ 单测 + 总线集成测试（send_status 按数值线格式对齐）
+9. docs: wire format 规格 + ASAN 工具链 + EPQ dispatch 发现
+
+
+三、跨仓数值线格式修复（HXNmeaParser 消费侧）
+------------------------------------------------
+仓库：HXNmeaParser | 5 commits | +165/-130
+（与上面 RDSS 发布侧配对——发布改发数值，消费侧容错读取）
+
+要点：
+1. fix: GBI group_seq 输出为 int
+2. fix: tcq / EPQ 数值参数按数值读取
+3. feat: ns() 容错读取器（全命令参数，防 type_error.302）
+4. docs: tcq/epq value() 类型陷阱 + nlohmann 默认值坑
+
+
+四、关键决策
+------------------------------------------------
+1. 引擎内聚于插件（方案 A）：状态机 + 三层匹配全在 plugin-HXNavigation
+2. 偏航单一权威：L3 OffrouteClassifier 唯一裁决，L1 不判偏航
+3. RDSS 线格式统一数值化：杜绝 std::to_string 精度丢失
+4. 消费侧 ns() 容错：兼容字符串/数值双形态，平滑过渡
+
+
+五、本周回顾（07-19 至 07-25）
+------------------------------------------------
+- 07-19 GJB 样式 7 模式 + HXSpatialMeasure 启动
+- 07-20 HXSpatialMeasure 跨平台固化 + Harness 机制
+- 07-21 HXNativeApp 引入空间测量 + 离线大模型
+- 07-22 HXNavigation 驾车引导插件设计
+- 07-23 HXGeoConverter GIS 格式转换模块实现
+- 07-24 maplibre 性能优化 + ORI 解析器
+- 07-25 HXNavigation 引擎全量实现 + RDSS EPQ/GBQ
+
+
+明日待续
+------------------------------------------------
+1. HXNavigation 引擎端到端实车/模拟器验证
+2. RDSS EPQ/GBQ 接入应用 + 全协议联调
+3. 全国区域 GJB 数据编译跑通
+
+
+================================================
+数据来源：HXNavigation / HXRdssSendingQueue / HXNmeaParser
+git log（2026-07-25）、guidance.md 知识模块、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
