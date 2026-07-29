@@ -1,0 +1,104 @@
+工作日报 2026-07-28（周二）— 完整刷新版
+================================================
+
+【今日要点】四主线（含在制），共 13 次提交 + HXRouteServer 在制：
+1. HXMapWidgetNative target-line Custom Layer 跨进程渲染（主工作，+790）
+2. TitanNavi（Android）性能优化（CPU 117%→64.5%）
+3. maplibre-native Qt 引擎修复（projectionMatrix 转发，配套主线1）
+4. HXRouteServer /route_strategies 响应增强（在制）
+
+
+一、HXMapWidgetNative target-line Custom Layer 跨进程渲染（主工作）
+------------------------------------------------
+仓库：HXAppWidgetNative | 8 commits | +790/-5
+
+目标线从 GeoJSON source 更新改为「子进程 GL Custom Layer」渲染，
+根除高频更新导致的 CPU 飙升（与 TitanNavi 2px gate 是同一问题的
+正解 vs 权宜）。
+
+【zmqbus 降噪 10:49】
+1. silence drained broker log via qCDebug category
+
+【Custom Layer 跨进程架构 20:01–20:19】
+2. feat: 子进程 Custom Layer host + shader + ZMQ
+   - targetlinecustomlayer.cpp（+289）：GL 着色器 + ZMQ 接收位置
+   - 经子进程渲染，绕开 GeoJSON source 重算
+3. feat: parent API + 1px gate + iconCoordinateChanged
+   - 父进程 API 控制目标线，1 像素门截断亚像素抖动
+4. feat: visibility 耦合状态机
+
+【性能与测试 20:26–20:43】
+5. perf: CPU benchmark + TL_PROFILE 性能埋点
+6. test: target-line 集成测试 + hxmaplocation 单测（+38）
+
+【收敛修复 21:12–21:46】
+7. fix: 移除 render cache，替换手写 Mercator（用 maplibre 投影）
+8. fix(cmake): targetlinecustomlayer.cpp 加入 test-wheel-gesture
+
+【联动】
+- hxmaplocation.cpp +107（位置指示器集成目标线）
+- hxmaplayer.cpp / zmqlayerhandler.cpp（层与 ZMQ 处理器适配）
+- 依赖今日 maplibre-native projectionMatrix 修复（见主线3）
+
+
+二、TitanNavi Android 性能优化
+------------------------------------------------
+仓库：TitanNavi | 4 commits | +220/-322
+
+1. CompassWidget 渲染 60fps→5fps；模拟定时器恢复 1Hz（匹配 GPS）
+2. NavigationDataDiaplay + DataPanel 迁移 QQuickWidget+QML
+   （GPU 加速替代 QWidget 软件光栅化，新增 DataPanel/NavigationPanel.qml）
+3. target-line 2px gate + source 优化（maxzoom=16+volatile）
+   → CPU 117%→64.5%，红线抖动消除
+
+
+三、maplibre-native Qt 引擎修复（配套主线1）
+------------------------------------------------
+仓库：HXAppPlatform/maplibre-native | 1 commit | +8/-1
+
+- fix(qt): CustomLayerRenderParameters 转发 projectionMatrix
+  Qt 包装层 struct 缺该字段 → 补 std::array<double,16>，
+  HostWrapper::render() 转发 → 解锁 Custom Layer 地理→屏幕投影
+  （HXMapWidgetNative target-line Custom Layer 直接依赖此项）
+
+
+四、HXRouteServer /route_strategies 响应增强（在制）
+------------------------------------------------
+仓库：HXRouteServer | 未提交 | +112/-10
+
+- build_strategies_response 增 params 字段（重建 /route 请求体）
+- 客户端可直接复用，免镜像 strategy→costing_options 映射
+- 同步 json_io、route_dispatcher、API reference、测试
+
+
+五、关键决策
+------------------------------------------------
+1. 目标线走子进程 Custom Layer（正解）而非 GeoJSON source 节流（权宜）
+2. 投影用 maplibre 原生而非手写 Mercator（去 render cache）
+3. 高频 UI 覆盖层走 QML GPU 加速；节流用像素门
+4. 多策略路由响应内嵌 params，消除客户端策略映射负担
+
+
+六、本周回顾（07-22 至 07-28）
+------------------------------------------------
+- 07-22 HXNavigation 驾车引导插件设计
+- 07-23 HXGeoConverter GIS 格式转换模块实现
+- 07-24 maplibre 性能优化 + ORI 解析器
+- 07-25 HXNavigation 引擎全量实现 + RDSS EPQ/GBQ
+- 07-26 ProductDesign 启动 + guidance 收官
+- 07-27 MSC-26-RW033 产品设计全量文档 + TitanNavi 性能
+- 07-28 HXMapWidgetNative 目标线 Custom Layer + TitanNavi 性能
+        + maplibre projectionMatrix + HXRouteServer 多策略响应
+
+
+明日待续
+------------------------------------------------
+1. HXMapWidgetNative 目标线 Custom Layer 端到端验证
+2. HXRouteServer 在制工作收敛提交
+3. TitanNavi 剩余性能瓶颈排查
+
+
+================================================
+数据来源：HXMapWidgetNative / TitanNavi / maplibre-native git log
+（2026-07-28）、HXRouteServer 未提交 diff、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

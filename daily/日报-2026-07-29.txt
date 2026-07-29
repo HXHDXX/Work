@@ -1,0 +1,114 @@
+工作日报 2026-07-29（周三）
+================================================
+
+【今日要点】跨 6 仓，共 40 次提交：
+1. HXMapWidgetNative maneuver-arrow Custom Layer + target-line 收尾（主工作）
+2. HXRdssSendingQueue TBQ 通播报文状态机（plan #1 完成）
+3. HXNavigation 模拟器接入 + 构建/子模组治理
+4. HXNmeaParser TBI→TBQ 助记符修正 + Doxygen
+5. HXRouteServer 公共头 API 契约文档化
+
+
+一、HXMapWidgetNative maneuver-arrow + target-line 收尾（主工作）
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 15 commits
+
+【target-line 收尾 09:33–14:30】
+1. 着色器抽到 .glsl 文件（MapLibre 兼容），弃 Qt qrc 改 C++ #include
+2. demo 加 Set/Clear Target 按钮
+3. 修全部 clang-tidy/clazy 警告（行为保持）
+4. code review 修复 C1/C2/I1/I2 + minor M1-M4
+5. glBlendFuncSeparate 完整 blend 状态恢复
+
+【maneuver-arrow 转向箭头新特性 15:25–21:32】
+6. screen-space 几何构建器 + TDD 测试
+7. Custom Layer host + passthrough 着色器
+8. 路由到 custom layer host，移除 FillLayer 路径
+9. style-reload 重建 + host 注册
+10. antimeridian 守卫用经度差（非屏幕像素）
+11. 尊重 shaftWidth/casingWidth/casingColor
+12. MA_PROFILE 性能埋点 + visibility flag
+13. test-maneuver-arrow skill（含正确 ZMQ 格式）
+
+
+二、HXRdssSendingQueue TBQ 通播报文状态机（plan #1 完成）
+------------------------------------------------
+仓库：HXRdssSendingQueue | 9 commits
+对应 plan「修正 rdss 插件对 tbq 的处理」
+
+要点：
+1. feat: 状态机 TBQ 支持，TCQ 兼容 fallback（fki_y/fki_n）
+2. feat: publish_tbq（扁平 13 字段签名，镜像 build_tbq）
+3. feat: validate() 加 TBQ 分支（仅需 broadcast_id+content）
+4. feat: TBQ dispatch 接 MsgParams extra_params 默认值
+5. feat: FKI 兼容扩展——接受空 tx_type 用于 TBQ
+6. test: 提取 HXNmeaParser build_tbq golden vectors 作 fixture
+7. test: ZMQ 总线 E2E 验证 0→1→5 状态流
+8. docs: 修 IBD 表 + FKI 字符串路由澄清 + TBQ 知识沉淀
+
+
+三、HXNavigation 模拟器接入 + 构建治理
+------------------------------------------------
+仓库：HXNavigation | 10 commits
+
+【模拟器 08:29】
+1. NmeaSimulator 拷入 plugin src（epoch-time 修正 + 动态控制）
+2. wire is_simulate + 6 个 simulate RPC + simulator/timer 生命周期
+3. demo_simulate 二进制（统一 sanitizer flag）
+
+【API 与构建 09:38–15:19】
+4. 补全 plugin-HXNavigation.h 公开头 API 文档
+5. zmq_client 转 git 子模组（对齐 HXRdssSendingQueue，pin b50bc69）
+6. 修 clang-tidy 全部警告
+7. check 默认不跑测试（Test 关键字开启；all 永不跑测试）
+8. gitignore 各平台 build 产物
+9. worktree 铁律加子模块同步要求
+
+
+四、HXNmeaParser TBI→TBQ 助记符修正
+------------------------------------------------
+仓库：HXNmeaParser | 3 commits
+1. fix: 助记符 TBI→TBQ（通播类报文通信申请）
+2. docs(knowledge): 修正决策与证据沉淀
+3. docs: Doxygen 补强 6 处文档缝隙
+
+
+五、HXRouteServer 公共头 API 契约文档化
+------------------------------------------------
+仓库：HXRouteServer | 2 commits
+（承接 07-28 在制工作——params 字段已提交）
+1. route_strategies params 用法 + endpoint 目录写入头文件
+2. docs(knowledge): 公共头作为 API 契约的决策沉淀
+
+
+六、关键决策
+------------------------------------------------
+1. maneuver-arrow 复用 target-line 的 Custom Layer 跨进程架构
+2. TBQ 与 TCQ 共享状态机，差异化在 validate/publish 层
+3. zmq_client 统一为 git 子模组（跨项目版本 pin）
+4. 公共头文件即 API 契约（params 等写入头文档）
+5. 助记符以国标为准（TBI→TBQ）
+
+
+七、本周回顾（07-23 至 07-29）
+------------------------------------------------
+- 07-23 HXGeoConverter GIS 格式转换模块实现
+- 07-24 maplibre 性能优化 + ORI 解析器
+- 07-25 HXNavigation 引擎全量实现 + RDSS EPQ/GBQ
+- 07-26 ProductDesign 启动 + guidance 收官
+- 07-27 MSC-26-RW033 产品设计全量文档
+- 07-28 HXMapWidgetNative target-line + TitanNavi 性能
+- 07-29 maneuver-arrow + TBQ 状态机 + 导航模拟器
+
+
+明日待续
+------------------------------------------------
+1. maneuver-arrow 端到端实车验证 + 性能基线
+2. TBQ 接入应用联调
+3. HXNavigation 模拟器回归测试体系
+
+
+================================================
+数据来源：HXMapWidgetNative / HXRdssSendingQueue / HXNavigation /
+HXNmeaParser / HXRouteServer / Work git log（2026-07-29）、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
