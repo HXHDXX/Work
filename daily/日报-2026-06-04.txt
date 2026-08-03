@@ -1,0 +1,60 @@
+工作日报 2026-06-04（周四）
+================================================
+
+【今日要点】共 22 次提交，涉及 10 仓：
+主线：OSMDataCompiler(10)、ZMQClient(3)、TitanNavi(2)、HXSpatialMeasure(1)
+
+1. OSMDataCompiler（10 commits）
+------------------------------------------------
+- 14:45 0ca9fca fix: use ogr2osm --idfile --saveid to prevent ID collision across multi-table PBF merge
+- 15:17 6a59635 docs: add root cause to skill; fix: --network host in run_ogr
+- 15:17 ba7cf37 docs: add root cause analysis - multi-table PBF ID collision fix
+- 15:19 a337d24 docs: fix skill field count (45 GJB_KEYS, not 109)
+- 15:44 f292f2b docs(gjb): sync GJB_KEYS count to 61 across knowledge base
+- 15:44 f764610 fix(gjb): add gjb_field_1..5 to GJB_KEYS for background layer passthrough
+- 17:30 75dfcb3 fix(gjb): add WriteGJBAttrs() and background feature routing to way_function
+- 17:49 44796a6 docs(knowledge): update GJB pipeline verification findings + F1-F4 complete
+- 17:54 bf0edad docs(knowledge): ingest GJB background layer fix findings
+- 19:07 83c936d feat(gjb): add gjb_display_level zoom visibility via MinZoom
+
+2. ZMQClient（3 commits）
+------------------------------------------------
+- 17:26 34b3baf feat(dealer): add ZmqDealerClient - send-only fire-and-forget
+- 19:04 339ee6f fix(dealer): use DONTWAIT + strict state protection for multipart send
+- 19:07 29584b5 docs(knowledge): record DEALER multipart send EAGAIN bug fix
+
+3. TitanNavi（2 commits）
+------------------------------------------------
+- 05:34 fe6795f Initial commit2026-07-15 16:08
+- 13:39 ff0554a init all
+
+4. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
+
+5. HXRouteServer（1 commits）
+------------------------------------------------
+- 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
+
+6. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
+
+7. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
+
+8. HXNmeaParser（1 commits）
+------------------------------------------------
+- 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
+
+9. HXNavigation（1 commits）
+------------------------------------------------
+- 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
+
+10. HXGeoConverter（1 commits）
+------------------------------------------------
+- 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
+
+================================================
+数据来源：上述仓库 git log（2026-06-04）

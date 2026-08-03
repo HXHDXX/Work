@@ -1,0 +1,80 @@
+工作日报 2026-04-22（周三）
+================================================
+
+【今日要点】共 33 次提交，涉及 13 仓：
+主线：OSMDataCompiler(17)、HXGISServer(4)、Work(2)、ZMQClient(1)
+
+1. OSMDataCompiler（17 commits）
+------------------------------------------------
+- 15:38 4f4b0b6 fix(nine-dash): use GeoJSON source to bypass tilemaker shapefile geometry bug
+- 17:10 42a9a28 docs(agents): update AGENTS.md with behavior guidelines and project-compound workflow
+- 17:14 142bed7 feat(skills): add project-task-runner and project-task-writer skills
+- 17:15 dfccc8c feat(tasks): initialize task plan system
+- 17:16 c2a9868 fix(gitignore): allow CHN custom shapefiles in version control
+- 17:18 709e8af feat(data): add CHN POV shapefiles and maritime indicator (ten-dash line)
+- 17:19 e854e83 chore(tracker): update session records
+- 19:00 2b8cad4 fix(skills): correct Python indentation in tiles-package SKILL.md
+- 19:00 9af3d71 fix(docs): add missing script docs, create index.md
+- 19:00 b994b90 fix(docs): correct seq range, unify port to 9090, update stale refs
+- 19:00 df0a8d7 fix(scripts): add --help to all scripts missing it
+- 19:01 8bac429 feat(skills): add build-tiles and build-sprites skills
+- 19:01 c6fa78e fix(skills): add Related Skills sections, fix consistency issues
+- 19:18 62a42e8 refactor!: restructure directories (style→mvt, tiles→data/mvt, profiles→scripts)
+- 19:30 88d8eed refactor: update all path references for new directory structure
+- 19:33 9f8e674 chore: remove empty tasks.md
+- 19:34 cf350ff chore: remove unused package.json and package-lock.json
+
+2. HXGISServer（4 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+- 09:52 13cdf70 docs: 更新 knowledge-base 健康检查和 skill-system 统计
+- 09:59 5d23368 docs: 知识库 lint 记录更新
+- 10:18 b52bf70 docs(knowledge): lint — fix merge conflict residue, add cross-links, record git workflow strategy
+
+3. Work（2 commits）
+------------------------------------------------
+- 10:10 1a6569e update plan
+- 10:38 4ccdbbc update plan
+
+4. ZMQClient（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+5. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+6. HXRouteServer（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+7. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+8. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+9. HXPOISearch（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+10. HXPluginRuntime（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+11. HXNmeaParser（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+12. HXNavigation（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+13. HXGeoConverter（1 commits）
+------------------------------------------------
+- 09:51 b25e45f fix(platform-adaptation): 将 linux_checker 从目标平台拆出至独立节
+
+================================================
+数据来源：上述仓库 git log（2026-04-22）

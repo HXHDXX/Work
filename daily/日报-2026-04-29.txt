@@ -1,0 +1,93 @@
+工作日报 2026-04-29（周三）
+================================================
+
+【今日要点】共 49 次提交，涉及 12 仓：
+主线：HXPluginRuntime(23)、maplibre-native-qt-test(11)、HXGISServer(6)、ZMQClient(1)
+
+1. HXPluginRuntime（23 commits）
+------------------------------------------------
+- 09:38 01ff70d refactor(service): add URI-based plugin protocol parser
+- 09:42 9105ecc refactor(service): replace MOD_CMD routing with URI protocol
+- 09:49 a34bbc6 refactor(service): remove old MOD_CMD code and update docs
+- 10:59 6250f80 feat(runtime): expose runtime paths and service URLs as environment variables for plugin discovery
+- 13:52 a3ed885 refactor(msgbus): add inproc_addrs.h with centralized address constants
+- 14:00 cd52f4a refactor(service): migrate all inproc address definitions to inproc_addrs.h
+- 14:05 093cd74 fix(env): use inproc_addrs.h constants for HX_MSGBUS_*_ADDR env vars
+- 14:09 e3563eb refactor(msgbus): rename inproc addresses to hx.<module>.<role> format
+- 14:47 d092caf refactor: remove dead protocol_type API and related unused code
+- 14:55 c8c5c4d style: add blank lines in HXPluginRuntime.h for readability
+- 14:58 1bf65c4 refactor: rename scheduler to runtime in destroy API parameter
+- 15:03 8b0ab1c fix(sse): remove hardcoded TCP fallback address (21698)
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+- 15:38 f4152a4 feat(loader): support per-plugin env var injection in plugins: protocol
+- 17:07 2334e96 feat(plugin): add hx-plugin.h shared ABI header for zero-copy request interface
+- 17:25 d206413 refactor(plugin): switch to zero-copy hx_request_t dispatch interface
+- 17:28 c009549 docs(plugin): update build config and knowledge for hx_request_t interface
+- 17:50 b196a99 fix(plugin): add std::shared_mutex for thread-safe m_plugin_list access
+- 18:33 f037c54 feat(plugin): add ${ENV_VAR} expansion in plugin protocol K=V values
+- 19:01 c4f6356 docs: update knowledge base for ${ENV_VAR} expansion feature
+- 19:04 f7d67d0 chore: remove guide.txt (dev notes migrated to knowledge base)
+- 19:08 c84d5b5 docs: add HXPluginRuntime usage documentation
+- 19:12 ce2b19d docs: fix HTTP call format in usage documentation
+
+2. maplibre-native-qt-test（11 commits）
+------------------------------------------------
+- 09:21 96bf953 feat(camera): add animated camera transitions with easing, bearing wrap, and touch cancellation
+- 09:45 621a0be docs: add detailed Chinese Doxygen comments with usage examples to all public API headers
+- 11:17 6b25a8c feat: add location indicator rotation API
+- 11:54 40e6e18 feat(location): add following pause and display switch to LocationIndicatorManager
+- 12:04 7e22aab feat(location): add smooth GPS following timer for Fixed mode
+- 12:09 e9c6bfe feat(location): add Fixed mode touch pan with auto-resume and smooth GPS following
+- 13:56 00a3c49 refactor(mapcontainer): extract LOCATION_OVERLAY_SIZE constant
+- 13:57 7fd2a61 refactor(locationindicatormanager): extract applyRotatedPixmap() helper
+- 13:57 dfaca77 docs(locationindicatormanager): add Doxygen comments to 5 public methods
+- 14:02 26898fc fix(locationindicatormanager): add QLabel forward declaration for applyRotatedPixmap
+- 14:14 1f08861 docs(mapcontainer): add Doxygen comments to 4 Fixed touch pan methods
+
+3. HXGISServer（6 commits）
+------------------------------------------------
+- 10:03 138ee9f fix(demo): update hx_plugin_do call for new hx_request_t interface
+- 10:03 27d3271 refactor(api): change hx_plugin_do to accept structured hx_request_t
+- 10:04 5841e01 docs(knowledge): ingest hx_plugin_do structured request change
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+- 16:02 1fe1b49 docs(knowledge): correct statistics for skill-system and library-integration
+- 16:03 28aca6a docs(knowledge): fix gis-server format and record audit log
+
+4. ZMQClient（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+5. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+6. HXRouteServer（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+7. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+8. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+9. HXPOISearch（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+10. HXNmeaParser（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+11. HXNavigation（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+12. HXGeoConverter（1 commits）
+------------------------------------------------
+- 15:29 7add880 feat: 重构插件接口为结构化请求上下文
+
+================================================
+数据来源：上述仓库 git log（2026-04-29）

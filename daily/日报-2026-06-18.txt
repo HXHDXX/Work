@@ -1,0 +1,25 @@
+工作日报 2026-06-18（周四）
+================================================
+
+【今日要点】共 14 次提交，涉及 1 仓：
+主线：maplibre-native-qt-test(14)
+
+1. maplibre-native-qt-test（14 commits）
+------------------------------------------------
+- 08:55 71f0bcd fix(touch): F-wave rework — jitter guard, test stability, dead code removal
+- 09:38 4e97440 test(location): add regression tests for setZoom browse-mode bug
+- 09:50 3e6d3ab refactor(location): three-layer gesture detection, remove m_selfAnimating
+- 10:11 b612147 refactor: extract computeFollowingFrame/computeIconFrame pure helpers from onAnimStep
+- 10:19 5c53644 test: add visualLocationChanged signal test scaffolding (RED)
+- 10:22 6596f4f feat: emit visualLocationChanged during Fixed-mode and icon animation
+- 10:40 a7b5043 fix: harden visualLocationChanged spam suppression and add edge-case tests
+- 11:04 60fb73e feat(location-indicator): add overlay rotation animation state + test hook
+- 11:04 f4a1651 feat(camera-math): add interpolateAngle pure function with TDD tests
+- 11:10 5aa3923 refactor(location-indicator): parameterize updateOverlayRotation + reset state on snap paths
+- 11:28 57cc1dd feat(location-indicator): animate NorthUp overlay rotation with easeInOutQuad shortest-path
+- 11:54 d2c3342 test(gui): verify NorthUp overlay smooth rotation reaches target, anti-jitter
+- 16:50 40a91c5 test: add RED tests for followBearingChanged (signal declared, not emitted)
+- 17:09 aab06ed feat: emit followBearingChanged during FixedFollowing, bridge to MapContainer::bearingChanged
+
+================================================
+数据来源：上述仓库 git log（2026-06-18）

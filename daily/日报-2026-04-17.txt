@@ -1,0 +1,35 @@
+工作日报 2026-04-17（周五）
+================================================
+
+【今日要点】共 18 次提交，涉及 3 仓：
+主线：OSMDataCompiler(11)、maplibre-native-qt-test(5)、Work(2)
+
+1. OSMDataCompiler（11 commits）
+------------------------------------------------
+- 09:32 275eaf4 feat(scripts): add package.sh CLI for MVT tile distribution packaging
+- 09:47 de3017e fix(scripts): always include global-base.mbtiles in packaging
+- 11:29 b50610d feat(style): standardize maxzoom for overzoom compatibility
+- 13:43 8991322 fix(skill): tiles-package font symlink handling
+- 13:50 64d3789 chore: add missing landcover symlinks to git tracking
+- 14:37 72cfb30 refactor(config): update shapefile source paths to data/shapefiles/
+- 14:43 cd7c1c0 refactor(scripts): update build-global-base.sh paths to data/shapefiles/
+- 14:48 311d744 refactor: remove coastline/landcover symlink directories
+- 14:52 9041253 docs: update knowledge base for direct shapefile paths
+- 15:03 20ae3e5 fix(skill): tiles-package always includes global-base.mbtiles
+- 15:53 44dabe3 chore: remove obsolete coastline/landcover symlinks
+
+2. maplibre-native-qt-test（5 commits）
+------------------------------------------------
+- 09:23 d4baf1a docs: add detailed comments to C++ application core
+- 09:24 1386c55 docs: add detailed comments to MapLibre map UI
+- 09:24 5d72789 docs: add detailed comments to build configuration
+- 10:01 4a3a8e2 feat(map): add zoom level indicator to scale bar
+- 14:58 1b52e29 feat(map): add zoom slider to control panel
+
+3. Work（2 commits）
+------------------------------------------------
+- 09:21 1149152 update plan
+- 19:15 b7b639a Update plan.md
+
+================================================
+数据来源：上述仓库 git log（2026-04-17）

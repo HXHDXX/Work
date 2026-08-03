@@ -1,0 +1,21 @@
+工作日报 2026-05-07（周四）
+================================================
+
+【今日要点】共 4 次提交，涉及 3 仓：
+主线：HXPluginRuntime(2)、Work(1)、maplibre-native-qt-test(1)
+
+1. HXPluginRuntime（2 commits）
+------------------------------------------------
+- 13:53 a7a97d8 build: fix Android NDK librt missing, update Windows link libs
+- 14:58 75482c4 build: exclude librt on Android/Windows, add missing static deps to container scripts
+
+2. Work（1 commits）
+------------------------------------------------
+- 10:17 b78b811 update plan
+
+3. maplibre-native-qt-test（1 commits）
+------------------------------------------------
+- 10:16 8a76f77 feat(map): refine Fixed mode with setMargins and fix scale bar positioning
+
+================================================
+数据来源：上述仓库 git log（2026-05-07）

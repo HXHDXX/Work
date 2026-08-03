@@ -1,0 +1,25 @@
+工作日报 2026-06-17（周三）
+================================================
+
+【今日要点】共 14 次提交，涉及 1 仓：
+主线：maplibre-native-qt-test(14)
+
+1. maplibre-native-qt-test（14 commits）
+------------------------------------------------
+- 08:33 b4148b6 feat(map): right-drag adjusts pitch and bearing simultaneously
+- 09:33 10b0f02 refactor(location): 条件化 Symbol Layer alignment + 修复无 heading 误旋转
+- 09:36 9f144c6 fix(location): 移除 icon-rotate 的 Free 模式守卫，确保 FixedBrowsing 中 heading 值变化时更新
+- 10:57 7d3a1f8 test(demo): 显示位置按钮交替传/不传 heading
+- 11:15 2920cb7 fix(location): FixedBrowsing 进入时图标直接固定 GPS 坐标,不滑动
+- 11:29 d08daba perf(map): 限制 maxPitch=30° + 缓存增至 200MB,减少瓦片暴增
+- 11:44 668cd26 perf(map): 恢复 maxPitch=60° + ConstrainWidthAndHeight 限制瓦片
+- 13:45 2c15f6d feat(map): 恢复 NoConstrain + 添加 setMaxPitch/maxPitch 动态接口
+- 13:47 7898d89 Revert "fix(location): FixedBrowsing 进入时图标直接固定 GPS 坐标,不滑动"
+- 13:51 c5850b7 debug(location): 加入图标滑动调试日志
+- 14:07 889301a fix(location): FixedBrowsing 进入时图标直接固定 GPS,不做过渡动画
+- 14:20 f40f112 fix(location): 旋转/俯视地图时重启 resume timer，防止过早恢复
+- 15:34 e644f67 chore(location): 移除图标滑动调试日志
+- 19:31 c0e8a6c fix(touch): two-finger tap zoom-out triggers reliably + zoom-to-cursor math
+
+================================================
+数据来源：上述仓库 git log（2026-06-17）

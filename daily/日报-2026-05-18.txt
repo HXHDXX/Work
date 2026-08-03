@@ -1,0 +1,28 @@
+工作日报 2026-05-18（周一）
+================================================
+
+【今日要点】共 11 次提交，涉及 3 仓：
+主线：maplibre-native-qt-test(5)、OSMDataCompiler(4)、HXGISServer(2)
+
+1. maplibre-native-qt-test（5 commits）
+------------------------------------------------
+- 16:31 c893556 更新GISServer库，修复字体栈问题
+- 17:47 a1328ff feat(demo): add multilingual annotation button for Algeria
+- 18:38 c115784 fix(annotation): add CJK/Arabic font fallback to annotation text-font
+- 18:39 1c3b16d fix(route): fix primary font and add CJK/Arabic fallback for route labels
+- 19:03 2bf94c9 chore(demo): remove obsolete text annotation button
+
+2. OSMDataCompiler（4 commits）
+------------------------------------------------
+- 09:59 3cc498d docs(knowledge): ingest font system multi-language support
+- 13:51 2883bb6 fix(server): font stack fallback picks best glyph file by size
+- 14:43 424180d fix(styles): font stack order Latin→CJK→Arabic for Regular and Bold
+- 16:03 f55c935 fix(styles): font stack order Latin→CJK→Arabic for night and navigation styles
+
+3. HXGISServer（2 commits）
+------------------------------------------------
+- 16:14 3cee9a5 fix(fonts): fontstack fallback via comma detection instead of hardcoded route
+- 16:18 b93549a fix(build): scope -frtti and -fexceptions to C++ only
+
+================================================
+数据来源：上述仓库 git log（2026-05-18）

@@ -1,0 +1,105 @@
+工作日报 2026-06-30（周二）
+================================================
+
+【今日要点】共 58 次提交，涉及 13 仓：
+主线：HXSpatialMeasure(7)、HXRdssSendingQueue(7)、HXProjectTemplate(7)、HXNmeaParser(7)
+
+1. HXSpatialMeasure（7 commits）
+------------------------------------------------
+- 10:16 b481773 docs(spec): add design for AGENTS.md behavior rules extension (debug/comm/anti-pattern)
+- 10:21 99c89aa docs(plan): add implementation plan for AGENTS.md behavior rules extension
+- 10:27 0ff231f docs(AGENTS.md): extend behavior rules with debugging/communication/anti-pattern disciplines
+- 10:42 0afbddd docs(knowledge): ingest AGENTS.md rules extension (decisions + strategies)
+- 10:59 b28e59a docs(principles): apply oracle review fixes (scope/cross-ref/line-count)
+- 11:03 d918622 docs(index): fix context-strategy.md line-count staleness (~120→~270)
+- 11:09 a130576 chore: remove superpowers process artifacts (spec/plan) from master tree
+
+2. HXRdssSendingQueue（7 commits）
+------------------------------------------------
+- 10:16 b481773 docs(spec): add design for AGENTS.md behavior rules extension (debug/comm/anti-pattern)
+- 10:21 99c89aa docs(plan): add implementation plan for AGENTS.md behavior rules extension
+- 10:27 0ff231f docs(AGENTS.md): extend behavior rules with debugging/communication/anti-pattern disciplines
+- 10:42 0afbddd docs(knowledge): ingest AGENTS.md rules extension (decisions + strategies)
+- 10:59 b28e59a docs(principles): apply oracle review fixes (scope/cross-ref/line-count)
+- 11:03 d918622 docs(index): fix context-strategy.md line-count staleness (~120→~270)
+- 11:09 a130576 chore: remove superpowers process artifacts (spec/plan) from master tree
+
+3. HXProjectTemplate（7 commits）
+------------------------------------------------
+- 10:16 b481773 docs(spec): add design for AGENTS.md behavior rules extension (debug/comm/anti-pattern)
+- 10:21 99c89aa docs(plan): add implementation plan for AGENTS.md behavior rules extension
+- 10:27 0ff231f docs(AGENTS.md): extend behavior rules with debugging/communication/anti-pattern disciplines
+- 10:42 0afbddd docs(knowledge): ingest AGENTS.md rules extension (decisions + strategies)
+- 10:59 b28e59a docs(principles): apply oracle review fixes (scope/cross-ref/line-count)
+- 11:03 d918622 docs(index): fix context-strategy.md line-count staleness (~120→~270)
+- 11:09 a130576 chore: remove superpowers process artifacts (spec/plan) from master tree
+
+4. HXNmeaParser（7 commits）
+------------------------------------------------
+- 10:16 b481773 docs(spec): add design for AGENTS.md behavior rules extension (debug/comm/anti-pattern)
+- 10:21 99c89aa docs(plan): add implementation plan for AGENTS.md behavior rules extension
+- 10:27 0ff231f docs(AGENTS.md): extend behavior rules with debugging/communication/anti-pattern disciplines
+- 10:42 0afbddd docs(knowledge): ingest AGENTS.md rules extension (decisions + strategies)
+- 10:59 b28e59a docs(principles): apply oracle review fixes (scope/cross-ref/line-count)
+- 11:03 d918622 docs(index): fix context-strategy.md line-count staleness (~120→~270)
+- 11:09 a130576 chore: remove superpowers process artifacts (spec/plan) from master tree
+
+5. HXNavigation（7 commits）
+------------------------------------------------
+- 10:16 b481773 docs(spec): add design for AGENTS.md behavior rules extension (debug/comm/anti-pattern)
+- 10:21 99c89aa docs(plan): add implementation plan for AGENTS.md behavior rules extension
+- 10:27 0ff231f docs(AGENTS.md): extend behavior rules with debugging/communication/anti-pattern disciplines
+- 10:42 0afbddd docs(knowledge): ingest AGENTS.md rules extension (decisions + strategies)
+- 10:59 b28e59a docs(principles): apply oracle review fixes (scope/cross-ref/line-count)
+- 11:03 d918622 docs(index): fix context-strategy.md line-count staleness (~120→~270)
+- 11:09 a130576 chore: remove superpowers process artifacts (spec/plan) from master tree
+
+6. HXGeoConverter（7 commits）
+------------------------------------------------
+- 10:16 b481773 docs(spec): add design for AGENTS.md behavior rules extension (debug/comm/anti-pattern)
+- 10:21 99c89aa docs(plan): add implementation plan for AGENTS.md behavior rules extension
+- 10:27 0ff231f docs(AGENTS.md): extend behavior rules with debugging/communication/anti-pattern disciplines
+- 10:42 0afbddd docs(knowledge): ingest AGENTS.md rules extension (decisions + strategies)
+- 10:59 b28e59a docs(principles): apply oracle review fixes (scope/cross-ref/line-count)
+- 11:03 d918622 docs(index): fix context-strategy.md line-count staleness (~120→~270)
+- 11:09 a130576 chore: remove superpowers process artifacts (spec/plan) from master tree
+
+7. OSMDataCompiler（5 commits）
+------------------------------------------------
+- 12:43 6d2cc23 fix(styles): add text-font to symbol layers missing it (poi-*, road_oneway)
+- 12:47 a0dcb21 docs(knowledge): ingest font-404 bug experience
+- 13:00 1fd9624 feat(validate): add text-font check; docs: fix font-order drift + HXGISServer risk
+- 14:41 b17296e docs(agents): 对齐行为准则 +4 条; 清理 C++ 模板残留
+- 14:44 a821559 docs(agents): 补全 principles.md Trivial 豁免缺失子句
+
+8. HXRouteServer（3 commits）
+------------------------------------------------
+- 11:06 3e53143 fix(plugin): swap shutdown_logging and spdlog::info order in destroy — SEGV on null logger
+- 14:01 e3321ca fix(plugin): use GIT_VERSION macro in version() instead of hardcoded string
+- 14:29 bc09c09 docs(agents): sync behavioral rules (systematic-debugging, root-cause, communication, anti-pattern) from HXProjectTemplate
+
+9. HXGISServer（3 commits）
+------------------------------------------------
+- 14:22 b34601a docs(agents): sync behavioral rules with HXProjectTemplate (§12-15 + checklist)
+- 14:27 723b8ef docs(knowledge): ingest AGENTS.md sync decision + checklist-sync strategy
+- 14:29 e6f2cb3 docs(agents): unify principles.md §1 title with AGENTS.md checklist
+
+10. HXPluginRuntime（2 commits）
+------------------------------------------------
+- 09:53 b450eda docs(plugin): expand .so naming convention with regex, examples, and .P<N> semantics
+- 14:22 f9fae21 docs: sync AGENTS.md discipline rules with template (debugging, root-cause, comms, anti-patterns)
+
+11. ZMQClient（1 commits）
+------------------------------------------------
+- 14:23 5795271 docs: align AGENTS.md behavioral rules with HXProjectTemplate reference
+
+12. TitanNavi（1 commits）
+------------------------------------------------
+- 16:40 35be930 add btn control panel show state
+
+13. HXPOISearch（1 commits）
+------------------------------------------------
+- 14:31 7de8694 docs(AGENTS.md,principles): sync 4 behavior rules with HXProjectTemplate
+
+================================================
+数据来源：上述仓库 git log（2026-06-30）

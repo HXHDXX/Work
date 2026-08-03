@@ -1,0 +1,37 @@
+工作日报 2026-07-12（周日）
+================================================
+
+【今日要点】共 26 次提交，涉及 1 仓：
+主线：OSMDataCompiler(26)
+
+1. OSMDataCompiler（26 commits）
+------------------------------------------------
+- 07:41 40bdd02 docs(map-preview): add GJB-SMS-LHZZ data_source support
+- 07:41 a184450 fix(gjb-sms): remove debug guard (do return end) + fix aerodrome_label dead code
+- 09:26 75fd40a fix(gjb-sms-poi): aviation aeroway routing + rebuild mbtiles
+- 09:31 a725a5f docs(gjb-sms): correct 'data-limited' misdiagnosis + POI routing knowledge
+- 11:26 f554fdb feat(gjb-sms): add build-gjb-sms-lhzz-sprites.sh with @2x support
+- 11:35 3b627f1 fix(gjb-sms): route cat 13/20/26/27 point features to poi_detail layer
+- 11:46 822185f feat(gjb-sms): complete poi match expressions for all point-feature icons
+- 11:55 a0c3b20 feat(gjb-sms): add missing category layers (annotation/contour-label/vegetation-subdivision)
+- 12:02 82f4692 test(gjb-sms): sprite integrity verification script
+- 12:09 05a1e7e docs(gjb-sms): knowledge ingest — style completeness
+- 13:03 e00e88d fix(gjb-sms): poi circle→symbol + cat 19 hydrology + WATER_CODE_MAP fix
+- 13:11 dca570e feat(gjb-sms): add poi-seabed/obstruction/hydrology layers + remove deferred-cats
+- 13:21 2b1569f build(gjb-sms): rebuild PBF + mbtiles with cat 16/19 fixes + hydrology intercept
+- 13:35 50d75b2 docs(gjb-sms): GJB 1839B cross-verification + knowledge ingest
+- 15:04 d7816c3 Wave 1: rename, 120106 fix, variable shadowing, water_point routing, POI diagnosis, GJB audit
+- 15:18 d5c3d13 Wave 2: build-all.sh integration, Area() threshold, screenshot+email sent, RGB verification
+- 15:31 a198721 Wave 4: rebuild + knowledge ingest + Final QA + T1 gap fix
+- 15:58 775cba0 feat(gjb-sms): add poi-spring layer + geomagnetism SVG icon
+- 16:39 6ba6b7f feat(gjb-sms): add reef/wreck/seabed SVGs per GJB 8023 附录B p74
+- 18:33 9b72eeb feat: complete GJB 1839B §6.5-6.18 transcription + reef/wreck/seabed SVGs + poi-spring
+- 18:40 fa45898 docs: knowledge ingest — GJB 1839B full + SVG + poi-spring
+- 18:43 cfbff2c fix(gjb-sms): 120106 match expression open_mine→oil_well
+- 18:54 0afb08d fix(gjb-sms): poi-spring→poi-water_point — actual class is water_point not spring
+- 22:03 f46e225 fix(gjb-sms): filter contour elevation sentinel values (-32767/0/negative)
+- 22:36 d4a124f fix(gjb-sms): style compliance — road casing RGB, POI icon-size, fonts, maritime layer
+- 23:03 08ae741 build(gjb-sms): full rebuild + render verification — GJB 8023 compliance check
+
+================================================
+数据来源：上述仓库 git log（2026-07-12）

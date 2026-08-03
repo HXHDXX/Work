@@ -1,0 +1,75 @@
+工作日报 2026-04-24（周五）
+================================================
+
+【今日要点】共 28 次提交，涉及 13 仓：
+主线：OSMDataCompiler(14)、Work(3)、ZMQClient(1)、HXSpatialMeasure(1)
+
+1. OSMDataCompiler（14 commits）
+------------------------------------------------
+- 10:40 75a5fbe style: water texture with zoom-based fade-in/fade-out opacity
+- 10:54 5dd990e refactor(docker): restructure sprite-one to subdirectory convention and pin v0.1.3
+- 13:55 7f0bedc chore(icons): clean up redundant poi SVGs and move pattern symbols to patterns/
+- 13:56 2fc87e5 feat(icons): generate 148 _11 variant SVGs for poi icons
+- 13:56 e9930e2 feat(icons): add _11 variant generation script for poi icons
+- 13:58 4726df5 feat(poi): expand poiTags/poiClasses for full icon coverage (14%→70%)
+- 14:10 b8c4374 style(nav): remove wave_pattern from navigation styles
+- 16:20 5019f20 chore(patterns): relocate source symbol SVGs to subdirectory
+- 16:21 28e72d9 feat(tilemaker+patterns): add leaf_type extraction and tiled forest pattern SVGs
+- 16:21 77de455 feat(styles): add leaf_type pattern rendering for forest landcover
+- 16:25 9249d15 style(patterns): increase leaf_type fill-pattern opacity for better visibility
+- 16:36 ec9bc94 feat(tilemaker): add salt to landcoverKeys for landcover rendering
+- 16:36 fec4058 feat(styles): add landcover-reef and landcover-salt pattern layers
+- 18:26 99f5067 feat(patterns): add light night-mode tree patterns and regenerate dense day patterns
+
+2. Work（3 commits）
+------------------------------------------------
+- 11:37 8603437 update cpp-doc
+- 14:27 63d3b34 update plan
+- 15:00 ce32725 update cpp-doc
+
+3. ZMQClient（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+4. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+5. HXRouteServer（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+6. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+7. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+8. HXPOISearch（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+9. HXPluginRuntime（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+10. HXNmeaParser（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+11. HXNavigation（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+12. HXGISServer（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+13. HXGeoConverter（1 commits）
+------------------------------------------------
+- 13:43 fbf6599 docs(agents): add context-mode strategy + knowledge ingest
+
+================================================
+数据来源：上述仓库 git log（2026-04-24）

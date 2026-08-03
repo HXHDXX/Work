@@ -1,0 +1,37 @@
+工作日报 2026-04-28（周二）
+================================================
+
+【今日要点】共 17 次提交，涉及 4 仓：
+主线：HXPluginRuntime(7)、HXGISServer(6)、maplibre-native-qt-test(3)、Work(1)
+
+1. HXPluginRuntime（7 commits）
+------------------------------------------------
+- 09:24 e45a955 refactor: 全量重命名 PIE 相关标识为 HX 前缀
+- 10:55 14078d0 refactor: replace httpagent_agents_address[] with httpagent_default_agent_count
+- 16:19 8ce802d refactor: replace hardcoded ports with 6-port API and modernize CMake deps
+- 17:19 6de820f refactor: clean up env vars, reorder API params, rename constants
+- 17:27 86bf0d1 refactor: remove redundant msgbus spdlog_init and rename env vars
+- 17:54 40d9b08 refactor: remove unused navigation service online state machine
+- 18:41 c22c910 refactor: replace getenv with libenvpp, remove hardcoded nav refs, fix copy ctor
+
+2. HXGISServer（6 commits）
+------------------------------------------------
+- 14:02 8b13e2d refactor(env): update demo environment variable names
+- 14:02 d788feb refactor(env): rename HX_GIS_MAP_PATH to HX_GIS_DATA_PATH, HX_GIS_MAP_CACHE_PATH to HX_GIS_CACHE_PATH
+- 14:03 d8b8ecd docs: update environment variable names in documentation
+- 14:06 53ab397 refactor(env): rename HX_HTTP_GIS_FLAG to HX_GIS_SERVER_FLAG
+- 14:06 9cbea66 docs: update HX_HTTP_GIS_FLAG references to HX_GIS_SERVER_FLAG
+- 14:12 fc72825 docs(knowledge): ingest environment variable naming refactor
+
+3. maplibre-native-qt-test（3 commits）
+------------------------------------------------
+- 14:54 9554cab feat(annotations): add map annotation system with icon/text rendering, visibility control and layer toggle
+- 16:31 551a13b feat(routes): add map route/line system with segmented styling, solid/dashed layers and visibility control
+- 17:57 0878062 feat(location): add current location indicator with fixed-center and free-position modes
+
+4. Work（1 commits）
+------------------------------------------------
+- 17:18 7e9d867 update plan
+
+================================================
+数据来源：上述仓库 git log（2026-04-28）

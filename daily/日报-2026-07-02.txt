@@ -1,0 +1,27 @@
+工作日报 2026-07-02（周四）
+================================================
+
+【今日要点】共 13 次提交，涉及 2 仓：
+主线：HXRouteServer(7)、Work(6)
+
+1. HXRouteServer（7 commits）
+------------------------------------------------
+- 18:22 c5f4f90 feat(cache): add HX_ROUTE_CACHE_SIZE env config (default 8)
+- 18:22 cef953e feat(cache): add json_io cache helpers (TDD)
+- 18:22 d3ecb09 feat(cache): add RouteCache LRU module (TDD)
+- 19:10 edacd64 feat(cache): wire LRU cache into RouteDispatcher
+- 19:14 9491826 feat(cache): add POST /cache/clear endpoint
+- 19:21 62df032 docs(cache): document /cache/clear and ingest knowledge
+- 19:36 7ae04d0 fix(cache): address code review (capacity=0 passthrough, trace/strategies cache tests, size field)
+
+2. Work（6 commits）
+------------------------------------------------
+- 10:45 64345e6 docs: add AGENTS.md optimization design spec
+- 10:52 d7e17b1 docs: optimize AGENTS.md for documentation workspace
+- 17:22 88aca24 update skills
+- 18:00 6525935 humanize patent disclosure prose (de-template for AI-detection)
+- 18:00 c2ad2c6 ignore patent disclosure outputs
+- 18:00 f40daaa add prior-art search to background; remove dangling figure ref
+
+================================================
+数据来源：上述仓库 git log（2026-07-02）

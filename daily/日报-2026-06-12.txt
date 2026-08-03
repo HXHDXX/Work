@@ -1,0 +1,32 @@
+工作日报 2026-06-12（周五）
+================================================
+
+【今日要点】共 15 次提交，涉及 3 仓：
+主线：maplibre-native-qt-test(9)、TitanNavi(4)、Work(2)
+
+1. maplibre-native-qt-test（9 commits）
+------------------------------------------------
+- 11:03 cf3a47c refactor(location-indicator): rewrite LocationIndicatorManager with QWidget overlay for Fixed mode
+- 11:04 4f3ee01 test(location-indicator): update unit tests and add GUI screenshot tests
+- 11:04 6fb23ac feat(location-indicator): integrate overlay into MapContainer and add demo buttons
+- 11:23 ee61a1e fix(location-indicator): remove per-frame source update, fix overlay jitter and zoom restore
+- 14:33 8930864 feat(location-indicator): add overlay rotation, configurable zoom/pitch, and NorthUp center
+- 15:35 0bcc245 refactor(location-indicator): add follow/resume timer infrastructure to Manager (Wave 1)
+- 15:54 a824708 refactor(location-indicator): switch MapContainer to delegate follow logic to Manager (Wave 2)
+- 15:56 dbd7a32 refactor(location-indicator): update callers to use Manager API directly (Wave 3)
+- 18:05 626c6c6 refactor(location-indicator): decouple Manager from MapContainer
+
+2. TitanNavi（4 commits）
+------------------------------------------------
+- 09:06 546c76e 修复插入行数据、新建、编辑的异常
+- 10:48 602c421 重置围栏页面布局
+- 15:21 4d45345 修改新增逻辑可地图选点生成电子围栏
+- 18:54 2fb6f78 电子围栏编辑增加显示顶点
+
+3. Work（2 commits）
+------------------------------------------------
+- 16:15 760006b update plan
+- 17:26 eafde11 update plan
+
+================================================
+数据来源：上述仓库 git log（2026-06-12）

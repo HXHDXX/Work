@@ -1,0 +1,64 @@
+工作日报 2026-04-10（周五）
+================================================
+
+【今日要点】共 20 次提交，涉及 12 仓：
+主线：Work(6)、HXPluginRuntime(3)、HXGISServer(2)、ZMQClient(1)
+
+1. Work（6 commits）
+------------------------------------------------
+- 10:11 7d9ed81 update development roadmap: Phase 5 in progress, Phase 6 paused for 3588 device
+- 10:11 dc9387e ingest roadmap status update into knowledge wiki
+- 10:19 8cca4cc update development roadmap: split GIS server into standalone Phase 8
+- 10:20 f06f2c4 ingest roadmap split decision into knowledge wiki
+- 10:37 0372ea2 update QtCreator download link to latest instead of fixed version
+- 10:37 dc2e1a9 ingest QtCreator link update into knowledge wiki
+
+2. HXPluginRuntime（3 commits）
+------------------------------------------------
+- 11:09 a9b0c38 refactor(plugin): change naming convention to libplugin-<name>.so format
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+- 13:55 f562899 docs(knowledge): add plugin naming examples and update plugin-architecture
+
+3. HXGISServer（2 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+- 13:42 2a2846c plugin-HXGISServer
+
+4. ZMQClient（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+5. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+6. HXRouteServer（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+7. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+8. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+9. HXPOISearch（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+10. HXNmeaParser（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+11. HXNavigation（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+12. HXGeoConverter（1 commits）
+------------------------------------------------
+- 13:30 6fc3bb0 refactor(build): replace hardcoded cp with declarative file-list copy system
+
+================================================
+数据来源：上述仓库 git log（2026-04-10）

@@ -1,0 +1,26 @@
+工作日报 2026-06-25（周四）
+================================================
+
+【今日要点】共 9 次提交，涉及 3 仓：
+主线：TitanNavi(7)、maplibre-native-qt-test(1)、HXRouteServer(1)
+
+1. TitanNavi（7 commits）
+------------------------------------------------
+- 09:42 962c55c update to merge
+- 10:05 074fe6f update
+- 13:43 e969dae update note
+- 15:33 51684c3 merge code
+- 15:54 848982b update PRO
+- 16:25 9f126ed merge code
+- 16:38 37880c1 merge res
+
+2. maplibre-native-qt-test（1 commits）
+------------------------------------------------
+- 15:41 8ce6ac8 feat: emit mapClicked on touch single-tap, matching mouse-click behavior
+
+3. HXRouteServer（1 commits）
+------------------------------------------------
+- 16:11 b2cbdbd plugin-HXRouteServer
+
+================================================
+数据来源：上述仓库 git log（2026-06-25）

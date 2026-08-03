@@ -1,0 +1,33 @@
+工作日报 2026-05-22（周五）
+================================================
+
+【今日要点】共 16 次提交，涉及 3 仓：
+主线：maplibre-native-qt-test(11)、OSMDataCompiler(3)、Work(2)
+
+1. maplibre-native-qt-test（11 commits）
+------------------------------------------------
+- 09:30 d2076d0 feat(demo): enable arrows on route-A in addRoute button
+- 09:51 700ce5e fix(route): reduce arrow size, use dark color, tighter spacing for road-like appearance
+- 09:58 aa4d0f4 fix(route): further reduce arrow size to match road markers
+- 10:04 9b878be fix(route): further reduce arrow size to 0.25
+- 10:23 1a701b4 fix(route): change arrow icon to point right for correct line direction alignment
+- 10:34 a8e36f3 fix(demo): increase route width and arrow size for better visibility
+- 10:36 785cd9b fix(demo): increase route width to 16 and arrow size to 1.5
+- 11:01 b111100 feat(route): auto arrow color via luminance inversion of route color
+- 11:38 5fa955e fix(route): use HSV brightness inversion for auto arrow color
+- 13:56 06462ce docs: update arrow API comments for auto-contrast behavior
+- 14:07 06ea1ad feat(map): auto-switch place label language to Latin on style load
+
+2. OSMDataCompiler（3 commits）
+------------------------------------------------
+- 09:46 810e52e chore(skills): remove project-task-writer and project-task-runner skills
+- 09:46 bfe42d1 docs(knowledge): log removal of task-plan skills
+- 10:00 c29a27a docs(knowledge): ingest global-base runtime language switching strategy
+
+3. Work（2 commits）
+------------------------------------------------
+- 10:15 9b31dcd add gammaray_remote_debug
+- 14:55 f979a94 update plan
+
+================================================
+数据来源：上述仓库 git log（2026-05-22）

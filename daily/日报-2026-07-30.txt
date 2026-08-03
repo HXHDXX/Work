@@ -1,0 +1,118 @@
+工作日报 2026-07-30（周四）
+================================================
+
+【今日要点】跨 8 仓，约 58 次提交：
+1. HXNativeApp 侧边栏系统重构 + NMEA/地图（主工作）
+2. HXMapWidgetNative 路径进度 + 位置 + 绘制 API
+3. HXRouteServer 环境变量配置化
+4. 4 仓二进制分发发布
+
+
+一、HXNativeApp 侧边栏系统重构（主工作）
+------------------------------------------------
+仓库：HXAppPlatform/HXNativeApp | 25 commits
+
+【侧边栏架构 12:18–17:33】（Qt Designer .ui 化 + 自动注册 + DI）
+1. eventbus 加 sidebarSectionChanged 信号
+2. registerSection/switchSection + 单测
+3. SidebarSectionHost 接口 + DI 注册
+4. 现有控件打包为 navigation section + 接入 SidebarSectionHost
+5. setSidebar 自动注册 sections（镜像 PageManager::setStack）
+6. MainWindow.ui 替换 main.cpp 手写布局
+7. SidebarWidget.ui，控件迁 Designer
+8. Designer 动态属性自动注册 sections/pages
+9. 统一 Designer 属性名 sectionId/pageId → id
+10. registerSection/registerPage 用 indexOf 支持预置 widget
+11. review 修复（3 Important）+ clang-tidy [[nodiscard]]
+
+【NMEA / 地图 14:59–19:39】
+12. NmeaService 暴露 sendRmo()（$CCRMO 输出语句切换）
+13. NmeaGga 加 VDOP + 补全 fixQuality 注释
+14. map ready 时显示 HXMapLocation 指示器
+15. 用下载的 location 图标（data/map_data/icons）
+16. 移除越界 zoom 按钮 + ServerUrls 守卫 location
+
+【构建 / 知识 18:03–23:21】
+17. BUILD_TESTING toggle（默认 OFF）单测开关
+18. copy-from-list -r 处理 stale 符号链接
+19. 知识沉淀：sidebar section 切换决策、BUILD_TESTING 决策、
+    NmeaGga VDOP 决策 + overlay 调查
+
+
+二、HXMapWidgetNative 路径进度 + 位置 + 绘制
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 25 commits
+
+【路径进度 RouteProgress 06:25–15:12】
+1. lineMetrics 启用 + 隐藏 routes-gradient 层
+2. setRouteProgress 内部实现 + ZMQ 命令 + 公共 API + 测试
+3. line-gradient 用固定色（非 data 表达式）
+4. 路线层插到 basemap symbol label 之下
+5. 反转 symbol target 顺序找最早 highway-name 层
+6. 统一 custom-layers-anchor
+7. setRouteProgressStyle：RouteProgressStyle + casing 层 + ZMQ + API + 测试
+8. MapRouteProgressStyle 抽独立头（后内联回 routemanager.h）
+9. code review 修复（progress 状态/层序/边界）
+
+【位置 Location 20:02–22:16】
+10. showLocation 门控到首次 setLocation（auto-show）
+11. mapReady guard 回退（style reload 后位置层持久）
+12. showEvent startPending 分支启 readyPollTimer
+13. 移除死代码（lazy-init / 嵌入模式不可达 keyPressEvent）
+
+【绘制 Draw API 22:17–23:20】
+14. finishDrawing/cancelDrawing 公共 API
+15. draw_manager 经 shared actions pipeline
+16. zmq_draw 接 draw/finish + draw/cancel 命令
+17. showEvent startPending 加 ok guard + 强化回归测试
+18. Doxygen 补 4 个内部头
+
+
+三、HXRouteServer 环境变量配置化
+------------------------------------------------
+仓库：Workspace/HXRouteServer | 4 commits
+
+1. ensure_default_alternates 纯函数
+2. HX_ROUTE_DEFAULT_ALTERNATES 接入 /route_strategies
+3. env var 文档化 + 公共头 usage section
+
+
+四、二进制分发发布（4 仓）
+------------------------------------------------
+- lib-HXRouteServer：Linux x86_64 插件分发
+- lib-HXRdssSendingQueue：android/linux/oh/windows 头+二进制
+- lib-hxprshell-app：--self-path + clang-tidy 修复
+- lib-ZMQClient：android/linux/oh/windows ZMQ client 实现
+
+
+五、关键决策
+------------------------------------------------
+1. 侧边栏走 Qt Designer .ui + 动态属性自动注册（弃手写布局）
+2. registerSection 用 indexOf 支持预置 widget（非全动态）
+3. showLocation 门控 auto-show（首次 setLocation 前不显示）
+4. 路线层统一锚 custom-layers-anchor，插 symbol label 之下
+5. HX_ROUTE_DEFAULT_ALTERNATES 环境变量化默认备选路线数
+
+
+六、本周回顾（07-24 至 07-30）
+------------------------------------------------
+- 07-24 maplibre 性能优化 + ORI 解析器
+- 07-25 HXNavigation 引擎全量实现 + RDSS EPQ/GBQ
+- 07-26 ProductDesign 启动 + guidance 收官
+- 07-27 MSC-26-RW033 产品设计全量文档
+- 07-28 HXMapWidgetNative target-line + TitanNavi 性能
+- 07-29 maneuver-arrow + TBQ 状态机 + 导航模拟器
+- 07-30 HXNativeApp 侧边栏重构 + 路径进度 + 绘制 API
+
+
+明日待续
+------------------------------------------------
+1. 侧边栏各 section 控件继续迁 Designer
+2. RouteProgress 端到端实车验证
+3. draw finish/cancel 集成测试
+
+
+================================================
+数据来源：HXNativeApp / HXMapWidgetNative / HXRouteServer /
+lib-* git log（2026-07-30）、Work/plan.md、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

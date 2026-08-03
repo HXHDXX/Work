@@ -1,0 +1,25 @@
+工作日报 2026-06-27（周六）
+================================================
+
+【今日要点】共 14 次提交，涉及 1 仓：
+主线：HXRouteServer(14)
+
+1. HXRouteServer（14 commits）
+------------------------------------------------
+- 12:07 a1e5cc0 docs(api): comprehensive API guide with valhalla/OSRM format comparison + header documentation + file-list packaging
+- 12:38 bb20305 feat(plugin): implement hx_plugin_{create,do,destroy,zmq_context}
+- 12:49 e8c7202 fix(review): resolve all 6 code review Important issues
+- 13:03 b812836 fix(test): add LD_LIBRARY_PATH for plugin_contract test runtime
+- 13:37 3f73f59 fix(plugin): revert unauthorized env fallback in standalone create
+- 13:51 8c718a1 fix(route_dispatcher): add C++17 unary_function compat for clang-tidy
+- 14:09 f810dba fix(json_io): extract trip field from body, not whole body
+- 14:42 8f41d07 test: fix all weak assertions + close coverage gaps
+- 15:13 b9788df fix(test): correct query string format + add unary_function compat define
+- 15:25 655c975 docs(knowledge): ingest hx_plugin_* implementation + test hardening
+- 15:26 cc498a0 docs(knowledge): ingest implementation experience + route-server module
+- 15:56 22fe84f refactor(env): rename HX_ROUTE_LOG_PATH to HX_LOG_PATH
+- 16:24 6ab7ceb chore(gitignore): ignore build artifacts and release tarballs
+- 18:58 ef5df3a fix(build): enable windows cross-compile + fix sdk packaging
+
+================================================
+数据来源：上述仓库 git log（2026-06-27）

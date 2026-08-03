@@ -1,0 +1,28 @@
+工作日报 2026-05-14（周四）
+================================================
+
+【今日要点】共 8 次提交，涉及 4 仓：
+主线：maplibre-native-qt-test(3)、HXPluginRuntime(2)、HXGISServer(2)、OSMDataCompiler(1)
+
+1. maplibre-native-qt-test（3 commits）
+------------------------------------------------
+- 15:30 646f7c8 fix(annotation): preserve registered icons in clearAnnotations()
+- 17:57 4f3b943 fix(annotation): support text-only annotations with icon-optional
+- 17:57 dcc266e fix(hxgisserver): support CJK/Cyrillic font glyph serving
+
+2. HXPluginRuntime（2 commits）
+------------------------------------------------
+- 14:28 b879793 docs(plugin): add loading protocol and command format to HXPluginRuntime.h
+- 16:50 4bf0f00 docs(runtime): add env variable reference and [K=V] syntax to header
+
+3. HXGISServer（2 commits）
+------------------------------------------------
+- 14:29 b5bfede docs: add env variable reference to plugin header and knowledge base
+- 14:50 94c54f3 feat(fonts): add zlib linkage for gzip compression
+
+4. OSMDataCompiler（1 commits）
+------------------------------------------------
+- 10:08 75481ea docs(knowledge): ingest font coverage and fontstack mechanism
+
+================================================
+数据来源：上述仓库 git log（2026-05-14）

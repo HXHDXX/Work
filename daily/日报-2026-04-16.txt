@@ -1,0 +1,46 @@
+工作日报 2026-04-16（周四）
+================================================
+
+【今日要点】共 29 次提交，涉及 3 仓：
+主线：OSMDataCompiler(20)、maplibre-native-qt-test(7)、HXGISServer(2)
+
+1. OSMDataCompiler（20 commits）
+------------------------------------------------
+- 11:10 5908409 feat(skills): add tiles-package skill for MVT data packaging workflow
+- 13:44 1c26d82 fix: update shapefile source paths in tilemaker config
+- 13:45 4edc4f7 feat: add global base map support to tile server
+- 13:45 9e9279a feat: enhance map styles with full road/bridge/label hierarchy (50→131 layers)
+- 13:45 dff209e docs: update style layer counts after enhancement (47/50→131)
+- 14:19 08bcdec refactor(styles): rename font references to space-free format NotoSans-{Variant}
+- 14:19 0f9f621 docs(agents): update font directory names to NotoSans-{Variant} format
+- 16:20 76a4ce7 fix(skills): correct font directory names in tiles-package skill
+- 16:25 7ce60be feat: add global-base tilemaker profile for shapefile-only z0-5 basemap
+- 16:26 9a5d043 feat: add build-global-base script for shapefile-only workflow
+- 16:28 21e6e43 docs: add global-base knowledge module and update wiki
+- 16:28 9c3486a docs: update build-new-region guide with global-base auto-loading
+- 16:29 8f323a8 chore: add Natural Earth shapefile symlinks for global-base build
+- 16:53 12d2bbd docs: add styles and tiles-package knowledge modules
+- 16:54 747af0f docs: update knowledge index and log for ingest and lint
+- 16:54 8332a8c docs: update project-structure and global-base knowledge modules
+- 16:55 c33cfa9 docs: fix stale claims and cross-refs across knowledge modules
+- 18:37 6cd3a28 fix(style): correct oneway arrow rotation from perpendicular to road-aligned
+- 18:56 b518fcd refactor(zoom): restructure zoom levels - global z0-6, region z7-14, display z0-20
+- 19:27 eec2fc9 docs(zoom): update documentation for z0-6 global base and z7-14 region architecture
+
+2. maplibre-native-qt-test（7 commits）
+------------------------------------------------
+- 10:53 6616766 feat: unify Linux/Android dual-platform build
+- 11:02 221f1db update gis-server
+- 13:49 71ba6ca fix(android): add ANDROID_NDK_ROOT to build script
+- 14:10 ba27938 fix(android): pass QMapLibre_DIR explicitly for cross-compilation
+- 15:44 0d18d42 ignore .qtcreator
+- 16:05 0694e06 fix(android): use CACHE FORCE for QMapLibre_DIR to work with Qt Creator
+- 17:40 f28cdab feat: add touch gesture support and scale bar
+
+3. HXGISServer（2 commits）
+------------------------------------------------
+- 09:33 4c2cc2d fix: schema query param replacement not working for style.json requests
+- 10:54 116427e fix(schema): handle both double-slash and triple-slash schema URL replacement
+
+================================================
+数据来源：上述仓库 git log（2026-04-16）

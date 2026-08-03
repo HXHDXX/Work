@@ -1,0 +1,278 @@
+工作日报 2026-04-15（周三）
+================================================
+
+【今日要点】共 228 次提交，涉及 14 仓：
+主线：HXGISServer(23)、ZMQClient(19)、HXSpatialMeasure(19)、HXRouteServer(19)
+
+1. HXGISServer（23 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 15:07 0ade6b1 docs(knowledge): lint knowledge base - fix merge conflict and format issues
+- 15:30 2721b59 docs: complete HTTP route documentation with full protocol details
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:33 19272a8 docs: merge doc/ into docs/ directory, update SDK packaging
+- 19:40 8c0f862 docs(knowledge): ingest doc/ merge, lint knowledge base - fix stale paths and format
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+2. ZMQClient（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+3. HXSpatialMeasure（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+4. HXRouteServer（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+5. HXRdssSendingQueue（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+6. HXProjectTemplate（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+7. HXPOISearch（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+8. HXPluginRuntime（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+9. HXNmeaParser（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+10. HXNavigation（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+11. HXGeoConverter（19 commits）
+------------------------------------------------
+- 10:07 39d29a8 docs(agents): add 4 Karpathy behavioral principles to principles.md
+- 10:14 fa39914 docs(agents): add 行为准则 section to AGENTS.md
+- 10:16 3dbc694 docs(agents): update writing-guide for 行为准则 convention
+- 10:16 5255a0f feat(skills): add design-phase self-check to task-writer
+- 10:20 886ab08 docs(knowledge): record Karpathy principles integration decision
+- 10:28 af1634c feat(skills): add pre-flight principle check to task-runner
+- 10:33 dac8076 docs(agents): fix AGENTS.md reference position consistency
+- 10:37 17c2870 docs(agents): reorder AGENTS.md sections — principles before project context
+- 10:46 ac67780 feat(skills): make archive step mandatory in task-runner
+- 10:53 548a5f3 docs(knowledge): fix lint issues — library count, cross-links, orphan modules
+- 11:06 6471528 docs(agents): 知识查询与沉淀 section 引用 project-compound skill
+- 11:15 01f8b5a docs(knowledge): P2 — module type classification + testing-and-verification module
+- 13:43 b50ffb6 fix(docs): audit fixes — task-plan links, AGENTS.md stale refs, format
+- 13:49 78552fe fix(knowledge): audit — headers, cross-refs, line counts, log format
+- 14:27 5199b55 docs(knowledge): lint fixes + resolve 3 open questions
+- 14:54 8dcfa5e fix(skills): add Chinese trigger phrases to all skill descriptions
+- 19:21 4dc9002 fix(skills): add post-build path rewriting for clangd LSP compatibility
+- 19:29 bcd0fe1 docs(knowledge): ingest build-system (file-list refactor) + testing-and-verification (LSP path rewrite)
+- 19:43 2f1702a docs(knowledge): lint — fix missing MIPS platform in platform-adaptation
+
+12. maplibre-native-qt-test（9 commits）
+------------------------------------------------
+- 11:44 23add25 init: MapLibre v3.0.0 interactive map with rotation and tilt2026-07-16 21:24
+- 13:40 da2c753 build: support Linux x86_64 and Android arm64 cross-platform build
+- 14:17 da49fea feat: add HXGISServer RAII wrapper and link library in CMake
+- 14:20 00172d0 feat: integrate HXGISServer into app lifecycle
+- 14:23 e538ba6 feat: switch MapLibre to local offline tile server
+- 14:53 3908684 refactor: hardcode GIS server params to 127.0.0.1:4943 and app_dir/map_data
+- 16:32 24578ff chore: add lib-plugin-HXGISServer library (LFS for .so binaries)
+- 16:38 21cf801 Merge branch 'gis-server'
+- 17:34 af15ac9 use gis-server
+
+13. Work（3 commits）
+------------------------------------------------
+- 08:55 232da51 fix qt-android doc
+- 08:57 3ac4828 fix plan.md
+- 09:55 3ccb4a5 Update C++开发环境配置.md
+
+14. OSMDataCompiler（3 commits）
+------------------------------------------------
+- 15:24 d068e12 feat: complete MVT data pipeline — shapefiles, sprites, style layers, region selector
+- 15:29 a0d0925 chore: move shapefiles to data/shapefiles, add symlinks in coastline/ + landcover/
+- 15:49 6824dde refactor: move coastline/landcover shapefile symlinks into tiles/input/
+
+================================================
+数据来源：上述仓库 git log（2026-04-15）

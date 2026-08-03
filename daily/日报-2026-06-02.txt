@@ -1,0 +1,28 @@
+工作日报 2026-06-02（周二）
+================================================
+
+【今日要点】共 14 次提交，涉及 2 仓：
+主线：OSMDataCompiler(13)、Work(1)
+
+1. OSMDataCompiler（13 commits）
+------------------------------------------------
+- 10:29 7a8376d style: refactor boundary to OSM Carto purple solid, raise service/bridge minzoom
+- 10:30 2e131d3 docs(knowledge): record style rendering decisions and bug fixes
+- 10:44 4e31adc chore: remove subway dedup pipeline
+- 15:15 189d941 fix(styles): resolve 7 rendering issues across all 4 style files
+- 15:19 752f9ca docs(knowledge): record round 2 style fixes and boundary decisions
+- 15:29 0ec64d9 docs(knowledge): comprehensive audit - fix contradictions, ingest missing commits
+- 16:22 cd7eb25 feat(openmaptiles): drop tiny water/landcover/landuse polygons
+- 16:30 25af3d0 refactor: remove housenumber layer
+- 16:30 3fbd6d8 chore: remove unused urban_areas from global-base profile
+- 17:29 b7b7e43 docs(knowledge): ingest data optimization — area filters + layer deletion + osm-stable-v1
+- 18:48 a1ce179 docs(knowledge): ingest GJB9121 module documentation
+- 18:48 baaaf60 feat(scripts): add GJB9121 import pipeline with multi-region support
+- 19:35 e24450d fix: correct GJB→OSM field mapping, add data specification
+
+2. Work（1 commits）
+------------------------------------------------
+- 16:26 f2f72f7 update cpp
+
+================================================
+数据来源：上述仓库 git log（2026-06-02）

@@ -1,0 +1,120 @@
+工作日报 2026-05-26（周二）
+================================================
+
+【今日要点】共 73 次提交，涉及 13 仓：
+主线：Work(11)、HXPluginRuntime(10)、ZMQClient(5)、HXSpatialMeasure(5)
+
+1. Work（11 commits）
+------------------------------------------------
+- 10:40 3030b41 update cpp
+- 10:50 5989068 update plan
+- 13:54 751b937 docs: expand AGENTS.md with behavior guidelines, context strategy, and verification rules
+- 14:04 071094e docs: streamline AGENTS.md, add supporting docs and knowledge base updates
+- 14:06 8257d59 docs(knowledge): lint infra.md after AGENTS.md streamlining
+- 14:09 3de674b chore: remove container, cross-library-examples, libs directories
+- 14:11 8559103 docs: remove references to deleted dirs (container, cross-library-examples, libs)
+- 14:13 5bdd947 docs(knowledge): lint - remove stale references, compress audit
+- 19:12 239050b update cpp
+- 19:20 9606f9f update cpp
+- 19:31 d729da6 update cpp
+
+2. HXPluginRuntime（10 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 10:10 54413be docs(knowledge): fix factual errors in c-api-pattern, build-system, runtime-architecture modules
+- 10:10 bce3ed8 docs(knowledge): fix knowledge-index path and update round 3 audit log
+- 10:10 cee066f docs(knowledge): fix stale status and method stats in codebase-issues, library-integration, library-inventory
+- 10:42 82c5aec docs(knowledge): fix 7 discrepancies and fill 2 gaps in round 4 audit
+- 11:00 db1f170 docs(structure): rewrite project structure doc to match actual layout
+- 11:01 6f3a25b docs: clarify ./libs/ as CMake template path in top-level config
+- 11:01 ec1c1ab docs(knowledge): remove fictional proj-gen.sh references (round 5 audit)
+
+3. ZMQClient（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:12 e473fb6 fix: knowledge audit — remove hx-project-template, rename PIE_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:16 fe98134 fix: resolve 4 clang-tidy warnings in zmq_client_async.cpp
+
+4. HXSpatialMeasure（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+5. HXRouteServer（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+6. HXRdssSendingQueue（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+7. HXProjectTemplate（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+8. HXPOISearch（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+9. HXNmeaParser（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+10. HXNavigation（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+11. HXGISServer（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 13:58 a5e3e13 docs(knowledge): lint — fix merge conflict, complete structure.md directory coverage
+- 14:08 c3b7106 fix(lint): handle 5 clang-tidy warnings for correctness and safety
+
+12. HXGeoConverter（5 commits）
+------------------------------------------------
+- 09:01 8b01a61 refactor: extract project structure table to docs/agents/core/structure.md
+- 09:18 8930ed2 docs: ingest AGENTS.md structure extraction decision into knowledge base
+- 09:48 80b1325 docs(knowledge): ingest ECC evaluation — reject 5/6 proposals after deep analysis
+- 14:13 e915de7 refactor: rename HX_NAVI_LOG_PATH to HX_LOG_PATH
+- 14:27 4b67986 fix(windows): add ws2_32 to CMAKE_STANDARD_LIBRARIES for boost::asio Winsock dependency
+
+13. OSMDataCompiler（2 commits）
+------------------------------------------------
+- 11:17 0ffbdae docs(agents): refactor AGENTS.md - extract project structure, add verification and research guidelines
+- 11:21 8c365cd docs(knowledge): sync knowledge base with AGENTS.md refactor
+
+================================================
+数据来源：上述仓库 git log（2026-05-26）

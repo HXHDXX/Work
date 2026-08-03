@@ -1,0 +1,76 @@
+工作日报 2026-06-08（周一）
+================================================
+
+【今日要点】共 23 次提交，涉及 15 仓：
+主线：TitanNavi(5)、maplibre-native-qt-test(3)、ZMQClient(2)、Work(2)
+
+1. TitanNavi（5 commits）
+------------------------------------------------
+- 09:46 170f4a7 add geoelectronicfenced
+- 09:49 b89015e add t_code
+- 10:17 2de2353 merge t_code
+- 10:53 3baef1c merge and to run
+- 14:45 1f8fd08 geoelectronicfencemanagermodel show focus delete hide
+
+2. maplibre-native-qt-test（3 commits）
+------------------------------------------------
+- 10:56 aee89ce fix(routemanager): hide arrows when hiding routes
+- 19:32 ac03db3 fix(demo): remove redundant setPolygons call from focus button
+- 19:32 ae653d1 fix(polygon): enforce zero fillOpacity when fill disabled and add text-font to label layer
+
+3. ZMQClient（2 commits）
+------------------------------------------------
+- 14:49 45ae4ea docs: enhance AGENTS.md with worktree naming and cross-project rules
+- 14:49 b624021 docs(knowledge): ingest AGENTS.md worktree and cross-project rule updates
+
+4. Work（2 commits）
+------------------------------------------------
+- 14:50 b8136c1 docs: AGENTS.md worktree命名规范、跨项目检索规则、依赖路径恢复
+- 14:50 bdb9f7b docs: AGENTS.md worktree命名规范、跨项目检索规则、依赖路径恢复
+
+5. OSMDataCompiler（1 commits）
+------------------------------------------------
+- 15:31 ad84e6c refactor(gjb): replace name-based place classification with pure data-field rules
+
+6. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
+
+7. HXRouteServer（1 commits）
+------------------------------------------------
+- 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
+
+8. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
+
+9. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
+
+10. HXPOISearch（1 commits）
+------------------------------------------------
+- 14:44 b5cafc2 docs(AGENTS.md,knowledge): refine worktree rules and ingest simple-fts5 module
+
+11. HXPluginRuntime（1 commits）
+------------------------------------------------
+- 14:44 0ef95c7 docs: improve AGENTS.md with worktree naming, cross-project rules, and knowledge sync
+
+12. HXNmeaParser（1 commits）
+------------------------------------------------
+- 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
+
+13. HXNavigation（1 commits）
+------------------------------------------------
+- 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
+
+14. HXGISServer（1 commits）
+------------------------------------------------
+- 14:37 bdfe166 docs(agents): enhance AGENTS.md with cross-project rules and worktree naming conventions
+
+15. HXGeoConverter（1 commits）
+------------------------------------------------
+- 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
+
+================================================
+数据来源：上述仓库 git log（2026-06-08）

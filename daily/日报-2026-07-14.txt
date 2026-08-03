@@ -1,0 +1,83 @@
+工作日报 2026-07-14（周二）
+================================================
+
+【今日要点】共 51 次提交，涉及 8 仓：
+主线：HXNmeaParser(21)、OSMDataCompiler(19)、HXSpatialMeasure(2)、HXRdssSendingQueue(2)
+
+1. HXNmeaParser（21 commits）
+------------------------------------------------
+- 06:12 51a9c95 test: add edge case coverage (wrong checksum, non-NMEA, empty line, non-line-io prefix)
+- 06:49 a7bb850 test: add BD/GL talker + S/E hemisphere + conversion accuracy tests
+- 09:21 6a97116 feat: add HDT/ROT/GRS parsers from protocol chapter 9 + 5 tests
+- 09:31 618bf1c feat: add DTM parser (datum reference) + 2 tests
+- 09:41 b8a4000 test: supplement HDT/ROT/GRS/DTM edge cases (talkers, boundaries, 12-sat, S/W, missing fields)
+- 09:52 652232d docs: comprehensive header API documentation (subscribe/publish protocol, field schema, consumer example)
+- 09:55 dd81cfb docs: add per-sentence fields reference (73 types) to header
+- 10:34 dbdc9a2 feat: command builder (RMO/COM/TXA/MSS) + compute_checksum + tests
+- 10:43 9dce219 feat: send_to_port + plugin process() command routing
+- 10:48 7626bf7 docs: add command builder API section to header
+- 10:52 36acb8a chore: gitignore .cache/clangd, remove committed index files
+- 11:05 420774e feat: implement 34 command builders + tests + process() routing
+- 11:59 2c54ff8 docs(knowledge): ingest command-builder module
+- 11:59 8977fa2 docs: list all 40 commands in header
+- 11:59 ae5fbb0 feat: add 11 bidirectional command builders + tests
+- 12:20 34d74ec test: process() routing for all 51 commands + error responses + response format
+- 12:23 2138155 fix: register test_process_routing with ctest via add_test (LD_LIBRARY_PATH)
+- 16:45 83fe555 docs: protocol implementation report (124 protocols, 223 tests)
+- 17:37 5c75803 fix: define hx_plugin_zmq_context in plugin per Runtime dlsym contract
+- 17:37 eb92b95 build: vendor lib-ZMQClient as submodule, derive prebuilt path per platform
+- 17:40 e5f1513 docs(knowledge): ingest zmq_client submodule + hx_plugin_zmq_context ownership
+
+2. OSMDataCompiler（19 commits）
+------------------------------------------------
+- 06:18 1ab676c fix(gjb-sms): add road-minor layer for 等外 village roads (class=minor)
+- 08:58 142bdeb docs: knowledge ingest — bridge lesson, minor road fix, 3-mode strategy, SMS data gaps
+- 09:11 58649ff feat(test-server): add zoom level indicator next to scale bar
+- 09:17 60a2d12 fix(test-server): move coords box up to avoid overlapping zoom indicator
+- 09:19 8138334 fix(test-server): raise coords box to fully clear zoom indicator
+- 09:48 7a4e56e fix(gjb-sms): progressive POI minzoom (aviation z10, military/survey z11)
+- 10:34 8df12d1 fix(gjb-sms): helipad icon color #FF3232→#4B4B91 + remove English H per GJB 8023 aviation color spec
+- 11:57 79f23e3 docs(offline): add engineer-reference README for offline compilation environment
+- 12:02 f9f8e0f feat(scripts): add export-offline-bundle.sh for offline compilation environment packaging
+- 12:23 04e37d8 fix(scripts): replace git bundle with working tree tar for LFS content
+- 12:27 995e26d docs(offline): update README for repo.tar approach (LFS fix)
+- 12:38 8ac5883 fix(scripts): remove over-broad --exclude='*.png' from export tar
+- 13:56 afe663c docs(offline): fix OSM build commands + add multi-region compilation guide
+- 14:07 f8871fa feat(scripts): add merge-pbf.sh wrapper for multi-region PBF merge
+- 14:08 37af9a6 feat(scripts): add region name shortcut to build-osm-tiles/valhalla
+- 14:10 740791c docs(offline): simplify all commands to use region shortcut mode
+- 14:15 7e9c039 feat(offline): add structured error codes (E01-E10) for offline diagnostics
+- 14:26 c96fc88 feat(offline): add shapefile preflight check + quickstart section
+- 17:36 8de80b6 feat(package): package.sh --data-source 支持 gjb-sms-lhzz
+
+3. HXSpatialMeasure（2 commits）
+------------------------------------------------
+- 18:15 16f38ce docs(knowledge): correct hx_plugin_zmq_context ownership in plugin-architecture
+- 18:15 6bbcaf0 fix: define hx_plugin_zmq_context in plugin per Runtime dlsym contract
+
+4. HXRdssSendingQueue（2 commits）
+------------------------------------------------
+- 18:15 16f38ce docs(knowledge): correct hx_plugin_zmq_context ownership in plugin-architecture
+- 18:15 6bbcaf0 fix: define hx_plugin_zmq_context in plugin per Runtime dlsym contract
+
+5. HXProjectTemplate（2 commits）
+------------------------------------------------
+- 18:15 16f38ce docs(knowledge): correct hx_plugin_zmq_context ownership in plugin-architecture
+- 18:15 6bbcaf0 fix: define hx_plugin_zmq_context in plugin per Runtime dlsym contract
+
+6. HXNavigation（2 commits）
+------------------------------------------------
+- 18:15 16f38ce docs(knowledge): correct hx_plugin_zmq_context ownership in plugin-architecture
+- 18:15 6bbcaf0 fix: define hx_plugin_zmq_context in plugin per Runtime dlsym contract
+
+7. HXGeoConverter（2 commits）
+------------------------------------------------
+- 18:15 16f38ce docs(knowledge): correct hx_plugin_zmq_context ownership in plugin-architecture
+- 18:15 6bbcaf0 fix: define hx_plugin_zmq_context in plugin per Runtime dlsym contract
+
+8. TitanNavi（1 commits）
+------------------------------------------------
+- 19:13 4b2f1d6 add Datatransfer tcp
+
+================================================
+数据来源：上述仓库 git log（2026-07-14）

@@ -1,0 +1,62 @@
+工作日报 2026-05-09（周六）
+================================================
+
+【今日要点】共 18 次提交，涉及 12 仓：
+主线：HXPluginRuntime(7)、ZMQClient(1)、Work(1)、HXSpatialMeasure(1)
+
+1. HXPluginRuntime（7 commits）
+------------------------------------------------
+- 09:29 b6c1c93 docs(knowledge): ingest crosslib transitive dep fix pattern
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+- 15:24 2149c34 feat(plugin): add plugin_child_process source file
+- 15:24 44da4f6 refactor(plugin): remove static from parse_hx_request for external access
+- 16:02 d13cab0 feat(plugin): add child process plugin API and packaging
+- 16:17 6804d00 Move hx-plugin.h to HXPluginRuntime root dir
+- 16:37 906ae53 fix(plugin): correct include in plugin_child_process to use HXPluginRuntime.h
+
+2. ZMQClient（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+3. Work（1 commits）
+------------------------------------------------
+- 09:39 70665cd update qt-android-doc
+
+4. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+5. HXRouteServer（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+6. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+7. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+8. HXPOISearch（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+9. HXNmeaParser（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+10. HXNavigation（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+11. HXGISServer（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+12. HXGeoConverter（1 commits）
+------------------------------------------------
+- 09:55 367dc12 fix(cross-library): sync corrected static library linking from HXPluginRuntime
+
+================================================
+数据来源：上述仓库 git log（2026-05-09）

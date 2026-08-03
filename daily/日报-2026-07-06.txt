@@ -1,0 +1,23 @@
+工作日报 2026-07-06（周一）
+================================================
+
+【今日要点】共 9 次提交，涉及 2 仓：
+主线：OSMDataCompiler(8)、Work(1)
+
+1. OSMDataCompiler（8 commits）
+------------------------------------------------
+- 10:59 643d486 feat(valhalla): store timezone shapefile in LFS + local fallback
+- 10:59 7b2728b fix(build-tiles): auto-derive --bbox from PBF via osmium fileinfo
+- 10:59 fceeadf docs(knowledge): ingest build pipeline fixes
+- 11:14 358bbd4 fix(review): harden bbox pipeline + timezone fallback
+- 11:20 4128872 docs(valhalla): document timezone LFS dependency in script header
+- 11:26 8c2a95e feat(lfs): add Natural Earth shapefiles to Git LFS
+- 11:29 bf5dc43 docs(setup): mark Natural Earth shapefiles as Git LFS
+- 11:32 32d586b feat(lfs): add water_polygons.shp (1.2GB) to Git LFS
+
+2. Work（1 commits）
+------------------------------------------------
+- 09:24 948aff7 update cpp-doc
+
+================================================
+数据来源：上述仓库 git log（2026-07-06）

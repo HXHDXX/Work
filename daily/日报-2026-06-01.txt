@@ -1,0 +1,24 @@
+工作日报 2026-06-01（周一）
+================================================
+
+【今日要点】共 10 次提交，涉及 2 仓：
+主线：OSMDataCompiler(9)、Work(1)
+
+1. OSMDataCompiler（9 commits）
+------------------------------------------------
+- 08:42 f206c41 refactor(railway): switch from centerline to keep-one-delete-rest merge strategy
+- 10:34 53ac52e fix(railway): tighten grouping + lower transit minzoom to z9
+- 11:17 f658806 perf(tiles): optimize tile data for GPU memory reduction
+- 11:44 d45edfb fix(tiles): remove dead variables + lower building layer minzoom to z12
+- 14:15 d7dd5c8 test(subway-merge): add pytest infrastructure + extract _should_group()
+- 14:36 ae43966 feat(subway-merge): add colour/fuzzy/name-ref grouping criteria feat(subway-merge): filter short anonymous orphan segments
+- 14:56 bddfba9 docs(knowledge): update subway-merge module reflecting dedup architecture
+- 17:29 a8a3bd7 fix: optimize data filtering and path rendering
+- 18:04 b41e101 perf: sync footway style + add minzoom to water-name/minor layers
+
+2. Work（1 commits）
+------------------------------------------------
+- 15:43 f3478e0 update cpp
+
+================================================
+数据来源：上述仓库 git log（2026-06-01）

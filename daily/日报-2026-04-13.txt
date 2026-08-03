@@ -1,0 +1,77 @@
+工作日报 2026-04-13（周一）
+================================================
+
+【今日要点】共 36 次提交，涉及 11 仓：
+主线：HXGISServer(5)、ZMQClient(4)、HXSpatialMeasure(3)、HXRouteServer(3)
+
+1. HXGISServer（5 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+- 11:45 7f32cba refactor(plugin): replace getenv with libenvpp for typed env var parsing
+- 11:49 2c3bfa1 docs(knowledge): record libenvpp production integration experience
+
+2. ZMQClient（4 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+- 17:20 966bc24 zmq_client
+
+3. HXSpatialMeasure（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+4. HXRouteServer（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+5. HXRdssSendingQueue（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+6. HXProjectTemplate（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+7. HXPOISearch（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+8. HXPluginRuntime（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+9. HXNmeaParser（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+10. HXNavigation（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+11. HXGeoConverter（3 commits）
+------------------------------------------------
+- 10:06 9438d37 feat(examples): add libenvpp and polylineencoder cross-library examples
+- 10:11 9f22ae3 docs(knowledge): record libenvpp and polylineencoder integration experience
+- 10:47 a01c777 docs(knowledge): add SDK packaging and file-list.txt maintenance guide for agents
+
+================================================
+数据来源：上述仓库 git log（2026-04-13）

@@ -1,0 +1,96 @@
+工作日报 2026-04-06（周一）
+================================================
+
+【今日要点】共 52 次提交，涉及 12 仓：
+主线：OSMDataCompiler(8)、ZMQClient(4)、HXSpatialMeasure(4)、HXRouteServer(4)
+
+1. OSMDataCompiler（8 commits）
+------------------------------------------------
+- 09:08 943e8a2 chore: add __pycache__ to gitignore
+- 09:19 508718a feat: add project-compound and project-check skills
+- 09:19 5719f28 chore: add .opencode runtime files to gitignore
+- 09:20 08ecb12 docs: optimize AGENTS.md with project structure table and knowledge query
+- 09:45 e2b89e5 feat: add genai-toolbox MCP server for PostGIS database access
+- 10:17 aa71c1e fix: set non-empty POSTGRES_PASSWORD for toolbox MCP
+- 10:40 b575c2a docs: initialize knowledge wiki with toolbox MCP experience
+- 10:41 0da303b chore: change default serve port from 8080 to 9090
+
+2. ZMQClient（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+3. HXSpatialMeasure（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+4. HXRouteServer（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+5. HXRdssSendingQueue（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+6. HXProjectTemplate（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+7. HXPOISearch（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+8. HXPluginRuntime（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+9. HXNmeaParser（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+10. HXNavigation（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+11. HXGISServer（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+12. HXGeoConverter（4 commits）
+------------------------------------------------
+- 09:15 187beab Wire knowledge query chain into project documentation
+- 09:15 25486ec Add project-compound skill with knowledge infrastructure
+- 13:00 0a6d27f Register knowledge modules in index and log
+- 13:00 1d7809a Populate knowledge base with module summaries
+
+================================================
+数据来源：上述仓库 git log（2026-04-06）

@@ -1,0 +1,118 @@
+工作日报 2026-07-31（周五）
+================================================
+
+【今日要点】跨 3 仓，约 64 次提交：
+1. HXNavigation 备选路线自动切换（新特性，scope 扩展）
+2. HXMapWidgetNative ZMQ 命令乱序修复（跨进程通信可靠性）
+3. HXNativeApp NMEA service 完善 + GUI 测试
+
+
+一、HXNavigation 备选路线自动切换（新特性）
+------------------------------------------------
+仓库：Workspace/HXNavigation | 18 commits
+
+【scope 调整 09:13】撤销 YAGNI 排除——备选路线自动切换纳入本期范围
+
+【数据模型 09:30–10:33】
+1. switch 阈值配置（默认禁用，保向后兼容）
+2. 真实 valhalla alternates fixture
+3. route_model 抽 parse_trip_like() 辅助
+4. load_valhalla_with_alternates + RouteSet 别名
+
+【引擎切换 11:04–12:57】
+5. 检测备选切换，发 route_switched 事件
+6. 执行路线 swap（forward cascade 前向级联）
+7. maneuver 邻域抑制切换（R5，防转向前误跳）
+8. alternate-scan 门控 + 上限（性能）
+9. start_guidance 响应含 routes 摘要（有 alternates 时）
+
+【测试与文档 13:29–17:38】
+10. forward cascade main→alt1→alt2 + off_route 守卫
+11. 零 alternates 向后兼容（默认配置不发 route_switched）
+12. API 文档：alternates 契约 + route_switched + 级联
+13. 备选检测改 scan_full + 重投影
+14. 边缘用例：空 maneuvers/多 leg/长度不符
+15. 综合备选拓扑 + 行为覆盖；断言强化消假阳性
+
+
+二、HXMapWidgetNative ZMQ 命令乱序修复
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 29 commits
+
+【跨进程命令排序 14:25–17:10】
+1. 出向 action/query 打 seq 保证命令有序
+2. host 命令 seq 按实例 + 锁内打戳
+3. ReorderBuffer 加 Flush/Drop 超时策略
+4. ZmqMsgRouter 重排 host→child action 命令
+5. 查询不再打 seq（保 action seq 流连续）
+6. ZmqMsgRouter dispatch 契约测试
+7. 修误导性 unknown-command 警告（log-noise）
+
+【位置 Location 10:26–12:25】
+8. 弃冗余 m_ready，改 gate 于 live isMapReady()
+9. FixedBrowsing 可见性恢复 + style reload 路径
+10. addImage repaint + 去冗余 mapReady rebuild
+11. mapReady 契约与位置就绪表述修正
+
+【构建 / Widget 09:30–11:50】
+12. clazy 警告 + ASAN 链接失败修复
+13. ASAN build-type 映射修正
+14. NoFocus + 清 vestigial focus handler
+15. launchChild 失败时发 loadFailed（showEvent + start() 分支）
+16. HX_MAP_VRAM_BUDGET_BYTES 生效
+17. draw finish/cancel ZMQ + 客户端测试
+
+
+三、HXNativeApp NMEA service 完善
+------------------------------------------------
+仓库：HXAppPlatform/HXNativeApp | 17 commits
+
+【NMEA service 12:25–18:01】
+1. MSQ 命令 + NmeaMsqParams
+2. date/time 字段类型化（QDate/QTime/int）
+3. GGA 补全 altitudeUnit/dgpsAge/dgpsStationId
+4. VTG 订阅全字段
+5. SatelliteSystem/SatelliteId 类型引入，重构 GSV/GSA/PAS
+
+【GUI 测试 / Map 09:06–10:38】
+6. 位置指示器渲染验证测试 + 像素断言
+7. location icon 转 RGBA PNG（MapLibre 兼容）
+8. showLocation 时序修（HXMapLocation m_ready 修复后去 delay）
+9. PageManager::switchTo → switchPage 命名对称
+
+【知识】
+10. HXMapLocation 集成配方、NMEA service 封装变更、
+    ZMQ reorder 调试 session 反思
+
+
+四、关键决策
+------------------------------------------------
+1. 备选路线切换默认禁用（阈值显式开），保向后兼容
+2. maneuver 邻域抑制切换，防转向关键时刻跳线
+3. 备选切换走 forward cascade（main→alt1→alt2 单向级联）
+4. 跨进程命令用 seq 打戳 + ReorderBuffer 重排
+5. action 与 query 分流：只 action 保序，query 不打戳
+
+
+五、本周回顾（07-25 至 07-31）
+------------------------------------------------
+- 07-25 HXNavigation 引擎全量实现 + RDSS EPQ/GBQ
+- 07-26 ProductDesign 启动 + guidance 收官
+- 07-27 MSC-26-RW033 产品设计全量文档
+- 07-28 HXMapWidgetNative target-line + TitanNavi 性能
+- 07-29 maneuver-arrow + TBQ 状态机 + 导航模拟器
+- 07-30 HXNativeApp 侧边栏重构 + 路径进度 + 绘制 API
+- 07-31 备选路线切换 + ZMQ 乱序修复 + NMEA service 完善
+
+
+明日待续
+------------------------------------------------
+1. 备选路线切换端到端实车验证（forward cascade）
+2. ZMQ 乱序修复回归 + 长稳测试
+3. HXNavigation 本月收尾（7-8 月 plan 盘点）
+
+
+================================================
+数据来源：HXNavigation / HXMapWidgetNative / HXNativeApp
+git log（2026-07-31）、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

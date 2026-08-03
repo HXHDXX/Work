@@ -1,0 +1,61 @@
+工作日报 2026-05-29（周五）
+================================================
+
+【今日要点】共 23 次提交，涉及 10 仓：
+主线：OSMDataCompiler(11)、HXPOISearch(3)、Work(2)、HXSpatialMeasure(1)
+
+1. OSMDataCompiler（11 commits）
+------------------------------------------------
+- 09:00 e2fcf7d docs(knowledge): ingest beijing/algeria tile build and package stats
+- 09:24 e05a26c feat(styles): elevate transit layers above roads, below labels
+- 10:11 96ac4d1 feat(styles): increase transit line-width, remove tunnel dash pattern
+- 10:27 e6ae08b feat(styles): filter out transit service tracks (yard/siding/crossover)
+- 11:12 776d53f feat(scripts): Docker setup + pyosmium PBF pass-through skeleton
+- 11:32 176c6de feat(scripts): subway merge core algorithm — extraction, grouping, centerline, PBF write
+- 11:37 86f89e7 feat(scripts): build pipeline integration with --preprocess-subway flag
+- 15:23 6fc8590 feat: multi-scale rail merge — N-way Union-Find + overlay + generalized layers
+- 15:28 bef4033 feat: multi-rail-type test scenarios + shell/build integration
+- 15:51 f886035 fix(scripts): use dynamic positive IDs for overlay PBF (tilemaker compat)
+- 16:10 af24ea3 docs(knowledge): ingest Phase 3 multi-scale overlay rail merge
+
+2. HXPOISearch（3 commits）
+------------------------------------------------
+- 09:09 9f60bdc plugin-HXPOISearch
+- 11:11 d1269d5 feat(api): define POI search C API with audit fixes
+- 11:21 217ac0e docs(knowledge): ingest POI search API design decisions
+
+3. Work（2 commits）
+------------------------------------------------
+- 16:17 671804a update plan
+- 18:47 61bc2bb update cpp
+
+4. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
+
+5. HXRouteServer（1 commits）
+------------------------------------------------
+- 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
+
+6. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
+
+7. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
+
+8. HXNmeaParser（1 commits）
+------------------------------------------------
+- 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
+
+9. HXNavigation（1 commits）
+------------------------------------------------
+- 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
+
+10. HXGeoConverter（1 commits）
+------------------------------------------------
+- 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
+
+================================================
+数据来源：上述仓库 git log（2026-05-29）

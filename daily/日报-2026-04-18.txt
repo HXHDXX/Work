@@ -1,0 +1,15 @@
+工作日报 2026-04-18（周六）
+================================================
+
+【今日要点】共 4 次提交，涉及 1 仓：
+主线：OSMDataCompiler(4)
+
+1. OSMDataCompiler（4 commits）
+------------------------------------------------
+- 13:11 d0b7b8e feat(server): add /tiles/base/ endpoint and multi-source style rewriting
+- 13:33 b573e3c feat(styles): add global-base background layers for dual-source compositing
+- 13:50 1558d66 fix(scripts): handle global-base source URL rewriting in package.sh
+- 13:50 d05f2ad fix(styles): use url format for global-base source to match openmaptiles pattern
+
+================================================
+数据来源：上述仓库 git log（2026-04-18）

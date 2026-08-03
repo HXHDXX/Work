@@ -1,0 +1,18 @@
+工作日报 2026-07-01（周三）
+================================================
+
+【今日要点】共 4 次提交，涉及 2 仓：
+主线：OSMDataCompiler(3)、TitanNavi(1)
+
+1. OSMDataCompiler（3 commits）
+------------------------------------------------
+- 16:08 aebe77c docs(agents): ingest custom-layers-anchor decision into styles knowledge
+- 16:08 ead6470 feat(styles): pre-load custom-layers-anchor placeholder in all style JSONs
+- 16:14 9742e4a test(preview): fix hardcoded worktree path in preview.spec.mjs
+
+2. TitanNavi（1 commits）
+------------------------------------------------
+- 10:09 9c4d129 traject modify set color title
+
+================================================
+数据来源：上述仓库 git log（2026-07-01）

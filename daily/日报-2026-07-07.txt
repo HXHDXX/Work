@@ -1,0 +1,19 @@
+工作日报 2026-07-07（周二）
+================================================
+
+【今日要点】共 5 次提交，涉及 2 仓：
+主线：TitanNavi(4)、OSMDataCompiler(1)
+
+1. TitanNavi（4 commits）
+------------------------------------------------
+- 08:28 5d959f1 add progresswidget show navi route
+- 13:16 24ee78a add naviWidget show or hide
+- 16:30 05f37e7 add quick navi 4 way to navi
+- 16:56 fd3faaa fix trajectors filter result
+
+2. OSMDataCompiler（1 commits）
+------------------------------------------------
+- 11:08 53a9eec fix(package): prefix all hxmap URLs with mvt/ to mirror map_data server root
+
+================================================
+数据来源：上述仓库 git log（2026-07-07）

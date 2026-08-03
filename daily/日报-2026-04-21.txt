@@ -1,0 +1,37 @@
+工作日报 2026-04-21（周二）
+================================================
+
+【今日要点】共 23 次提交，涉及 2 仓：
+主线：OSMDataCompiler(12)、maplibre-native-qt-test(11)
+
+1. OSMDataCompiler（12 commits）
+------------------------------------------------
+- 10:49 4240515 chore: add dist/ to .gitignore
+- 10:56 29ef2bf refactor(data): move style/icons/ to data/icons/ with symlink
+- 11:02 8bbcd0b docs: update path references for data directory reorganization
+- 11:11 22b42ea chore: mark data-reorg plan tasks as completed
+- 12:01 fecbc34 feat(openmaptiles): lower minzoom from 7 to 4 for z4-6 regional data
+- 16:19 39ddbea fix(server): remove incorrect fallback to global-base in _tile()
+- 16:22 086c4cd docs(plan): mark openmaptiles-minzoom4 as complete
+- 16:52 4bc7a3c fix(server): route global-base source to /tiles/base/ endpoint
+- 17:07 49ec999 fix(web): improve style switcher performance
+- 17:15 676c617 fix(server): preserve original minzoom/maxzoom from style file
+- 17:20 b5851b4 fix(web): improve style switcher reliability
+- 17:28 1985785 chore: add .gstack to gitignore and track plan files
+
+2. maplibre-native-qt-test（11 commits）
+------------------------------------------------
+- 10:54 db31422 refactor(map): externalize configuration API
+- 11:15 81f32c0 feat(map): unified cross-platform touch gestures via QTouchEvent
+- 11:21 076ec0c fix(map): prevent mouse/touch event conflict
+- 11:27 cde4cc3 docs(widget): add public API comments
+- 15:08 678166f docs(mapcontainer): enhance header documentation
+- 15:17 d32e5bb docs(mapcontainer): add implementation comments
+- 15:22 d9acc00 docs(mainwindow): add architecture comments
+- 15:30 97ced13 docs: add comprehensive comments to main.cpp, CMakeLists.txt, and hxgisserver
+- 15:36 1dd6bac docs: add algorithm and interaction comments to scalebar and controlpanel
+- 16:09 897c0b8 chore: clean up temporary task files
+- 16:53 0ff695e docs: add offline map demo integration guide
+
+================================================
+数据来源：上述仓库 git log（2026-04-21）

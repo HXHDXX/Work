@@ -1,0 +1,48 @@
+工作日报 2026-07-10（周五）
+================================================
+
+【今日要点】共 31 次提交，涉及 3 仓：
+主线：OSMDataCompiler(27)、TitanNavi(3)、Work(1)
+
+1. OSMDataCompiler（27 commits）
+------------------------------------------------
+- 09:43 fd80026 fix(import-gjb-sms-lhzz): Phase 3 QA bbox Python 缩进修复 + chmod +x
+- 09:45 183bd06 docs(knowledge): gjb-sms-lhzz Phase3 Python bug + valhalla 无 extract 设计
+- 13:47 ea4f213 fix(scripts): download-osm-pbf.sh REGION 支持路径分隔符 + 尾部斜杠防御
+- 13:48 bcbfaf3 docs(knowledge): data-sources 模块 + 全量重建基线 + URL bug 修复记录
+- 14:42 bd5e1c8 fix(build-tiles): bbox 取 Header 而非 Data 区段致瓦片膨胀
+- 14:42 c09d4ad refactor(valhalla): per-region 配置收尾与 gitignore 补全
+- 15:29 907d922 refactor(mvt): profile 目录统一 + 脚本命名对称化
+- 15:31 c4a9c97 refactor(valhalla): 打包链 RUNTIME 路径更新 + valhalla.json.build 退役
+- 15:42 e5d81c2 docs: 构建链命名规范文档化 + 引用同步
+- 15:43 5571775 fix: 补充 scripts/ 与 opencode skills 的 build-tiles.sh→build-osm-tiles.sh 引用更新
+- 16:42 74dc221 feat(gjb+package): gjb 补 timezone/extract stage + package.sh 数据源自动发现
+- 16:44 7ffb09b fix(package): HAS_ADMIN=false 时 del(.mjolnir.admin) 避免绝对路径透传
+- 16:53 57622ca docs(knowledge): gjb timezone/extract + package.sh 自动发现 + admin DB 决策记录
+- 16:59 df031fb fix(skills): import-gjb-9121 SKILL 的 scripts/profiles 引用更新为 products/mvt/profiles
+- 17:11 4404211 docs(tiles-package): add gjb-sms-lhzz data_source support + dist cleanup rule
+- 17:22 a6b7ae9 feat(gjb-sms-lhzz): translation sub-code mapping for facilities/water/vegetation
+- 17:25 bb06b3e fix(gjb-sms-lhzz): keep gjb_category for process.lua routing — sub-code tags now reach tiles
+- 17:27 8da074b fix(gjb-sms-lhzz): pass OSM tags through GJB_KEYS for sub-code labels
+- 17:27 b129f27 docs(gjb-sms-lhzz): GJB 8023 symbol specification for SVG sprite creation
+- 20:59 7379c82 feat(gjb-sms-lhzz): 15 SVG sprites from GJB 8023 symbol specification
+- 21:01 aa0b2ff feat(gjb-sms-lhzz): use GJB military sprite icons in normal.json
+- 21:20 e055361 docs(gjb-sms-lhzz): finalize GJB 8023 Appendix B coverage — 16/18 categories confirmed
+- 21:28 1b0afe7 docs(gjb-sms-lhzz): derived RGB values for 24 aids-to-nav and 27 military
+- 21:30 e9edb96 docs(knowledge): gjb-sms-lhzz style + sub-code + RGB 100% knowledge ingest
+- 21:38 f7a85a9 feat(gjb-sms-lhzz): 50 SVG military symbols + symbol knowledge base
+- 21:50 9bf3bf1 feat(gjb-sms-lhzz): 20 more SVG sprites (total 70) + knowledge update
+- 22:26 d24a19c feat(gjb-sms-lhzz): 27 aids-to-navigation SVG sprites (total 97)
+
+2. TitanNavi（3 commits）
+------------------------------------------------
+- 09:29 7f4bde7 update 健康管理列表功能
+- 13:26 9716144 add map manage 功能
+- 15:55 57ae25d Update test point
+
+3. Work（1 commits）
+------------------------------------------------
+- 15:43 7e4596b update plan
+
+================================================
+数据来源：上述仓库 git log（2026-07-10）

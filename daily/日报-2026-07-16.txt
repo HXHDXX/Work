@@ -1,0 +1,57 @@
+工作日报 2026-07-16（周四）
+================================================
+
+【今日要点】共 37 次提交，涉及 4 仓：
+主线：OSMDataCompiler(17)、HXRdssSendingQueue(11)、TitanNavi(5)、HXNmeaParser(4)
+
+1. OSMDataCompiler（17 commits）
+------------------------------------------------
+- 11:10 28590e5 fix(topology): output 39K topology visualization nodes (node_type > 0) in T7 converter
+- 14:30 7be2047 feat(places): china-places-full.osm.pbf git-tracked + auto-merge in import
+- 14:44 d399ba4 feat(places): add admin codes (GB/T 2260) + province boundaries (NE admin_1)
+- 14:49 265b97d chore(lfs): migrate china-places-full.osm.pbf to Git LFS
+- 14:52 36fa85d feat(places): optimize admin code matching + province boundaries
+- 15:10 254a705 fix(style): boundary source-layer 'boundary'→'gjb9121_background' in 3 styles
+- 15:22 dad846c feat(boundaries): DataV admin boundaries (34 prov + 363 city + 2840 district) + tag unification
+- 15:54 91b4eee refactor: unify admin_code tag + fix bridge/POI branch bug
+- 16:00 6b9c077 fix: gitignore/gitattributes cleanup for offline build
+- 16:14 ed0c08c docs(knowledge): ingest gjb-9121 session (4 bugs + 3 decisions + 2 strategies)
+- 17:30 1f8b5aa docs: record multi-source admin data rendering strategy (boundary_line vs boundary)
+- 17:35 a89b4d4 feat(fusion): P0 data fusion - boundary layer separation + region clip
+- 17:46 6d9047e fix(places): exclude Natural Earth village (GJB9121 has own village POIs)
+- 17:55 a2e4eb9 feat(aliases): admin code alias framework for GB/T 2260 version drift
+- 19:32 02e86f3 feat(semantic): hidden field mapping + building layer split
+- 19:45 dd6aa18 fix: add import re in _parse_height
+- 21:14 185d49f fix(import): restore topology + china-places + china-boundaries merge
+
+2. HXRdssSendingQueue（11 commits）
+------------------------------------------------
+- 06:59 7b7c10e docs: fix bus socket types (tcq REQ/REP) and document tcq rate field
+- 09:08 ec2ac16 docs: document package_count/package_number in field semantics
+- 09:22 1823d5f docs: correct rate field semantics (报文通信频度, not reserved)
+- 09:54 b72aeb2 feat: add frequency countdown + fail_reason to /rdss/status
+- 10:44 746bc61 feat: snapshot returns remain_seconds; gate status remain_seconds to retry states
+- 11:22 b0b6f60 fix(test): align reason-1 test with new callback behavior; address review
+- 12:15 14e5e5a docs: correct max-length axes (encryption not encoding); record protocol finding
+- 12:40 9bad89e feat(validate): enforce TCQ freq-based length limit (Lf4 caps 640bit)
+- 15:27 227cb9b test(bus): add NMEA FKI/IBD/ACK -> /rdss/status E2E over real ZMQ
+- 16:00 c4757c6 feat(rdss-queue): add per-message port routing for serial selection
+- 16:08 5528ce4 docs(knowledge): ingest port routing decision + container/check pipeline fix
+
+3. TitanNavi（5 commits）
+------------------------------------------------
+- 11:21 4a92c0a add tableview height
+- 13:46 cd5b6e3 fix question 1,2,5,13
+- 16:15 43fe83d add point mapmeasurement cal
+- 17:02 fd6d4b1 add COM1 <-> COM7 COM4 -> COM0
+- 18:18 b54dc93 add Route Trajecties calculatro Distance
+
+4. HXNmeaParser（4 commits）
+------------------------------------------------
+- 15:40 e340ab3 feat(rdss): support $BDICO alias of $BDOCZ, normalize type to ICO; refresh FKI comment to 0-10
+- 15:48 e90c8df feat(cmd)!: build_mss test_item int→string for v1.9.3.5 A/F items; extend ICR coverage to 4/5/8
+- 16:25 c50d917 docs: sync OCZ→ICO in header comments; document ICR type 8 semantics
+- 17:20 86ad24a fix(review): preserve test_item default "0", sync OCZ/ICO comments, fix field docs
+
+================================================
+数据来源：上述仓库 git log（2026-07-16）

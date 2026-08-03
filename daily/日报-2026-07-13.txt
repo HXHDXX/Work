@@ -1,0 +1,74 @@
+工作日报 2026-07-13（周一）
+================================================
+
+【今日要点】共 54 次提交，涉及 4 仓：
+主线：HXNmeaParser(31)、OSMDataCompiler(21)、Work(1)、TitanNavi(1)
+
+1. HXNmeaParser（31 commits）
+------------------------------------------------
+- 10:31 5a913b7 plugin-HXNmeaParser
+- 10:58 726be71 update docs
+- 14:42 5afe0b3 docs: add 北三 RNSS+RDSS protocol statistics reference
+- 14:42 7aa4d49 docs(knowledge): ingest nmea-protocol module with minmea coverage analysis
+- 14:42 ceabc4d docs(knowledge): lint knowledge-base, fix dates/counts/cross-refs
+- 16:07 0fd4eae feat(cross-library): add minmea v1.0.0 NMEA parser library
+- 16:08 5bf8247 docs(knowledge): mark minmea integration decision resolved
+- 16:21 817aac0 docs(knowledge): ingest HXNativeApp line-io cross-project reference
+- 17:26 61b717b build: add minmea+zmq_client+nlohmann_json deps
+- 17:29 8869775 feat: add nmea_types.h unified data structures
+- 17:32 52599a5 feat: add nmea_parser.h parser interface
+- 17:35 460d287 feat: add bus_connector.h ZMQ SUB/REQ wrapper
+- 17:41 eed0c97 feat: add minmea dispatcher + GGA normalizer
+- 17:44 57e8a51 fix: time format always emits milliseconds + minor cleanup
+- 17:49 b1ad74c feat: add RMC normalizer with speed m/s conversion
+- 17:52 b68e1a3 feat: add remaining 7 minmea normalizers
+- 17:58 54b1c3d fix: correct GSA sat_prns count in test (7→8)
+- 18:01 79fba40 feat: add BSI custom parser as template + registration mechanism
+- 18:07 8e4688a feat: wire bus + parser into plugin lifecycle
+- 18:12 8166b60 test: set up Catch2 test framework
+- 18:20 e2c0f07 fix: correct NMEA checksums, GSA test data, and 2-digit year handling
+- 18:26 3cfe14b test: add bus integration tests
+- 18:35 17a8d3f fix: resolve ASAN/clang-tidy warnings
+- 18:48 be664b6 feat: add 17 RNSS private sentence parsers
+- 18:52 8923d14 fix: exception-safe stod/stoi + ECT buffer 256→1024
+- 19:06 db0fb7b feat: add 45 RDSS private sentence parsers
+- 19:38 43f0ce7 fix: BusConnector start() partial failure cleanup + thread safety docs + 9 minmea tests
+- 19:42 8b570b6 docs(knowledge): ingest nmea-parser + bus-architecture modules
+- 21:38 5bac66b fix: replace std::stoi with safe_stoi in ECT/CHL + remove owns_ctx_ dead code + add ICZ BD2 test
+- 22:33 12f4980 refactor: extract shared helpers + once_flag + checksum validation + test fixture
+- 23:33 315bb88 feat: add GSI parser (variable-length PRN list + TDOP)
+
+2. OSMDataCompiler（21 commits）
+------------------------------------------------
+- 09:44 4b11819 feat(test-server): add ?nostack=1 param for pure SMS preview
+- 10:34 9c353f4 docs: knowledge ingest — 30-sample verification + protobuf methodology + nostack param
+- 12:01 c271226 fix(gjb-sms-style): bump sub-pixel line-widths for contour/road visibility
+- 12:06 054d014 fix(gjb-sms-style): add missing line-dasharray for sketch/pipeline/power/admin-boundary
+- 12:08 5ebc93f style(gjb-sms): add line-cap/join round for contour/road-rail/road-path/road-track
+- 12:10 5eeb8b9 style(gjb-sms): bump text-size for contour-label/poi/road-name readability
+- 12:16 447c4c0 docs(gjb-sms): document POI icon decisions for building/hydrology/maritime layers
+- 12:18 8e9b62d style(gjb-sms): pull place label minzoom earlier for city/town/village visibility
+- 12:42 4e09c5c docs(gjb-sms): record F2-F4 visual verification of style optimization
+- 12:46 f41cae3 docs(gjb-sms): record style rendering optimization decisions in wiki
+- 14:44 682ae09 docs(gjb-1839b): transcribe missing 6.4.5 附属建筑物(140500) section
+- 15:05 b127366 docs(gjb-8023): document 1405xx coverage matrix in Appendix B
+- 15:09 5e4396a feat(gjb-sms-style): add road-bridge and road-tunnel layers per GJB 8023 spec
+- 15:09 9a4c4dd docs: record road-bridge/tunnel layer execution in learnings
+- 16:29 e198d18 fix(gjb-sms-style): bump text-offset to prevent label-icon overlap
+- 16:35 b9b5330 refactor(gjb-sms-style): unify POI text-anchor to top + [0, 0.9]
+- 17:21 e9c38c8 fix(gjb-sms-style): place labels no longer cover dot icons
+- 17:33 e8cc315 style(gjb-sms): defensive opacity + font consistency + variable-anchor unification
+- 18:56 fec9f68 style(gjb-sms): strengthen place label hierarchy for visual differentiation
+- 23:00 2c005f3 feat(gjb-sms): add background and theme display modes per GJB 8023
+- 23:27 b05f832 fix(gjb-sms): correct contour and vegetation colors in theme/background modes
+
+3. Work（1 commits）
+------------------------------------------------
+- 10:02 8422baf update plan
+
+4. TitanNavi（1 commits）
+------------------------------------------------
+- 16:55 9e2ff14 add datatransfer  tcprecv
+
+================================================
+数据来源：上述仓库 git log（2026-07-13）

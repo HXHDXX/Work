@@ -1,0 +1,15 @@
+工作日报 2026-05-06（周三）
+================================================
+
+【今日要点】共 4 次提交，涉及 1 仓：
+主线：maplibre-native-qt-test(4)
+
+1. maplibre-native-qt-test（4 commits）
+------------------------------------------------
+- 11:47 73c3e5a feat(test): add complete map API demo and auto-test suite
+- 14:07 0df4153 fix(map): unify Fixed mode touch resume timer behavior
+- 18:07 d49cd4b feat(map): implement Fixed mode touch interaction with two modes
+- 18:21 df90912 feat(map): refine Fixed mode controls and block all gestures when locked
+
+================================================
+数据来源：上述仓库 git log（2026-05-06）

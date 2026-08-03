@@ -1,0 +1,34 @@
+工作日报 2026-07-09（周四）
+================================================
+
+【今日要点】共 20 次提交，涉及 2 仓：
+主线：OSMDataCompiler(19)、TitanNavi(1)
+
+1. OSMDataCompiler（19 commits）
+------------------------------------------------
+- 11:05 6caed94 fix(gjb-sms-lhzz): comprehensive normal.json — motorway dual-color + zoom optimization + layer order
+- 11:09 72eb050 fix(valhalla): clean graph_tiles before rebuild to prevent cross-region contamination
+- 11:14 e07ab3c docs(knowledge): ingest algeria build + valhalla graph_tiles cleanup fix
+- 14:03 bf90f94 fix(valhalla): per-region output paths for multi-region coexistence
+- 14:11 cc749aa docs(knowledge): valhalla per-region refactor supersedes 72eb050 cleanup
+- 14:27 888e28f feat(osmium): add pyosmium to image + broken-refs filter scripts
+- 14:47 904ab04 fix(osmium): harden pyosmium install for flaky-proxy build env
+- 17:09 9e8d4d2 fix(osmium): build pyosmium v3.6.0 from GitHub source (no PyPI dep)
+- 17:26 e1b8204 fix(osmium): use local source tarballs (COPY) instead of wget in build
+- 17:34 54cc745 fix(osmium): add pybind11-dev for pyosmium v3.6.0 cmake build
+- 17:48 110651f fix(filter): rewrite filter-broken-refs.py for pyosmium v3.6.0 API
+- 17:49 b1cc0a9 docs(knowledge): osmium image tooling gap resolved (pyosmium v3.6 source-built)
+- 17:54 de0a5f2 docs(knowledge): 镜像能力优先原则 + osmium-tool pyosmium v3.6.0 能力描述
+- 18:22 bdbfbe5 fix(scripts): docker run 加 --user + HOME=/tmp, 产物改用户属主
+- 18:33 1caeea0 fix(scripts): 补 DOCKER_ARGS 数组的 --user 漏网 (build-tiles/build-global-base)
+- 19:26 b4839f2 fix(valhalla): timezone 阶段隔离 cwd, 不再删项目 dist/
+- 19:31 84d7524 docs(knowledge): dist 删除谜题真凶(timezone cwd) + --user 约定 + 共存验证
+- 19:42 145e16a fix(import-gjb): gdal/osmium docker run 加 --user, PBF/中间产物用户属主
+- 19:53 fd3b5d5 docs(knowledge): import-gjb --user 补齐 + PBF 镜像内过滤合规化
+
+2. TitanNavi（1 commits）
+------------------------------------------------
+- 14:55 90c49ae update map path mvt
+
+================================================
+数据来源：上述仓库 git log（2026-07-09）

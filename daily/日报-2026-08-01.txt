@@ -1,0 +1,51 @@
+工作日报 2026-08-01（周六）
+================================================
+
+【今日要点】轻量日，单一特性：多地图相机同步（broadcast mirror）
+跨 2 仓，共 7 次提交
+
+
+一、HXMapMirrorGroup 多地图相机同步（主工作）
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 6 commits
+
+【背景】多个地图视图并排时，主地图相机变化广播到所有镜像地图，
+实现平移/缩放/旋转联动（主图 + 镜像图同位置不同样式/比例）。
+
+【实现 09:28–10:03】
+1. bus：允许 broadcast 连接（空 mapId 专用广播通道）
+2. child：broadcastEnabled 开关 + IPC setBroadcastEnabled 命令
+3. HXMapMirrorGroup：多地图相机同步协调器
+4. HXNativeApp SDK：broadcastCamera() + 专用 broadcast bus
+
+【测试 09:50–10:34】
+5. broadcastEnabled + broadcast seq + broadcastCamera + 边界
+6. 3 地图镜像 + 1 独立图集成测试（验证独立图不受影响）
+
+【知识】
+7. 知识沉淀：broadcast camera mirror 特性
+
+
+二、关键决策
+------------------------------------------------
+1. 广播走专用通道（空 mapId），与单地图消息隔离
+2. broadcastEnabled 默认关，按需开启
+3. 镜像与独立图可混用（独立图不受广播影响）
+
+
+三、本月开局（8 月第 1 天）
+------------------------------------------------
+7 月主线回顾：GJB9121 导航图、HXSpatialMeasure 空间测量、
+HXNavigation 驾车引导引擎、HXGeoConverter 格式转换、
+HXMapWidgetNative 跨进程渲染（target-line/maneuver-arrow/
+route-progress/mirror）、MSC-26-RW033 产品设计。
+
+8 月待续：
+1. 备选路线切换 + ZMQ 乱序修复实车验证
+2. 多地图镜像集成到应用
+3. 全国区域 GJB 数据编译
+
+
+================================================
+数据来源：HXMapWidgetNative / HXNativeApp git log（2026-08-01）、
+commit body、opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

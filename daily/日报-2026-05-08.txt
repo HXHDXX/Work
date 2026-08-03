@@ -1,0 +1,22 @@
+工作日报 2026-05-08（周五）
+================================================
+
+【今日要点】共 5 次提交，涉及 3 仓：
+主线：Work(2)、maplibre-native-qt-test(2)、HXPluginRuntime(1)
+
+1. Work（2 commits）
+------------------------------------------------
+- 09:49 4b82d7e update plan
+- 19:44 7d1bad5 update plan
+
+2. maplibre-native-qt-test（2 commits）
+------------------------------------------------
+- 10:19 ae7408e docs: add MapContainer distribution file manifest
+- 17:19 525c123 feat(map): add focusOnRoute to animate camera to route bounds
+
+3. HXPluginRuntime（1 commits）
+------------------------------------------------
+- 19:31 15ccf63 fix(build): add gnutls transitive static deps to make .so self-contained
+
+================================================
+数据来源：上述仓库 git log（2026-05-08）

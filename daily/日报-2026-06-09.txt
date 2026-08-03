@@ -1,0 +1,34 @@
+工作日报 2026-06-09（周二）
+================================================
+
+【今日要点】共 17 次提交，涉及 3 仓：
+主线：maplibre-native-qt-test(9)、TitanNavi(5)、OSMDataCompiler(3)
+
+1. maplibre-native-qt-test（9 commits）
+------------------------------------------------
+- 09:35 dfd21fe feat(location): add bearing/zoom/pitch params to setLocation with lerp interpolation
+- 09:35 e930a74 test(location): add tests for setLocation bearing/zoom/pitch params
+- 13:54 bbc9b4b feat(annotation): add altitude field to MapAnnotation
+- 13:58 727ceff feat(export): serialize altitude in GeoJSON coordinates
+- 14:02 db7b7e1 feat(import): parse altitude from GeoJSON coordinates
+- 14:05 f3ff22e test(annotation): add altitude roundtrip verification
+- 14:28 bed8f78 test(location-indicator): add locationChanged signal tests (TDD RED)
+- 14:36 0fe3ed4 feat(location-indicator): add locationChanged signal with change detection
+- 14:38 5e6fc86 chore: update test log timestamp
+
+2. TitanNavi（5 commits）
+------------------------------------------------
+- 09:03 29a4f20 update polygong show title error
+- 11:02 7fa0236 标记和位置的图标覆盖，位置图标在顶层
+- 14:18 03b8339 按钮点击释放后的效果
+- 15:04 2ca896e 结构体增加alt,location增加positionChanged信号
+- 15:36 5b5f4e0 替换mapcontainer同步
+
+3. OSMDataCompiler（3 commits）
+------------------------------------------------
+- 11:42 2e5279c refactor(gjb): simplify place classification to pure field + minimal suffix
+- 11:45 d75f06a feat(gjb): align place minzoom to z10 for mainstream map parity
+- 17:17 de21b7f fix(gjb-9121): align town/village zoom to 高德 hierarchy (town=z11, village=z13)
+
+================================================
+数据来源：上述仓库 git log（2026-06-09）

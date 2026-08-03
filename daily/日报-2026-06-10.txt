@@ -1,0 +1,32 @@
+工作日报 2026-06-10（周三）
+================================================
+
+【今日要点】共 15 次提交，涉及 3 仓：
+主线：OSMDataCompiler(9)、TitanNavi(5)、maplibre-native-qt-test(1)
+
+1. OSMDataCompiler（9 commits）
+------------------------------------------------
+- 09:34 f38abce feat(scripts): add OSM PBF download and Shapefile conversion scripts
+- 09:56 f3fb123 fix(scripts): add OSM_CONFIG_FILE env var for GDAL OSM driver
+- 09:57 fbf3921 feat(scripts): add --source and --url flags to download script
+- 16:07 edf92b5 fix(gjb): remap 810100 to landuse, 810121 to office=gov, expand place detection for 810141
+- 16:09 46ff306 fix(poi): add diplomatic, ngo to poiTags office set + public_transport set
+- 16:16 e5208bd feat(poi): add GJB-code rank override + poiClassRanks re-rank
+- 16:17 f608560 refactor(poi): change WritePOI threshold rank>4 to rank>14
+- 16:19 3e084d4 feat(poi): lower poi minzoom 12→8, poi_detail 14→11
+- 16:23 cfa0a27 feat(poi): add 5-tier progressive POI layers z8-z15
+
+2. TitanNavi（5 commits）
+------------------------------------------------
+- 08:57 58c873a 修改样式
+- 10:00 fda7f01 add .ts file
+- 10:02 bc605ca add t_code GNSS file
+- 10:22 65dc09e Merge remote-tracking branch 'origin/updateT'
+- 11:33 17f91dc fix merge error  code
+
+3. maplibre-native-qt-test（1 commits）
+------------------------------------------------
+- 17:12 2b38936 fix(zoom): use touch point as zoom center for double-tap and two-finger-tap
+
+================================================
+数据来源：上述仓库 git log（2026-06-10）

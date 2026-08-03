@@ -1,0 +1,81 @@
+工作日报 2026-04-23（周四）
+================================================
+
+【今日要点】共 37 次提交，涉及 12 仓：
+主线：OSMDataCompiler(11)、ZMQClient(6)、HXSpatialMeasure(2)、HXRouteServer(2)
+
+1. OSMDataCompiler（11 commits）
+------------------------------------------------
+- 09:22 2450840 refactor: separate styles/ and fonts/ from mvt/ build artifacts
+- 09:33 05dc06e chore: remove mvt/ from version control (pure build artifacts)
+- 09:39 d376033 refactor: merge server/ + web/ into test-server/
+- 09:47 e819aae chore: clean up repo — remove runtime state, unused data, template files
+- 09:48 1be08a0 chore: keep tasks/ as local template, untrack from git
+- 09:56 adf7e78 feat: track data/fonts + data/icons via Git LFS
+- 10:14 ebc336b docs: add missing core/ docs and shapefile data sources
+- 10:16 55e8e47 chore: migrate CHN POV shapefiles to Git LFS pointers
+- 14:59 6e51973 fix: tilemaker v3.0.0 integer encoding - convert admin_level/disputed to strings
+- 19:22 4dc4bf4 feat: wire fill patterns into landcover styles (day/night/nav)
+- 19:23 93705ff chore: remove old poi/wave.svg (replaced by patterns/wave_pattern.svg)
+
+2. ZMQClient（6 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+- 15:28 fb431e5 feat: add async C API wrapper for zmq_client
+- 15:33 329f913 docs(knowledge): ingest zmq-client-async module
+- 15:35 5d7325a docs: add async wrapper design doc and implementation plan
+- 15:57 1987319 docs(knowledge): add async init sequence strategy to zmq-client-async
+
+3. HXSpatialMeasure（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+4. HXRouteServer（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+5. HXRdssSendingQueue（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+6. HXProjectTemplate（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+7. HXPOISearch（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+8. HXPluginRuntime（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+9. HXNmeaParser（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+10. HXNavigation（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+11. HXGISServer（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+12. HXGeoConverter（2 commits）
+------------------------------------------------
+- 09:57 e3d38ad chore: remove tasks.md & tasks/ from version control
+- 10:02 b31aeb8 chore: ignore tasks.md and tasks/ directory
+
+================================================
+数据来源：上述仓库 git log（2026-04-23）

@@ -1,0 +1,84 @@
+工作日报 2026-04-20（周一）
+================================================
+
+【今日要点】共 34 次提交，涉及 14 仓：
+主线：OSMDataCompiler(6)、Work(5)、ZMQClient(2)、HXSpatialMeasure(2)
+
+1. OSMDataCompiler（6 commits）
+------------------------------------------------
+- 09:19 193658e docs: update knowledge base for 04-17/18 changes (dual-source, package.sh CLI, path standardization)
+- 12:54 929c1e9 refactor(global-base): swap Natural Earth to China POV
+- 14:31 66cfe43 refactor(global-base): change maritime_indicator class to dedicated value for style layer separation
+- 14:54 0c0ee89 feat(styles): add dedicated gb-boundary-maritime-indicator layer for nine-dash line
+- 15:15 6e3d29e docs: update knowledge base for nine-dash line dedicated layer
+- 16:16 e9188a6 fix(styles): exclude maritime_indicator from boundary-land-level-2 to prevent double rendering
+
+2. Work（5 commits）
+------------------------------------------------
+- 09:51 60e9b25 update cpp-doc
+- 09:56 5754e57 update cpp-doc
+- 10:27 ba5f89c update cpp-doc
+- 10:30 c80e88d update cpp-doc
+- 10:37 f336e7b update cpp-doc
+
+3. ZMQClient（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+4. HXSpatialMeasure（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+5. HXRouteServer（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+6. HXRdssSendingQueue（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+7. HXProjectTemplate（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+8. HXPOISearch（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+9. HXPluginRuntime（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+10. HXNmeaParser（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+11. HXNavigation（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+12. HXGISServer（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+13. HXGeoConverter（2 commits）
+------------------------------------------------
+- 10:52 be8e491 fix(skills): add Chinese descriptions and triggers to project-level skills
+- 11:01 4813c0f docs(knowledge): ingest skill-system — SKILL.md schema, Chinese trigger strategy
+
+14. maplibre-native-qt-test（1 commits）
+------------------------------------------------
+- 15:58 6287a26 refactor: migrate MapLibre from QML to QWidget architecture
+
+================================================
+数据来源：上述仓库 git log（2026-04-20）

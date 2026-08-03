@@ -1,0 +1,110 @@
+工作日报 2026-05-21（周四）
+================================================
+
+【今日要点】共 63 次提交，涉及 13 仓：
+主线：maplibre-native-qt-test(6)、ZMQClient(5)、HXSpatialMeasure(5)、HXRouteServer(5)
+
+1. maplibre-native-qt-test（6 commits）
+------------------------------------------------
+- 17:22 8bc00c7 fix(layers): use before parameter for deterministic z-order
+- 17:23 4761d4c test(layers): add z-order verification test
+- 17:48 3137c75 feat(mapcontainer): expose Manager getters for direct application access
+- 19:36 4a6bb3c feat(route): add direction arrow fields and icon generation (Wave 1)
+- 19:50 f8ed329 feat(route): add routes-arrows layer, icon lifecycle, and GeoJSON persistence (Wave 2)
+- 19:55 d7fe38f fix(build): register tst_arrow_icon_generation in CTest (found by F3 QA)
+
+2. ZMQClient（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+3. HXSpatialMeasure（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+4. HXRouteServer（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+5. HXRdssSendingQueue（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+6. HXProjectTemplate（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+7. HXPOISearch（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+8. HXPluginRuntime（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+9. HXNmeaParser（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+10. HXNavigation（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+11. HXGISServer（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+12. HXGeoConverter（5 commits）
+------------------------------------------------
+- 16:26 81634b5 docs(knowledge): remove task-plan cross-references from related modules
+- 16:26 92bd388 docs(agents): remove task-plan core documentation
+- 16:26 9544b85 docs(knowledge): remove task-plan-system knowledge module
+- 16:26 f21b292 chore: remove project-task-runner and project-task-writer skills
+- 16:27 4e35e41 docs(agents): remove task-plan section from AGENTS.md and log deletion
+
+13. Work（2 commits）
+------------------------------------------------
+- 09:53 c15e76c add yaogan-dixing
+- 10:44 7f972f7 update plan
+
+================================================
+数据来源：上述仓库 git log（2026-05-21）

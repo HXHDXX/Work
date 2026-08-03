@@ -1,0 +1,21 @@
+工作日报 2026-05-11（周一）
+================================================
+
+【今日要点】共 7 次提交，涉及 2 仓：
+主线：maplibre-native-qt-test(6)、Work(1)
+
+1. maplibre-native-qt-test（6 commits）
+------------------------------------------------
+- 14:29 9ff4e52 feat(tts): add ttsplayer-1.0.0 library and build configuration
+- 14:29 a35ec6a feat(tts): add French TTS playback button to control panel
+- 14:50 eb84670 fix(tts): correct Linux TTS model path to reach project root
+- 15:05 b0d60da fix(tts): use file(COPY) for Android model deployment to assets
+- 15:12 0e80831 fix(tts): restrict model COPY to Android builds only
+- 16:21 7329043 fix(android): read TTS models from external storage and enable touch scrolling
+
+2. Work（1 commits）
+------------------------------------------------
+- 14:32 107e984 update plan
+
+================================================
+数据来源：上述仓库 git log（2026-05-11）

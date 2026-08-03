@@ -1,0 +1,41 @@
+工作日报 2026-06-26（周五）
+================================================
+
+【今日要点】共 24 次提交，涉及 3 仓：
+主线：OSMDataCompiler(11)、HXRouteServer(10)、TitanNavi(3)
+
+1. OSMDataCompiler（11 commits）
+------------------------------------------------
+- 13:31 f11a616 feat(valhalla): add routing tile build pipeline with concurrent-safe config
+- 14:15 d7b816b refactor(structure): migrate MVT assets to products/mvt/ layout
+- 15:20 ce6f676 feat(package): unify MVT + Valhalla into {region}-map-data.tar
+- 15:29 aa24530 docs(tiles-package): update for unified map-data package with Valhalla routing
+- 15:37 76c3c07 fix(tiles-package): align Step 5.5 jq with package.sh implementation
+- 15:49 1ab5bea fix(package): restore rm -rf for idempotency + strengthen routing verification
+- 16:47 7eccaed fix(valhalla): redirect build_timezones stdout to TIMEZONE_DB
+- 17:08 d40c1d3 docs(knowledge): ingest valhalla timezone stdout bug + map-data package stats
+- 17:10 a0a5608 fix(valhalla): use find instead of ls for nested .gph tile count
+- 17:11 3368a1b docs(tiles-package): update entry count to actual 1835
+- 22:55 dc09d7d chore(gitignore): ignore root-level mvt/ artifacts and duplicateways.txt
+
+2. HXRouteServer（10 commits）
+------------------------------------------------
+- 17:36 18a6475 feat(cmake): add mongoose, valhalla, gtest, libenvpp, rapidjson dependencies + test infrastructure
+- 17:36 25e616d feat(actor): add ValhallaActorService with shared GraphReader + parallel strategies
+- 17:36 346cb92 feat(http): add mongoose HTTP server wrapper with dedicated event-loop thread
+- 17:36 3663a33 feat(json): add rapidjson I/O helpers with strategies envelope + error format
+- 17:36 44660c4 feat(config): add env config (libenvpp) + valhalla config loader with validation
+- 17:36 99ee308 feat(logging): add spdlog init/shutdown with file+console sinks
+- 17:36 e545d54 feat(dispatcher): add RouteDispatcher for 7 endpoints with CORS + mutex serialization
+- 17:37 1332218 docs(api): add Markdown API reference for 7 endpoints + error codes + CORS + config
+- 17:37 97181cf docs(knowledge): add valhalla-integration knowledge module
+- 17:37 aa27b80 feat(integration): wire all modules into plugin entry + demo + e2e tests
+
+3. TitanNavi（3 commits）
+------------------------------------------------
+- 14:20 60f5e4d add dataPanel show
+- 14:22 77eb400 delete
+- 16:18 e3bc65d update ins
+
+================================================
+数据来源：上述仓库 git log（2026-06-26）

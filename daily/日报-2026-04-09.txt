@@ -1,0 +1,16 @@
+工作日报 2026-04-09（周四）
+================================================
+
+【今日要点】共 5 次提交，涉及 1 仓：
+主线：HXPluginRuntime(5)
+
+1. HXPluginRuntime（5 commits）
+------------------------------------------------
+- 10:12 1a2b8cc fix - 9
+- 10:51 14562f8 Add all src files to CMakeLists.txt and fix include paths
+- 10:52 7f1344d Add runtime-architecture knowledge module
+- 10:53 520681f Add codebase-issues knowledge module
+- 10:54 06a54f5 Update knowledge index, plugin-architecture module, and log
+
+================================================
+数据来源：上述仓库 git log（2026-04-09）

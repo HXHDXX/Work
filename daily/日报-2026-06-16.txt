@@ -1,0 +1,61 @@
+工作日报 2026-06-16（周二）
+================================================
+
+【今日要点】共 23 次提交，涉及 10 仓：
+主线：OSMDataCompiler(12)、maplibre-native-qt-test(3)、TitanNavi(1)、HXSpatialMeasure(1)
+
+1. OSMDataCompiler（12 commits）
+------------------------------------------------
+- 11:03 c97b5ff docs: refine AGENTS rules for worktree naming, cross-project docs, and CN interaction
+- 13:59 e67f57a fix(styles): replace composite source with openmaptiles in OSM base POI layers
+- 14:04 91b50c1 feat(validate): reject composite source + scan OSM base styles
+- 15:27 b10dea0 fix(build-sprites): correct icon and sprite paths
+- 15:32 0e94bab feat(tiles-package): add GJB-9121 data_source support
+- 15:32 9d2f0ac fix(map-preview): correct all paths + add GJB support
+- 15:32 bdaad91 fix(build-tiles): correct paths + add GJB cross-reference
+- 15:45 8926222 fix(tiles-package): add missing bash code fence around 世界底图 commands
+- 15:57 f530b7a docs(knowledge): ingest skill-osm-gjb-diff - canonical paths + GJB differentiation
+- 16:49 01a4ad7 feat(test-server): support ?data_source=gjb-9121 URL param for style switching
+- 16:49 176adfe docs(map-preview): document ?data_source= URL param in Step 3.1
+- 17:03 de08a7b docs(knowledge): ingest index-html-dynamic-style - URL param + Playwright TDD
+
+2. maplibre-native-qt-test（3 commits）
+------------------------------------------------
+- 09:10 bba1a36 fix(location-indicator): fix animation stutter, drag icon transition, and selfAnimating guard
+- 09:34 4b777d2 feat(location-indicator): add smooth 300ms resume animation with overlay handoff
+- 09:43 7030567 fix(location-indicator): code review fixes — bug, dead code, API cleanup
+
+3. TitanNavi（1 commits）
+------------------------------------------------
+- 09:11 abb4fbd 增加围栏同步到监控
+
+4. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
+
+5. HXRouteServer（1 commits）
+------------------------------------------------
+- 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
+
+6. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
+
+7. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
+
+8. HXNmeaParser（1 commits）
+------------------------------------------------
+- 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
+
+9. HXNavigation（1 commits）
+------------------------------------------------
+- 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
+
+10. HXGeoConverter（1 commits）
+------------------------------------------------
+- 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
+
+================================================
+数据来源：上述仓库 git log（2026-06-16）

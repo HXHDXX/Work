@@ -1,0 +1,23 @@
+工作日报 2026-06-03（周三）
+================================================
+
+【今日要点】共 12 次提交，涉及 1 仓：
+主线：OSMDataCompiler(12)
+
+1. OSMDataCompiler（12 commits）
+------------------------------------------------
+- 10:02 1c4752f feat(import): add --direct mode for GJB GeoJSON export without PG/PBF
+- 14:23 7ee5462 feat: complete GJB full-field mapping and coordinate perturbation
+- 14:23 b1a084c docs: add GJB9121 field mapping, skill, and knowledge updates
+- 14:48 9ab7fb4 fix: add --positive-id to ogr2osm, update skill with tile build step
+- 14:49 c1049ec docs: add --positive-id bug fix and successful build to knowledge base
+- 15:51 452523e feat: GJB gjb_* passthrough, expanded highway map, independent styles
+- 15:53 c3e3c3a refactor: separate GJB and OSM process.lua
+- 15:56 3180b31 docs: update skill with GJB build command, add build-gjb-tiles.sh
+- 16:00 c64ff27 refactor: rename gjb9121 to gjb-9121 for format precision
+- 16:05 873b680 refactor: rename gjb dirs to gjb-9121 for format precision
+- 16:09 61c36be chore: update script header comments to gjb-9121
+- 16:09 ddfb9c2 docs: add gjb-9121 naming and process.lua separation decisions
+
+================================================
+数据来源：上述仓库 git log（2026-06-03）

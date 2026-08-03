@@ -1,0 +1,46 @@
+工作日报 2026-07-11（周六）
+================================================
+
+【今日要点】共 35 次提交，涉及 1 仓：
+主线：OSMDataCompiler(35)
+
+1. OSMDataCompiler（35 commits）
+------------------------------------------------
+- 06:26 1c8176d docs(gjb-sms): gjb_code validation results from MBTiles sampling
+- 06:28 6729ddc fix(gjb-sms): railway casing+fill 10:9 dasharray per GJB 8023
+- 06:29 8a18ac0 fix(gjb-sms): construction road 8:1 dashed by gjb_code
+- 06:30 5296052 fix(gjb-sms): contour differentiation by gjb_code (2 types)
+- 06:31 3242654 fix(gjb-sms): boundary differentiation, 国界 3:1 dash per spec
+- 06:36 66c169e feat(gjb-sms): power-line arrow decoration per GJB 8023
+- 10:56 b404d1b fix(gjb-sms): 34个点符号SVG颜色按GJB 8023附录A/B修正
+- 10:57 98f31ad docs(gjb-sms): fix lighthouse color from cyan to pink per PDF appendix A
+- 12:17 5851ccc fix(gjb-sms): road-path/track color to rgb(90,90,90) per GJB 8023
+- 12:27 f19f366 fix(gjb-sms): split pipeline into power-line(150101 purple) + pipeline(150302 orange)
+- 13:10 341ac47 docs(gjb-sms): supplement 58 SVG entries to symbols knowledge base
+- 13:12 5313424 docs(gjb-sms): deduplicate symbols KB, remove 19 stale entries
+- 13:16 868b2d4 docs(gjb-sms): restore 8 accidentally deleted KB entries (aviation/waterfall/elevation/volcano)
+- 13:19 4a50c2a docs(gjb-sms): restore lighthouse entry in symbols KB
+- 14:14 cf60ab5 fix(gjb-sms): 7 SVG shapes per PDF spec — military_control cross, gps_point hollow, oil_tank cylinder, aviation_obstacle mast+flare, aviation_beacon hexagram, nav_station Y-antenna, radio_mast pole+bars
+- 14:41 02ce7b5 fix(gjb-sms): 5 more SVG shapes per PDF — power_plant lightning, observatory circle+dot, city/town/village circle fill states
+- 14:57 855ee12 docs(gjb-sms): record full symbol audit results to knowledge base
+- 15:20 5d6d866 fix(gjb-sms): contour intermediate/sketch layers, power-line underground dashed, landcover outline color
+- 16:11 3afcc19 fix(gjb-sms): split composite gjb_code on semicolon — primary code + full preserved
+- 16:22 c7a1335 feat(gjb-sms): wire 93 POI icons via data-driven icon-image match expression
+- 19:25 28a194d fix(gjb-sms): add gjb_code_full to GJB_KEYS for attribute passthrough
+- 19:26 c3edbbb refactor(gjb-sms): rewrite config.json with 15 GJB-category source-layers
+- 19:28 58ab016 test(gjb-sms): add layer routing validation script
+- 19:32 37240b1 refactor(gjb-sms): rewrite process.lua way_function GJB routing
+- 19:36 e10bc34 refactor(gjb-sms): update normal.json source-layer references to GJB layers
+- 19:58 e782b0d build(gjb-sms): rebuild MBTiles with new GJB layer architecture
+- 20:00 13953fa docs(gjb-sms): archive layer redesign decision to knowledge base
+- 20:15 e907f6f fix(gjb-sms): add missing returns in waterway/aeroway/vegetation/landuse/parks blocks
+- 20:24 628fb9e fix(gjb-sms): AC-6 dynamic GJB block detection + AC-4 full GJB_KEYS check
+- 20:26 e376bf0 fix(gjb-sms): AC-4 restrict regex to GJB_KEYS table + AC-6 dynamic block detection
+- 21:19 5db0900 refactor(gjb-sms): split mixed layers — terrain/military/maritime/aeroway + zoom fixes
+- 21:21 1387103 refactor(gjb-sms): add 7 style layers for split data + aeroway source fix
+- 21:35 8aa4e98 fix(gjb-sms): render order per GJB §6.1 + add transport-supp-line
+- 21:51 63a5d09 fix(gjb-sms): place-city-major uses Bold font stack per OSM convention
+- 22:50 5e7c6c4 feat(gjb-sms): introduce global base map (z0-6) from OSM style
+
+================================================
+数据来源：上述仓库 git log（2026-07-11）

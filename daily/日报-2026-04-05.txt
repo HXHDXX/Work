@@ -1,0 +1,70 @@
+工作日报 2026-04-05（周日）
+================================================
+
+【今日要点】共 26 次提交，涉及 12 仓：
+主线：OSMDataCompiler(15)、ZMQClient(1)、HXSpatialMeasure(1)、HXRouteServer(1)
+
+1. OSMDataCompiler（15 commits）
+------------------------------------------------
+- 21:45 07d8d47 docs: add tilemaker & map styles directory structure documentation
+- 21:45 5e2b26e docs: update AGENTS.md with tilemaker & styles directory reference
+- 21:46 06c1931 feat: add tilemaker openmaptiles profile (config + process.lua)
+- 21:46 0add9e1 feat: add 1075 SVG map icons from OSM Carto + OSM Liberty
+- 21:46 bc1572e feat: add 4 MapLibre GL styles (day/night/day-nav/night-nav)
+- 21:47 151ad41 feat: add XYZ vector tile server and MapLibre GL H5 viewer
+- 21:47 614fe0a chore: add node_modules to gitignore, lock playwright dependency
+- 22:05 a882990 docs: add environment setup and scripts reference docs
+- 22:06 f068fe5 docs: update tilemaker-styles and AGENTS.md with server/web/sprite docs
+- 22:07 6decf97 feat: add build and serve shell scripts
+- 22:24 0437341 feat: support specifying mbtiles path as CLI argument
+- 22:34 435de5b docs: add knowledge retention rule to AGENTS.md
+- 22:43 06914da docs: add build new region checklist to AGENTS.md
+- 22:43 098b4c1 docs: add new region map build guide
+- 22:43 c4ce267 docs: update serve.sh docs with mbtiles path parameter
+
+2. ZMQClient（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-16 17:24
+
+3. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-15 16:08
+
+4. HXRouteServer（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-15 16:08
+
+5. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-14 10:49
+
+6. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-15 16:08
+
+7. HXPOISearch（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-01 16:55
+
+8. HXPluginRuntime（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-16 18:29
+
+9. HXNmeaParser（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-03 14:35
+
+10. HXNavigation（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-15 11:23
+
+11. HXGISServer（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init2026-07-09 10:10
+
+12. HXGeoConverter（1 commits）
+------------------------------------------------
+- 22:23 1b67cbe init
+
+================================================
+数据来源：上述仓库 git log（2026-04-05）

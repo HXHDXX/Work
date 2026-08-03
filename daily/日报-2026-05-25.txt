@@ -1,0 +1,107 @@
+工作日报 2026-05-25（周一）
+================================================
+
+【今日要点】共 66 次提交，涉及 11 仓：
+主线：ZMQClient(10)、HXPluginRuntime(9)、HXGISServer(7)、HXSpatialMeasure(5)
+
+1. ZMQClient（10 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 09:55 09f34b5 docs(knowledge): add zmq-client-sync module
+- 09:55 96441fd docs(knowledge): comprehensive correction of all wiki modules
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:23 deeceef docs(knowledge): ingest header documentation audit results
+- 10:23 e0bda16 docs: add comprehensive Doxygen comments to public headers
+- 10:45 45d0bb8 docs(knowledge): fix libenvpp usage pattern in library-integration
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+2. HXPluginRuntime（9 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:20 d7a8a7d fix: use env::prefix("HX") to avoid double underscore in env var lookup
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:57 7b8daa6 docs(knowledge): fix factual errors across 4 modules (round 2 deep audit)
+- 10:57 837d8fe docs(knowledge): sync index, inventory, cross-refs, and audit log
+- 10:57 d086640 docs(knowledge): fix stale references and paths in 5 modules (round 1 audit)
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+3. HXGISServer（7 commits）
+------------------------------------------------
+- 09:05 9983744 docs(knowledge): correct env::prefix usage and add auto-append note
+- 09:05 fbb1fc6 fix(env): correct libenvpp prefix double-underscore bug
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+4. HXSpatialMeasure（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+5. HXRouteServer（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+6. HXRdssSendingQueue（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+7. HXProjectTemplate（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+8. HXPOISearch（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+9. HXNmeaParser（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+10. HXNavigation（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+11. HXGeoConverter（5 commits）
+------------------------------------------------
+- 09:12 006008a fix(cross-library): correct double-underscore prefix in libenvpp example
+- 09:14 ae9a1d5 docs(cross-library): add comment warning about env::prefix auto-append underscore
+- 09:38 7cd34b8 docs(agents): sync core principles with expanded behavioral guidelines
+- 10:10 f73eb77 style(AGENTS.md): remove trailing period from motto
+- 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
+
+================================================
+数据来源：上述仓库 git log（2026-05-25）

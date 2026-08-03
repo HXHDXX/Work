@@ -1,0 +1,34 @@
+工作日报 2026-04-30（周四）
+================================================
+
+【今日要点】共 14 次提交，涉及 4 仓：
+主线：HXPluginRuntime(7)、Work(5)、maplibre-native-qt-test(1)、HXGISServer(1)
+
+1. HXPluginRuntime（7 commits）
+------------------------------------------------
+- 09:20 4791a91 fix: correct substr offset when stripping libplugin- prefix
+- 09:22 3a98b0a docs(knowledge): update runtime-architecture with current ports and env vars
+- 09:36 d8b7a0c refactor(plugin): allow hyphen in plugin name and add .dll platform note
+- 10:12 7577ee3 refactor(zmq_service): differentiate msgbus forwarding response by scenario
+- 10:12 87830ed feat(demo): add ZMQ test client
+- 10:42 b86fa4e fix(zmq_service): remove msgbus messages from plugin route and change not-found code to -1
+- 10:49 66c9e65 fix(zmq_service): escape JSON braces in fmt format strings
+
+2. Work（5 commits）
+------------------------------------------------
+- 10:18 4e5145d update cpp-doc
+- 10:30 a0e3dd7 update cpp-doc
+- 11:07 9d98a61 update cpp-doc
+- 14:29 6e025a1 Update progress status in plan.md
+- 18:11 e890643 Update plan.md
+
+3. maplibre-native-qt-test（1 commits）
+------------------------------------------------
+- 10:43 b535190 feat(touch): add two-finger tap zoom-out gesture
+
+4. HXGISServer（1 commits）
+------------------------------------------------
+- 10:02 3f57c1d docs: add developer guide and user guide for HXGISServer
+
+================================================
+数据来源：上述仓库 git log（2026-04-30）

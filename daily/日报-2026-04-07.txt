@@ -1,0 +1,31 @@
+工作日报 2026-04-07（周二）
+================================================
+
+【今日要点】共 17 次提交，涉及 2 仓：
+主线：OSMDataCompiler(13)、Work(4)
+
+1. OSMDataCompiler（13 commits）
+------------------------------------------------
+- 11:29 b20af5c fix: restore server.py full implementation and update gitignore
+- 11:38 9ffa1c7 feat: add map-preview skill for tile server launch and browser verification
+- 11:47 35715a3 feat: add tilemaker Docker image (3.0.0, multi-arch build with RapidJSON)
+- 11:47 458e795 feat: add osmosis Docker image (0.49.2, Java-based OSM data processing)
+- 11:47 a38c870 feat: add valhalla Docker image (3.2.1, tools & data tools only)
+- 11:47 b286cc9 feat: add bash-env Docker image (Ubuntu 22.04 utility environment)
+- 11:47 e24005c feat: add postgis Docker image (PostgreSQL 15 + PostGIS 3.4)
+- 11:47 f299517 feat: add gdal Docker image (3.6.3, multi-arch with cross-library)
+- 11:47 f45f3aa feat: add osmium-tool Docker image (1.16.0, multi-stage build)
+- 13:48 88721ef docs: ingest knowledge for server, docker-images, project-structure, map-preview
+- 18:10 49bc57d feat: add background mode and tile server with daemonize + PID file
+- 18:16 bd7eef9 feat: update map-preview skill with auto-detect region and background mode docs
+- 18:17 fb606da chore: update mbtiles paths in style JSONs and web viewer center
+
+2. Work（4 commits）
+------------------------------------------------
+- 14:56 41af6b1 init2026-06-30 14:52
+- 15:08 38741c2 add agent config and knowledge docs
+- 15:09 dd408e5 add project-compound skill
+- 15:17 bc5755c ingest infra knowledge: project scaffold and toolchain decisions
+
+================================================
+数据来源：上述仓库 git log（2026-04-07）

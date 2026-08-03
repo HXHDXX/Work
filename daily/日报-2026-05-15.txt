@@ -1,0 +1,74 @@
+工作日报 2026-05-15（周五）
+================================================
+
+【今日要点】共 24 次提交，涉及 14 仓：
+主线：OSMDataCompiler(9)、Work(2)、maplibre-native-qt-test(2)、ZMQClient(1)
+
+1. OSMDataCompiler（9 commits）
+------------------------------------------------
+- 14:44 f39cb8d data(fonts): add source TTF font files via Git LFS
+- 15:06 fd43477 infra(fontnik): add fontnik Docker image for PBF glyph generation
+- 15:07 ea2edbd feat(fonts): rewrite build-fonts.sh with fontnik Docker pipeline
+- 15:27 3544b81 data(fonts): rebuild NotoSans PBF and add CJK/Arabic font families
+- 15:52 71d1b28 feat(rtl): add MapLibre RTL text plugin and update packaging
+- 15:52 e5b36e2 style(fonts): add font stack fallback for CJK and Arabic
+- 16:31 809c5bb style(fonts): add {name:nonlatin} to all label layers for global coverage
+- 16:46 9849b40 feat(tiles): generate name:nonlatin for non-Latin scripts in process.lua
+- 17:45 d091315 fix(tiles): revert name:nonlatin for region tiles, avoid duplicate labels
+
+2. Work（2 commits）
+------------------------------------------------
+- 17:35 fe63aa5 update plan
+- 19:05 e4b8b84 Update plan.md
+
+3. maplibre-native-qt-test（2 commits）
+------------------------------------------------
+- 09:27 7dce048 feat(map): add coordinate conversion methods and click signal
+- 09:27 a6b0d1c test(map): add coordinate conversion unit tests
+
+4. ZMQClient（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+5. HXSpatialMeasure（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+6. HXRouteServer（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+7. HXRdssSendingQueue（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+8. HXProjectTemplate（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+9. HXPOISearch（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+10. HXPluginRuntime（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+11. HXNmeaParser（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+12. HXNavigation（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+13. HXGISServer（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+14. HXGeoConverter（1 commits）
+------------------------------------------------
+- 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
+
+================================================
+数据来源：上述仓库 git log（2026-05-15）

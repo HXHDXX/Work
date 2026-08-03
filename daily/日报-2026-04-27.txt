@@ -1,0 +1,39 @@
+工作日报 2026-04-27（周一）
+================================================
+
+【今日要点】共 25 次提交，涉及 2 仓：
+主线：maplibre-native-qt-test(18)、OSMDataCompiler(7)
+
+1. maplibre-native-qt-test（18 commits）
+------------------------------------------------
+- 10:05 1c55cef fix(android): 全屏显示以适配手机屏幕
+- 10:11 ed15e2b feat(android): 支持外部存储访问 SD 卡任意位置
+- 10:15 13e72bc feat(android): 启动时检查地图数据目录，缺失则提示用户
+- 10:17 568c995 feat(android): 严格检查权限和数据目录，缺失时强制退出
+- 10:19 3ee905a feat(android): 循环检查权限和数据目录，无需手动重启
+- 10:41 567de9f fix(android): 使用 QtNative 替代 QNativeInterface 获取 Context
+- 11:17 6e5ead2 feat(android): 完整实现外部存储权限检查和数据目录验证
+- 13:51 e621afb fix(android): 修复双指缩放和旋转手势
+- 14:02 3fe4c95 降低旋转阈值到 0.5°，提升旋转灵敏度
+- 14:07 b16a284 优化双指复合手势：锁定主导意图避免缩放/旋转互相干扰
+- 14:18 aa955f9 优化 zoom 8 旋转卡顿：指定旋转中心 + 帧节流
+- 14:39 59ff2bf 修复双指缩放时比例尺不更新 + 优化旋转 API
+- 15:07 56e2c39 性能优化：减少 QWidget 重绘 + 强制 OpenGL ES 硬件加速
+- 15:27 57958ca 优化渲染频率：旋转每3帧 + 平移每2帧节流
+- 15:48 30713c1 Fix composite gesture priority and zoom 8 rotation performance
+- 16:20 f0e2a3f Optimize memory: 50MB cache limit + low-res sprite
+- 17:33 f30cfba feat(mapcontainer): add double-tap zoom with animation and zoom level limit
+- 17:47 5fe0ecc feat(mapcontainer): add two-finger vertical swipe to adjust pitch
+
+2. OSMDataCompiler（7 commits）
+------------------------------------------------
+- 10:21 db93eea feat(global-base): preprocess shapefiles via GeoJSON to eliminate all build errors
+- 10:46 6eb88d9 docs(knowledge): ingest global-base GeoJSON preprocessing experience
+- 11:31 9cefa8e docs(knowledge): record regional map verbose build error analysis
+- 14:51 0f5811d fix(global-base): add Docker resource limits to prevent system hang/OOM
+- 16:47 9960102 fix(styles): resolve place label rendering issues in global-base/region overlay
+- 17:03 d37af96 feat(build-sprites): add LOW_MEM_SPRITES mode for low-end devices
+- 17:06 ff04055 docs(knowledge): ingest place label rendering and LOW_MEM_SPRITES decisions
+
+================================================
+数据来源：上述仓库 git log（2026-04-27）

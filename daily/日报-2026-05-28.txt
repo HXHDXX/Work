@@ -1,0 +1,100 @@
+工作日报 2026-05-28（周四）
+================================================
+
+【今日要点】共 53 次提交，涉及 13 仓：
+主线：OSMDataCompiler(5)、HXSpatialMeasure(5)、HXRouteServer(5)、HXRdssSendingQueue(5)
+
+1. OSMDataCompiler（5 commits）
+------------------------------------------------
+- 08:12 d5a988f fix(styles): set building-3d opacity to 1.0 for embedded device compatibility
+- 09:03 d9fbc4d fix(styles): restore building-3d opacity to 0.85
+- 15:22 17479aa feat(styles,tilemaker): add 12 landuse layers, island/islet labels, per-line transit colors
+- 15:48 2276103 fix(knowledge): lint project-structure.md, remove project-check skill
+- 15:53 2b15d60 docs(knowledge): comprehensive lint - fix date typo, update docker count, add cross-refs
+
+2. HXSpatialMeasure（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+3. HXRouteServer（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+4. HXRdssSendingQueue（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+5. HXProjectTemplate（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+6. HXPOISearch（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+7. HXNmeaParser（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+8. HXNavigation（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+9. HXGeoConverter（5 commits）
+------------------------------------------------
+- 10:02 46e4260 docs(AGENTS.md): refine behavioral guidelines with stricter phrasing and add sandbox assertion rule
+- 10:32 0b7aaa3 docs(context-strategy): rewrite against official context-mode docs and add sandbox assertion rule
+- 10:34 8e54320 docs(knowledge): update context-mode module with rewrite and sandbox assertion
+- 10:43 1553682 docs(knowledge): lint knowledge-base, fix context-mode structure
+- 11:01 4c391a7 docs(AGENTS.md): add source attribution comments for context-mode and project-compound
+
+10. Work（4 commits）
+------------------------------------------------
+- 13:38 ea70248 update cpp
+- 15:12 cb1aada docs: sync AGENTS.md references and detailed docs
+- 15:12 d006f96 docs(knowledge): lint - sync roadmap, fix stale references
+- 15:23 2ad7903 update cpp
+
+11. ZMQClient（2 commits）
+------------------------------------------------
+- 14:59 1f185b0 docs(knowledge): sync modules with AGENTS.md formalization
+- 14:59 f78391d docs: formalize AGENTS.md guidelines and expand rules
+
+12. HXPluginRuntime（1 commits）
+------------------------------------------------
+- 15:02 f3b447c docs(knowledge): lint knowledge base and update AGENTS.md
+
+13. HXGISServer（1 commits）
+------------------------------------------------
+- 15:08 1597d64 docs(knowledge): lint — fix 9 stale/duplicate entries across 7 knowledge modules
+
+================================================
+数据来源：上述仓库 git log（2026-05-28）

@@ -1,0 +1,22 @@
+工作日报 2026-05-13（周三）
+================================================
+
+【今日要点】共 11 次提交，涉及 1 仓：
+主线：maplibre-native-qt-test(11)
+
+1. maplibre-native-qt-test（11 commits）
+------------------------------------------------
+- 11:27 be63572 feat(polygon): add MapPolygon data structure
+- 13:46 8d978d4 feat(polygon): add PolygonGeoJsonBuilder with Multi-Feature support
+- 13:46 a1eef5d feat(polygon): add PolygonManager with 4-layer support
+- 13:46 b0961e7 feat(polygon): integrate polygon API into MapContainer
+- 13:47 926269b test(polygon): add GUI desktop test for polygon API
+- 13:47 d1f4850 feat(polygon): add polygon UI demo buttons to MainWindow
+- 16:54 d671384 refactor(annotation): separate icon registration from data management
+- 16:55 45c7432 feat(ui): add GeoJSON export/import buttons and demo code
+- 16:55 cd808de feat(geojson): add GeoJsonExporter and GeoJsonImporter
+- 16:55 d2928e7 fix(polygon): correct QColor format in GeoJSON builder
+- 16:55 eb46625 test(geojson): add export/import unit tests and GUI tests
+
+================================================
+数据来源：上述仓库 git log（2026-05-13）

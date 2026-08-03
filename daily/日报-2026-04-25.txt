@@ -1,0 +1,25 @@
+工作日报 2026-04-25（周六）
+================================================
+
+【今日要点】共 11 次提交，涉及 2 仓：
+主线：OSMDataCompiler(6)、Work(5)
+
+1. OSMDataCompiler（6 commits）
+------------------------------------------------
+- 10:33 13b5cd1 feat(icons): add missing POI sprite icons (barrier, parachute, peak_11, spring_11)
+- 10:37 0a19647 fix(poi): add default class to catch-all block to prevent empty sprite warnings
+- 11:01 59be310 docs(knowledge): ingest leaf-type forest pattern experience
+- 12:18 a9151ef docs: commit AGENTS.md Context-Mode additions + sync principles + fix context-strategy link
+- 12:21 90990f2 docs(knowledge): update docker-images + project-structure modules for Context-Mode sync
+- 13:03 4dd11e2 docs(knowledge): fix orphaned module, broken cross-refs, and missing index entries
+
+2. Work（5 commits）
+------------------------------------------------
+- 14:49 c457d8d Update plan.md
+- 14:58 426a8db Update plan.md
+- 14:59 abeabbf Update plan.md
+- 15:15 d72d4c4 Update C++开发环境配置.md
+- 15:17 9da0c91 Remove valgrind installation step
+
+================================================
+数据来源：上述仓库 git log（2026-04-25）

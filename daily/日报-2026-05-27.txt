@@ -1,0 +1,32 @@
+工作日报 2026-05-27（周三）
+================================================
+
+【今日要点】共 18 次提交，涉及 2 仓：
+主线：OSMDataCompiler(12)、Work(6)
+
+1. OSMDataCompiler（12 commits）
+------------------------------------------------
+- 09:46 77ed759 docs(knowledge): record sprite build status - LOW_MEM_SPRITES not enabled, 1x vs 2x actual sizes
+- 14:24 ffaf7f4 feat(styles): add 3D building extrusion and fix text-field blank lines
+- 14:33 c2fee5c feat(styles): batch optimization - labels, waterways, roads, colors
+- 14:47 50b7ab2 fix(styles): revert #9 casing+fill merge - lost road surface colors
+- 15:02 139f799 fix(styles): night colors, disputed boundary, peak labels; explain #9
+- 15:20 13a1661 docs(knowledge): ingest style optimization experience - 3D buildings, expressions, symbol layers
+- 16:52 506a076 docs(knowledge): ingest packaging workflow - incremental update strategy, path mapping
+- 18:12 7e81964 fix(test-server): add pitch:60 for 3D building visibility
+- 18:12 ecdc6f1 fix(styles): reorder building-3d and fix opacity to avoid z-fighting
+- 18:14 a534b02 docs(knowledge): record building-3d layer reorder, opacity fix, and pitch fix
+- 19:02 09d7d40 fix(skills): correct tiles-package paths and counts to match project structure
+- 19:28 72cc957 fix(styles): move road labels before building-3d and set opacity to 0.85
+
+2. Work（6 commits）
+------------------------------------------------
+- 09:42 68f66fc update cpp
+- 10:26 ef18c30 update plan
+- 14:34 f238144 update cpp
+- 14:48 64052fd update cpp
+- 16:44 6f7b6c7 update cpp
+- 16:56 b8e5a22 update cpp
+
+================================================
+数据来源：上述仓库 git log（2026-05-27）

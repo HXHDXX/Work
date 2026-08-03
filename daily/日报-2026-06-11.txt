@@ -1,0 +1,21 @@
+工作日报 2026-06-11（周四）
+================================================
+
+【今日要点】共 7 次提交，涉及 2 仓：
+主线：OSMDataCompiler(5)、TitanNavi(2)
+
+1. OSMDataCompiler（5 commits）
+------------------------------------------------
+- 18:20 e339808 fix(styles): raise poi-railway minzoom from 8 to 10 in GJB styles
+- 18:41 6bbba17 docs: define class-based POI zoom tier mapping for GJB-9121
+- 18:45 972d724 refactor(styles): replace rank-based POI filters with class-based in GJB styles
+- 18:50 7cc95b7 tooling: add style POI layer consistency validator for GJB styles
+- 19:53 9a06e1b fix(styles): replace composite source with openmaptiles in GJB POI layers
+
+2. TitanNavi（2 commits）
+------------------------------------------------
+- 15:30 2e738d4 add GeoEletrionic moniter file
+- 16:56 26d7731 电子围栏内外的判断
+
+================================================
+数据来源：上述仓库 git log（2026-06-11）

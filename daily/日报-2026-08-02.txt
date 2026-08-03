@@ -1,0 +1,62 @@
+工作日报 2026-08-02（周日）
+================================================
+
+【今日要点】两主线，共 27 次提交：
+1. HXMapWidgetNative RouteOverview 路线总览图（主工作，GL Custom Layer）
+2. HXNativeApp 内置 NMEA/RDSS 测试面板
+
+
+一、RouteOverview 路线总览图（主工作）
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 22 commits
+继 target-line / maneuver-arrow 后又一 GL Custom Layer：
+小窗总览图（minimap）显示整条路线 + 车辆位置标记。
+
+【几何与骨架 07:01–08:52】（TDD 起步）
+1. route geometry lib：bbox/fit/split/vertices/clip
+2. RouteOverviewCustomLayer GL host + 着色器
+3. 接线 MapRenderWindow + RouteManager + ZMQ handler
+4. vehicle marker TRIANGLE_STRIP quad（GLES 安全）
+5. demo：overview toggle + 模拟进度 + ZMQ 集成测试
+
+【渲染打磨 09:32–16:14】
+6. OverviewStyle 颜色序列化保 alpha（HexArgb）
+7. backgroundQuad 顶点序修正（GL_TRIANGLE_STRIP 防重叠）
+8. 背景 GL_TRIANGLES 消 alpha-blend 接缝
+9. 粗路线线改 triangle strip（buildScreenArrowShaft，弃 glLineWidth）
+10. Douglas-Peucker 折线简化（1.5px 容差）+ 最近点切分
+11. 线宽一致化：分段 quad（无 miter）+ bevel join 填角
+12. 6 项优化：viewport 加粗、reload 状态恢复、GLES 重入修复、
+    line caps、可配 width/tolerance、动态简化
+
+【边框与标记 16:31–18:17】
+13. glScissor 裁剪 + 半透明盒边框（对齐 padding 内容区 eb）
+14. 边框 1.5px + scissor 边距保可见；最后绘制（置顶层）
+15. 边框用不透明背景色（深色非白）
+16. 可配 borderColor + vehicleSize；圆形车辆标记（GL_TRIANGLE_FAN）
+
+
+二、HXNativeApp 内置 NMEA/RDSS 测试面板
+------------------------------------------------
+仓库：HXAppPlatform/HXNativeApp | 5 commits
+
+要点：
+1. NMEA/RDSS 测试类目脚手架 + 端口探测
+2. NmeaService 接口测试用例
+3. RdssService 接口测试用例
+4. helper 加 parent + raw-vs-typed 值比较
+5. 测试结果直接显示在面板 GUI（应用内自测/诊断）
+
+
+三、关键决策
+------------------------------------------------
+1. RouteOverview 复用 Custom Layer 跨进程架构（同 target-line 系列）
+2. 粗线走 triangle strip/分段 quad，不依赖 glLineWidth（GLES 兼容）
+3. Douglas-Peucker 简化 + 动态容差，平衡总览图性能与保形
+4. 边框置顶层 + glScissor，保证视觉完整性
+5. 应用内测试面板，GUI 直接呈现自测结果
+
+
+================================================
+数据来源：HXMapWidgetNative / HXNativeApp git log（2026-08-02）、
+commit body、opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

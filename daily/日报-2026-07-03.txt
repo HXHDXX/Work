@@ -1,0 +1,35 @@
+工作日报 2026-07-03（周五）
+================================================
+
+【今日要点】共 18 次提交，涉及 3 仓：
+主线：HXRouteServer(9)、TitanNavi(7)、Work(2)
+
+1. HXRouteServer（9 commits）
+------------------------------------------------
+- 09:08 f3028ef feat(cache): cross-endpoint cache - strategies feed /route cache
+- 09:26 8a0cf9b test(cache): verify alternates cross-endpoint cache behavior
+- 09:33 9c02a86 docs(cache): document cross-endpoint flow, remove redundant test
+- 09:35 a745ca5 docs(cache): document cache strategy in public API header
+- 09:39 404d6f3 docs(cache): add cross-endpoint usage pattern with examples
+- 09:44 0dbcebf docs(cache): add navigation usage pattern to public header
+- 09:49 2094bd4 docs(cache): add usage pattern hint to /route_strategies endpoint
+- 14:06 9a0a94a refactor(cache): default HX_ROUTE_CACHE_SIZE 8->4, add capacity rationale
+- 14:27 af79a78 fix(build): add route_cache.cpp to library sources (fixes android/windows link)
+
+2. TitanNavi（7 commits）
+------------------------------------------------
+- 09:44 56faa43 add routepath mamager new show delete
+- 09:45 e76732e add routepath mamager new show delete
+- 10:42 c0a10d4 FIX Route list tableview selectionmode
+- 13:48 144a647 add Route simulate Navi
+- 14:36 212eee4 FIX route delete point
+- 14:36 c3e0028 FIX route delete point
+- 17:33 074980d add route delete messagebox
+
+3. Work（2 commits）
+------------------------------------------------
+- 14:52 4e66196 add cross-platform unified build patent disclosure
+- 14:52 fba2286 bump patent-disclosure-skill for §8.4 self-check
+
+================================================
+数据来源：上述仓库 git log（2026-07-03）

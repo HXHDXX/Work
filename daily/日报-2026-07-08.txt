@@ -1,0 +1,52 @@
+工作日报 2026-07-08（周三）
+================================================
+
+【今日要点】共 35 次提交，涉及 3 仓：
+主线：OSMDataCompiler(30)、TitanNavi(3)、Work(2)
+
+1. OSMDataCompiler（30 commits）
+------------------------------------------------
+- 10:24 0c8339c docs(knowledge): restructure GJB knowledge base into three-layer architecture
+- 11:16 4a91ee1 feat(gjb-sms-lhzz): Wave 1 - import script, translation, tilemaker profile
+- 11:21 1abe4b5 feat(gjb-sms-lhzz): T3 coordinate linear correction (Phase 3) - fix_coordinates() function: reads .SMS metadata (scale=4.0, SW 114.0/30.0) - Auto-detection: coordinates already geographic (X~114) or paper (X<10) - DMS parsing: '1140000-1153000' → 114.0°/115.5° - CRLF handling for Windows-format SMS files - Key finding: ogr2ogr SMS driver export already produces correct coords - Output preserves geojson-fixed/ for downstream pipeline consistency - QA: bbox X[114.0,115.5] Y[30.0,31.0] PASS + 武汉长江大桥 (114.283,30.555) PASS
+- 11:22 513138d feat(gjb-sms-lhzz): T4 GeometryCollection flatten (Phase 4) - flatten_gc(): extracts Polygon/MultiPolygon from GC, drops center Point - 372 GC features flattened (Boundaries 55, Residential 66, Vegetation 249, Landforms 2) - HARD assertion: zero GC in all 14 output files (tilemaker silent-drop requirement) - Feature count preserved (Vegetation 862→862, no loss) - --skip-flat flag added - QA: zero-GC, no-loss, --skip-flat flag all pass
+- 11:27 de95309 feat(gjb-sms-lhzz): T6 bridge way highway inference (Phase 4.5) - infer_bridge_highway(): nearest-road highway inheritance for 291 bridge/tunnel LineStrings - HIGHWAY_MAP/CODE_FALLBACK computation mirrors translation_sms.py - 100% match rate (291/291), 0 road fallback, 0 non-bridge leaks - 0.5s execution (Euclidian midpoint nearest-neighbor) - --skip-bridge-infer flag - Highest-leverage task per Metis: Valhalla routing depends on bridge highway=*
+- 11:50 0681f59 feat(gjb-sms-lhzz): T7 PBF generation via ogr2osm (Phase 5) - generate_pbf(): 14 layers via ogr2osm with --positive-id/--idfile/--saveid - Shared ID counter prevents multi-layer ID collision (GJB9121 yellow blanket bug) - Merged with osmium cat into data/input/N085005-sms.osm.pbf (1.5MB) - Validated: highway=4749 ways, bridge=182 tags, 39 railway=rail - PBF bbox: (114,30)-(115.5,31.000015) — correct Wuhan coordinates - 310850 nodes, 10752 ways, 22 relations - --skip-pbf flag, qa_pbf() inline QA with osmium fileinfo
+- 12:05 785c0d1 feat(gjb-sms-lhzz): Wave 3 - MBTiles + Valhalla build scripts
+- 12:05 fc2718c feat(gjb-sms-lhzz): T10 MBTiles build script (force-add, gitignore)
+- 13:54 f1fb1ec fix(gjb-sms-lhzz): post-verification fixes — dry-run bug, config architecture, orphan cleanup
+- 14:10 1085327 fix(gjb-sms-lhzz): product-specific config.json (SIGSEGV root cause found)
+- 14:12 ec81d6f docs(knowledge): correct SIGSEGV misdiagnosis — real cause is layer key mismatch
+- 14:23 21aeefa docs(knowledge): clarify layer naming is design choice, not hard constraint
+- 14:42 e6e7fb3 feat(gjb-sms-lhzz): add import skill documentation
+- 15:39 d26f91f docs(gjb-sms-lhzz): architecture principle — sample data ≠ product boundary
+- 15:45 03ef478 fix(gjb-sms-lhzz): national scope — dynamic LAYERS/BBOX, remove Wuhan QA hardcode
+- 15:45 bc9ccf9 feat(gjb-sms-lhzz): translation covers all 18 GJB1839B categories
+- 16:11 6d77003 docs(knowledge): gjb-sms-lhzz v1 knowledge — 18 categories, dynamic LAYERS/BBOX, bug corrections
+- 17:21 efbf3b6 docs(gjb-sms-lhzz): GJB 8023 Appendix B RGB color table extracted
+- 17:52 bac2d3b docs(gjb-sms-lhzz): complete GJB 8023 Appendix B RGB extraction (16/18 categories)
+- 18:59 90176d2 fix(gjb-sms-lhzz): process.lua routes 7 dropped GJB categories
+- 19:23 15c1811 fix(gjb-sms-lhzz): add node_function GJB routing for Point features
+- 20:12 2a576d0 fix(gjb-sms-lhzz): handle 3D Point coords in point_to_polygon
+- 20:16 ce6d4f1 fix(gjb-sms-lhzz): data layer verification — 6/7 dropped categories recovered
+- 21:07 ea577fd feat(gjb-sms-lhzz): normal mode style (正常模式) — 32 layers, GJB 8023 RGB
+- 22:18 634dd64 feat(test-server): support gjb-sms-lhzz data_source with 3 display modes
+- 22:24 bd413d5 fix(gjb-sms-lhzz): optimize normal.json rendering
+- 22:32 c29f26d fix(gjb-sms-lhzz): thicker contour lines for visibility
+- 22:38 b992c0b fix(gjb-sms-lhzz): preserve name attributes in process.lua GJB routing
+- 22:40 a0abe91 fix(gjb-sms-lhzz): text-field uses name:latin to match tile attributes
+- 22:44 04487ea fix(gjb-sms-lhzz): absolute paths for glyphs/sprite in normal.json
+
+2. TitanNavi（3 commits）
+------------------------------------------------
+- 14:07 b9dcd17 fix 控制导航时的窗口显示隐藏
+- 16:40 ffa7f0d fix 按钮选中效果
+- 19:17 e4426da fix navi finish
+
+3. Work（2 commits）
+------------------------------------------------
+- 10:45 f7a0a19 更新计划进度：HXMapDraw API 测试通过，联合图编译实施中
+- 11:17 6b5e7aa update plan
+
+================================================
+数据来源：上述仓库 git log（2026-07-08）

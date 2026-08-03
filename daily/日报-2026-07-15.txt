@@ -1,0 +1,66 @@
+工作日报 2026-07-15（周三）
+================================================
+
+【今日要点】共 43 次提交，涉及 5 仓：
+主线：HXRdssSendingQueue(23)、OSMDataCompiler(10)、TitanNavi(5)、ZMQClient(3)
+
+1. HXRdssSendingQueue（23 commits）
+------------------------------------------------
+- 09:26 8787d49 plugin-HXRdssSendingQueue
+- 11:39 bdb75ff feat(scaffold): add zmq_client submodule, bus_connector skeleton, rdss_queue types
+- 11:59 f50f2d9 feat(queue): port B3 state machine with TDD (FKI/IBD/ACK + worker)
+- 12:27 14dda80 feat(plugin): hx_plugin_do dispatch + init/add/remove commands
+- 12:39 137c6af feat(plugin): snapshot/move/verify commands
+- 13:06 f6f9ad7 feat(bus): wire tcq publish + /rdss/status publish
+- 13:50 f2b3a45 test: concurrency/edge cases + knowledge ingest
+- 14:27 b9c878e fix: clear warnings, fix ctest infra, align move semantics, limit build parallelism
+- 14:36 11527ef chore: gitignore build artifacts (linux-check-fix/)
+- 15:03 c3214d2 fix: align fki_n with B3 semantics + add 8 state machine edge tests
+- 15:04 f01a41b fix: remove accidentally committed build artifacts, gitignore linux-check*
+- 15:42 4f7aef4 fix: align fki_y/ibd/remove with B3 (deviation 4+5+ibd cache)
+- 15:57 02c4093 feat: align max_length to B3 3D table (communication_mode × level × encryption)
+- 16:34 3fd3201 fix: resolve all 7 Oracle deviations (frequency gate, remove status, move splice, destroy cleanup)
+- 16:55 e959817 fix: ACK/IBD callback passes correct package_count (was 0)
+- 17:20 f3dc26e fix: resolve code review C1+C2+I2+I3 (thread safety, msgid cleanup, verify encryption, atomic flag)
+- 18:40 314e252 refactor: bus_connector migrate async REQ -> DEALER for thread-safe publish
+- 18:40 ac61f7c fix: auto-freq validates against max 14000 bits + correct doc FKI_Y wording
+- 19:44 3971508 build: restrict tests to native check builds with pthread linking
+- 19:44 8fc268e fix: Windows setenv compatibility in test fixture
+- 19:45 9f1c61f build: gate internal symbol export behind HX_TEST_EXPORT
+- 20:54 45750bb docs: document command protocol, bus messages, and end-to-end flow in plugin header
+- 22:07 9355327 fix: publish_tcq uses REQ/REP async for plugin command ack
+
+2. OSMDataCompiler（10 commits）
+------------------------------------------------
+- 16:43 6955af8 docs(skill): build-mvt-pipeline SKILL.md (7-step skeleton + decision template + OSM/SMS references)
+- 16:55 eeb85aa chore(wave1): T2 cleanup deprecated 9121-2008 code + T3 GDAL fields doc
+- 17:10 a94ca40 feat(translate): T4 translation_gjb_9121.py (dual-dim road, Code bridge, bg CATEGORY_MAP) + T5 process.lua + config.json
+- 17:46 8973367 feat(sprite): T11 gjb-9121 sprite generation (69 icons) + T6 import script
+- 18:18 75b6ae9 fix(translate): normalize FIELD_N (uppercase) → field_N (lowercase) in filter_tags
+- 18:50 c86813c chore(package): T15 gjb-9121 data_source + naming convention + stale reference cleanup
+- 18:54 ec10fb8 docs: T13 import-gjb-9121 skill (92 lines) + T14 knowledge module rewrite + supersede old docs
+- 19:00 f8ada12 fix(qa): awk column index $2→$1 in tags-count parsing (PBF was correct, QA was misreporting)
+- 19:22 2204212 feat: T7 topology converter (20K turn_restrictions) + T8 MBTiles build (225MB, 12K tiles)
+- 19:39 b0beb89 feat: T9 Valhalla routing (144MB tiles) + T10 GJB8023 3-mode styles + T12 test-server E2E
+
+3. TitanNavi（5 commits）
+------------------------------------------------
+- 08:43 59ea6f2 fix Datatransfer lat/lon tcp error
+- 10:19 1cc14ae fix Trajecties save single json file
+- 10:41 6c79d0a fix ROutePathInfo save single json file
+- 16:35 4db12c4 add mfc tcp to page_datatrans
+- 18:57 2e177d3 fix polyong new error
+
+4. ZMQClient（3 commits）
+------------------------------------------------
+- 10:51 c118e18 fix: avoid memcpy UB on empty reply/message (stop interrupt)
+- 11:06 29ce965 docs(knowledge): record C-wrapper memcpy-on-empty UB bug
+- 11:19 cfeb15c fix(demo): apply sanitizer link options to demo_async (ASAN link failure)
+
+5. HXNmeaParser（2 commits）
+------------------------------------------------
+- 18:03 f735caa refactor: switch publish/send_to_port to sync DEALER guarded by mutex
+- 18:10 b5e3c1b fix: silence clang-tidy member-init warnings in parse_hdt/parse_rot
+
+================================================
+数据来源：上述仓库 git log（2026-07-15）

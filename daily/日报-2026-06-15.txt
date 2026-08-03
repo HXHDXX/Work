@@ -1,0 +1,17 @@
+工作日报 2026-06-15（周一）
+================================================
+
+【今日要点】共 3 次提交，涉及 2 仓：
+主线：maplibre-native-qt-test(2)、TitanNavi(1)
+
+1. maplibre-native-qt-test（2 commits）
+------------------------------------------------
+- 10:46 47b3764 fix(location-indicator): fix overlay visibility, interaction control, and map position
+- 19:13 42c149c refactor(location-indicator): merge timers and add time-deadline interpolation
+
+2. TitanNavi（1 commits）
+------------------------------------------------
+- 15:45 7a957de 优化增加\编辑围栏点时显示点标注
+
+================================================
+数据来源：上述仓库 git log（2026-06-15）
