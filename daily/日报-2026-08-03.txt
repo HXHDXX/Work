@@ -1,0 +1,65 @@
+工作日报 2026-08-03（周一）
+================================================
+
+【今日要点】聚焦相机/缩放/旋转控制（应用 + 引擎协同），共 23 次提交：
+1. HXNativeApp zoomctrl 缩放/旋转控制面板（主工作）
+2. HXMapWidgetNative 相机对称 + 最短路径插值修复（配套引擎）
+
+
+一、HXNativeApp zoomctrl 缩放/旋转控制面板（主工作）
+------------------------------------------------
+仓库：HXAppPlatform/HXNativeApp | 12 commits
+
+【面板搭建 10:20–10:49】
+1. zoomctrl 骨架 + OverlayManager 注册
+2. 6 按钮 + 初始 disabled 态
+3. mapReady 时 queryCamera 初始化
+4. regionChanged 状态同步 + 边界禁用
+5. click handler + easeTo 动画
+
+【打磨与修复 10:55–16:04】
+6. 样式打磨 + 知识沉淀
+7. 修正 sidebar 布局下 widget 几何断言
+8. 对齐 initial-disabled 测试与 fixture autostart
+9. 文档：旋转过冲 bug（SDK std::remainder 修复）
+10. 旋转步进 45→15 度（更细腻，对齐行业惯例）
+11. maplocation heading 置 0 修复 + 知识沉淀
+
+
+二、HXMapWidgetNative 相机对称 + 最短路径插值（配套引擎）
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 9 commits
+
+【cameraChanged 对称 09:58–10:32】
+1. cameraChanged 信号携带 bearing/pitch（与 regionChanged 对称）
+2. 文档同步 5 字段对称签名 + 决策沉淀
+3. 收紧 camera 测试容差 + 澄清 regionChanged doxygen
+
+【最短路径插值 13:52–14:29】（HXNativeApp 旋转过冲的引擎根因修复）
+4. bearing 插值走最短路径（std::remainder，easeTo/flyTo）
+5. 经度插值走最短路径（日期变更线环绕）
+6. 复用 CameraMath::bearingDelta + wrap 回归测试
+
+【其他修复 15:43–15:49】
+7. location heading 策略在 ensureLayerSetup 建层时应用
+8. host windowContainer 默认 StrongFocus 抢键盘焦点修复
+
+
+三、test-bridge
+------------------------------------------------
+- fix: props 命令枚举动态属性（1 commit）
+
+
+四、关键决策
+------------------------------------------------
+1. 旋转步进 15 度（替代 45），对齐行业惯例提升可控性
+2. cameraChanged 与 regionChanged 对称（同带 bearing/pitch）
+3. 角度插值一律走最短路径（bearing 用 std::remainder，
+   经度按日期变更线环绕），根治旋转过冲
+4. zoomctrl 经 OverlayManager 注册，与既有 overlay 统一
+
+
+================================================
+数据来源：HXNativeApp / HXMapWidgetNative / test-bridge
+git log（2026-08-03）、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

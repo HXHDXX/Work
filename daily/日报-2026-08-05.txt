@@ -1,0 +1,91 @@
+工作日报 2026-08-05（周三）
+================================================
+
+【今日要点】三主线，共 74 次提交：
+1. HXMapWidgetNative 图层可见性特性 + 公共 API 组织（主工作，38）
+2. TitanNavi GNSS 线程 + 权限 + SELinux（20）
+3. HXNativeApp zoom-control 连点修复 + 相机信号迁移（16）
+
+
+一、HXMapWidgetNative 图层可见性 + 公共 API 组织（主工作）
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 38 commits
+
+【图层可见性 layer-visibility 18:11–19:18】（4 类实体全套）
+1. annotation / polyline / polygon / route 各自加
+   setLayerVisible / queryLayerVisible / signal（3 轴语义 + lazy apply）
+2. ZMQ：setLayerVisible 命令路由（annotation/polyline/polygon/route
+   四 handler）+ queryLayerVisible 查询 + 域前缀按实体路由
+3. 3 轴协议测试 + 4 个 e2e 用例（Test 208-211）
+4. zmq-bus 文档加 8 个可见性端点
+5. 修复 annotation payload key bug
+
+【公共头拆分 + src 重组 11:34–16:26】
+6. 公共头拆分到 include/（公开 API 与内部实现分离）
+7. 内部源文件移入 src/
+8. app↔lib IPC transport + shared 头抽 OBJECT lib（mapwidget_shared）
+9. 内部头重分类（hxmapeasing/pitch_policy/locationoverlaywidget）
+10. HXMapMirrorGroup 文档 + include 拆分约定沉淀
+
+【相机信号统一收尾 00:24–01:16】（承 08-04 重构）
+11. 更新陈旧信号名注释（regionChanged/cameraChanged →
+    cameraDidChange/cameraIsChanging）
+12. 决策沉淀：camera 信号统一 + supersede 标记
+
+
+二、TitanNavi GNSS 线程 + 权限 + SELinux
+------------------------------------------------
+仓库：Workspace/TitanNavi | 20 commits
+
+【GNSS 线程安全 11:24–12:09】
+1. socket 写操作 marshal 到属主线程
+2. FenceMonitor::start 移到 worker 线程
+3. 线程亲和性注释澄清
+
+【权限 11:24–11:26】
+4. manifest 加定位权限（QtGeoFenceAdapter）
+5. 运行时定位权限流 + HXGIS log anchor
+6. 异步定位权限流注释修正
+
+【SELinux / ROM 11:24–13:03】
+7. permissive 模式 README + .te 规则 + Magisk 模板
+8. ROM 重建回滚步骤 copy-paste 修正
+
+【UI / 健壮性 11:24–13:40】
+9. annotations removeImage 防御未知 style image
+10. UI slot 命名规范化（treeView_Mapmanage/handleHome/BackPressed/
+    checkBox_ThemeAutoSwich）+ 清理死 slot
+11. verify：logcat 后置断言脚本 + fail-closed default + 抗噪断言(eq→ge)
+12. 合并 cpumdf 分支
+
+
+三、HXNativeApp zoom-control 连点修复 + 相机信号迁移
+------------------------------------------------
+仓库：HXAppPlatform/HXNativeApp | 16 commits
+
+【相机信号迁移 00:17–00:33】（消费 08-04 引擎重构）
+1. overlays 迁移到统一相机信号（cameraWillChange/IsChanging/DidChange）
+2. 迁移知识沉淀 + harness 反思
+
+【zoom-control 连点/保中心修复 11:00–15:43】
+3. 动画期间禁用 zoom 按钮（防连点）
+4. zoom 用 camera-options 重载保中心（preserve center）
+5. 动画期间跳 per-frame updateButtonStates
+6. m_animating 守卫扩到 rotate/pitch 按钮
+7. rotate/pitch 用 camera-options 保 center/zoom
+8. 连点 + 保中心 GUI 测试；pitch-down 断言修正
+
+
+四、关键决策
+------------------------------------------------
+1. 图层可见性四实体统一 API + 域前缀 ZMQ 路由（3 轴语义）
+2. 公共头 include/ 与内部 src/ 分离，IPC transport 抽 OBJECT lib
+3. 角度动画期间禁用按钮 + camera-options 保中心，根治连点抖动
+4. GNSS 跨线程写一律 marshal 到属主线程
+5. 验证脚本 fail-closed + 抗噪断言（环境波动不误报）
+
+
+================================================
+数据来源：HXMapWidgetNative / TitanNavi / HXNativeApp
+git log（2026-08-05）、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv

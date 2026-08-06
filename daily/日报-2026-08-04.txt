@@ -1,0 +1,54 @@
+工作日报 2026-08-04（周二）
+================================================
+
+【今日要点】两主线，共 10 次提交：
+1. HXMapWidgetNative 相机信号统一（API 重构，主工作）
+2. HXMapWidgetNative IPC 输入转发加固
+3. TitanNavi 小幅更新
+
+
+一、相机信号统一（API 重构）
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 1 commit（重构主体）
+
+- refactor(api): 统一相机信号——删除 throttled + regionChanged，
+  新增 3 个分相信号（cameraWillChange / cameraIsChanging /
+  cameraDidChange），镜像 mbgl::MapObserver 语义
+- 意义：相机事件从「单节流信号」升级为「开始/进行中/结束」三相，
+  消费者可按相位精确响应（为 08-05 各 consumer 迁移铺路）
+
+
+二、IPC 输入转发加固
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 8 commits
+
+【触摸 06:16–06:39】
+1. 合成 Qt 事件透传时间戳（来自 IPC）
+2. 转发触摸 screenPos + 扩展 QTouchDevice capabilities
+
+【健壮性 08:56–13:00】
+3. pointCount 上限 + wheel 亚像素 + 未知消息安全
+4. 持久化帧缓冲 + 版本 pin + 断连 watchdog
+5. child 在自身 mapWindow 置空 ShapeInput（spec 保证不重触发）
+
+【双击 15:20–16:30】
+6. MouseButtonDblClick 转发为 MousePress（双击缩放）
+7. DblClick 作独立 MouseDblClick 消息类型
+8. 断连 watchdog dummy 触点 + TouchCancel 转发 + 注释修正
+
+
+三、TitanNavi
+------------------------------------------------
+- update 1-7（1 commit，tianzengchun）
+
+
+四、关键决策
+------------------------------------------------
+1. 相机事件三相化（will/is/did），对齐 mbgl::MapObserver
+2. IPC 输入消息类型细分（DblClick 独立），触摸透传时间戳/screenPos
+3. IPC 帧缓冲持久化 + 版本 pin + 断连 watchdog 提升健壮性
+
+
+================================================
+数据来源：HXMapWidgetNative / TitanNavi git log（2026-08-04）、
+commit body、opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
