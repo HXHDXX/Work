@@ -1,0 +1,91 @@
+工作日报 2026-08-06（周四）
+================================================
+
+【今日要点】跨 5 仓，约 60 次提交：
+1. Qt metatype 注册修复（HXNativeApp + HXMapWidgetNative 跨仓主题）
+2. HXNativeApp NMEA 字段补全 + TTS 集成
+3. HXMapWidgetNative 图层可见性补全（polyline/annotation）
+4. arch-naming 规范化（CMAKE_SYSTEM_PROCESSOR）
+
+
+一、Qt metatype 注册修复（跨仓主题）
+------------------------------------------------
+仓库：HXNativeApp + HXMapWidgetNative
+
+【根因】信号参数含嵌套/未注册类型时，moc 5.15 不生成 metatype 注册，
+queued connection 运行时失败。修复：类型名全限定 + 显式注册。
+
+【HXNativeApp】
+1. 注册 18 个信号参数 metatype（queued connection）
+2. 信号参数改用全限定类型名（moc 生成 metatype 注册）
+3. moc -1 影响评估矩阵 + 嵌套类型限制知识沉淀
+4. 决策：fully-qualified signal param + moc 生成验证
+
+【HXMapWidgetNative】
+5. 注册 DrawFeature/DrawMode/QVector<*> metatype + HXMapFilter 命名式
+6. LocationData Qt metatype 注册（头 + 构造函数）
+7. 5 个 string-based QSignalSpy 回归测试（未注册信号参数类型）
+8. metatype 注册决策沉淀（named-form / LocationData bug / TDD 策略）
+9. moc 嵌套类型限制 + 顶层类型约定知识
+
+
+二、HXNativeApp NMEA 字段补全 + TTS 集成
+------------------------------------------------
+仓库：HXAppPlatform/HXNativeApp | 21 commits
+
+【NMEA 字段补全 10:02–14:14】
+1. GGA/GSV/RMC 字段补全到插件 schema
+2. jsonToString 容错 helper（数字线型路径 + 整数格式化加固）
+3. ICP 字段补全 4→23（容错 wire-type 读取）
+4. IcpInfo 11 字段对齐插件 wire 类型
+5. review 修复：jsonToString int 阈值 9e15、doc SHA 引用、YAGNI 测试缺口
+
+【TTS 集成 10:23–12:43】
+6. FetchContent 集成 TTSPlayer（tidy 抑制）
+7. IoC 注册 TTSPlayer（防御性 shutdown）
+8. 修 hx-native-app-tests clean-env 构建缺口
+9. 抑制 onnxruntime cpuinfo LSAN global
+10. file-list.txt 拷 TTSPlayer 运行时依赖
+
+【RDSS API 统一 12:34】
+11. 统一数据传递 API：sendTcq(TcqParams)、commandFkiResult(FkiResult)
+
+【构建 14:28】
+12. arm64 交叉编译 CMAKE_SYSTEM_PROCESSOR 用 aarch64
+
+
+三、HXMapWidgetNative 图层可见性补全
+------------------------------------------------
+仓库：HXAppPlatform/HXMapWidgetNative | 27 commits
+（承 08-05 四实体可见性，补齐 polyline/annotation）
+
+1. polygon：setPolygonVisible/queryPolygons（host+child+RED 契约测试）
+2. polyline：setPolylineVisible/queryPolylines（host+child）
+3. annotation：setAnnotationVisible/queryAnnotations（host+child）
+4. child：getPolylines + getAnnotations 查询 handler + E2E 219-222
+5. zmq-bus 文档补 polyline/annotation 查询/开关端点
+6. 公共头 Doxygen 翻中文 + fence 编辑会话 recipe
+
+
+四、arch-naming 规范化（跨仓）
+------------------------------------------------
+仓库：HXProjectTemplate | 4 commits
+
+1. canonicalize CMAKE_SYSTEM_PROCESSOR 值（架构名统一）
+2. 架构命名约定决策沉淀 + harness 反思
+（HXNmeaParser：parts[19-23] wire type 推断兜底标注）
+
+
+五、关键决策
+------------------------------------------------
+1. Qt 信号参数一律全限定 + 显式注册 metatype（moc 5.15 嵌套限制）
+2. NMEA 字段读取统一 jsonToString 容错（字符串/数值双形态）
+3. ICP 字段从 4 补到 23，对齐插件 wire 类型
+4. TTSPlayer 经 FetchContent 集成 + IoC 管理 + 防御性 shutdown
+5. CMAKE_SYSTEM_PROCESSOR 跨仓统一命名（arm64→aarch64 等）
+
+
+================================================
+数据来源：HXNativeApp / HXMapWidgetNative / HXProjectTemplate /
+HXNmeaParser / TTSPlayer git log（2026-08-06）、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
