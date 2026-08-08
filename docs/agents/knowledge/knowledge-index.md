@@ -10,7 +10,7 @@
 |------|------|---------|
 | infra | 项目基础设施、工具链配置、知识管理策略 | `./modules/infra.md` |
 | cpp-env | C++ 开发环境配置：GCC/Docker/Qt/调试分析 | `./modules/cpp-env.md` |
-| agent-guidelines | Agent 编码行为原则、harness 反思机制 | `./modules/agent-guidelines.md` |
+| agent-guidelines | Agent 编码行为原则、经验记忆半自动捕获 | `./modules/agent-guidelines.md` |
 
 ## 全局主题
 
@@ -19,6 +19,15 @@
 | 主题 | 描述 | 路径 |
 |------|------|------|
 <!-- Add global topics here -->
+
+---
+
+## 经验记忆层（独立于语义记忆）
+- **Skill:** `agent-experience`（capture/query/lifecycle）
+- **存储位置：** `~/.dotfiles/.agent-experiences/`，由 `agent-experience` skill 管理（query/capture）
+- **边界：** 经验记忆 = 原始事件流（跨项目，按 project 字段标注来源）；语义记忆 = 综合结论（per-project）
+- **升华路径：** confirmed 经验 → 手动 `project-compound ingest` → 语义层
+- **See also:** `.opencode/skills/agent-experience/SKILL.md`（skill）、`../core/experience-memory.md`（设计文档）
 
 ---
 

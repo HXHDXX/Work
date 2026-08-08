@@ -51,11 +51,11 @@
 - 任务完成后，必须在当前分支生命周期内归档记录核心决策、技术策略与 Bug 经验（非 trivial 变更必选）
 <!-- 来源: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f -->
 
-### harness 反思与复利
-> 详细: `./docs/agents/core/harness-reflection.md`
-- 触发：非 trivial 任务完成后，先 project-compound ingest 项目知识，再反思 harness；失败/中止任务同样触发（聚焦 harness 何处使任务更难）
-- 反思维度：Skill 体验 / AGENTS.md 规则 / Hook·MCP 机制 / 文档验证链
-- 记录：观察 + 结构化提案（位置/现状→提案/理由/状态；风险可选）追加到 `./docs/agents/core/harness-reflection.md` 的 Backlog 小节
-- 兑现：同类任务开始前必须 query Backlog 继承未兑现提案；提案兑现后 `status: done` 并 ingest 入 `agent-guidelines` 为 Decision
-- 门槛：一次性摩擦/显而易见本地修/已被规则覆盖 → 不入 backlog；无提案亦合法，禁止编造
-- 治理：去重(grep-before-write)、僵尸防治(折叠进 lint 周期)、元提案路由用户
+### 经验记忆
+> 详细: `./docs/agents/core/experience-memory.md`
+- 任务前查询：非 trivial 任务（尤其 debug/architecture/integration）开始前，MUST 通过 `agent-experience` skill query 相关历史经验，结果注入上下文
+- 任务后捕获：非 trivial 任务完成后，MUST 通过 `agent-experience` skill capture 生成经验草稿（status: draft），等待人类确认
+- 确认流程：人类审核 draft → 改 status: confirmed 或 rejected
+- 升华：confirmed 经验若具普适性，可手动通过 `project-compound ingest` 升华为语义知识
+- 跨项目：经验存储在 `~/.dotfiles/.agent-experiences/`，跨项目共享，按 project 字段标注来源
+- 边界：经验记忆（原始经验）≠ 语义记忆（综合结论，project-compound）

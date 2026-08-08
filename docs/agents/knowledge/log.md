@@ -5,6 +5,11 @@
 
 ## Log
 
+## [2026-08-07] ingest | agent-guidelines
+- 对齐 HXProjectTemplate 56ac45d：移除 harness-reflection 系统，引入 agent-experience skill（跨项目经验记忆）
+- Supersedes 2026-07-20 harness 反思决策
+- Types: Decision
+
 ## [2026-07-20] ingest | agent-guidelines
 - 新增 harness 反思与复利机制：AGENTS.md 新节 + core/harness-reflection.md 详情（适配 Work 文档项目，将"构建验证链"维度改为"文档验证链"）+ index.md 目录树更新 + writing-guide.md 维护规则
 - 业务知识进 project-compound，元层提案进 harness-reflection.md，兑现后 ingest 入 agent-guidelines Decisions
