@@ -1,0 +1,79 @@
+工作日报 2026-08-07（周五）
+================================================
+
+【今日要点】跨 4 仓，约 57 次提交：
+1. 图层锚点系统（HXMapWidgetNative 渲染侧 + OSMDataCompiler 样式侧）
+2. HXNmeaParser NMEA 协议文档 + 批量解析修复（Batch 1/2/3）
+3. HXProjectTemplate agent 基建（episodic memory + 移除 harness-reflection）
+
+
+一、图层锚点系统（跨两仓，主工作）
+------------------------------------------------
+【渲染侧】HXAppPlatform/HXMapWidgetNative | 18 commits
+1. LayerOrderManager 升级为 LayerSpec 表（3 级 fallback 链）
+2. 3 个业务锚点常量 + 21 个 app- 前缀业务图层 ID
+3. managers 用 LayerOrder::kBusiness* 常量；清全部陈旧字面量
+4. polygon-manager 拆 normal/highlight 双源
+5. PolygonRenderMode 枚举 + mode 字段入 struct Polygon
+6. draw：draw_renderer 显式 beforeId + app-draw-* 前缀
+7. 移除 custom-layers-anchor（phase 2），custom layer + location 加 app- 前缀
+8. 锚点设计 spec v2.0（3 锚点 base/top/apex）
+9. 测试：route progress early-return、annotation/events 时序、offscreen 跳外窗测试
+
+【样式侧】Workspace/OSMDataCompiler | 10 commits
+10. business-anchors inserter（TDD）
+11. check_anchors 校验器（TDD，报全部缺失锚点）
+12. 18 个样式迁业务锚点
+13. 打包门控：anchor 校验通过才允许 package
+14. 锚点 spec v1→v2；keep-legacy 幂等测试
+
+（两侧同一特性：3 锚点系统统一业务图层顺序，渲染+样式+打包全链路）
+
+
+二、HXNmeaParser NMEA 协议文档 + 批量解析修复
+------------------------------------------------
+仓库：Workspace/HXNmeaParser | 23 commits
+
+【协议字段文档全量展开 11:12–12:36】
+1. 标准 NMEA-0183 字段表注释（14 条）
+2. RNSS 私有字段表（16 条，CHL Batch1）
+3. RDSS 私有字段表 part1（20 条 EPI）+ part2（21 条 ORI）
+4. 证据件：协议文档「句→表」映射 artifact
+
+【Batch 1/2/3 解析修复 10:36–17:30】
+5. CHL：BD-3 7 字段 RDSS 层 + 北二→北三 注释；checksum *70→*53
+6. PWI：BD-3 双制式波束段解析（S2C_d/S2C_p/S2A）
+7. EPI：尾字段语义修正，BCD payload 保字符串
+8. BSI：解析全 12 字段（2 波束 ID + 10 波束功率）+ 命名校正
+9. HFN：补 minmea_scan 说明符（mil_civil_interact off-by-one 修复）
+10. DTM/RMC/PSM/PRT：次要审计修复
+11. 知识沉淀：Batch 1/2/3 regime-fix 决策
+
+
+三、HXProjectTemplate agent 基建
+------------------------------------------------
+仓库：Workspace/HXProjectTemplate | 7 commits
+
+【episodic memory skill 11:22–12:16】
+1. 新增情景记忆 skill + 存储引导
+2. 经验记忆规则 + ECC 决策修订
+3. 跨知识库交叉引用情景记忆
+4. 修：模板加 title source + INDEX 重建 + zsh 空存储守卫 + frontmatter 去重
+
+【🔴 移除 harness-reflection 系统 12:16】
+5. refactor(harness): 移除 harness-reflection 系统——
+   4 提案 0 解决，仪式开销 > 价值（07-20 引入的机制诚实回退）
+
+
+四、关键决策
+------------------------------------------------
+1. 图层顺序走 3 锚点系统（base/top/apex），渲染+样式+打包全链路统一
+2. 打包前强制 anchor 校验（门控）
+3. NMEA 协议字段表按 Batch 组织修复（standard/RNSS/RDSS-private）
+4. 移除 harness-reflection：机制无产出即砍，不留仪式负担
+
+
+================================================
+数据来源：HXMapWidgetNative / OSMDataCompiler / HXNmeaParser /
+HXProjectTemplate git log（2026-08-07）、commit body、
+opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
