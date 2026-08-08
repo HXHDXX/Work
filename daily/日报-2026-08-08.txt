@@ -1,7 +1,7 @@
 工作日报 2026-08-08（周六）
 ================================================
 
-【今日要点】三主线，跨多仓约 45 次提交：
+【今日要点】三主线，共 48 次提交，涉及 18 仓（git 实查刷新版）：
 1. HXNativeApp titan 分支合并（大量 UI 特性入主，主工作）
 2. 跨仓 agent-experience 经验记忆迁移（移除 harness-reflection）
 3. HXNativeApp BD3-only 对齐（NMEA/RDSS）
@@ -9,10 +9,10 @@
 
 一、HXNativeApp titan 分支合并（主工作）
 ------------------------------------------------
-仓库：HXAppPlatform/HXNativeApp | ~25 commits
+仓库：HXAppPlatform/HXNativeApp | 23 commits
 将 tianzengchun 的 titan 特性分支并入 master
 
-【titan 分支新特性（tianzengchun）】
+【titan 分支新特性（tianzengchun 15 / wangfx 3）】
 1. 航点管理界面
 2. 系统设置界面 + 日期时间编辑 widget
 3. 音量/亮度调整界面 + 导航界面菜单条
@@ -24,19 +24,20 @@
 9. uvc 视频显示模块 + 图元管理类
 10. 主界面加 rd 界面
 11. 地图控制 widget（wangfx 协作）
+12. service 库更新 + hotkeymanager bug 修复
 
-【master 侧合并修复（guangbin）】
-12. 清理 .orig 冲突残留 + 对齐 docs 到 master
-13. 去重 rebase 引入的 Nmea/Rdss 重复定义（保留 master 版）
-14. 联合合并 titan 新增源文件到 master 构建列表
-15. 修复 titan rebase 后编译错误（RDSS/RNSS/App 界面适配 master 架构）
-16. 删除 main.cpp 第二个 MapPage 构造（保留 ui widget_map，
+【master 侧合并修复（guangbin 5）】
+13. 清理 .orig 冲突残留 + 对齐 docs 到 master
+14. 去重 rebase 引入的 Nmea/Rdss 重复定义（保留 master 版）
+15. 联合合并 titan 新增源文件到 master 构建列表
+16. 修复 titan rebase 后编译错误（RDSS/RNSS/App 界面适配 master 架构）
+17. 删除 main.cpp 第二个 MapPage 构造（保留 ui widget_map，
     消除双重 overlay 注册 abort）
 
 
 二、HXNativeApp BD3-only 对齐（NMEA/RDSS）
 ------------------------------------------------
-仓库：HXAppPlatform/HXNativeApp | 6 commits
+仓库：HXAppPlatform/HXNativeApp | 6 commits（含 1 条 agent-experience 迁移）
 
 1. EPI/PWI 对齐 BD3 契约，剥离 BD2 时代 sendZhs
 2. communicationMode '3=B2' 标签中性化（应用为 BD3-only）
@@ -46,7 +47,8 @@
 
 三、跨仓 agent-experience 经验记忆迁移
 ------------------------------------------------
-约 16 仓 docs(agents) 同步：
+16 仓 docs(agents) 同步（17 commits，含 HXNavigation 悬空引用清理、
+Work 日报归档更新）：
 - 移除 harness-reflection 系统（承 08-07 决策）
 - 引入 agent-experience 跨项目经验记忆（episodic memory）
 
@@ -58,9 +60,10 @@ HXMapWidgetNative/HXPRShell
 
 四、二进制分发 + 测试修正
 ------------------------------------------------
-- lib-HXNmeaParser：插件分发
-- lib-HXRdssSendingQueue：android/linux/oh/windows 二进制
+- lib-HXNmeaParser：插件分发（1 commit）
+- lib-HXRdssSendingQueue：android/linux/oh/windows 二进制首提交（1 commit）
 - HXRdssSendingQueue：修 test_bus_integration 陈旧 TBQ 注释
+  （wait_ibd_=0 非 -1，max-compat 非 compat-fallback）
 
 
 五、关键决策
@@ -72,6 +75,8 @@ HXMapWidgetNative/HXPRShell
 
 
 ================================================
-数据来源：HXNativeApp / HXMapWidgetNative / HXPRShell / 13 个 Workspace 仓
-git log（2026-08-08）、commit body、
+数据来源：HXNativeApp / HXMapWidgetNative / HXPRShell /
+lib-HXNmeaParser / lib-HXRdssSendingQueue / 13 个 Workspace 仓
+git log（2026-08-08 实查）、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+（本版为 skill 验证重生成，未发邮件）
