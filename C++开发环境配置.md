@@ -97,7 +97,7 @@ mkdir HXAppPlatform && cd HXAppPlatform
 repo init -u ssh://git@192.168.1.100:2222/HXHDXX/app-platform-manifest.git -b master
 repo sync
 repo start master --all
-repo forall -c 'git lfs pull'
+repo forall -c 'git lfs pull' # repo forall -p -j1 -c 'GIT_LFS_FORCE_PROGRESS=1 git lfs pull'
 ```
 
 构建并运行Qt应用
