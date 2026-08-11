@@ -1,0 +1,24 @@
+工作日报 2026-08-10（周一）
+================================================
+【今日要点】共 23 次提交，涉及 15 仓：
+主线：HXNativeApp(8)、lib-* 插件发布仓(9)、HXNavigation/HXRouteServer 等源码仓(6)
+------------------------------------------------
+一、导航选路与模拟导航功能落地（HXNativeApp | 8 commits）
+- 抽取 RouteService 为可复用路线规划组件
+- 新增选路面板：多路线展示、选中高亮
+- 模拟导航：start_guidance 接入选中路线，订阅 guidance 事件实时展示导航状态
+- 完善导航控制：停止/暂停/调速/位置跟踪，集成进 MapApiTestPanel
+- 修复 guidance_status 真实字段名（仅 3 个字段）、导航事件原始 dump、路线参数回退与 TTS 播放
+
+二、路由/导航服务修复与知识沉淀（源码仓 | 6 commits）
+- HXNavigation：修复 route_model 解析 valhalla alternates 真实嵌套层级
+- HXRouteServer：修复 GET ?json= 查询值未 URL 解码问题
+- ZMQClient：记录异步层 handle 复用决策
+- HXGuidance / Work：模块与计划、daily 更新
+
+三、插件二进制仓初始化与多平台发布（lib-* | 9 commits）
+- 新建并初始化 HXGISServer、HXNmeaParser、HXPluginRuntime、HXSpatialMeasure、HXRdssSendingQueue、ZMQClient 等插件分发仓
+- HXNavigation 插件发布 Android/Linux/OpenHarmony/Windows 四平台
+- HXRouteServer 发布 Linux x86_64；hxprshell-app 更新（--self-path + clang-tidy 修复）
+================================================
+数据来源：各仓库 git log（2026-08-10）、commit body、opencode 会话
