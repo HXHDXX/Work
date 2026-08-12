@@ -1,0 +1,31 @@
+工作日报 2026-08-11（周二）
+================================================
+【今日要点】共 41 次提交，涉及 10 仓：
+主线：HXNativeApp(21)、HXNmeaParser(5)、HXMapWidgetNative(3)、test-bridge(3)、HXGuidance/HXGuidance-bak(4)、Work(2)、HXRouteServer/lib-HXRouteServer(2)、lib-HXNmeaParser(1)
+------------------------------------------------
+一、导航功能开发与加固（HXNativeApp | 21 commits）
+- 导航 UX 完善：转弯卡片、地图旋转、自动缩放、信息栏、到达提示；导航控制齐备（停止/暂停/倍速/位置跟踪）
+- 架构重构：从 MapApiTestPanel 抽取 NavVoiceService；路径解析统一走 RouteService::planRoutes
+- 体验修复：路径选择闪烁消除（updateSegments upsert）、偏航播报限频（10s 一次）、乱码按钮文案恢复
+- 质量收尾：map-api-test 32 个 clang-tidy 告警清理、qint64→double narrowing 修复、静态方法类名调用等
+- 配套：NavVoiceService 不崩溃 + RouteService buildSegments 测试；TTS 模型 symlink 构建修复；git 提交流程团队约定（MSC-26-RW033）入库
+
+二、NMEA 协议解析修复（HXNmeaParser | 5 commits）
+- PAP 语句按表 2-2-2-19 解析全部 12 个固定字段（原 10 个，power/mask/centers 偏移 2 位）
+- 响应代码评审：schema 注释、边界测试、风格、mask docstring；PAP BREAKING CHANGE 升级为完整迁移指南
+- HFN 类型变更说明 + COV 卫星字段数告警补入头文件文档
+- 二进制发布：lib-HXNmeaParser 插件分发
+
+三、地图组件路径闪烁根治（HXMapWidgetNative | 3 commits）
+- addRouteSegment 按 id upsert，消除路径闪烁
+- 全部 addX 方法支持 upsert-by-id + 公开 API 文档；批量方法委托单数形式 + annotation 守卫
+
+四、静态检查治理（test-bridge | 3 commits）
+- 解决 9 个 clang-tidy 告警（auto、braced-init、Nolint 递归、static 方法）；类外定义非法 static 关键字移除、NOLINT 注释归位
+
+五、路由服务与知识沉淀（HXRouteServer / HXGuidance / Work | 7 commits）
+- HXRouteServer：json_io 畸形百分号编码负向测试；lib-HXRouteServer Linux x86_64 插件分发
+- HXGuidance(+bak)：GJB 5067A-2012 导航协议模块 ingest 入知识库并归档源文档
+- Work：cpp-doc、daily 更新
+================================================
+数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-11）、commit body
