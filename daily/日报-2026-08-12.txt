@@ -1,0 +1,36 @@
+工作日报 2026-08-12（周三）
+================================================
+【今日要点】共 43 次提交，涉及 6 仓：
+主线：HXNativeApp(15)、HXGuidance(12)、HXNmeaParser(11)
+支线：HXMapWidgetNative(2)、Work(2)、lib-HXNmeaParser(1)
+------------------------------------------------
+一、HXGuidance 导航引导插件：从零搭建至 API 打通（HXGuidance | 12 commits）
+- 插件 ABI 骨架：hx_plugin 生命周期 + try/catch 防火墙，dlopen/dlsym + ASAN 生命周期冒烟测试
+- 构建与依赖：接入 zmq_client 子模块（CMake 接线 + zmq_async_init/deinit 生命周期），移植 Catch2 v2.13.9 测试基建（ENABLE_TESTS）
+- 领域类型层：6 个领域头文件（NavFix/Route/Marking/NavParams/Alarm/GuidanceConfig）+ Catch2 测试
+- 数据管线：NmeaSubscriber / InputGate / GuidancePublisher + nmea.jsonl 测试夹具
+- 引擎与算法：等距圆柱几何原语（distance/bearing/XTK/ATK），几何 + 计算器（position/route/time/goal），修正 route.h 几何委托；GuidanceEngine 单互斥接线 + 死锁修复 + T19 测试
+- 告警体系：系统告警占位（1-4，含注入钩子）、接近告警（5/6/7/9）、航向告警（8/10/11）
+- API 层：RPC dispatch + 8 个处理器（start/stop/status/nav_params/alarms/markings/config），插件对外接口打通
+
+二、NMEA 协议库治理：6 个无真实样本解析器停用（HXNmeaParser | 11 commits）
+- 停用 NTI/ETI/ICG/INQ/PRO/IHO 六个解析器，统一登记至 protocol-pending-issues 待真实样本回补
+- 注册时对停用解析器发一次性 spdlog::warn，运行时可感知
+- 文档同步：.h schema 加 @warning 标注、implementation-report 过期计数 241→264/270 修正、结构化知识库条目沉淀
+
+三、HXNativeApp：NMEA 对齐与导航相机修复（HXNativeApp | 15 commits）
+- NMEA 头文件对齐（基于 lib 38f7813 field-type 真相源）：QPI/GBI/PRM 字段类型修正、RMC 增加 mode、新增 PAP（B3AE 功率增强预报）支持
+- 新增 sendZhs 自毁/清除命令（$CCZHS），补齐 mode 0/1/2 契约测试；清理已停用 IHO 解析器的过期夹具
+- 相机修复：导航启动时 zoom 至 16.0 以呈现导航细节，queryCamera 读回回归护栏（Fix A，-1.0 哨兵值），持久化断言
+- 细节打磨：GSA qDebug 精度统一 %.1f、ICP 日志行拆分、去 C 风格强转
+- 知识沉淀：变基压平 merge commit 静默回退 Bug Experience、rebase+ff-only 策略映射、nav-start zoom bug 与 FetchContent 跨仓策略入库
+
+四、HXMapWidgetNative：相机负缩放防护（HXMapWidgetNative | 2 commits）
+- jumpTo/easeTo/flyTo 对负 zoom 入参保持当前值（守护修复，与 HXNativeApp Fix A 哨兵联动）
+- 修正 ShapeInput 误导性注释
+
+五、发布与行政（lib-HXNmeaParser | 1，Work | 2）
+- lib-HXNmeaParser 发布 HXNmeaParser 插件分发包
+- Work 仓更新计划与日报档案
+================================================
+数据来源：HXNativeApp/HXMapWidgetNative/HXGuidance/HXNmeaParser/lib-HXNmeaParser/Work git log（2026-08-12）、commit body、opencode 会话
