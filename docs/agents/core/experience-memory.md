@@ -29,7 +29,7 @@
 - ID 生成：`YYYYMMDD-HHMMSS-<4hex>`（如 `20260807-101530-a1b2`）
 - Frontmatter schema（flat，单层键值，grep 兼容）：
   - `id`（YYYYMMDD-HHMMSS-<4hex>）/ `created_at`（YYYY-MM-DD）/ `type` / `project`（来源项目名）/ `tags`（逗号分隔）/ `status` / `schema_version`
-- type 枚举：`debug`（Symptom→Reproduce→Hypotheses Tried→Root Cause→Fix→Prevention）/ `architecture`（Context→Options→Decision→Rationale→Tradeoffs）/ `integration`（Library→What Integrated→Approach→Gotchas）/ `tool`（Tool→Usage Pattern→Tips→Pitfalls）/ `other`（自由叙事）
+- type 枚举：`debug`（Symptom→Reproduce→Hypotheses Tried→Root Cause→Fix→Prevention）/ `architecture`（Context→Options→Decision→Rationale→Tradeoffs）/ `integration`（Library→What Integrated→Approach→Gotchas）/ `tool`（Tool→Usage Pattern→Tips→Pitfalls）/ `decision`（原子单选用户偏好，捕获即 confirmed，rationale 标 `[inferred]`，`related:` peer 交叉引用）/ `other`（自由叙事）
 - Dedup：写前 grep 经验目录查语义重复（grep-before-write），有则合并或标 `Supersedes-candidate:`
 - 半自动流程：任务完成 → capture 生成 draft → 人类审核 → confirmed / rejected
 - 文件落点：`~/.dotfiles/.agent-experiences/{YYYYMMDD-HHMMSS-<4hex>}.md`，按 project 字段标注来源
@@ -56,6 +56,7 @@
 - 跳过 grep-before-write：同一条经验重复 capture，目录膨胀且检索噪音
 - 跨项目经验不标 project：失去来源可追溯性，跨项目复利退化为孤儿记录
 - 自动升华：未经人类确认批量 ingest，违反 ECC 决策（2026-05-26）
+- 把 Y/N 确认掰成 2-options 凑 decision capture：只有真正 ≥2 并列候选且留下可复用偏好才记录，确认性提问不触发
 
 ## 8. See also
 
