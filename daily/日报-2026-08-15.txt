@@ -1,0 +1,35 @@
+工作日报 2026-08-15（周六）
+================================================
+【今日要点】共 7 次提交，涉及 1 仓：
+主线：HXMapWidgetNative(7)
+------------------------------------------------
+一、ST/DMA-BUF 离屏渲染 defect-④ 专项收尾（HXMapWidgetNative | 7 commits）
+
+1. defect-④ 根因修复与架构重构（窗口 resize 黑屏/冻结）
+- 根因定位（T17 bisect）：裸 HXMapDmabufGLWidget 各尺寸健康，真实 demo
+  异常 —— 触发源是 host resize 期间 child 离屏窗口 setGeometry 干扰
+  host 的 xcb_egl 合成（首槽 stale-Y 黑屏 + 右槽冻结）。
+- 修复：冻结 child 渲染窗口（Resize 不再 setGeometry，仅 resizeMap），
+  导出 FBO 按请求纹理尺寸（m_texSize）而非窗口尺寸分配；残留防护：
+  比较 texSize() 防 resize 突发末帧被丢、去抖路径 250ms 尾随补发。
+- 窗口化矩阵 1280x800→1920x1080→2560x1472→1024x600→1280x800 各阶段
+  两半屏均 >10/255（修复前 61→0→0→0 不可逆）；全屏切换可逆。
+- 重构落地 windowless child：surfaceless GL 上下文 + 渲染前绑定自有
+  FBO（仅 ST，WC 不动）；ST quad shader 移入 shaders/ 目录按仓库惯例
+  编译期内嵌。
+
+2. 回归守卫与知识沉淀
+- 修复 949e160/8fc3bb6 引入的 Obs-1/Obs-2 回归：恢复 WC child Resize
+  setGeometry，ZMQ handler 视口改读 texSize。
+- review 修复：陈旧注释刷新至 windowless 时代事实 + windowless 渲染
+  重入防护。
+- QA 加固：回归脚本全部 xdotool 限时（防 >60s 挂死）；首帧早退一次性
+  诊断挂 m_hasTexture 门；child 内容自检 30 帧窗口锁定首个非零帧；
+  「child frame dropped」独立日志上限。
+- 知识库归档 defect-④ 专项结案：最终根因链与证伪记录入库。
+- 已知残留（记录在案，不在本次修复）：全屏态 DMA-BUF EGL-image 首槽
+  stale-Y（地图仅填充下部 ~46%），纹理尺寸正确，需 Qt 5.15.13+/6.x
+  升级解决；窗口化 resize 已完全修复并加守卫。
+
+================================================
+数据来源：HXMapWidgetNative git log（2026-08-15）、commit body、opencode 会话

@@ -1,0 +1,26 @@
+工作日报 2026-08-14（周五）
+================================================
+【今日要点】共 28 次提交，涉及 3 仓：
+主线：HXMapWidgetNative(22)、HXGuidance(5)、lib-sherpa-onnx(1)
+------------------------------------------------
+一、地图组件共享纹理渲染后端落地（HXMapWidgetNative | 22 commits）
+- 完成 SharedTexture 渲染后端全链路实施（T5–T13）：抽取 HXMapRenderBackend 接口
+  与 WindowContainerBackend，子进程 --render-mode 分发（window 路径可用）
+- 子进程 FBO 离屏渲染 + DMA-BUF 导出，SCM_RIGHTS fd 传递回宿主
+- 三级帧同步机制：fence fd + implicit sync + glFinish 兜底
+- 崩溃恢复、overlay 子控件合成路径激活（xcb 透明子控件 spike 验证通过）
+- API 演进：实例 setRenderMode → 静态 setDefaultRenderMode，调用方全量迁移
+- 多轮 review 修复：C1 dispatch bug、I3 fd double-close、SharedTextureRunner
+  复用 MapRenderWindow、fail-fast 与 demux 不变量
+- 测试体系：渲染 oracle（感知容差）、双后端逐控件共存测试 +
+  HX_MAP_RENDER_BACKEND 环境变量、overlay FixedFollowing 校验
+- 知识库 ingest shared-texture-rendering 模块：7 决策 + 4 策略 + 3 Bug 经验
+二、HXGuidance 跨平台构建修复（HXGuidance | 5 commits）
+- Windows 容器 gnutls CNG 后端补链 bcrypt/ncrypt/crypt32 系统库
+- zmq_client 预编译库路径平台感知化（从 CROSS_SHARED_PATH 推导架构）
+- 清理 demo 裸 atomic/pthread 链接；gitignore 收录 release  tarball
+- 公共头文件补齐外部 RPC + 订阅协议文档
+三、语音识别库发布（lib-sherpa-onnx | 1 commits）
+- 新增 sherpa-onnx Linux 麒麟 V10 NPU 平台库
+================================================
+数据来源：HXMapWidgetNative / HXGuidance / lib-sherpa-onnx git log（2026-08-14）、commit body、opencode 会话

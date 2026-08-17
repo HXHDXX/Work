@@ -1,0 +1,21 @@
+工作日报 2026-08-13（周四）
+================================================
+【今日要点】共 54 次提交，涉及 6 仓：
+主线：HXGuidance(43)、HXNativeApp(4)、HXMapWidgetNative(3)、HXProjectTemplate(2)、HXPRShell(1)、Work(1)
+------------------------------------------------
+一、HXGuidance 导航引擎 GJB 符合性修复与测试强化（HXGuidance | 43 commits）
+- GJB 条款修复：磁偏角自动计算（内嵌 WMM）+磁北输出（§3.5-c）；bds_time 转 BDT 历元（§2.4.9）并应用 BDT-UTC +4s 闰秒偏移；信号丢失告警 2s 超时（§3.10）；系统告警 #1-4 详情文本对齐 §3.10；低速跳点门限收紧 + 基于 HDOP 的定位剔除（§3.6.8）；set_goal RPC 手动目标覆盖（§3.6.1-b）；转弯告警文案与偏航角端点钳制
+- 几何与健壮性：distance_m 由等距矩形换 haversine（>50km 航段），haversine 对跖点 NaN 钳制；WMM epoch_year 钳制有效期；set_goal(0) 防 size_t 下溢段错误；destroy 空指针防护
+- 架构：所有 publish 调用移出 mutex_；统一 geometry::distance_m 并覆盖标记点；删除死配置字段
+- 测试：测试数 125→180，新增并发压力（ASAN）、回调注入、ABI 健壮性矩阵、对跖点/超大载荷/2050 年边界用例；CI 默认跑测试并加 NoTest 开关
+- 构建：增量编译 + 可选 clang-tidy；知识库同步
+二、地图相机参数对齐与协作者同步流程（HXMapWidgetNative + HXNativeApp | 7 commits）
+- easeTo/flyTo/jumpTo 标量参数重排对齐 HXMapCameraOptions 字段顺序，修正 MapApiTestPanel 调用点；jumpTo 签名格式化
+- 文档：变基后协作者 reset --hard 同步步骤沉淀至 git-workflow 知识模块
+三、agent-experience 经验记忆系统迭代（HXProjectTemplate + 3 仓 | 5 commits）
+- 新增 type:decision 与 pre-ask query 支持偏好学习，Lifecycle 增加定期 review 清单
+- 能力移植至 HXNativeApp、HXMapWidgetNative、HXPRShell 三仓
+四、日常维护（Work | 1 commit）
+- 日报数据更新
+================================================
+数据来源：各仓库 git log（2026-08-13）、commit body、opencode 会话

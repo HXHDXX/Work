@@ -1,0 +1,41 @@
+工作日报 2026-08-16（周日）
+================================================
+【今日要点】共 38 次提交，涉及 3 仓：
+主线：HXNativeApp(18)、HXMapWidgetNative(14)、HXNmeaParser(6)
+------------------------------------------------
+一、引擎重启退化闭环修复（HXNativeApp + HXMapWidgetNative | 8 commits）
+- 根因收官：确认"三 bug 一症状"并归档知识库，关闭 engine-restart degradation 开放问题
+- widget 侧重启 readiness：慢子节点 slow-poll + 总线端点 immutable（993e4dc）
+- 回归防线：engine restart slow-child 回归测试、host crash-log tee、重启等待预算提至 60s
+- fitBounds 断言改为随 span 比例容差，消除跨分辨率误判
+
+二、GUI 测试基建升级（HXNativeApp | 8 commits）
+- 新增 wait_for_assertions 轮询助手，camera/diag/scale 等异步断言全部改为轮询等待
+- 修复 cv2 污染 Qt 环境导致测试假死，引擎重启失败改为显式报错
+- 对齐 284 按钮（含 NmeaRdss 第 10 类）与 selected-only 删除语义
+- visual_matrix 标记 remote-only（依赖 ssh x11grab 截屏）
+
+三、渲染模式收敛：ST 默认 + 本地 xcb_egl（HXNativeApp | 3 commits）
+- 撤销 pin WindowContainer render mode 的尝试（Revert ecf57e9）
+- 最终方案：保持 SharedTexture 为默认，本地启动时选 xcb_egl 集成
+- 本地 GUI 套件统一在 xcb_egl 下运行，知识库归档定论
+
+四、危险指令防护上线（HXNmeaParser | 6 commits）
+- 新增 nmea::dangerous_cmd_blocked helper 及单元测试
+- zhs/tim 发送门控在 HXNMEA_ALLOW_DANGEROUS 之后，且部署契约定为精确 =1 语义
+- 评审 minor 修复（string_view、文档措辞），契约入知识库
+
+五、Widget 测试与构建健壮性（HXMapWidgetNative | 9 commits）
+- zmq 测试修复：/mvt/ 陈旧 URL、字母序前序用例泄漏的 camera pitch、删除从不发出的 'changing' 阶段
+- layer 集成测试改走真实 manager API 断言 176c626 之后的 app-* 图层 ID
+- run-zmq/run-qt-api 脚本：系统 ASAN 运行时、xcb_egl、泄漏抑制、套件退出码捕获
+- docker-compose down 正确透传构建/测试失败退出码
+- PIMPL 化 EGL 状态移出公共头文件，阻断 X11 宏泄漏；清理冗余 m_d 默认值
+
+六、测试基建与知识沉淀（HXMapWidgetNative | 4 commits）
+- 落地 visual-verification skill + 可复用 ST/WC 矩阵测试 harness（凌晨 00:28）
+- 知识库批量 ingest：HarmonyOS 移植分析（4 层移植面/IPC 栈/ST 模式 X11 收敛/P0 探针）、
+  容器退出码矩阵、widget EGL-free PIMPL 约定、Obs-1/Obs-2 回归分析抢救
+- test-skill truths 刷新：5 套件计数与 2026-08-16 通过率
+================================================
+数据来源：HXNmeaParser、HXNativeApp、HXMapWidgetNative git log（2026-08-16）、commit body
