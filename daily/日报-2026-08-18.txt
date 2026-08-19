@@ -1,0 +1,26 @@
+工作日报 2026-08-18（周二）
+================================================
+【今日要点】共 24 次提交，涉及 6 仓：
+主线：HXNativeApp(13)、HXMapWidgetNative(6)
+辅线：HXNmeaParser(2)、HXRdssSendingQueue(1)、lib-HXNmeaParser(1)、lib-HXRdssSendingQueue(1)
+------------------------------------------------
+一、RDSS/NMEA 真板联调与硬件测试体系建设（HXNativeApp | 13 commits）
+- 真板实测驱动多轮 RDSS 修复：line-io 按 NMEA-0183 发送 CRLF 行尾（板卡静默忽略 LF-only 命令）；autoInit 重试请求落入启动 pending 窗口被吞，改为失败 finish 后排队重跑
+- 环回模型演进：负载压缩至 mode1/level1/encrypted 206-bit 上限内；纯数字负载（encoding=2 直传）；暴露 fire-and-forget 命令回执（原 "package size exceeds max_length" 静默拒收）
+- 无超时环回判定：卫星调度抖动下硬超时产生假阴性（真板 TCI 迟到 240s+），改为发送时 INFLIGHT 判定 + 持久 TCI 监听器迟到覆盖为 PASS；initCompleted 同样改持久监听器解决 startup-race
+- 硬件测试套件落成：26 例全套 NMEA/RDSS 服务测试 + 服务 API 面覆盖（37）+ 服务信号覆盖（58，24 个服务信号全部验证，信号↔总线无事件丢失一致性检查）；沉淀综合 skill（面板冒烟、总线驱动验证矩阵、板检自动跳过、部署 md5 清单）
+
+二、DMA-BUF 渲染管线优化（HXMapWidgetNative | 6 commits）
+- 每缓冲持久化：EGLImage 缓存 + 子进程 DMA-BUF 导出（稳定 inode，零每帧对象/导出churn）
+- 离 GUI 线程宿主渲染：共享 GL context + blit paintGL；worker 帧上 repaint() 绕过 GUI 事件队列饥饿（host paintEvent starvation）
+- 诊断与调度：限频 BLIT/worker 探针（带帧序号）；启动 60 帧 warmup 预爬 Qt compose 调度（首拖拽 paint 间隔抖动）
+
+三、协议解析增强（HXNmeaParser + HXRdssSendingQueue | 3 commits）
+- HXNmeaParser：BD 变体 ZDA/GSA 双解析、EPI 尾部 off-by-one 修复、VTG 空模式约定；启用 ICG（真样本验证）、放宽 ICZ 空响应守卫、新增 ICK 厂商扩展解析（key 查询应答，未公开文档），均附真板 fixture
+- HXRdssSendingQueue：按协议编码类计算消息位数（汉字 16bit GB2312、code 8bit、混合分段）
+
+四、插件发布（lib-HXNmeaParser + lib-HXRdssSendingQueue | 2 commits）
+- lib-HXNmeaParser 插件分发入库
+- lib-HXRdssSendingQueue 初版：android/linux/oh/windows 四平台二进制与头文件
+================================================
+数据来源：各仓 git log（2026-08-18）、commit message、opencode 会话

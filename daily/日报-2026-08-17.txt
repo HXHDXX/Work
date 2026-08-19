@@ -1,0 +1,29 @@
+工作日报 2026-08-17（周一）
+================================================
+【今日要点】共 51 次提交，涉及 19 仓：
+主线：HXMapWidgetNative(14)、HXNativeApp(10)、TTSPlayer(9)、agent-experience 经验记忆体系全仓推广(15)
+------------------------------------------------
+一、地图渲染与交互修复（HXMapWidgetNative | 14 commits）
+- shared-texture 覆盖层输入路由：从接收鼠标事件 → setEnabled(false) 点击穿透 → 最终回归 Qt 事件传播机制转发空白区域输入，知识库同步订正为 Qt 传播语义
+- 稳定性修复：子窗口 isFullyLoaded 要求完整渲染帧；HXMapDmabufGLWidget 构造强制 NoFocus；空 endpoint 懒总线不得冻结 endpoint 不可变性
+- 定位图标：同 URL addImage 去重双发，显式 setLocationIcon 时强制重发以支持内容更新；附首拖闪动决策树诊断脚本
+
+二、HXNativeApp 实机测试与日志治理（HXNativeApp | 10 commits）
+- 新增 NmeaCaptureService（双总线捕获、TIM 过滤、回退匹配）
+- map-api-test 新增「实机测试」分类（5 按钮、大字体结果），移除 setTiming，同步计数 284→288/10→11
+- 硬件 NMEA/RDSS 流程 GUI 测试（无板自动跳过）；新增 BeiDou 硬件测试 skill 并修 HwTest 按钮 objectName 前缀
+- 静音 camera 事件逐帧日志刷屏（保留 lastCamera 跟踪）；project-check skill 修复 pkill -f 自匹配杀持久 shell
+
+三、TTSPlayer 运行时模型切换（TTSPlayer | 9 commits）
+- 新增 switchModel/switchModelWithResources API：失败保留原模型、modelSwitched 信号、空路径对称校验、no-op 切换无条件 stop
+- worker 安全引擎交换：销毁旧句柄、复用 PcmPlayer，修复双初始化泄漏与音量重置
+- demo 覆盖成功/失败/no-op/播放中切换/未初始化切换等场景；maplibre-native-qt-test demo 联动演练运行时切模型
+
+四、agent-experience 经验记忆体系推广（15 仓各 1 commit）
+- 新增 type:decision 经验类型 + 任务前 query 前置 + 周期 review 清单，同步至 Work、HXPOISearch、HXGISServer、OSMDataCompiler、HXGuidance、HXRdssSendingQueue、ProductDesign、HXPluginRuntime、HXSpatialMeasure、HXNavigation、ZMQClient、HXNmeaParser、HXRouteServer、HXGeoConverter 等仓
+
+五、其他
+- lib-HXNmeaParser 插件分发包发布
+- Work 仓日报维护更新
+================================================
+数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-17）、commit body
