@@ -1,0 +1,33 @@
+工作日报 2026-08-20（周四）
+================================================
+【今日要点】共 31 次提交，涉及 8 仓：
+主线：HXNativeApp(13)、HXRdssSendingQueue(5)、HXNmeaParser(5)、HXMapWidgetNative(4)；
+辅线：maplibre-native(1)、lib-HXRdssSendingQueue(1)、lib-HXNmeaParser(1)、lib-maplibre-native(1)
+------------------------------------------------
+一、RDSS 串口队列空包指令全链路修复与 OFQ/EPQ 闭环（HXNativeApp + HXRdssSendingQueue + HXNmeaParser | 23 commits）
+- 队列契约补齐：rdss-service 的 queue add 要求所有 bdcommand 类型携带 msgid，修复 EPQ/OFQ/GBQ 家族自队列迁移后被 403 静默拒收、面板按钮实际从未下发的问题（8 处调用点自动生成 QUuid msgid）。
+- 空包指令（EPQ/GBQ/OFQ）调度修复：clear-completed 循环把 size()==0 误判为"瞬间完成"提前弹出，指令入队后无声消失；改为空包绕过提前完成判定，走 st=0 正常派发，FKI_Y 立即完成，6 处访问点加固。
+- 空包超时清理对称性：send_status_==0 时空包前排也可被清理（此前 FKI 不到达会无限重试），与 TCQ 超时语义对齐。
+- 0 包协议通知加固：fki_n 尾包检查覆盖空包场景（原 -1==-1 恒假导致被拒指令永不清理）；st5/st6 双回调 msgid 映射顺序澄清。
+- OFQ 指令支持：HXRdssSendingQueue 新增 publish_ofq + 派发分支 + 字段校验；HXNativeApp 侧 sendOfq 迁移至队列路径（原为裸发，无门控无回执），NmeaService::sendOfq 废弃，面板按钮改道，回复走 commandFkiResult。
+- EPQ 报文格式真机校准：字段顺序按表 2-3-1-15 修正（高程误入 rescue_type 位，5 个字段错位），补单位字段；文档示例校验和错误证实损坏，以表为准；末尾空字段不再多发（真机为 11 字段，多一个尾逗号导致板卡拒收 FKI N/7）。
+- BD3 参数合规：频点 1→2（Lf0=BD2 在 BD3 板卡被拒 N/7），rate 10→1（范围 1-4 档位非秒数），urgent 0→2（范围 1-3），真实卡号，清除全部 BD2 时代默认值。
+- 闭环结论：OFQ 3/3 FKI_Y 通过（纯净单指令法）；EPQ 全矩阵 N/7 后推翻了 provisioning 判定——最终定位为 5 层构造缺陷（尾字段省略规则：板卡拒收第 12 个空字段）；EPQ 面板演练补齐 rescueType 全字段集后 TCQ/OFQ/EPQ 三条线全部经服务队列路径闭环。
+- 方法论沉淀："沉默"双根因归因法、频点语义（0=自适应推荐，Lf0=BD2 在 BD3 禁发）、GBQ seq 槽位模型（句柄丢失可经槽号暴力解散恢复）等已 ingest 知识库。
+
+二、面板与测试基建完善（HXNativeApp）
+- 新增 queryGroupInfoPaged 演练按钮，服务 API 覆盖补齐最后一环（289 按钮）。
+- 测试基建：teardown 全进程树清理（孤儿 hxprshell 导致的"中途被杀"假象与 pytest 挂起消除）；看门狗 3 次未命中防抖；新增 RDSS 信号验证层（经 statusReceived/commandFkiResult 信号链校验发送，信号↔总线一致性检查，共 67 项）。
+- 硬件套件：解散确认重试机制（8s 后 15s+重查询），应对中心状态传播延迟。
+
+三、渲染与构建（HXMapWidgetNative + maplibre-native | 5 commits）
+- 渲染加固：worker 队列背压 + resize 导出失败韧性（评审意见落实）；worker 生命周期边界用例（渲染中销毁、resize 风暴）。
+- 构建修复：EGL-free 公共头文件（X11 宏污染曾致 Release 构建失败）。
+- maplibre-native：warmup 扩展至按属性缺失的变体，消除拖动中懒编译卡顿。
+
+四、插件二进制发布（lib-* 仓 | 3 commits）
+- lib-HXRdssSendingQueue 首发（android/linux/oh/windows 四平台二进制+头文件）。
+- lib-maplibre-native 首发（x86_64 + arm64 EGL 构建产物）。
+- lib-HXNmeaParser 插件分发包发布。
+================================================
+数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-20）、commit subject/body

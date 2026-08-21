@@ -1,0 +1,51 @@
+工作日报 2026-08-19（周三）
+================================================
+【今日要点】共 47 次提交，涉及 7 仓：
+主线：HXNativeApp(30)、HXNmeaParser(7)、HXMapWidgetNative(3)、HXRdssSendingQueue(3)
+------------------------------------------------
+一、hw-suite 硬件在环测试基设施：稳定性修复与自愈能力（HXNativeApp | 11 commits）
+- 主机看门狗：1s 轮询守护线程即时检测 app 退出，从日志捕获崩溃原因行，所有 call/collect 立即抛 HostDiedError，不再空等死主机
+- host-restart 自愈：看门狗死亡+进程复活触发面板 OpenSerial 回放（串口状态随重启丢失）
+- 单 xcb host 原则：zmq 端口从 gui-test app 日志发现（内嵌 hxprshell ForwardedChannels），run_app.sh offscreen→xcb，消除第二实例 offscreen GL 崩溃
+- REQ 30s 超时+状态机复位（不再无限阻塞）；REQ retry 改走 holder 间接 socket，修复 closed-socket-in-closure 导致的 45 例假失败
+- 信号测试改读本会话 app 日志（HX_GUI_TEST_APP_LOG），修复昨日崩溃会话残留日志污染判定
+- gui-test 关闭 map 子进程 LSan abort（预编译二进制第三方 dbus/Qt 退出时泄漏误杀主机，code 6）；业务泄漏检测保留在 ctest/CI
+- msq 已知间歇挂起容错（skip 不级联），隔离复现全过，疑 HXNmeaParser broker 路径状态竞争，缺陷已立案
+- 双流基线断言加固：GGA/RMC 硬断言（1Hz），ZDA/VTG 降为 advisory（间隔输出）
+- ICR 节流窗口按固件规格取 30s，retry 跨完整窗口；ICR 族 backoff+retry（固件在快速 cmd_type 切换下丢回复，串口直连慢发证明全部可达，throttling 时 skip 不 fail）
+
+二、GBQ 组业务真机语义定版与落地（HXNativeApp | 6 commits）
+- 4 次实验定版手柄模型：create=cat2/dest-empty（GBI handle+ICG delta 双校验）、query=ICR-type1/ICG 通道（cat12 固件不支持已弃）、disband=cat10+center-seq（自包含句柄获取）；category 表纠正（1=permission 9=leave）
+- createGroup() 去掉 dest/groupNo（中心分配句柄，自编号真机静默失败）；groupNo→groupSeq 重命名（中心分配语义）；句柄规则文档化（持久化 GBI {addr,seq}，seq 当前固件不可恢复）
+- 面板 GBQ 按钮升级为 handle-flow 演示（GBI 监听持久化，全部操作经句柄寻址，queryGroup 走 NmeaService::queryGroupInfo）
+- service-layer 直测 63 例：面板按钮驱动真实 NmeaService/RdssService 调用，断言+总线订阅双验证（drive=service / verify=bus / debug=bus-inject）
+- GBQ 服务按钮落户 NmeaRdss 页面（objectName 前缀+autouse 翻页 fixture）；frame_no 断言对齐协议化命令
+- HX_SERIAL_PORT 环境变量启动自动开板串口（无头/部署入口）；清理临时 GBQ 实验脚本（结论已沉淀 hw-suite+skill）
+
+三、ICR 在飞串行化 + ICG 双模 API（HXNativeApp | 7 commits，晚间主线）
+- ICR 全局在飞闸门（1 bool+时间戳+队列，纯事件驱动零 pacing，2.5s 死锁守护超时，会话放弃不重试）串行化所有 ICR 查询（含 queryIcp），修复 autoInit/面板碰撞，ICP 应答释放闸门
+- ICG 双模 API：collect-mode queryGroupInfo() 自动翻页到完成（单次 emit 带 totalGroups/framesReceived/complete 元数据）+ paged-mode queryGroupInfoPaged(frame)/icgFrameReceived 逐帧
+- code-review C1-C3+I1-I3 修复：session mode 随 IcrRequest 携带（dequeue 时赋 paged 标志，消除 last-writer-wins 竞态）；ICG 会话每次 type-1 发送都布防（分页 frame>=2 回复不再被丢）；shortFrame 比较覆写前值（原 x<x 死代码导致无限翻页）；分页超时就约路由 icgFrameReceived；ICP 应答仅在 type-0 在飞时释放闸门（迟到 ICP 不会误杀 ICG 守护）；autoInit 守护 5s→8s
+- hw-suite 适配：ICG 信号断言 complete=1（会话收齐），业务 ICG 查询避让 autoInit 在飞窗口（4s），api-surface 标注 direct-REQ-bypasses-gate 语义
+- 设计纠偏：「≥1s 同型间隔」无协议/字段依据撤回（YAGNI）；frame_no 按协议表 2-3-1-11 注 2 规则化（type 0/3→00，type 1/2→01 递增）；raw 字段改 JSON 解码修复 \r 转义破坏 checksum（QPI 案）
+- review minors 收尾：throttle 措辞改 gate/timeout-abandon 语义（5 处）、头注释对齐代码、totalGroups 计数组大小而非固件字段（防漂移）
+
+四、HXNmeaParser ICG 多组语义 verdict 与文档刷新（/Workspace/HXNmeaParser | 7 commits）
+- 真机 verdict：ICG 中段字段为 group_addr，无 group_seq；测试钉住真实板样本固化为回归依据
+- §2.1/§2.2 文档刷新：ctest 快照更新至 285/285 运行、指标表计数同步（63/252/253）、清除残留 stale disabled 计数
+
+五、短报文队列 implicit FKI_Y（/Workspace/HXRdssSendingQueue | 3 commits）
+- 等待 FKI 期间早到 IBD 视为隐式 FKI_Y；抽取 fki_y_transition_locked helper（无行为变更）；决策与不变量入库
+
+六、渲染性能（HXMapWidgetNative 3 + maplibre-native 1）
+- maplibre-native：GL shader 程序即时预编译，消除首用卡顿
+- dmabuf 空闲保活心跳维持主机合成链路（ST only，3s 间隔）
+- EGL-free 公共头修复 X11 宏污染导致的 Release 构建失败
+- BLIT/worker 限频探针带帧序号（诊断）
+
+七、知识沉淀与工程支撑（OSMDataCompiler 1 + Work 2 + HXNativeApp knowledge）
+- OSMDataCompiler：valhalla_build_extract 实测 ingest + 全国构建分省分包决策入库
+- HXNativeApp 知识库 ingest：ICR 在飞闸门设计 3 事实（含 retracted-interval 教训）、ICG 双模 API 与 review 发现的状态机 bug、GBQ 手柄模型 4 实验结论、CRLF 行尾、hw-suite 5 层架构与 service 层测试方法论、测试基建坑
+- Work：plan/daily 例行更新（2 commits）
+================================================
+数据来源：/Workspace + /HXAppPlatform 各仓 git log（2026-08-19 00:00–24:00）、commit body、opencode 会话
