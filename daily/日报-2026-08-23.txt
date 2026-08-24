@@ -1,0 +1,22 @@
+工作日报 2026-08-23（周日）
+================================================
+【今日要点】共 22 次提交，涉及 15 仓：
+主线：HXSpatialMeasure(6)、HXMapWidgetNative(2)、HXNmeaParser(2)、其余 12 仓各 1
+------------------------------------------------
+一、容器 check 构建默认 Release 收敛（15 仓 | 15 commits）
+- 全部仓库统一 check 目标默认构建 Release，ASAN 与测试用例改为显式开关（--with-tests 等）
+- HXNativeApp 增加测试门控与 ASAN 部署条件化；HXGuidance 默认不构建测试
+- 各仓同步更新 AGENTS.md 与知识库，统一三场景用法文档
+- 覆盖：HXPOISearch、HXGISServer、HXGuidance、HXRdssSendingQueue、HXPluginRuntime、HXSpatialMeasure、HXProjectTemplate、HXNavigation、ZMQClient、HXNmeaParser、HXRouteServer、HXGeoConverter、HXNativeApp、HXMapWidgetNative、HXPRShell
+
+二、HXSpatialMeasure sanitizer 体系修复（HXSpatialMeasure | 5 commits）
+- 根治 LSan 检出的 PJ 泄漏：抛出路径补 proj_destroy，删除测试侧抑制
+- 修正 Clang 静态 ASAN 运行时旗标拼写（-static-libasan→-static-libsan），按编译器区分旗标
+- 测试目标补 ASAN 链接接线，修复 check ASAN Test 链接失败
+- ASAN 构建下校准 benchmark p99 预算与符号化器退出路径（Release 阈值不变）
+
+三、测试与日志质量修复（HXNmeaParser、HXMapWidgetNative | 2 commits）
+- HXNmeaParser：修复 2 个与现行 API 脱节的单元测试，对齐当前签名，168/168 通过
+- HXMapWidgetNative：bus() SKIP 日志收紧为未连接且地址未配置才打印，消除逐次访问噪音
+================================================
+数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-23）、commit subject/body

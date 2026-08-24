@@ -1,0 +1,41 @@
+工作日报 2026-08-21（周五）
+================================================
+【今日要点】共 67 次提交，涉及 24 仓：
+主线：HXNativeApp(19)、HXRdssSendingQueue(10)、ZMQClient(9)；
+辅助：HXGuidance(3)、HXNavigation(3)、HXNmeaParser(3)、HXMapWidgetNative(2)、Work(2)；
+其余 16 仓各 1 次（多为 gitignore 工具目录收尾 + lib 发布仓首发）。
+------------------------------------------------
+一、RDSS 北斗群组（GBQ）解散攻关终局（HXNativeApp | 19 commits）
+- 端到端打通「无序列号(seqless)解散」方案：addr 为唯一键，addMember/removeMember/
+  leaveGroup/disbandGroup 全部去掉 groupSeq 参数，group_no 固定 '000'；
+  cat10+addr+000 实测 17/17 清除成功，ICG 权威查询归零
+- 推翻此前「seq 必填」结论：真正根因是对未完成中心站注册的群组立即解散被静默丢弃；
+  硬件套件强制 create→manage 各边界 60s 注册传播等待，manage_gate() 收口 5 处调用点
+- 测试体系重写为用户方案 v3 单线用例：ICG 基线→建组→ICG 判定→无 seq 解散→ICG 终判，
+  FKI/GBI 仅作旁证；全程命令时间线仪表化（seq、T+偏移、语义标注、汇总表）
+- 双卡互通套件（72 例）：本机 1811614 + 对端卡 1811615（HW_PEER_CARD），
+  覆盖 P2P、带对端成员建组、组播、移成员、解散，填平单卡时代 skip 空白；
+  修正「自建组成员设为本机」语义错误
+- 统一频度门 freq_gate()：17 处通信操作前统一排队快照+余量等待，测试体零裸 sleep
+- 顺带：GUI 测试以真实视觉断言替换空转 exists()（bearing/pitch/polyline），
+  关闭 5 条缺陷记录（Supersede xfail/orphan/render-issues），清理死测试文件
+
+二、ZMQClient 异步生命周期根治 + 全仓 submodule 同步（ZMQClient 9 + HXRdssSendingQueue 10 + HXGuidance/HXNavigation/HXNmeaParser 各 3 | 25 commits）
+- ZMQClient 连修 5 个异步缺陷：SUB worker 在 destroy 时 join、cancel-then-resubmit 契约、
+  跨 pool 生命周期存活、destroy/lambda 生命周期守卫、header deinit 契约与 drop 语义对齐；
+  全部配红色回归测试，并加固防挂死
+- 构建与质量：check 默认启用 ASAN；test_async_lifecycle 限定 linux x86_64 宿主工具链；
+  spdlog_deinit 只移除自身添加的 sink（库不再越权）
+- 知识库沉淀异步生命周期修复文档，登记消费方；子模块滚动升级至 1a0b22b，
+  下游 HXGuidance/HXNavigation/HXNmeaParser/HXRdssSendingQueue 同步 bump（共 8 次 update）
+- HXRdssSendingQueue：bus-less 测试去掉绷带式 sleep，显式声明 dead-endpoint 环境；
+  flaky 根因归档并关联 2026-07-15 HX_SKIP_BUS 掩盖史
+
+三、产物发布与工程收尾（lib-* 3 仓 + 16 仓 gitignore | 19 commits）
+- 首发三个二进制发布仓：lib-ZMQClient、lib-HXRdssSendingQueue（Android/Linux/OH/Windows
+  四平台）、lib-HXNmeaParser 插件分发
+- 全工作区 16 仓统一 gitignore .codegraph/ 与 .omo/ 工具目录
+  （HXNativeApp 额外处理 .codegraph 软链需 symlink 规则）
+- HXMapWidgetNative：订正 pitch=0 过时注释（pitch 实际渲染，保留因 maplibre-native#4039）
+================================================
+数据来源：/Workspace 15 仓 + /HXAppPlatform 9 仓 git log（2026-08-21）、commit body

@@ -1,0 +1,19 @@
+工作日报 2026-08-22（周六）
+================================================
+【今日要点】共 11 次提交，涉及 1 仓：
+主线：HXNativeApp(11)
+------------------------------------------------
+一、RdssService 发送域信号收敛重构（HXNativeApp | 6 commits）
+- RdssService 收敛发送域：信号收敛为 statusReceived+bdcommandType 单流，send* 系列改为返回 msgid，删除 commandFkiResult/gbqBusinessResult 信号与 GBI 接线
+- app 层适配：移除 metatype 注册与 GBI 接线
+- panel 层迁移至 statusReceived 单流，补齐两服务用例全覆盖（queryGroup/setTiming/3 信号监听/msgid 记录）
+- 测试同步：hw/gui 信号断言 4→2、setTiming 面板断言翻转、面板与脚本联动同步；nmea 文档移除 gbiReceived 自引用 @see
+二、测试与评审加固（HXNativeApp | 4 commits）
+- zmq 总线级用例：bdcommandType 透传 + 状态流回归
+- 评审加固：测试名脱离已删信号概念、queryGroupCat12 按钮存在性断言
+- e2e 验证门：计数注释改述，消除 setNmeaService grep 残留
+- 评审 Minor#1 修复：statusBdcmd 监听器仅记命令帧（空 bdcommandType 守卫）
+三、知识库沉淀（HXNativeApp | 1 commit）
+- 应答分型表 v2、信号收敛决策记录、gbiToGbq 勘误、BDEPI 漂移注记、部署版本考古注脚
+================================================
+数据来源：HXNativeApp git log（2026-08-22）、commit body、opencode 会话
