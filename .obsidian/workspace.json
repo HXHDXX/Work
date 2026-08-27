@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "cc009892ffb4a187",
+        "id": "b5139eb3900a73e7",
         "type": "tabs",
         "children": [
           {
-            "id": "c066c22371dfb4d6",
+            "id": "2421f09534205ede",
             "type": "leaf",
             "state": {
-              "type": "empty",
+              "type": "graph",
               "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "icon": "lucide-git-fork",
+              "title": "关系图谱"
             }
           }
         ]
@@ -37,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -191,11 +193,17 @@
       "opencode-obsidian:OpenCode": false
     }
   },
-  "active": "481310fd7ca8a5f3",
+  "active": "2421f09534205ede",
   "lastOpenFiles": [
+    "daily/INDEX.md",
+    "docs/agents/index.md",
+    "scripts/daily-index.py",
+    "daily.md",
+    "pics/qt-sdk.png",
+    "AGENTS.md",
+    "C++开发环境配置.md",
     "未命名.base",
     "未命名.canvas",
-    "C++开发环境配置.md",
     "plan.md",
     "2026-06-16.md"
   ]
