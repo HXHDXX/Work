@@ -1,0 +1,28 @@
+工作日报 2026-08-24（周一）
+================================================
+【今日要点】共 19 次提交，涉及 10 仓：
+主线：HXNativeApp(9)、HXMapWidgetNative(7)
+二进制发布：lib-ZMQClient、lib-HXRouteServer、lib-HXNavigation、lib-HXPluginRuntime、lib-HXSpatialMeasure、lib-HXNmeaParser、lib-HXRdssSendingQueue、lib-hxprshell-app、lib-HXGISServer
+------------------------------------------------
+一、HXNativeApp：测试管线加固 + 面板/服务修复（9 commits）
+- 堵死假绿管线：修复 container wait 退出码覆盖 bug，check 改 fail-fast，加陈旧二进制守卫，杜绝测试误报通过
+- GUI 测试稳定性：地图重启等待由滑动窗计数改为 isRunning 标记位定位；overlap_click 先清标注积压、以相机落定信号替代盲等；location_indicator 检测签名对齐真实图标（蓝簇+视口中心锚定）
+- 面板修复：标注图标注册 404——pin-red 资产落地 icons/ 并修正面板 URL；清理 /map-icons/ 同类残留，test 图标 404 修正与措辞对齐
+- 服务层：NavigationService 信封解析对齐 QJsonParseError 根因修法，统一空白边角处理；plugins 串 arg 链式分段（10 插件就绪）
+- 评审 Minor：订阅移守卫后、/stop 断言仅成功落键、arrived 断言对称、删重复等待、补心跳断言
+
+二、HXMapWidgetNative：ST 能力探测体系落地（7 commits）
+- 新增 StCapabilityProbe 模块：构造期一次性探测 + 单向 WC 回退，STRICT 模式 fatal，进程级一次报告，配确定性测试
+- 纯函数 resolveEffectiveRenderMode 助手 + 12 用例矩阵测试；ST 脚本锁定 STRICT/FORCE 环境变量保证确定性
+- 子进程侧 6 处 capability qFatal 改造为可行动提示 + exit(81)，宿主将 81 记为能力失败
+- nativeFence predicate 镜像 resolveEgl（token + sync procs + glWaitSync），严格助手环境加固
+- ST 能力矩阵与回退语义文档 ingest 入库
+
+三、插件二进制仓集中发布（9 仓各 1 commit）
+- lib-HXNavigation：发布 Android/Linux/OpenHarmony/Windows 四平台插件
+- lib-HXSpatialMeasure：发布 v3555038 预编译二进制
+- lib-HXGISServer / lib-HXPluginRuntime / lib-ZMQClient / lib-HXRdssSendingQueue：initial commit 落库
+- lib-HXNmeaParser / lib-HXRouteServer：插件分发更新（Linux x86_64）
+- lib-hxprshell-app：二进制更新，含 --self-path 与 clang-tidy 修复
+================================================
+数据来源：HXNativeApp、HXMapWidgetNative、lib-* 等仓 git log（2026-08-24）、commit body

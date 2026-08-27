@@ -1,0 +1,25 @@
+工作日报 2026-08-26（周三）
+================================================
+【今日要点】共 17 次提交，涉及 16 仓：
+主线：docker-compose 项目隔离改造（15 仓 × 15 commits）
+副线：lib-sherpa-onnx(1)、HXNativeApp(2)
+------------------------------------------------
+一、容器构建并行化：docker-compose 按 checkout 隔离项目名（15 仓 | 15 commits）
+- 全平台 15 个仓库统一落地同一改造：导出由 checkout 目录名派生的
+  COMPOSE_PROJECT_NAME，并移除写死的 container_name。
+- 效果：跨仓库及 main+worktree 并发构建不再互相 kill/阻塞，串行行为不变。
+- 覆盖：/Workspace 12 仓（HXPOISearch、HXGISServer、HXGuidance、
+  HXRdssSendingQueue、HXPluginRuntime、HXSpatialMeasure、HXProjectTemplate、
+  HXNavigation、ZMQClient、HXNmeaParser、HXRouteServer、HXGeoConverter）
+  + /HXAppPlatform 3 仓（HXNativeApp、HXMapWidgetNative、HXPRShell）。
+
+二、lib-sherpa-onnx：新增 NPU c-api 变体（1 commit）
+- 基于 sherpa-onnx 2e8c1b83 交叉构建 libsherpa-onnx-c-api.so
+  （docker linux_gcc_cl:v1.3，导入厂商 onnxruntime 1.20.1）。
+- 产物入 onnxruntime_npu_ftn300_kylinv10/，厂商目录成为自包含单一事实源
+  NPU 库集；由 3 个提交压缩而来（原件保留于 backup 分支）。
+
+三、HXNativeApp：TTS 测试评审收尾（1 commit）
+- review minors：ASSERT 等待 errSpy 保证一致性；冷页缓存归因措辞弱化。
+================================================
+数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-26）、commit body
