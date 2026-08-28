@@ -33,18 +33,26 @@ for root in /Workspace /HXAppPlatform; do
   done
 done | sort >> "$TMP"
 
-{
-  printf '工作日报 %s（自动兜底版）\n================================================\n\n' "$D"
-  printf '【说明】agent 路径失败，此为脚本兜底档案版（按仓分组列提交）。\n\n'
-  awk -F'|' '{print $2}' "$TMP" | sort | uniq -c | sort -rn | while read n r; do
-    printf '### %s（%s）\n' "$r" "$n"
-    grep "|${r}|" "$TMP" | awk -F'|' '{printf "  %s %s %s\n",$1,$3,$4}'
-    echo
-  done
-} > "/Workspace/Work/daily/日报-${D}.txt"
+REPORT="/Workspace/Work/daily/日报-${D}.txt"
+SUBJ_TEXT="工作日报 ${D}（自动兜底版）"
+if [ -s "$REPORT" ]; then
+  # ponytail: 降级数据不覆盖更好的既有数据（如早前手工/深度版），只重发
+  echo "[$(date '+%T')] 已存在日报（疑为深度版），兜底不覆盖，仅重发现有文件"
+  SUBJ_TEXT="工作日报 ${D}（重发现有版）"
+else
+  {
+    printf '工作日报 %s（自动兜底版）\n================================================\n\n' "$D"
+    printf '【说明】agent 路径失败，此为脚本兜底档案版（按仓分组列提交）。\n\n'
+    awk -F'|' '{print $2}' "$TMP" | sort | uniq -c | sort -rn | while read n r; do
+      printf '### %s（%s）\n' "$r" "$n"
+      grep "|${r}|" "$TMP" | awk -F'|' '{printf "  %s %s %s\n",$1,$3,$4}'
+      echo
+    done
+  } > "$REPORT"
+fi
 rm -f "$TMP"
 
-SUBJ=$(printf '工作日报 %s（自动兜底版）' "$D" | base64 | tr -d '\n')
+SUBJ=$(printf '%s' "$SUBJ_TEXT" | base64 | tr -d '\n')
 {
   printf 'From: guangbin79@icloud.com\nTo: guangbin79@icloud.com\n'
   printf 'Subject: =?UTF-8?B?%s?=\n' "$SUBJ"
