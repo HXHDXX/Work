@@ -15,8 +15,9 @@ cd /Workspace/Work || { echo "ERR: 无法 cd /Workspace/Work"; exit 1; }
 D=$(date +%F)
 
 # 主路径：opencode run 非交互执行 skill（深度版 + 发邮件）
+# 模型固定 zai-coding-plan/glm-5.3（本地代理，避开 Kimi 5 小时配额；撞配额史见 08-27）
 # 超时 15 分钟兜底（agent 偶发卡住不阻塞 cron）
-timeout 900 opencode run --auto \
+timeout 900 opencode run --auto -m zai-coding-plan/glm-5.3 \
   "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /Workspace/Work/daily/日报-${D}.txt，并发邮件到 guangbin79@icloud.com。标题用 printf|base64 生成禁止手敲。" \
   && { echo "[$(date '+%T')] 成功（深度版）"; exit 0; }
 
