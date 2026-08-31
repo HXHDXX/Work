@@ -34,4 +34,23 @@
 - 23:03 08ae741 build(gjb-sms): full rebuild + render verification — GJB 8023 compliance check
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  18:28 [general] Continue GJB 1839B extraction (@general subagent)
+  13:44 [Momus (Plan Critic)] Momus review production readiness (@Momus (Plan Critic) suba
+  13:34 [general] F1-F4 parallel final reviews (@general subagent)
+  12:49 [Momus (Plan Critic)] Momus review iteration 3 (@Momus (Plan Critic) subagent)
+  12:43 [Momus (Plan Critic)] Momus review iteration 2 (@Momus (Plan Critic) subagent)
+  12:37 [Momus (Plan Critic)] Momus review category completeness (@Momus (Plan Critic) sub
+  12:31 [Metis (Plan Consultant)] Metis gap analysis for cat 16/17/18/19/23 (@Metis (Plan Cons
+  12:08 [general] F3 Real manual QA map-preview (@general subagent)
+  12:06 [general] F2 Code quality review (@general subagent)
+  11:03 [Momus (Plan Critic)] Momus review iteration 2 (@Momus (Plan Critic) subagent)
+  11:01 [Momus (Plan Critic)] Momus review of style completeness plan (@Momus (Plan Critic
+  10:52 [Metis (Plan Consultant)] Metis gap analysis style completeness (@Metis (Plan Consulta
+  09:37 [general] F3 Real manual QA (map-preview) (@general subagent)
+  09:33 [general] F2 Code quality review (@general subagent)
+  09:07 [Momus (Plan Critic)] Momus review of POI fix plan (@Momus (Plan Critic) subagent)
+  …共 18 个主会话（上表前 15）
+  （合计 18 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-12）

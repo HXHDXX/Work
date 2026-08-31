@@ -102,4 +102,23 @@
 - 14:31 7de8694 docs(AGENTS.md,principles): sync 4 behavior rules with HXProjectTemplate
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:24 [Metis (Plan Consultant)] Metis gap analysis on MapApiTestPanel plan (@Metis (Plan Con
+  19:24 [Sisyphus (Ultraworker)] test_06_screenshot_capture SSH target verification
+  19:23 [​Atlas (Plan Executor)] QtDebugBridge GUI test workflow reference
+  18:56 [​Atlas (Plan Executor)] onnxruntime_npu_ftn300_kylinv10 加入 Git LFS
+  16:19 [Sisyphus (Ultraworker)] 远端ARM64设备安装运行
+  15:21 [Sisyphus (Ultraworker)] QEventBus实际使用案例
+  15:05 [Sisyphus (Ultraworker)] execvp failed plugin load error
+  14:46 [Sisyphus (Ultraworker)] 优化项目AGENTS.md
+  14:31 [Sisyphus (Ultraworker)] AGENTS.md优化参考
+  14:30 [Sisyphus (Ultraworker)] 优化 AGENTS.md 文件
+  14:30 [Sisyphus (Ultraworker)] 优化项目 AGENTS.md
+  14:28 [​Atlas (Plan Executor)] MVT渲染 Open Sans Regular 字体404问题
+  14:23 [Sisyphus (Ultraworker)] 参考HXProjectTemplate优化AGENTS.md
+  14:22 [Sisyphus (Ultraworker)] 优化本项目AGENTS.md
+  14:01 [Sisyphus (Ultraworker)] 参考
+  …共 35 个主会话（上表前 15）
+  （合计 35 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-30）

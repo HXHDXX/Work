@@ -49,3 +49,11 @@ route-progress/mirror）、MSC-26-RW033 产品设计。
 ================================================
 数据来源：HXMapWidgetNative / HXNativeApp git log（2026-08-01）、
 commit body、opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:45 [Momus (Plan Critic)] Momus re-verify amended eagle-eye plan (@Momus (Plan Critic)
+  22:19 [Momus (Plan Critic)] Momus review of eagle-eye plan (@Momus (Plan Critic) subagen
+  22:05 [Metis (Plan Consultant)] Metis gap analysis for eagle-eye plan (@Metis (Plan Consulta
+  20:48 [general] Code review broadcast mirror (@general subagent)
+  09:12 [Momus (Plan Critic)] Momus review broadcast plan (@Momus (Plan Critic) subagent)
+  （合计 5 个主会话；subagent/截图判读等碎件已滤除）

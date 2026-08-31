@@ -16,4 +16,11 @@
 三、知识库沉淀（HXNativeApp | 1 commit）
 - 应答分型表 v2、信号收敛决策记录、gbiToGbq 勘误、BDEPI 漂移注记、部署版本考古注脚
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:02 [Sisyphus] 生成 2026-08-22 工作日报并邮件发送
+  18:59 [general] Review code changes (@general subagent)
+  12:27 [Metis] Metis 审查 RDSS 信号收敛计划 (@Metis - Plan Consultant subagent)
+  07:06 [Prometheus] 项目向总线发送的广播内容
+  （合计 4 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：HXNativeApp git log（2026-08-22）、commit body、opencode 会话

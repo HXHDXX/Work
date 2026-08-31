@@ -29,4 +29,23 @@
 - 16:56 b8e5a22 update cpp
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:27 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  19:01 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  18:06 [Momus (Plan Critic)] Momus review building-3d plan (@Momus (Plan Critic) subagent
+  17:34 [Metis (Plan Consultant)] Metis gap analysis for building-3d reorder (@Metis (Plan Con
+  16:52 [Prometheus (Plan Builder)] 北京与阿尔及利亚3D建筑效果查询
+  14:43 [Sisyphus (Ultraworker)] repo sync访问提示密码问题
+  14:18 [Prometheus (Plan Builder)] linux-arm64程序构建与SSH远程部署
+  13:58 [Prometheus (Plan Builder)] gammaray-cli触发Qt应用按钮和输入文本
+  11:19 [Momus (Plan Critic)] Momus review of widget-geometry plan (@Momus (Plan Critic) s
+  11:12 [Metis (Plan Consultant)] Metis gap analysis for widget-geometry (@Metis (Plan Consult
+  10:52 [Prometheus (Plan Builder)] GammaRay SSH远程调试Qt程序方案
+  10:52 [build] Update gammaray.md three-tool model (@build subagent)
+  10:44 [build] Fix select-object hex parsing and verify (@build subagent)
+  10:40 [build] Execute gammaray.md read-only fix (@build subagent)
+  10:36 [build] Fix gammaray.md to read-only scope (@build subagent)
+  …共 18 个主会话（上表前 15）
+  （合计 18 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-27）

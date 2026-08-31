@@ -14,4 +14,13 @@
 - 15:45 7a957de 优化增加\编辑围栏点时显示点标注
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  11:39 [Momus (Plan Critic)] Momus 3rd review anchor-zoom plan (@Momus (Plan Critic) suba
+  11:34 [Momus (Plan Critic)] Momus re-review anchor-zoom plan (@Momus (Plan Critic) subag
+  11:27 [Prometheus (Plan Builder)] animateTo与easeTo变更确认
+  11:23 [Momus (Plan Critic)] Momus review of anchor-zoom plan (@Momus (Plan Critic) subag
+  09:48 [Sisyphus (Ultraworker)] LocationIndicatorManager能力与解耦设计
+  08:56 [Prometheus (Plan Builder)] Fixed+NorthUp地图定位及交互问题
+  （合计 6 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-15）

@@ -1,13 +1,14 @@
-工作日报 2026-08-25（周二）
+工作日报 2026-08-25（周二）· 补发（增会话信息）
 ================================================
-【今日要点】共 29 次提交，涉及 5 仓：
-主线：HXNativeApp(20)、HXGuidance(5)、HXNavigation(2)
+
+【今日要点】共 29 次提交（5 仓）+ 1 项会话级发布工作（未提交）：
+主线：HXNativeApp(20)、HXGuidance(5)、HXNavigation(3)
 ------------------------------------------------
 一、HXNativeApp IO/TTS/模拟链路攻坚（HXNativeApp | 20 commits）
 - IO 层重构：open 所有权下沉至 connection 层并新增 opened()/closed() 信号；attach/findService 改按 IoConnection* 键控（修复 pre-open 空 portId 问题）；LineIoService 过滤非 NMEA 入站行（$/! 哨兵）；SerialConnection strand 内 close 改 non-throwing；删除废弃 NmeaService::sendOfq
 - 面板与路由：buildRouteJson 接入 + GuidanceConfig 类型化 + Valhalla 入口 + 模拟控制按钮组；RouteService 保留 Valhalla 原始 trip、删除 params 伪造 fallback；新增 route builders 与 simulate wrappers
 - 测试加固：e2e 模拟引导全链路 + seek/暂停/导航模拟回归；ZMQ EPI fixture 字段对齐、happy_path 改 dispatch-gated 且顺序无关；TTS 模型加载等待放宽至 60s、wait 超时改 ASSERT（消除空 takeFirst UB）；测试日志由 HX_TEST_LOGS 环境变量门控
-- 排障与知识沉淀：exit-137 根因更正为 compose 项目名互杀（非 OOM）并给出 COMPOSE_PROJECT_NAME 缓解方案；ghost-engine 定性修正为双域并行引擎；完成 simnmea-and-service-refactor 收尾知识沉淀（四层缺陷考古/simnmea 双总线/GJB schema/发布管线）
+- 排障与知识沉淀：exit-137 根因更正为 compose 项目名互杀（非 OOM）并给出 COMPOSE_PROJECT_NAME 缓解方案；ghost-engine 定性修正为双域并行引擎；simnmea-and-service-refactor 收尾知识沉淀（四层缺陷考古/simnmea 双总线/GJB schema/发布管线）
 
 二、HXGuidance 失锁/告警契约修复（HXGuidance | 5 commits）
 - 无效帧驱动失锁检测：simulate_pause 正确触发 receiver_unlock（契约对齐）
@@ -23,5 +24,12 @@
 
 四、NPU 推理适配（lib-sherpa-onnx | 1 commit）
 - 新增 FT-D3000M（kylinv10）NPU c-api 变体，基于厂商 onnxruntime 1.20.1 构建
+
+五、会话级发布工作（当日无 git 提交，源：opencode 会话 ses_fc854…）
+- GStreamer 双架构 bundle 重建 + LFS 推送收口（Prometheus 规划 + Atlas 执行）：
+  计划 11/11 完成、终验 4/4 APPROVE；提交 da95bbf 入库并推 origin/master；
+  541 个 LFS 对象 / 44MB（203 新增 + 451 修改二进制，654−541=113 纯文本，数字自洽）；
+  240 插件对称、xvimagesink/v4l2src 管道元件在位，消费方 git lfs pull 即得完整 bundle
 ================================================
-数据来源：/Workspace、/HXAppPlatform 各仓 git log（2026-08-25）、commit message
+数据来源：/Workspace、/HXAppPlatform 各仓 git log（2026-08-25）、commit message、
+opencode 会话（session_list/read，按 daily-report skill 第 5 条规则补查）

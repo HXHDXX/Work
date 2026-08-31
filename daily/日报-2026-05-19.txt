@@ -15,4 +15,15 @@
 - 15:42 807eede docs(knowledge): overzoom z20 blank due to layer maxzoom exclusive upper bound
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  15:42 [Sisyphus (Ultraworker)] 阿尔及利亚数据地图层数查询
+  14:45 [Momus (Plan Critic)] Momus review cmake-dual-mode plan (@Momus (Plan Critic) suba
+  14:34 [Metis (Plan Consultant)] Metis gap analysis for CMake refactoring (@Metis (Plan Consu
+  13:30 [Momus (Plan Critic)] Momus review crash-fix plan (@Momus (Plan Critic) subagent)
+  12:03 [Metis (Plan Consultant)] Metis gap analysis for crash fix (@Metis (Plan Consultant) s
+  11:23 [Sisyphus (Ultraworker)] Oh-my-openagent team mode analysis
+  10:53 [Momus (Plan Critic)] Momus review round 1 (@Momus (Plan Critic) subagent)
+  10:46 [Metis (Plan Consultant)] Gap analysis for Embedded FBO fix (@Metis (Plan Consultant) 
+  （合计 8 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-19）

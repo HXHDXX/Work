@@ -89,3 +89,22 @@
 数据来源：HXMapWidgetNative / TitanNavi / HXNativeApp
 git log（2026-08-05）、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  21:31 [Sisyphus (Ultraworker)] 地图添加电线面要素方法
+  21:03 [general] Review layer visibility feature (@general subagent)
+  17:35 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  17:20 [Momus (Plan Critic)] Momus plan review iteration 1 (@Momus (Plan Critic) subagent
+  16:41 [Metis (Plan Consultant)] Plan gap analysis (@Metis (Plan Consultant) subagent)
+  16:27 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  16:11 [Sisyphus (Ultraworker)] 快速连续点击放大缩小按钮问题
+  15:57 [general] 独立代码评审 rotate/pitch 修复 (@general subagent)
+  15:41 [general] Code review src-migration (@general subagent)
+  15:32 [general] Code review src-migration (@general subagent)
+  15:22 [Sisyphus (Ultraworker)] RK3588S 崩溃日志分析
+  13:58 [Sisyphus (Ultraworker)] TitanNavi 应用日志分析
+  13:57 [Metis (Plan Consultant)] Metis rotate/pitch 修复审查 (@Metis (Plan Consultant) subagent)
+  13:53 [Momus (Plan Critic)] Momus 审查 rotate/pitch 计划 (@Momus (Plan Critic) subagent)
+  13:47 [general] Review M2 M3 fixes (@general subagent)
+  …共 40 个主会话（上表前 15）
+  （合计 40 个主会话；subagent/截图判读等碎件已滤除）

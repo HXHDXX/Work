@@ -57,4 +57,23 @@
 - 10:07 a12e7e9 fix(cross-library): replace find_package with direct zmq static linking
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:23 [Prometheus (Plan Builder)] ZMQ_DEALER vs ZMQ_REQ 支持选择
+  19:19 [Prometheus (Plan Builder)] ZMQ DEALER对接REP底层特性与实现
+  19:19 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  19:10 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  19:02 [build] Update multipart broken log msgs (@build subagent)
+  18:56 [Momus (Plan Critic)] Momus review of dealer-multipart-fix plan (@Momus (Plan Crit
+  18:53 [build] Fix hxmapbus DEALER send v3 (@build subagent)
+  18:53 [build] Fix zmqbusclient DEALER send v3 (@build subagent)
+  18:38 [Metis (Plan Consultant)] Metis gap analysis for DEALER blocking send fix (@Metis (Pla
+  17:53 [build] Update zmq-bus knowledge after fix (@build subagent)
+  17:48 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:46 [build] Fix DEALER sends in zmqbusclient.cpp (@build subagent)
+  17:45 [build] Fix DEALER send in hxmapbus.cpp (@build subagent)
+  17:45 [build] Fix DEALER send in zmqbusclient.cpp (@build subagent)
+  17:43 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  …共 40 个主会话（上表前 15）
+  （合计 40 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-04）

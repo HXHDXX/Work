@@ -25,4 +25,23 @@
 - 10:08 75481ea docs(knowledge): ingest font coverage and fontstack mechanism
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  20:58 [Sisyphus (Ultraworker)] 添加标注接口变更后测试按钮代码检查
+  19:45 [build] Fix GIS env var names (@build subagent)
+  19:16 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:51 [Sisyphus (Ultraworker)] Test message
+  17:36 [Momus (Plan Critic)] Momus review plan (@Momus (Plan Critic) subagent)
+  17:26 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  16:51 [Prometheus (Plan Builder)] 项目环境变量统计
+  16:48 [build] Edit header file env var docs (@build subagent)
+  15:51 [Sisyphus (Ultraworker)] Greeting
+  14:49 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:38 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:29 [Prometheus (Plan Builder)] 统计项目环境变量
+  14:29 [Prometheus (Plan Builder)] 插件加载协议介绍
+  14:13 [Prometheus (Plan Builder)] 测试文字标注运行效果
+  14:05 [Sisyphus (Ultraworker)] 统计环境变量
+  …共 26 个主会话（上表前 15）
+  （合计 26 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-14）

@@ -23,4 +23,23 @@
 三、语音识别库发布（lib-sherpa-onnx | 1 commits）
 - 新增 sherpa-onnx Linux 麒麟 V10 NPU 平台库
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:02 [Sisyphus (Ultraworker)] 生成2026-08-14工作日报并邮件发送
+  18:04 [Prometheus (Plan Builder)] container/build.sh linux-x86_64 构建失败分析
+  17:29 [Prometheus (Plan Builder)] jumpTo 标量与结构体重载是否必要
+  17:21 [Prometheus (Plan Builder)] 左右旋转按钮调用地图接口实现
+  16:39 [Prometheus (Plan Builder)] 共享纹理接口变化与模式切换
+  16:14 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  16:04 [Metis (Plan Consultant)] Metis gap analysis for plan (@Metis (Plan Consultant) subage
+  15:41 [general] Review code changes (@general subagent)
+  15:34 [Momus (Plan Critic)] Momus review of build fix plan (@Momus (Plan Critic) subagen
+  15:09 [Metis (Plan Consultant)] Metis gap analysis for build fix plan (@Metis (Plan Consulta
+  14:33 [Prometheus (Plan Builder)] 分析 build.sh linux-x86_64 构建失败
+  13:39 [Sisyphus (Ultraworker)] default.xml 添加 lib-HXGuidance 仓库
+  13:31 [Prometheus (Plan Builder)] Git LFS non-text file commit
+  12:11 [​Atlas (Plan Executor)] Fixing build.sh linux build failure
+  11:48 [Prometheus (Plan Builder)] 跨进程渲染：窗口容器改共享纹理可行性分析 (fork #1)
+  …共 31 个主会话（上表前 15）
+  （合计 31 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：HXMapWidgetNative / HXGuidance / lib-sherpa-onnx git log（2026-08-14）、commit body、opencode 会话

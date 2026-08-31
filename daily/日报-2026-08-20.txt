@@ -30,4 +30,19 @@
 - lib-maplibre-native 首发（x86_64 + arm64 EGL 构建产物）。
 - lib-HXNmeaParser 插件分发包发布。
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:33 [general] Review ACK timing fix (@general subagent)
+  22:02 [Sisyphus (Ultraworker)] 2026-08-20 工作日报生成与邮件发送
+  20:54 [Momus (Plan Critic)] Momus review of ack fix plan (@Momus (Plan Critic) subagent)
+  20:17 [Metis (Plan Consultant)] Metis gap analysis for ack fix plan (@Metis (Plan Consultant
+  16:13 [Prometheus (Plan Builder)] 自适应频点确认
+  15:27 [Prometheus (Plan Builder)] 北斗二号Lf0与三号Lf1/Lf2频点含义
+  14:32 [Prometheus (Plan Builder)] epq指令含义查询
+  12:14 [Prometheus (Plan Builder)] OFQ的作用
+  10:59 [Prometheus (Plan Builder)] 首次启动拖动地图偶发黑屏闪烁
+  10:17 [general] 评审闪黑战役四提交 (@general subagent)
+  08:50 [Prometheus (Plan Builder)] 查看当前未提交的修改内容
+  08:50 [Prometheus (Plan Builder)] Valhalla经纬度道路匹配接口
+  （合计 12 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-20）、commit subject/body

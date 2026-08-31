@@ -71,4 +71,21 @@
 - 16:55 9e2ff14 add datatransfer  tcprecv
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  21:41 [general] Fix 3 review issues (thread+unsubscribe+cmake) (@general sub
+  21:16 [general] Review HXMapSDK implementation (@general subagent)
+  18:50 [general] Fix test refs to deleted ShellService (@general subagent)
+  18:47 [general] Migrate HxApp/MapSvc/LineIo to HXMapSDK (@general subagent)
+  18:25 [general] Add unit test for plugins string (@general subagent)
+  17:57 [general] Implement HXMapSDK messaging layer (@general subagent)
+  17:49 [general] Implement HXMapSDK lifecycle (p_h + cpp) (@general subagent)
+  16:44 [Sisyphus (Ultraworker)] 插件 inproc:// 协议实现机制
+  16:21 [Sisyphus (Ultraworker)] 理解HXNativeApp串口网口协议数据读取与总线发送
+  16:08 [Sisyphus (Ultraworker)] 北三板卡接口协议文档v1.9.3.4解析
+  11:29 [Momus (Plan Critic)] Momus final review of style plan (@Momus (Plan Critic) subag
+  11:23 [Momus (Plan Critic)] Momus re-review of style plan (@Momus (Plan Critic) subagent
+  11:15 [Momus (Plan Critic)] Momus review of style plan (@Momus (Plan Critic) subagent)
+  10:17 [Sisyphus (Ultraworker)] 专利交底书生成：容器化交叉编译构建方法
+  （合计 14 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-13）

@@ -80,4 +80,23 @@
 - 19:13 4b2f1d6 add Datatransfer tcp
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:29 [Sisyphus (Ultraworker)] B3SendingQueue 与 plugin-B3SendingQueue 项目阅读理解
+  19:22 [Sisyphus (Ultraworker)] lib-HXNmeaParser 版本库添加及 HXNativeApp 依赖
+  18:54 [Sisyphus (Ultraworker)] Git 提交操作
+  18:47 [Sisyphus (Ultraworker)] NMEA命令构造器文档审查
+  18:15 [Sisyphus (Ultraworker)] 容器 Linux 构建失败
+  17:38 [Sisyphus (Ultraworker)] gjb-sms-lhzz 打包 N085005 数据
+  17:04 [Sisyphus (Ultraworker)] gjb-sms-lhzz打包N085005数据
+  16:45 [Sisyphus (Ultraworker)] ZMQClient workspace analysis
+  11:50 [Momus (Plan Critic)] Momus rigorous plan review (@Momus (Plan Critic) subagent)
+  10:57 [Metis (Plan Consultant)] Gap analysis for offline export plan (@Metis (Plan Consultan
+  10:43 [Prometheus (Plan Builder)] Map preview workflow
+  10:42 [Sisyphus (Ultraworker)] 是否能通过
+  10:02 [general] Trim MapService dead methods (@general subagent)
+  09:39 [general] Remove QObject, replace signals with callbacks (@general sub
+  09:02 [general] Make 3 start() params required, move port alloc to ctor (@ge
+  …共 17 个主会话（上表前 15）
+  （合计 17 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-14）

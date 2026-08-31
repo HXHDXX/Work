@@ -58,4 +58,23 @@
 - 19:11 dc00048 docs: 新增跨项目知识借鉴规则，更新知识库
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  21:02 [Metis (Plan Consultant)] Gap analysis for railway dedup (@Metis (Plan Consultant) sub
+  20:55 [Metis (Plan Consultant)] Metis gap analysis for gui-test dual mode plan (@Metis (Plan
+  16:09 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  16:04 [Metis (Plan Consultant)] Metis gap analysis for ZMQ implementation (@Metis (Plan Cons
+  15:02 [Momus (Plan Critic)] Momus re-review railway-merge (@Momus (Plan Critic) subagent
+  15:00 [Momus (Plan Critic)] Momus review railway-merge plan (@Momus (Plan Critic) subage
+  14:42 [Momus (Plan Critic)] Momus review of E2E plan (@Momus (Plan Critic) subagent)
+  14:25 [Metis (Plan Consultant)] Metis gap analysis for rail merge (@Metis (Plan Consultant) 
+  14:19 [Metis (Plan Consultant)] Metis gap analysis for E2E test (@Metis (Plan Consultant) su
+  11:23 [​Atlas (Plan Executor)] POI检索项目接口设计参考
+  11:08 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  11:01 [Sisyphus (Ultraworker)] 查找使用zmq的代码部分
+  10:43 [Momus (Plan Critic)] Momus review merge-subway-lines plan (@Momus (Plan Critic) s
+  10:37 [Metis (Plan Consultant)] Metis gap analysis for subway merge (@Metis (Plan Consultant
+  10:37 [Prometheus (Plan Builder)] 地图比例尺获取更新机制分析
+  …共 27 个主会话（上表前 15）
+  （合计 27 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-29）

@@ -43,4 +43,12 @@
 - 22:50 5e7c6c4 feat(gjb-sms): introduce global base map (z0-6) from OSM style
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  20:12 [general] Review layer redesign changes (@general subagent)
+  19:22 [Momus (Plan Critic)] Momus 3rd review layer plan (@Momus (Plan Critic) subagent)
+  19:15 [Momus (Plan Critic)] Momus re-review layer plan (@Momus (Plan Critic) subagent)
+  19:06 [Momus (Plan Critic)] Momus review layer redesign plan (@Momus (Plan Critic) subag
+  18:58 [Metis (Plan Consultant)] Metis: layer redesign gaps (@Metis (Plan Consultant) subagen
+  （合计 5 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-11）

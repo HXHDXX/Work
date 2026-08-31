@@ -29,3 +29,11 @@
 ================================================
 数据来源：git log 双轨遍历（0 提交核实）、
 opencode 会话（SQLite 直查 opencode.db，/home/guangbin 等路径）
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:01 [Sisyphus] 生成 2026-08-30 日报并邮件发送
+  22:00 [Sisyphus] repowire 卸载残留清理
+  19:42 [Atlas] Repowire.io
+  11:09 [Prometheus] repowire.io review
+  10:50 [Atlas] 项目代码阅读理解
+  （合计 5 个主会话；subagent/截图判读等碎件已滤除）

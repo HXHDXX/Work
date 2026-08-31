@@ -18,4 +18,23 @@
 - 14:32 107e984 update plan
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:46 [Sisyphus (Ultraworker)] 项目构建产物说明
+  17:47 [Sisyphus (Ultraworker)] Greeting
+  17:36 [Sisyphus (Ultraworker)] Greeting
+  17:35 [Sisyphus (Ultraworker)] Greeting
+  17:33 [Prometheus (Plan Builder)] 项目理解
+  17:32 [Sisyphus (Ultraworker)] Greeting
+  17:24 [Sisyphus (Ultraworker)] Greeting
+  16:50 [Sisyphus (Ultraworker)] Greeting
+  16:47 [Sisyphus (Ultraworker)] Adding HXPRShell to repository
+  16:37 [Sisyphus (Ultraworker)] Greeting
+  16:25 [Sisyphus (Ultraworker)] TTS player maximum volume check
+  16:21 [Prometheus (Plan Builder)] Qt Android build with NDK 27.1 and device deployment
+  16:19 [build] Fix QScrollArea touch scrolling (@build subagent)
+  16:13 [build] Fix Android server URL to localhost (@build subagent)
+  16:08 [build] Fix Android TTS external storage (@build subagent)
+  …共 39 个主会话（上表前 15）
+  （合计 39 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-11）

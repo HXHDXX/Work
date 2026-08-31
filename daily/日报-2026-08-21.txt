@@ -38,4 +38,23 @@
   （HXNativeApp 额外处理 .codegraph 软链需 symlink 规则）
 - HXMapWidgetNative：订正 pitch=0 过时注释（pitch 实际渲染，保留因 maplibre-native#4039）
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:03 [Prometheus] 地图测试面板NMEA/RDSS服务测试界面及skill开发
+  22:16 [Atlas] 为 /Workspace 和 /HXAppPlatform 项目 .gitignore 添加 .codegraph 与 
+  22:03 [Sisyphus] 生成 2026-08-21 工作日报并发邮件
+  15:34 [Prometheus] OMO版本及hashline使用情况
+  15:15 [Atlas] OMO 是否已支持 hashline
+  14:41 [​Atlas (Plan Executor)] 单元测试未通过原因分析
+  13:54 [general] 代码评审：双仓 flaky 修复链 (@general subagent)
+  13:19 [​Atlas (Plan Executor)] hxprshell-app 存活占端口与 MapLibre 视觉缺陷复检
+  11:01 [​Atlas (Plan Executor)] 去除opencode安全网插件
+  11:00 [Metis (Plan Consultant)] Gap analysis for plugin removal (@Metis (Plan Consultant) su
+  10:21 [Momus (Plan Critic)] Momus 审查计划 (@Momus (Plan Critic) subagent)
+  10:09 [Metis (Plan Consultant)] Metis 差距分析（收尾计划） (@Metis (Plan Consultant) subagent)
+  09:49 [Metis (Plan Consultant)] Metis 差距分析（收尾包计划） (@Metis (Plan Consultant) subagent)
+  09:39 [Metis (Plan Consultant)] Metis 计划差距分析 (@Metis (Plan Consultant) subagent)
+  09:09 [Prometheus (Plan Builder)] 项目介绍
+  …共 22 个主会话（上表前 15）
+  （合计 22 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：/Workspace 15 仓 + /HXAppPlatform 9 仓 git log（2026-08-21）、commit body

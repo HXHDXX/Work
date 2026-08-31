@@ -107,4 +107,23 @@
 - 10:44 7f972f7 update plan
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:54 [general] F3: Real manual QA execution (@general subagent)
+  19:54 [general] F2: Code quality review (@general subagent)
+  19:42 [Sisyphus (Ultraworker)] build.sh依赖库拷贝差异排查
+  19:31 [build] Execute RPATH fix + rebuild (@build subagent)
+  19:30 [build] Fix RPATH regression in HXMapWidgetNative (@build subagent)
+  19:14 [Momus (Plan Critic)] Momus strict review of route arrow plan (@Momus (Plan Critic
+  19:06 [Metis (Plan Consultant)] Metis gap analysis for route arrows (@Metis (Plan Consultant
+  17:48 [​Atlas (Plan Executor)] Manager接口列表查询
+  17:32 [Momus (Plan Critic)] Momus review of GammaRay plan (@Momus (Plan Critic) subagent
+  17:24 [Prometheus (Plan Builder)] SDK添加图层顺序介绍
+  17:18 [Metis (Plan Consultant)] Metis gap analysis for GammaRay plan (@Metis (Plan Consultan
+  17:08 [Sisyphus (Ultraworker)] Opencode自定义快捷键绑定
+  16:27 [Sisyphus (Ultraworker)] 删除project-task-runner和writer技能
+  16:27 [Momus (Plan Critic)] Momus review of layer z-order plan (@Momus (Plan Critic) sub
+  16:26 [Momus (Plan Critic)] Momus review of unify-copy-list plan (@Momus (Plan Critic) s
+  …共 33 个主会话（上表前 15）
+  （合计 33 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-21）

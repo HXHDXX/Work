@@ -26,4 +26,23 @@
 - lib-HXNmeaParser 插件分发包发布
 - Work 仓日报维护更新
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:02 [Sisyphus (Ultraworker)] 生成 2026-08-17 工作日报并发邮件
+  18:38 [Prometheus (Plan Builder)] st模式拖动缩放旋转慢：共享纹理同步延迟排查
+  18:38 [Momus (Plan Critic)] Momus review of st-drag-jank-fix plan (@Momus (Plan Critic) 
+  17:46 [Metis (Plan Consultant)] Metis gap analysis for ST jank plan (@Metis (Plan Consultant
+  17:24 [Sisyphus (Ultraworker)] 构建运行退出后日志问题分析
+  17:16 [general] Review HXMapWidgetNative icon dedup (@general subagent)
+  17:14 [general] Review HXNativeApp log fixes (@general subagent)
+  17:04 [Momus (Plan Critic)] Momus 审查工作计划 (@Momus (Plan Critic) subagent)
+  16:48 [Metis (Plan Consultant)] Metis 评审规划盲区 (@Metis (Plan Consultant) subagent)
+  16:13 [Metis (Plan Consultant)] Metis 缺口分析 (@Metis (Plan Consultant) subagent)
+  16:12 [Prometheus (Plan Builder)] 构建运行退出后日志问题分析
+  16:07 [Sisyphus (Ultraworker)] st模式键盘事件与mapReady黑屏问题
+  16:07 [general] 993e4dc 修复代码评审 (@general subagent)
+  15:48 [Prometheus (Plan Builder)] master分支是否默认构建地图API测试面板
+  15:16 [​Atlas (Plan Executor)] arm64打包脚本替换FT-D3000M NPU版onnxruntime库
+  …共 39 个主会话（上表前 15）
+  （合计 39 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-17）、commit body

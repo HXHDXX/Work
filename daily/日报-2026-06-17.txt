@@ -22,4 +22,23 @@
 - 19:31 c0e8a6c fix(touch): two-finger tap zoom-out triggers reliably + zoom-to-cursor math
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  20:39 [Momus (Plan Critic)] Momus review (background) (@Momus (Plan Critic) subagent)
+  20:39 [Momus (Plan Critic)] Momus review (background) (@Momus (Plan Critic) subagent)
+  20:39 [Momus (Plan Critic)] Momus review (background) (@Momus (Plan Critic) subagent)
+  20:39 [Momus (Plan Critic)] Momus review (background) (@Momus (Plan Critic) subagent)
+  20:39 [Momus (Plan Critic)] Momus review (background) (@Momus (Plan Critic) subagent)
+  20:08 [Momus (Plan Critic)] Momus re-review plan (retry) (@Momus (Plan Critic) subagent)
+  19:45 [Metis (Plan Consultant)] Metis gap analysis for 17-item fix (@Metis (Plan Consultant)
+  19:43 [Metis (Plan Consultant)] Metis gap analysis for plan (@Metis (Plan Consultant) subage
+  19:39 [Momus (Plan Critic)] Momus re-review updated plan (@Momus (Plan Critic) subagent)
+  19:09 [Momus (Plan Critic)] Momus review iteration 1 (@Momus (Plan Critic) subagent)
+  18:54 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  17:26 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  17:22 [Metis (Plan Consultant)] Metis gap analysis for refactor (@Metis (Plan Consultant) su
+  17:09 [Momus (Plan Critic)] Momus review of touch gesture fix plan (@Momus (Plan Critic)
+  16:50 [Metis (Plan Consultant)] Metis gap analysis for touch gesture fix (@Metis (Plan Consu
+  …共 25 个主会话（上表前 15）
+  （合计 25 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-17）

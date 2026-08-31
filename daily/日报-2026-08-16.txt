@@ -38,4 +38,23 @@
   容器退出码矩阵、widget EGL-free PIMPL 约定、Obs-1/Obs-2 回归分析抢救
 - test-skill truths 刷新：5 套件计数与 2026-08-16 通过率
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:21 [Momus (Plan Critic)] Momus re-review plan (@Momus (Plan Critic) subagent)
+  23:14 [Momus (Plan Critic)] Momus review plan (@Momus (Plan Critic) subagent)
+  22:53 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  22:34 [​Atlas (Plan Executor)] 运行程序并截图发送邮件
+  22:22 [​Atlas (Plan Executor)] Committing changes
+  22:18 [Prometheus (Plan Builder)] 地图API测试面板测试用例执行
+  22:02 [Sisyphus (Ultraworker)] 生成 2026-08-16 工作日报并发邮件
+  21:06 [Prometheus (Plan Builder)] 自毁指令识别
+  19:21 [Prometheus (Plan Builder)] 最后一次提交修正内容
+  19:21 [general] Ingest 知识到 qhx-map-widget-native (@general subagent)
+  19:18 [general] Review guard-eq1 semantics change (@general subagent)
+  18:43 [general] Review dangerous-cmd-guard changes (@general subagent)
+  17:50 [Momus (Plan Critic)] Momus review of guard plan (@Momus (Plan Critic) subagent)
+  17:43 [Metis (Plan Consultant)] Metis gap analysis for guard plan (@Metis (Plan Consultant) 
+  14:56 [​Atlas (Plan Executor)] 鸿蒙等系统移植可行性及IPC架构分析
+  …共 22 个主会话（上表前 15）
+  （合计 22 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：HXNmeaParser、HXNativeApp、HXMapWidgetNative git log（2026-08-16）、commit body

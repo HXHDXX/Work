@@ -22,4 +22,23 @@
 三、HXNativeApp：TTS 测试评审收尾（1 commit）
 - review minors：ASSERT 等待 errSpy 保证一致性；冷页缓存归因措辞弱化。
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:01 [Sisyphus] 生成 2026-08-26 工作日报并发邮件
+  18:45 [Prometheus] 多项目AI并行构建容器冲突
+  17:56 [Metis] Metis gap analysis on plan (@Metis - Plan Consultant subagen
+  17:45 [Atlas] 从windows_mingw_cl:v1.3提取mingw-posix-amd64依赖库
+  16:41 [Atlas] linux-arm64 构建是否打包 TTS 语音模型
+  16:20 [Prometheus] QtCreator下hx-ADAS-app无法解码，命令行正常
+  15:55 [Metis] Metis gap analysis on draft (@Metis - Plan Consultant subage
+  14:53 [Atlas] 同一串口分别读写NMEA与二进制数据
+  14:39 [Prometheus] 构建容器冲突原因分析与改进方案
+  14:25 [Atlas] Qt项目ldd动态库依赖分析
+  12:19 [Atlas] build.sh linux-x86_64 构建失败排查
+  12:17 [Atlas] MSC-26-RW033-TITAN3变基到MSC-26-RW033-preview
+  11:47 [Prometheus] 变基MSC-26-RW033-TITAN3到preview的冲突分析
+  11:44 [Atlas] hx-ADAS-app通过GST_ROOT引入lib-GStreamer库
+  10:59 [Atlas] OpenCode免重启切换GLM账号API key
+  …共 18 个主会话（上表前 15）
+  （合计 18 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-26）、commit body

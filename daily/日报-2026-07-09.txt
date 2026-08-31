@@ -31,4 +31,20 @@
 - 14:55 90c49ae update map path mvt
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  20:25 [Momus (Plan Critic)] Momus review lineio-app-mount plan (@Momus (Plan Critic) sub
+  19:38 [Momus (Plan Critic)] Momus review cleanup plan (@Momus (Plan Critic) subagent)
+  19:34 [Metis (Plan Consultant)] Metis gap analysis LineIo mount (@Metis (Plan Consultant) su
+  19:25 [Metis (Plan Consultant)] Metis gap analysis LineIo mount (@Metis (Plan Consultant) su
+  19:09 [Prometheus (Plan Builder)] 串口网口行协议收发模块
+  19:07 [Prometheus (Plan Builder)] hx-native-app 目录重构方案
+  15:38 [Momus (Plan Critic)] Momus review of restructure plan (@Momus (Plan Critic) subag
+  15:18 [Metis (Plan Consultant)] Metis gap analysis for restructure plan (@Metis (Plan Consul
+  14:12 [Sisyphus (Ultraworker)] CMake Qt6 not found in maplibre-native-qt
+  13:56 [general] Review io-connection-refactor code (@general subagent)
+  10:41 [Momus (Plan Critic)] Momus review io-connection-refactor plan (@Momus (Plan Criti
+  10:17 [Sisyphus (Ultraworker)] GIS server数据路径配置
+  09:58 [Metis (Plan Consultant)] Review algeria data build plan (@Metis (Plan Consultant) sub
+  （合计 13 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-09）

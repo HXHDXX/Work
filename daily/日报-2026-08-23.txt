@@ -19,4 +19,23 @@
 - HXNmeaParser：修复 2 个与现行 API 脱节的单元测试，对齐当前签名，168/168 通过
 - HXMapWidgetNative：bus() SKIP 日志收紧为未连接且地址未配置才打印，消除逐次访问噪音
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:01 [Sisyphus] 执行 daily-report：生成 2026-08-23 日报并发邮件
+  18:17 [Prometheus] build.sh check增加ASAN与测试用例开关
+  18:00 [general] 跟进①②: 泄漏根治+旗标修正 (@general subagent)
+  17:14 [Metis] Metis gap analysis of plan (@Metis - Plan Consultant subagen
+  16:52 [general] Fix-3+4: demo链接+基准校准 (@general subagent)
+  15:10 [general] Fix-A: 测试sanitizer接线 (@general subagent)
+  15:03 [general] Fix-B: 脱节测试修复 (@general subagent)
+  13:23 [general] F3 终验: 真实手工QA (@general subagent)
+  13:16 [general] F2 终验: 代码质量评审 (@general subagent)
+  13:16 [general] F1 终验: 计划合规审计 (@general subagent)
+  13:15 [general] F4 终验: 范围忠实度 (@general subagent)
+  13:11 [general] Task 7 档③分诊补正 (@general subagent)
+  13:07 [general] Task 16: 跨仓一致性审计 (@general subagent)
+  12:58 [general] Task 7 恢复: 收尾HXSpatialMeasure (@general subagent)
+  12:53 [general] Task 11: HXNavigation (@general subagent)
+  …共 35 个主会话（上表前 15）
+  （合计 35 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-23）、commit subject/body

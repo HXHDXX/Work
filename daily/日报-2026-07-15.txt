@@ -63,4 +63,23 @@
 - 18:10 b5e3c1b fix: silence clang-tidy member-init warnings in parse_hdt/parse_rot
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  20:54 [Sisyphus (Ultraworker)] container/build.sh Linux构建失败
+  19:47 [Sisyphus (Ultraworker)] review changes [commit|branch|pr], defaults to uncommitted (
+  19:16 [Sisyphus (Ultraworker)] container/build.sh Windows 构建失败
+  19:04 [Sisyphus (Ultraworker)] Code review for commit 4c203b5ed18b90c1e6a893cd54
+  18:48 [general] Review reorganized commits (@general subagent)
+  18:38 [Sisyphus (Ultraworker)] 修复构建警告
+  18:37 [Sisyphus (Ultraworker)] 项目概览文档更新需求检测
+  18:13 [​Atlas (Plan Executor)] 构建运行测试并分析日志问题
+  18:10 [Sisyphus (Ultraworker)] 提交操作
+  18:07 [general] Review DEALER refactor commit (@general subagent)
+  18:04 [general] Review commit 4c203b5 (@general subagent)
+  17:57 [Sisyphus (Ultraworker)] HXNmeaParser HXRdssSendingQueue zmq_client 发送接口分析
+  17:44 [Prometheus (Plan Builder)] B3SendingQueue project analysis
+  17:42 [Momus (Plan Critic)] Momus review of clang-tidy cleanup plan (@Momus (Plan Critic
+  17:37 [Metis (Plan Consultant)] Metis gap analysis for clang-tidy cleanup (@Metis (Plan Cons
+  …共 34 个主会话（上表前 15）
+  （合计 34 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-15）

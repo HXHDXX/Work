@@ -61,3 +61,17 @@
 ================================================
 数据来源：/Workspace + /HXAppPlatform 全量 git log、各库 knowledge、
 .sisyphus 计划与证据、opencode 会话
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:20 [Sisyphus (Ultraworker)] NMEA解析数据订阅与RDSS短报文发送
+  17:20 [Sisyphus (Ultraworker)] rdss_queue move bug: queue_id=0 sentinel
+  15:54 [Prometheus (Plan Builder)] Plugin bus_connector tx_type field path bug
+  15:43 [general] Cross-repo NMEA contract review (@general subagent)
+  14:21 [Prometheus (Plan Builder)] GIS导航产品SDK数据编译介绍文档
+  10:29 [Momus (Plan Critic)] Momus review of promo H5 plan (@Momus (Plan Critic) subagent
+  10:15 [Metis (Plan Consultant)] Metis gap analysis for promo doc (@Metis (Plan Consultant) s
+  00:17 [Sisyphus (Ultraworker)] 今日开发工作总结
+  00:16 [Sisyphus (Ultraworker)] 昨日工作总结生成并发送邮件
+  00:16 [Sisyphus (Ultraworker)] 昨日工作总结并发送邮件附件
+  00:16 [Sisyphus (Ultraworker)] 今日开发工作总结
+  （合计 11 个主会话；subagent/截图判读等碎件已滤除）

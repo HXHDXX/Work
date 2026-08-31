@@ -52,3 +52,8 @@
 ================================================
 数据来源：HXMapWidgetNative / TitanNavi git log（2026-08-04）、
 commit body、opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:06 [Prometheus (Plan Builder)] QHXMapWidgetNative键盘焦点截获问题
+  07:47 [general] Code review of IPC input forwarding (@general subagent)
+  （合计 2 个主会话；subagent/截图判读等碎件已滤除）

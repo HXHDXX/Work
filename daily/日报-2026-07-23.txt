@@ -79,3 +79,12 @@
 数据来源：HXGeoConverter + HXGISServer git log（2026-07-23）、
 geo-conversion.md / geo-converter-design.md、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  17:19 [Prometheus (Plan Builder)] GGA语句各字段含义详解
+  17:02 [Sisyphus (Ultraworker)] 提交请求
+  16:52 [Sisyphus (Ultraworker)] build.sh Windows 构建失败排查
+  16:36 [Prometheus (Plan Builder)] GIS格式转换模块（SHP/MIF/GeoTIFF转GeoJSON/MBTiles）
+  15:47 [Prometheus (Plan Builder)] 检索知识库获取RDSS频度频点命令
+  10:08 [Sisyphus (Ultraworker)] MBTiles tile_row 用 TMS：文档标反 XYZ
+  （合计 6 个主会话；subagent/截图判读等碎件已滤除）

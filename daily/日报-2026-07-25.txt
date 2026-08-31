@@ -103,3 +103,22 @@
 数据来源：HXNavigation / HXRdssSendingQueue / HXNmeaParser
 git log（2026-07-25）、guidance.md 知识模块、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:13 [Prometheus (Plan Builder)] nemaservice/rdssservice 接口易用性评估
+  21:26 [general] Review HXRdssSendingQueue changes (@general subagent)
+  21:25 [general] Review HXNativeApp changes (@general subagent)
+  21:25 [general] Review HXNmeaParser changes (@general subagent)
+  18:54 [Momus (Plan Critic)] Momus review iteration 1 (@Momus (Plan Critic) subagent)
+  18:48 [Sisyphus (Ultraworker)] nmeaservice短报文接收与txr协议
+  18:34 [Sisyphus (Ultraworker)] 通播信息项目接收与解析分析
+  18:33 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  18:27 [Sisyphus (Ultraworker)] 项目能否接收解析通播信息
+  18:04 [Prometheus (Plan Builder)] RNSS/RDSS 协议封装与GGA结构更新
+  17:25 [general] Code review: RDSS+NMEA work (@general subagent)
+  16:44 [Sisyphus (Ultraworker)] Git commit request
+  16:14 [Prometheus (Plan Builder)] hxcamera 获取摄像头参数
+  15:42 [Metis (Plan Consultant)] Metis 评审设计 gap (@Metis (Plan Consultant) subagent)
+  07:11 [Momus (Plan Critic)] Momus review: rdss-queue-generalization v2 (@Momus (Plan Cri
+  …共 20 个主会话（上表前 15）
+  （合计 20 个主会话；subagent/截图判读等碎件已滤除）

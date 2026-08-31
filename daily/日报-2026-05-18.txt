@@ -25,4 +25,23 @@
 - 16:18 b93549a fix(build): scope -frtti and -fexceptions to C++ only
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:42 [plan] Plan standalone QOpenGLWidget test (@plan subagent)
+  19:04 [Prometheus (Plan Builder)] Algeria map with multilingual labels
+  18:54 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  18:28 [Momus (Plan Critic)] Momus review of font stack fix plan (@Momus (Plan Critic) su
+  18:28 [Prometheus (Plan Builder)] MBGL-QT introduction
+  18:26 [Metis (Plan Consultant)] Gap analysis for font stack fix (@Metis (Plan Consultant) su
+  18:25 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  18:23 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:08 [Metis (Plan Consultant)] Gap analysis for Algeria multilingual annotation (@Metis (Pl
+  16:31 [Sisyphus (Ultraworker)] GISServer字体栈修复提交
+  16:18 [Prometheus (Plan Builder)] 字体栈导致地图显示问题排查
+  16:17 [build] Fix -frtti CMake warning (@build subagent)
+  16:08 [build] Rewrite font handler comma fallback (@build subagent)
+  16:06 [Prometheus (Plan Builder)] Noto字体多语言支持方案
+  16:01 [build] Fix font route generic comma detection (@build subagent)
+  …共 25 个主会话（上表前 15）
+  （合计 25 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-18）

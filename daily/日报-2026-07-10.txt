@@ -45,4 +45,23 @@
 - 15:43 7e4596b update plan
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:21 [Momus (Plan Critic)] Momus 3rd review of fixed plan (@Momus (Plan Critic) subagen
+  23:16 [Momus (Plan Critic)] Momus re-review of fixed plan (@Momus (Plan Critic) subagent
+  23:07 [Momus (Plan Critic)] Momus review of compliance plan (@Momus (Plan Critic) subage
+  22:43 [Metis (Plan Consultant)] Review line/area compliance plan (@Metis (Plan Consultant) s
+  21:50 [Sisyphus (Ultraworker)] hxmapdraw中IPC实现关联性
+  21:30 [Prometheus (Plan Builder)] Workspace N085005 data analysis (fork #3)
+  17:29 [Sisyphus (Ultraworker)] build.sh check 构建日志问题分析
+  17:13 [Sisyphus (Ultraworker)] GnuTLS初始化错误来源so排查
+  17:00 [Prometheus (Plan Builder)] Analyze uncommitted and untracked files
+  16:47 [Sisyphus (Ultraworker)] Linux加载自带Qt SDK而非系统Qt
+  16:10 [Sisyphus (Ultraworker)] LineIo 测试用例完整性检查
+  16:01 [​Atlas (Plan Executor)] 导出项目Docker镜像到~/Downloads
+  15:56 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:39 [Sisyphus (Ultraworker)] API开发指南与qt-api文档关系
+  15:30 [Sisyphus (Ultraworker)] 多进程地图渲染架构与技术方案
+  …共 39 个主会话（上表前 15）
+  （合计 39 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-10）

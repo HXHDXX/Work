@@ -60,3 +60,12 @@
 ================================================
 数据来源：HXMapWidgetNative / HXNativeApp git log（2026-08-02）、
 commit body、opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:11 [general] Code review overview map (@general subagent)
+  18:05 [Prometheus (Plan Builder)] NMEA服务和RDSS服务接口查询
+  17:27 [general] Review code changes (@general subagent)
+  16:27 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  16:18 [Metis (Plan Consultant)] Metis gap analysis for plan (@Metis (Plan Consultant) subage
+  07:30 [Prometheus (Plan Builder)] setLocation蓝色图标未显示排查
+  （合计 6 个主会话；subagent/截图判读等碎件已滤除）

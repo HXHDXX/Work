@@ -97,4 +97,23 @@
 - 15:08 1597d64 docs(knowledge): lint — fix 9 stale/duplicate entries across 7 knowledge modules
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  15:56 [Sisyphus (Ultraworker)] AGENTS.md 知识检查修复与积累
+  15:48 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:46 [Sisyphus (Ultraworker)] AGENTS.md知识检查与修复
+  15:39 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:25 [Momus (Plan Critic)] Momus review of docs-completion plan (@Momus (Plan Critic) s
+  15:22 [Prometheus (Plan Builder)] 查看/tmp目录PNG图片
+  15:20 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:18 [Metis (Plan Consultant)] Metis gap analysis for docs plan (@Metis (Plan Consultant) s
+  15:13 [Sisyphus (Ultraworker)] AGENTS.md知识检查与修复
+  15:10 [build] Ingest knowledge: styles + tilemaker (@build subagent)
+  15:08 [Sisyphus (Ultraworker)] AGENTS.md知识检查与修复
+  15:08 [Sisyphus (Ultraworker)] AGENTS.md 知识检查与修复积累
+  15:07 [Sisyphus (Ultraworker)] AGENTS.md 知识检查与修复
+  15:07 [Sisyphus (Ultraworker)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:05 [Sisyphus (Ultraworker)] AGENTS.md 知识检查与修复
+  …共 42 个主会话（上表前 15）
+  （合计 42 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-28）

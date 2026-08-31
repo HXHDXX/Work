@@ -9,4 +9,23 @@
 - 18:20 bf62282 add navi data display
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:48 [Prometheus (Plan Builder)] hxprshell-app 子进程孤立泄漏排查
+  22:11 [general] Review code changes (@general subagent)
+  19:13 [Momus (Plan Critic)] Momus resubmit after fix (@Momus (Plan Critic) subagent)
+  19:07 [Momus (Plan Critic)] Momus rigorous plan review (@Momus (Plan Critic) subagent)
+  18:56 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  18:36 [Sisyphus (Ultraworker)] Text file busy 构建复制错误
+  18:18 [Sisyphus (Ultraworker)] About页面URL拷贝与启动性能分析
+  18:17 [Sisyphus (Ultraworker)] 运行完整测试用例
+  17:55 [Sisyphus (Ultraworker)] RouteServer HTTP服务启动测试
+  17:22 [Sisyphus (Ultraworker)] 地图数据拷贝修正方案
+  17:19 [Sisyphus (Ultraworker)] HXMapBus不应作为公共Qt API
+  17:04 [general] Follow-up review rename + gitkeep fix (@general subagent)
+  16:59 [Sisyphus (Ultraworker)] 查找项目中 HXMapBus 使用位置
+  16:47 [general] Review mapdata + RuntimeEndpoints changes (@general subagent
+  16:43 [Sisyphus (Ultraworker)] HXMapBus代码引用排查
+  …共 18 个主会话（上表前 15）
+  （合计 18 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-29）

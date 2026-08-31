@@ -104,4 +104,23 @@
 - 10:58 5f79f75 fix(knowledge): 11 处文档与代码不一致修复 — 全面知识库审计
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:37 [Sisyphus (Ultraworker)] AGENTS.md 项目结构层级优化建议
+  11:16 [Sisyphus (Ultraworker)] AGENTS.md更新详细文档
+  10:59 [Sisyphus (Ultraworker)] env::prefix文档检查
+  10:58 [Sisyphus (Ultraworker)] 全面知识更新与修正
+  10:58 [Prometheus (Plan Builder)] 根据AGENTS.md更新详细文档
+  10:47 [Sisyphus (Ultraworker)] library-integration.md 用法问题
+  10:23 [Sisyphus (Ultraworker)] 知识全面修正与更新
+  10:12 [Metis (Plan Consultant)] Review doc sync plan gaps (@Metis (Plan Consultant) subagent
+  10:10 [Sisyphus (Ultraworker)] 优化AGENTS.md
+  10:04 [Prometheus (Plan Builder)] 深入理解env::prefix
+  10:03 [Prometheus (Plan Builder)] 深入理解 env::prefix
+  10:00 [Sisyphus (Ultraworker)] 深入理解env::prefix
+  09:39 [Prometheus (Plan Builder)] AGENTS.md核心原则与行为准则文档完善评估
+  09:36 [build] 补全 principles.md 三个缺失章节 (@build subagent)
+  09:21 [build] Fix libenvpp example double underscore (@build subagent)
+  …共 18 个主会话（上表前 15）
+  （合计 18 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-25）

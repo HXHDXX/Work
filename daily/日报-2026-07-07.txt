@@ -16,4 +16,23 @@
 - 11:08 53a9eec fix(package): prefix all hxmap URLs with mvt/ to mirror map_data server root
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:38 [Sisyphus (Ultraworker)] Workspace N085005 data analysis
+  18:07 [Sisyphus (Ultraworker)] 应用调试与日志问题分析
+  17:55 [Sisyphus (Ultraworker)] 应用调试与日志问题分析 (fork #1)
+  17:48 [Momus (Plan Critic)] Momus review round 2 (@Momus (Plan Critic) subagent)
+  17:42 [Momus (Plan Critic)] Momus review round 1 (@Momus (Plan Critic) subagent)
+  17:12 [Momus (Plan Critic)] Momus review of draw segv plan (@Momus (Plan Critic) subagen
+  17:11 [Metis (Plan Consultant)] Gap analysis for maneuver arrow plan (@Metis (Plan Consultan
+  16:37 [general] Code review of shutdown throttle fixes (@general subagent)
+  15:52 [Momus (Plan Critic)] Momus review of fix plan (@Momus (Plan Critic) subagent)
+  15:37 [Prometheus (Plan Builder)] 应用调试与日志问题分析 (fork #3)
+  15:33 [Metis (Plan Consultant)] Metis gap analysis for fix plan (@Metis (Plan Consultant) su
+  15:29 [​Atlas (Plan Executor)] HXMapDraw顶点删除后选中状态未刷新
+  15:16 [Prometheus (Plan Builder)] 应用调试与日志问题分析 (fork #2)
+  14:57 [Momus (Plan Critic)] Momus review round 3 (@Momus (Plan Critic) subagent)
+  14:49 [Momus (Plan Critic)] Momus review round 2 (@Momus (Plan Critic) subagent)
+  …共 37 个主会话（上表前 15）
+  （合计 37 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-07）

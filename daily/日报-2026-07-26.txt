@@ -87,3 +87,16 @@ HXNmeaParser 3 commits + HXRdssSendingQueue 1 commit
 数据来源：ProductDesign / HXNavigation / HXNmeaParser / HXRdssSendingQueue
 git log（2026-07-26）、guidance.md 知识模块、MSC-26-RW033 需求文档、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  16:34 [Momus (Plan Critic)] Momus review of MSC-26-RW033 Qt UI plan (@Momus (Plan Critic
+  16:16 [Metis (Plan Consultant)] Metis gap analysis for MSC-26-RW033 Qt UI plan (@Metis (Plan
+  14:29 [Sisyphus (Ultraworker)] 项目中ZMQ client库使用与插件加载方式分析
+  14:24 [Prometheus (Plan Builder)] 驾车实时导航引导插件模块开发
+  09:13 [Sisyphus (Ultraworker)] 优化 agents.md
+  09:06 [Sisyphus (Ultraworker)] 新增产品需求提交
+  08:23 [Prometheus (Plan Builder)] 项目初始化提交
+  07:46 [Sisyphus (Ultraworker)] build.sh Linux 构建失败及 check 文件被修改问题
+  07:38 [Prometheus (Plan Builder)] 解决./container/build.sh linux失败问题
+  07:27 [Metis (Plan Consultant)] Gap analysis for trivial build fix plan (@Metis (Plan Consul
+  （合计 10 个主会话；subagent/截图判读等碎件已滤除）

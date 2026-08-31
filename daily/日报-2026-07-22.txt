@@ -62,3 +62,12 @@
 数据来源：HXNavigation git log（4b7a67c/e169770）、
 driving-guidance-design.md 设计文档、Work/plan.md（5dcae2d）、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:11 [Prometheus (Plan Builder)] NMEA订阅与RDSS短报文是否改用服务层
+  19:04 [Sisyphus (Ultraworker)] 新增 MSC-26-RW033 manifest 文件
+  17:16 [Momus (Plan Critic)] Momus review lineio fix plan (@Momus (Plan Critic) subagent)
+  14:08 [Momus (Plan Critic)] Momus re-review of updated plan (@Momus (Plan Critic) subage
+  13:55 [Momus (Plan Critic)] Momus review of docs plan (@Momus (Plan Critic) subagent)
+  09:48 [Sisyphus (Ultraworker)] 驾车实时导航引导插件模块设计
+  （合计 6 个主会话；subagent/截图判读等碎件已滤除）

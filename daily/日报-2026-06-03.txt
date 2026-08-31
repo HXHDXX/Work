@@ -20,4 +20,14 @@
 - 16:09 ddfb9c2 docs: add gjb-9121 naming and process.lua separation decisions
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  17:41 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  17:07 [Metis (Plan Consultant)] Metis gap analysis for HXMapFilter (@Metis (Plan Consultant)
+  16:01 [build] Fix CMake and run tests (@build subagent)
+  15:57 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:39 [Sisyphus (Ultraworker)] 隐藏世界底图中文标注
+  10:39 [Momus (Plan Critic)] Momus review of qt-wrapper-api plan (@Momus (Plan Critic) su
+  09:58 [Metis (Plan Consultant)] Metis gap analysis for Qt wrapper plan (@Metis (Plan Consult
+  （合计 7 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-03）

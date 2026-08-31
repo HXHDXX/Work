@@ -19,4 +19,16 @@
 - 19:31 15ccf63 fix(build): add gnutls transitive static deps to make .so self-contained
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  20:12 [Sisyphus (Ultraworker)] espeak-ng-data directory contents in models
+  19:38 [Sisyphus (Ultraworker)] Ensuring Git LFS for binary files in repositories
+  19:37 [Sisyphus (Ultraworker)] Git commit workflow
+  18:02 [Sisyphus (Ultraworker)] 验证so库构建后使用的测试demo
+  17:20 [Sisyphus (Ultraworker)] MapContainer添加线路方法
+  13:47 [Sisyphus (Ultraworker)] Qt cross-platform audio library architecture
+  13:43 [Sisyphus (Ultraworker)] 引入HXProjectTemplate容器构建当前项目
+  10:59 [Sisyphus (Ultraworker)] Project task writer skill documentation
+  10:21 [Sisyphus (Ultraworker)] MapContainer SDK interface class
+  （合计 9 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-08）

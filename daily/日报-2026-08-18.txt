@@ -23,4 +23,8 @@
 - lib-HXNmeaParser 插件分发入库
 - lib-HXRdssSendingQueue 初版：android/linux/oh/windows 四平台二进制与头文件
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:02 [Sisyphus (Ultraworker)] 生成并发送 2026-08-18 工作日报
+  （合计 1 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：各仓 git log（2026-08-18）、commit message、opencode 会话

@@ -25,4 +25,23 @@
 - lib-HXNmeaParser / lib-HXRouteServer：插件分发更新（Linux x86_64）
 - lib-hxprshell-app：二进制更新，含 --self-path 与 clang-tidy 修复
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:01 [Sisyphus] 执行 daily-report 生成 2026-08-24 日报并发邮件
+  19:53 [general] 终版活体摘要校验 (@general subagent)
+  19:44 [general] 重算修订计划SHA256 (@general subagent)
+  19:36 [general] 计算计划文件SHA256 (@general subagent)
+  18:51 [Metis] Metis 计划缺口分析 (@Metis - Plan Consultant subagent)
+  18:38 [general] 运行正式计划脚手架 (@general subagent)
+  18:21 [general] 运行计划脚手架脚本 (@general subagent)
+  18:20 [Metis] Metis 计划缺口分析 (@Metis - Plan Consultant subagent)
+  17:19 [Atlas] 结合opencode与tmux配置分析项目优化空间
+  16:32 [Prometheus] st模式的fallback机制
+  16:30 [general] 终态全量清扫核查 (@general subagent)
+  16:28 [general] 独立复核followup终态 (@general subagent)
+  16:27 [general] followup合入master+清理 (@general subagent)
+  16:24 [general] 只读拉取修复diff与证据 (@general subagent)
+  16:17 [Atlas] MSC-26-RW033-dd 变基到 MSC-26-RW033
+  …共 36 个主会话（上表前 15）
+  （合计 36 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：HXNativeApp、HXMapWidgetNative、lib-* 等仓 git log（2026-08-24）、commit body

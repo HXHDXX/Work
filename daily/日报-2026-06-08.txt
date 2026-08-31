@@ -73,4 +73,23 @@
 - 14:28 7c55b4f docs(AGENTS.md): upgrade worktree rules to atomic naming convention
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:40 [Metis (Plan Consultant)] Gap analysis for polygon fix (@Metis (Plan Consultant) subag
+  19:33 [Sisyphus (Ultraworker)] 多边形简化为无填充矩形框
+  19:31 [Sisyphus (Ultraworker)] review changes [commit|branch|pr], defaults to uncommitted (
+  18:49 [Metis (Plan Consultant)] Metis gap analysis for polygon fix (@Metis (Plan Consultant)
+  18:48 [Prometheus (Plan Builder)] 分析“添加多边形”无法显示原因
+  18:47 [Prometheus (Plan Builder)] 地图多边形显示不全及缩放异常
+  16:45 [build] Fix place classification geo-suffix (@build subagent)
+  15:59 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  15:35 [Momus (Plan Critic)] Momus review polygon fix plan (@Momus (Plan Critic) subagent
+  15:34 [Metis (Plan Consultant)] Metis gap analysis for plan (@Metis (Plan Consultant) subage
+  15:33 [Metis (Plan Consultant)] Metis gap analysis for polygon fix (@Metis (Plan Consultant)
+  15:04 [Sisyphus (Ultraworker)] AGENTS.md完善与知识积累提交
+  15:01 [Sisyphus (Ultraworker)] AGENTS.md完善与知识提交
+  15:01 [Sisyphus (Ultraworker)] AGENTS.md完善与知识提交
+  15:01 [Sisyphus (Ultraworker)] 完善AGENTS.md知识积累与提交
+  …共 38 个主会话（上表前 15）
+  （合计 38 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-08）

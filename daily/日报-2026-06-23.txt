@@ -15,4 +15,23 @@
 - 11:28 7280548 update cpp-doc
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  21:21 [Sisyphus (Ultraworker)] Linux x86_64 build crash and map display fix
+  19:43 [Sisyphus (Ultraworker)] Linux x86_64 build crash and missing map fix
+  19:41 [Sisyphus (Ultraworker)] QHXMapWidgetNative style URL初始化与地图位置设置
+  19:41 [Sisyphus (Ultraworker)] Database unable to open file error during test run
+  19:37 [general] Query project knowledge (@general subagent)
+  19:34 [Sisyphus (Ultraworker)] HXMapWidgetNative接口更新分析与修正建议
+  19:28 [Sisyphus (Ultraworker)] MapRenderWindow shutdown race condition in hx-map-widget-app
+  19:18 [Sisyphus (Ultraworker)] review changes [commit|branch|pr], defaults to uncommitted (
+  18:31 [Sisyphus (Ultraworker)] ASan shared library missing after build check
+  18:28 [Sisyphus (Ultraworker)] map-api-test-panel collapse_toggle click fix
+  17:41 [Sisyphus (Ultraworker)] HXNativeApp地图阿尔及利亚坐标赋值来源
+  17:20 [Sisyphus (Ultraworker)] 完善map-api-test面板功能
+  14:41 [​Atlas (Plan Executor)] 分析git commit 45fc6737
+  13:57 [Prometheus (Plan Builder)] 代码改动分析
+  11:42 [Momus (Plan Critic)] Momus re-review after G16 fix (@Momus (Plan Critic) subagent
+  …共 35 个主会话（上表前 15）
+  （合计 35 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-23）

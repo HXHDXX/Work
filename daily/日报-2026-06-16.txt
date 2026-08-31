@@ -58,4 +58,23 @@
 - 10:58 fb2267e docs(AGENTS.md): clarify language rule to English thinking with Chinese interaction
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:13 [Sisyphus (Ultraworker)] public接口设计讨论
+  18:58 [Sisyphus (Ultraworker)] 修改 AGENTS.md 并提交
+  17:31 [Sisyphus (Ultraworker)] GJB-9121数据MVT渲染分类分层
+  17:14 [Prometheus (Plan Builder)] GJB-9212转PBF数据完整性与样式优化分析
+  16:33 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  16:26 [Metis (Plan Consultant)] Metis gap analysis for plan (@Metis (Plan Consultant) subage
+  16:07 [Sisyphus (Ultraworker)] qt5-x86_64-gl 达梦数据库支持
+  15:49 [Momus (Plan Critic)] Momus re-review after 3 fixes (@Momus (Plan Critic) subagent
+  15:40 [Momus (Plan Critic)] Momus re-review after singleton change (@Momus (Plan Critic)
+  15:29 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  15:18 [Momus (Plan Critic)] Momus review of skill plan (@Momus (Plan Critic) subagent)
+  14:57 [Prometheus (Plan Builder)] LocationIndicatorManager 原生层架构实现
+  14:41 [Metis (Plan Consultant)] Metis gap analysis for API prune (@Metis (Plan Consultant) s
+  14:38 [Metis (Plan Consultant)] Metis gap analysis for skills (@Metis (Plan Consultant) suba
+  13:55 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  …共 28 个主会话（上表前 15）
+  （合计 28 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-16）

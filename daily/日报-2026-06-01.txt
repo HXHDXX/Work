@@ -21,4 +21,23 @@
 - 15:43 f3478e0 update cpp
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  17:35 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  16:41 [Prometheus (Plan Builder)] 本项目如何调试Qt程序
+  16:28 [Prometheus (Plan Builder)] QtDebugBridge测试用例
+  16:27 [Momus (Plan Critic)] Momus review zmq-test-env plan (@Momus (Plan Critic) subagen
+  16:23 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  16:11 [Metis (Plan Consultant)] Metis gap analysis for zmq test plan (@Metis (Plan Consultan
+  16:07 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:22 [Prometheus (Plan Builder)] 地铁线层级调整
+  15:20 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:17 [Momus (Plan Critic)] Momus review of api-cleanup plan (@Momus (Plan Critic) subag
+  15:14 [Prometheus (Plan Builder)] 地图控件鼠标交互方式调查
+  15:11 [Metis (Plan Consultant)] Metis gap analysis for API cleanup (@Metis (Plan Consultant)
+  15:07 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:48 [Prometheus (Plan Builder)] ZMQ地图指令与状态消息格式设计
+  14:47 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  …共 36 个主会话（上表前 15）
+  （合计 36 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-01）

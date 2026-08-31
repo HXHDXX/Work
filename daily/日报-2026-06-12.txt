@@ -29,4 +29,14 @@
 - 17:26 eafde11 update plan
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  17:08 [Momus (Plan Critic)] Momus review round 4 - fixed issues (@Momus (Plan Critic) su
+  16:58 [Momus (Plan Critic)] Momus review round 3 - simplified plan (@Momus (Plan Critic)
+  16:39 [Momus (Plan Critic)] Momus review round 2 (@Momus (Plan Critic) subagent)
+  16:31 [Momus (Plan Critic)] Momus review of decouple-manager plan (@Momus (Plan Critic) 
+  16:30 [Sisyphus (Ultraworker)] 运行Demo
+  16:19 [Metis (Plan Consultant)] Metis gap analysis for decoupling (@Metis (Plan Consultant) 
+  15:13 [Metis (Plan Consultant)] Metis review of refactoring plan (@Metis (Plan Consultant) s
+  （合计 7 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-12）

@@ -23,4 +23,23 @@
 - 16:11 b2cbdbd plugin-HXRouteServer
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:06 [Momus (Plan Critic)] Momus review after blocker fixes (@Momus (Plan Critic) subag
+  22:58 [Momus (Plan Critic)] Momus review of updated multilingual plan (@Momus (Plan Crit
+  22:20 [Momus (Plan Critic)] Momus review background retry (@Momus (Plan Critic) subagent
+  21:54 [Momus (Plan Critic)] Momus review retry of updated plan (@Momus (Plan Critic) sub
+  21:24 [Momus (Plan Critic)] Momus review of updated route plan (@Momus (Plan Critic) sub
+  21:17 [general] Review ScaleBarOverlay changes (@general subagent)
+  17:36 [Momus (Plan Critic)] Momus review of route service plan (@Momus (Plan Critic) sub
+  17:24 [Metis (Plan Consultant)] Metis gap analysis for route service plan (@Metis (Plan Cons
+  17:13 [Prometheus (Plan Builder)] 根据项目现状修正 project-overview.html
+  16:36 [Momus (Plan Critic)] Momus review of plan round 2 (@Momus (Plan Critic) subagent)
+  16:31 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  16:22 [​Atlas (Plan Executor)] 项目使用的HTTP服务库
+  16:17 [Metis (Plan Consultant)] Metis gap analysis for HXMapLocation demo (@Metis (Plan Cons
+  16:05 [​Atlas (Plan Executor)] Git推送
+  15:55 [​Atlas (Plan Executor)] Dependency audit for HXNativeApp modules
+  …共 47 个主会话（上表前 15）
+  （合计 47 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-25）

@@ -116,3 +116,22 @@
 数据来源：HXNativeApp / HXMapWidgetNative / HXRouteServer /
 lib-* git log（2026-07-30）、Work/plan.md、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:25 [general] Code review for showEvent ok guard + test fix (@general suba
+  22:43 [general] F2: Code Quality Review (@general subagent)
+  22:17 [general] Code review: NMEA GGA vdop + comment (@general subagent)
+  22:10 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  22:09 [general] Review location show-gate changes (@general subagent)
+  22:09 [Momus (Plan Critic)] Momus plan review (@Momus (Plan Critic) subagent)
+  22:07 [Momus (Plan Critic)] Momus plan review (@Momus (Plan Critic) subagent)
+  19:38 [Metis (Plan Consultant)] Metis gap analysis for NMEA GGA plan (@Metis (Plan Consultan
+  19:33 [general] Review location indicator code (@general subagent)
+  19:22 [Metis (Plan Consultant)] Gap analysis for location show-gate (@Metis (Plan Consultant
+  19:05 [Metis (Plan Consultant)] Metis gap analysis for showEvent fix (@Metis (Plan Consultan
+  18:26 [Prometheus (Plan Builder)] Location icon URL 获取方法
+  17:50 [Prometheus (Plan Builder)] Map overlay widget not displaying issue
+  17:39 [general] Review Option B .ui migration (@general subagent)
+  16:32 [Momus (Plan Critic)] Momus plan review (@Momus (Plan Critic) subagent)
+  …共 34 个主会话（上表前 15）
+  （合计 34 个主会话；subagent/截图判读等碎件已滤除）

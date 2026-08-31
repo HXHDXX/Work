@@ -15,4 +15,23 @@
 - 10:09 9c4d129 traject modify set color title
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:30 [general] Code review layer order feature (@general subagent)
+  19:29 [general] Code review map-api-test-remediation (@general subagent)
+  18:26 [general] Review OverlayManager refactor (@general subagent)
+  18:12 [Metis (Plan Consultant)] Metis gap 分析诊断计划 (@Metis (Plan Consultant) subagent)
+  18:11 [general] Wire T5 T6 T7 managers (@general subagent)
+  18:09 [Momus (Plan Critic)] Momus 审查诊断计划 (@Momus (Plan Critic) subagent)
+  17:27 [Sisyphus (Ultraworker)] Map source type configuration missing
+  17:20 [Sisyphus (Ultraworker)] 地图源缺少类型配置修复
+  17:15 [Momus (Plan Critic)] Momus review of layer order plan (@Momus (Plan Critic) subag
+  17:10 [Momus (Plan Critic)] Momus 审查计划 (@Momus (Plan Critic) subagent)
+  17:00 [Sisyphus (Ultraworker)] 远端设备截图调试：检查每层比例尺和刻度尺
+  16:59 [Metis (Plan Consultant)] Metis gap analysis for layer order plan (@Metis (Plan Consul
+  16:59 [​Atlas (Plan Executor)] About页面URL修改
+  16:55 [Sisyphus (Ultraworker)] GIS Server HTTP URL 版本号查询
+  16:54 [Metis (Plan Consultant)] Metis 差距分析 (@Metis (Plan Consultant) subagent)
+  …共 32 个主会话（上表前 15）
+  （合计 32 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-01）

@@ -32,4 +32,10 @@
   升级解决；窗口化 resize 已完全修复并加守卫。
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:57 [Prometheus (Plan Builder)] SDK环境变量设置 QT_XCB_GL_INTEGRATION
+  22:03 [Sisyphus (Ultraworker)] 生成 2026-08-15 工作日报并邮件发送
+  16:08 [general] Code review 63ca0de..7b9c8d7 (@general subagent)
+  （合计 3 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：HXMapWidgetNative git log（2026-08-15）、commit body、opencode 会话

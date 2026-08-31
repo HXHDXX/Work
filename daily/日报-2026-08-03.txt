@@ -63,3 +63,22 @@
 数据来源：HXNativeApp / HXMapWidgetNative / test-bridge
 git log（2026-08-03）、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:21 [Momus (Plan Critic)] Momus review of IPC plan (@Momus (Plan Critic) subagent)
+  16:27 [Momus (Plan Critic)] Momus re-review after fixes (@Momus (Plan Critic) subagent)
+  16:11 [​Atlas (Plan Executor)] Location方向功能检查
+  16:09 [Momus (Plan Critic)] Momus review of unify-camerachanged plan (@Momus (Plan Criti
+  15:32 [Metis (Plan Consultant)] Metis gap analysis for cameraChanged deletion (@Metis (Plan 
+  15:09 [Metis (Plan Consultant)] Metis gap analysis for signal docs plan (@Metis (Plan Consul
+  14:29 [Prometheus (Plan Builder)] Test面板放大缩小按钮实现
+  14:20 [Prometheus (Plan Builder)] Test面板放大缩小按钮实现 (fork #1)
+  11:49 [Prometheus (Plan Builder)] regionChanged vs carmerChanged signal区别
+  11:47 [Prometheus (Plan Builder)] Location heading传递检查
+  11:36 [Prometheus (Plan Builder)] Location icon rotation capability
+  11:16 [Prometheus (Plan Builder)] location图标旋转支持
+  11:07 [general] Review cameraChanged symmetry changes (@general subagent)
+  11:01 [general] Review cameraChanged symmetry changes (@general subagent)
+  10:37 [general] Review cameraChanged symmetry changes (@general subagent)
+  …共 19 个主会话（上表前 15）
+  （合计 19 个主会话；subagent/截图判读等碎件已滤除）

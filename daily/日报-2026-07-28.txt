@@ -102,3 +102,22 @@
 数据来源：HXMapWidgetNative / TitanNavi / maplibre-native git log
 （2026-07-28）、HXRouteServer 未提交 diff、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  21:37 [Momus (Plan Critic)] Momus 审查 route-strategies-params (@Momus (Plan Critic) subag
+  21:32 [Metis (Plan Consultant)] Metis 简短缺口分析 (@Metis (Plan Consultant) subagent)
+  21:25 [general] F2: Code quality (re-verify) (@general subagent)
+  21:24 [general] F3: Manual QA (re-verify) (@general subagent)
+  21:22 [general] F4: Scope fidelity (re-verify) (@general subagent)
+  20:55 [general] F4: Scope fidelity check (@general subagent)
+  20:49 [general] F2: Code quality review (@general subagent)
+  20:45 [general] F3: Manual QA (@general subagent)
+  19:16 [Momus (Plan Critic)] Momus review of Custom Layer plan (@Momus (Plan Critic) suba
+  19:13 [Metis (Plan Consultant)] Metis gap analysis for Custom Layer plan (@Metis (Plan Consu
+  17:21 [Sisyphus (Ultraworker)] 阅读理解项目
+  16:12 [Momus (Plan Critic)] Momus review of target-line plan (@Momus (Plan Critic) subag
+  16:05 [Metis (Plan Consultant)] Metis gap analysis for target-line plan (@Metis (Plan Consul
+  14:30 [Sisyphus (Ultraworker)] MapLibre GeoJSON 源更新性能分析
+  10:50 [Prometheus (Plan Builder)] 查找 ZmqBusClient drained 日志
+  …共 18 个主会话（上表前 15）
+  （合计 18 个主会话；subagent/截图判读等碎件已滤除）

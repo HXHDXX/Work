@@ -77,3 +77,22 @@
 数据来源：HXMapWidgetNative / OSMDataCompiler / HXNmeaParser /
 HXProjectTemplate git log（2026-08-07）、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:57 [Momus (Plan Critic)] Momus review unify-tbq-ibd-ack (@Momus (Plan Critic) subagen
+  22:00 [Prometheus (Plan Builder)] fki、ibd、ack 作用说明
+  21:44 [Momus (Plan Critic)] Momus review iteration 1 (@Momus (Plan Critic) subagent)
+  19:59 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  18:56 [Prometheus (Plan Builder)] 点线面的对象概念
+  18:27 [Momus (Plan Critic)] Momus review plan (@Momus (Plan Critic) subagent)
+  18:19 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  18:12 [Prometheus (Plan Builder)] 点线面的对象概念 (fork #1)
+  15:45 [Prometheus (Plan Builder)] PWI旧体制 vs BMI新体制 推断验证 (fork #1)
+  15:41 [general] Review code changes 0032243..5e49db0 (@general subagent)
+  14:32 [Momus (Plan Critic)] Momus high-accuracy review of protocol-fix-batch3 plan (@Mom
+  13:52 [general] Review code changes 52c82a2..7cf0fc4 (@general subagent)
+  12:57 [Prometheus (Plan Builder)] Titan分支rebase到master并推送
+  12:41 [Prometheus (Plan Builder)] CoALA: Cognitive Architecture for Language Agents
+  12:03 [Prometheus (Plan Builder)] Git LFS非文本文件提交
+  …共 32 个主会话（上表前 15）
+  （合计 32 个主会话；subagent/截图判读等碎件已滤除）

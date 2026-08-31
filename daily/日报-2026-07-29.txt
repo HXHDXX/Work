@@ -112,3 +112,22 @@
 数据来源：HXMapWidgetNative / HXRdssSendingQueue / HXNavigation /
 HXNmeaParser / HXRouteServer / Work git log（2026-07-29）、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:30 [Metis (Plan Consultant)] Metis gap analysis route-progress (@Metis (Plan Consultant) 
+  19:43 [general] Ingest HXNavigation knowledge (@general subagent)
+  19:41 [general] Review maneuver-arrow migration (@general subagent)
+  19:35 [Prometheus (Plan Builder)] TBI文档误写修正为TBQ
+  18:02 [general] Review HXNavigation integration (@general subagent)
+  17:51 [Momus (Plan Critic)] Momus 评审计划 #1 (@Momus (Plan Critic) subagent)
+  17:48 [general] F2: Code quality review (@general subagent)
+  17:48 [general] F3: Real manual QA (@general subagent)
+  17:44 [general] F4: Scope fidelity check (@general subagent)
+  17:20 [Metis (Plan Consultant)] Metis 盲点扫描 (@Metis (Plan Consultant) subagent)
+  17:00 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  16:52 [Prometheus (Plan Builder)] 检索项目中tbq/tbi信息
+  16:46 [Metis (Plan Consultant)] Metis gap analysis for plan (@Metis (Plan Consultant) subage
+  16:45 [general] F3: 手工 QA 执行 (@general subagent)
+  16:43 [general] F2: 代码质量审查 (@general subagent)
+  …共 43 个主会话（上表前 15）
+  （合计 43 个主会话；subagent/截图判读等碎件已滤除）

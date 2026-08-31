@@ -9,4 +9,23 @@
 - 12:53 ad79135 update plan
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  23:02 [​Atlas (Plan Executor)] 地图比例尺修复与HXRouteServer集成
+  23:02 [​Atlas (Plan Executor)] plugins://插件协议介绍
+  22:21 [Momus (Plan Critic)] Momus rigorous plan review iteration 4 (@Momus (Plan Critic)
+  21:58 [Momus (Plan Critic)] Momus rigorous plan review iteration 3 (@Momus (Plan Critic)
+  21:36 [Momus (Plan Critic)] Momus rigorous plan review iteration 2 (@Momus (Plan Critic)
+  21:12 [Momus (Plan Critic)] Momus rigorous plan review iteration 1 (@Momus (Plan Critic)
+  20:56 [Momus (Plan Critic)] Momus third review after T3 CMake fix (@Momus (Plan Critic) 
+  20:52 [Metis (Plan Consultant)] Metis gap analysis for zoom signal plan (@Metis (Plan Consul
+  20:52 [Momus (Plan Critic)] Momus re-review after T2 correction (@Momus (Plan Critic) su
+  20:43 [Momus (Plan Critic)] Momus review of hxmapbus-internalization plan (@Momus (Plan 
+  20:05 [Metis (Plan Consultant)] Metis gap analysis for HXMapBus internalization (@Metis (Pla
+  19:54 [​Atlas (Plan Executor)] 参照GISServer调整HXRouteServer加载方式
+  13:54 [​Atlas (Plan Executor)] location demo fixed模式圆点图标黑框问题
+  13:37 [​Atlas (Plan Executor)] 是否更新QHXMapWidgetNative头文件注释和文档
+  13:37 [​Atlas (Plan Executor)] review changes [commit|branch|pr], defaults to uncommitted (
+  …共 20 个主会话（上表前 15）
+  （合计 20 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-28）

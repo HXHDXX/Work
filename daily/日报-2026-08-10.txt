@@ -21,4 +21,11 @@
 - HXNavigation 插件发布 Android/Linux/OpenHarmony/Windows 四平台
 - HXRouteServer 发布 Linux x86_64；hxprshell-app 更新（--self-path + clang-tidy 修复）
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:01 [Sisyphus (Ultraworker)] 生成 2026-08-10 工作日报并邮件发送
+  15:54 [Prometheus (Plan Builder)] PWI旧体制 vs BMI新体制 推断验证
+  10:55 [Sisyphus (Ultraworker)] ZMQ client接口介绍
+  10:08 [Prometheus (Plan Builder)] 上周主要工作回顾
+  （合计 4 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：各仓库 git log（2026-08-10）、commit body、opencode 会话

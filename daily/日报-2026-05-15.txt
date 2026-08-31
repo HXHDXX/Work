@@ -71,4 +71,23 @@
 - 10:20 f464154 docs(agents): enforce ./container/build.sh check for debug/verification
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  17:39 [build] Ingest knowledge to wiki (@build subagent)
+  17:34 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:23 [build] Add Qt plugins copy and qt.conf (@build subagent)
+  17:15 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:07 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:00 [Prometheus (Plan Builder)] 初始化hxprshell并加载地图插件
+  16:57 [build] Remove redundant clazy compiler line (@build subagent)
+  16:34 [Prometheus (Plan Builder)] 添加arm64 ASAN构建支持
+  16:34 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  16:30 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  16:27 [Momus (Plan Critic)] Momus review of plan (@Momus (Plan Critic) subagent)
+  16:18 [Metis (Plan Consultant)] Metis gap analysis for arm64 fix (@Metis (Plan Consultant) s
+  16:14 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:50 [Sisyphus (Ultraworker)] review changes [commit|branch|pr], defaults to uncommitted (
+  15:09 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  …共 43 个主会话（上表前 15）
+  （合计 43 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-05-15）

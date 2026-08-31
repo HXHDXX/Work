@@ -1,0 +1,69 @@
+工作日报 2026-08-28（周五）
+================================================
+
+【今日要点】共 21 次提交，涉及 3 仓：
+主线：HXNativeApp(11)、HXMapWidgetNative(8)、Work(2)
+今日两大主题：系统时间同步 hx-settime 全链路 / 高分屏 pixelRatio·textScale 双旋钮
+
+------------------------------------------------
+一、HXNativeApp 系统时间同步 hx-settime 全链路（9 commits）
+1. feat(tools): hx-settime 特权时钟设置工具，strict-parse 核心（TDD）
+2. feat(services): SystemTime DI 单例异步 facade，signal API（TDD）
+3. feat(scripts): setup-permissions.sh 安装后权限脚本
+   （serial group + cap_sys_time helper）
+4. test(hw-suite): 上机 hx-settime 验证用例
+5. fix(cmake): QtCreator dev POST_BUILD 补拷 hx-settime +
+   setup-permissions.sh
+6. review 修复：hw clock 测试判别力（同义反复改反例判别）、
+   POST_BUILD 竞态依赖、probe 双结果分支
+7. 沉淀：sys-time-sync 决策 ingest、pixel-ratio 双旋钮入知识索引
+
+二、HXMapWidgetNative 高分屏双旋钮适配（8 commits）
+1. pixelRatio 范围放宽至 0.5-4.0（高分屏设备）
+2. textScale 纯逻辑层：snapshot 解析 + expression 包装 + env + DPI 推导
+3. textScale 端到端接线：applier / ZMQ handler / env / host API
+4. textScale 应用到 polygon/polyline 标注
+5. feat: WC/独立模式合成放大（ratio != DPR 时）
+6. 🔴 三个渲染竞态/绑定修复：
+   - 首帧渲染守卫到 style load（WC expose 竞态）
+   - WC 子窗口在 xcb 下强制 xcb_glx（app 侧配套 xcb_egl 选择
+     改为 WC 模式感知）
+   - glBlitFramebuffer READ/DRAW 绑定拆分
+
+三、HXNativeApp 架构图（1 commit）
+- 交互式架构图：12 节点双 region + NMEA/地图栈导览
+
+四、Work 事务（2 commits）
+- cron 深度版切换 zai-coding-plan/glm-5.3（本地代理，避开 Kimi 5h 配额）
+- 兜底版不再覆盖已有日报（降级数据不摧毁深度版）
+
+------------------------------------------------
+关键决策：
+1. 系统时间同步走特权 helper + DI facade 分层，应用侧只见异步
+   signal API，权限收敛到 cap_sys_time 单点
+2. pixelRatio / textScale 双旋钮分工：ratio 管 GPU 合成整体放大，
+   textScale 管 XML 表达式级文本缩放，各自独立可调
+3. WC 子窗口 GL 绑定按模式选择（xcb 下 WC 强制 glx），
+   与宿主 EGL 选择解耦
+
+================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:37 [Atlas] 截图并发送至guangbin79@icloud.com
+  22:10 [Prometheus] fonttools合并重叠路径后生成PBF字体
+  22:01 [Prometheus] 运行demo显示地图并截图发邮箱
+  22:01 [Sisyphus] 生成 2026-08-28 工作日报并邮件发送
+  21:06 [Atlas] 地图拖动卡顿排查（Release版仍卡顿）
+  21:05 [general] ## ROLE You are (@general subagent)
+  20:18 [general] ## ROLE You are (@general subagent)
+  17:45 [Atlas] setuid 包装程序实现普通用户修改系统时间
+  16:46 [general] 评审 sys-time-sync 全部变更 (@general subagent)
+  15:56 [general] 评审 sys-time-sync 全部变更 (@general subagent)
+  14:51 [Metis] Metis gap analysis on plan (@Metis - Plan Consultant subagen
+  14:40 [Prometheus] 汉字笔画交汇处反色问题排查
+  11:26 [general] Build & install weave-fleet lane (@general subagent)
+  11:17 [Sisyphus] 回复“正常”两字请求
+  10:44 [Metis] Metis 缺口分析 sys-time-sync 计划 (@Metis - Plan Consultant subage
+  …共 20 个主会话（上表前 15）
+  （合计 20 个主会话；subagent/截图判读等碎件已滤除）
+数据来源：Work/HXNativeApp/HXMapWidgetNative git log（2026-08-28）

@@ -60,3 +60,10 @@
 数据来源：OSMDataCompiler + HXSpatialMeasure git log（2026-07-19）、
 knowledge log、gjb-9121.md / gjb-sms-lhzz.md / library-integration.md、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  13:40 [Sisyphus (Ultraworker)] GJB-9121数据编译定制化设计优化 - mvt
+  11:31 [Momus (Plan Critic)] Momus review of spatial-measure plan (@Momus (Plan Critic) s
+  10:45 [Metis (Plan Consultant)] Metis gap analysis before plan generation (@Metis (Plan Cons
+  09:05 [general] Review GJB9121 style changes (@general subagent)
+  （合计 4 个主会话；subagent/截图判读等碎件已滤除）

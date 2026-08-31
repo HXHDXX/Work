@@ -89,3 +89,22 @@ queued connection 运行时失败。修复：类型名全限定 + 显式注册�
 数据来源：HXNativeApp / HXMapWidgetNative / HXProjectTemplate /
 HXNmeaParser / TTSPlayer git log（2026-08-06）、commit body、
 opencode 会话 ses_090b5f35bffeqRxfXZJ2fLbYUv
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  17:12 [Prometheus (Plan Builder)] HXMapPolygon API接口设计讨论
+  17:08 [general] Review code changes (@general subagent)
+  16:38 [Prometheus (Plan Builder)] TTSPlayer引入参考HXMapWidgetNative
+  16:24 [Prometheus (Plan Builder)] Rebase titan分支到master并推送titan2
+  16:18 [Prometheus (Plan Builder)] NMEA服务PWI封装字段完整性
+  16:08 [Prometheus (Plan Builder)] Qt嵌套类型moc注册方案对比
+  15:52 [Prometheus (Plan Builder)] 未注册Qt元数据的信号数据体问题
+  15:52 [Prometheus (Plan Builder)] armv8-a 规范命名问题
+  15:50 [general] Review arch-naming changes (@general subagent)
+  15:43 [build] 执行 18 处全限定名替换 (@build subagent)
+  15:31 [general] Review code changes (@general subagent)
+  15:25 [Prometheus (Plan Builder)] Qt信号未注册元数据问题
+  14:54 [general] Review code changes (@general subagent)
+  14:53 [Momus (Plan Critic)] Momus review iteration 1 (@Momus (Plan Critic) subagent)
+  14:44 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  …共 45 个主会话（上表前 15）
+  （合计 45 个主会话；subagent/截图判读等碎件已滤除）

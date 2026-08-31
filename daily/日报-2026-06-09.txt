@@ -31,4 +31,23 @@
 - 17:17 de21b7f fix(gjb-9121): align town/village zoom to 高德 hierarchy (town=z11, village=z13)
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:23 [Prometheus (Plan Builder)] 对比maplibre-native-qt-test的API实现差异
+  19:18 [Momus (Plan Critic)] Momus high-accuracy plan review (@Momus (Plan Critic) subage
+  19:05 [Prometheus (Plan Builder)] MapLibre GL鼠标旋转俯视角机制分析
+  19:03 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  18:49 [​Atlas (Plan Executor)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:08 [Sisyphus (Ultraworker)] 检测oh-my-openagent.json配置合理性
+  15:55 [Momus (Plan Critic)] Momus review zoom-align-gaode (@Momus (Plan Critic) subagent
+  15:49 [Metis (Plan Consultant)] Metis gap analysis zoom-gaode (@Metis (Plan Consultant) suba
+  15:25 [Metis (Plan Consultant)] Metis gap analysis zoom restore (@Metis (Plan Consultant) su
+  14:48 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:39 [Prometheus (Plan Builder)] locationchanged信号删除原因
+  14:38 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:22 [Momus (Plan Critic)] Momus re-review with test tasks (@Momus (Plan Critic) subage
+  14:11 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:07 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  …共 44 个主会话（上表前 15）
+  （合计 44 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-09）

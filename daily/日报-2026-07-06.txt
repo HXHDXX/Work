@@ -20,4 +20,17 @@
 - 09:24 948aff7 update cpp-doc
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:38 [Momus (Plan Critic)] Momus 严格审查计划 (@Momus (Plan Critic) subagent)
+  22:17 [Metis (Plan Consultant)] Metis 审查规划会话 (@Metis (Plan Consultant) subagent)
+  21:38 [Prometheus (Plan Builder)] HXRouteServer路径规划渲染地图功能
+  19:31 [Sisyphus (Ultraworker)] ZMQ与X11 IPC传输区分确认
+  19:13 [general] Review HXMapDraw selection/drag fixes (@general subagent)
+  11:42 [Sisyphus (Ultraworker)] HXMapDraw两点间多生点排查
+  11:32 [Sisyphus (Ultraworker)] OSM北京数据下载与打包
+  11:27 [Prometheus (Plan Builder)] MapApiTestPanel添加test按钮及地图覆盖物 (fork #1)
+  11:15 [general] Code review HXMapWidgetNative (@general subagent)
+  09:33 [Sisyphus (Ultraworker)] Superpowers skill 版本查询
+  （合计 10 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-07-06）

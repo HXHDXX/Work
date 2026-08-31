@@ -25,4 +25,23 @@
 - 16:26 f2f72f7 update cpp
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  19:20 [Prometheus (Plan Builder)] 项目地图鼠标操作方式
+  18:37 [Momus (Plan Critic)] Momus review of fix-layer-error-failures plan (@Momus (Plan 
+  18:14 [Metis (Plan Consultant)] Metis gap analysis for layer/error fix plan (@Metis (Plan Co
+  17:39 [Metis (Plan Consultant)] Metis gap analysis for repack (@Metis (Plan Consultant) suba
+  17:35 [Sisyphus (Ultraworker)] 重新打包北京、阿尔及利亚地图
+  17:30 [Prometheus (Plan Builder)] 北京二环内灰色虚线数据来源
+  16:58 [Momus (Plan Critic)] Momus review of test fix plan (@Momus (Plan Critic) subagent
+  16:36 [Metis (Plan Consultant)] Gap analysis on test fix plan (@Metis (Plan Consultant) suba
+  16:35 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  16:22 [Sisyphus (Ultraworker)] 地图构建Lua语法检测版本推荐
+  15:48 [Metis (Plan Consultant)] Metis gap analysis for data optimization plan (@Metis (Plan 
+  14:44 [Prometheus (Plan Builder)] review changes [commit|branch|pr], defaults to uncommitted (
+  14:27 [Momus (Plan Critic)] Momus review of ZMQ API fix plan (@Momus (Plan Critic) subag
+  14:13 [Metis (Plan Consultant)] Metis gap analysis for ZMQ fix plan (@Metis (Plan Consultant
+  14:10 [Metis (Plan Consultant)] Metis gap analysis for GJB9121 import (@Metis (Plan Consulta
+  …共 33 个主会话（上表前 15）
+  （合计 33 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-02）

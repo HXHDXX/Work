@@ -28,4 +28,23 @@
 - HXGuidance(+bak)：GJB 5067A-2012 导航协议模块 ingest 入知识库并归档源文档
 - Work：cpp-doc、daily 更新
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  22:41 [Prometheus (Plan Builder)] 测试构建与修复构建警告
+  22:40 [general] Code review of clang-tidy fixes (@general subagent)
+  22:02 [Sisyphus (Ultraworker)] 生成 2026-08-11 工作日报并邮件发送
+  20:18 [Momus (Plan Critic)] Momus review of fix-build-warnings plan (@Momus (Plan Critic
+  19:32 [Metis (Plan Consultant)] Gap analysis for warning fix plan (@Metis (Plan Consultant) 
+  19:26 [Momus (Plan Critic)] Momus review iteration 1 (@Momus (Plan Critic) subagent)
+  19:23 [Prometheus (Plan Builder)] 地图API测试面板线路规划按钮乱码
+  18:44 [Metis (Plan Consultant)] Metis gap analysis for HXGuidance plan (@Metis (Plan Consult
+  18:34 [Prometheus (Plan Builder)] IMU数据解析
+  18:14 [Prometheus (Plan Builder)] GJB_5067A-2012导航协议知识库积累
+  18:05 [Momus (Plan Critic)] Momus review plan (@Momus (Plan Critic) subagent)
+  17:20 [Momus (Plan Critic)] Momus rigorous plan review (@Momus (Plan Critic) subagent)
+  17:19 [Prometheus (Plan Builder)] GJB 5067A-2012 卫星导航定位系统导航协议阅读
+  17:15 [Prometheus (Plan Builder)] GJB 5067A-2012 卫星导航定位系统导航协议知识库
+  17:15 [Prometheus (Plan Builder)] Rebase MSC-26-RW033 到 master（不推送）
+  …共 37 个主会话（上表前 15）
+  （合计 37 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：/Workspace 与 /HXAppPlatform 各仓 git log（2026-08-11）、commit body

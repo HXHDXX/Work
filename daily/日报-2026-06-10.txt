@@ -29,4 +29,23 @@
 - 17:12 2b38936 fix(zoom): use touch point as zoom center for double-tap and two-finger-tap
 
 ================================================
+
+── 当日会话活动（机械补录，源：opencode SQLite 直查）──
+  17:20 [​Atlas (Plan Executor)] fixed模式下LocationIndicator图标旋转行为
+  17:20 [​Atlas (Plan Executor)] review changes [commit|branch|pr], defaults to uncommitted (
+  17:14 [​Atlas (Plan Executor)] 地图双击放大中心点偏移问题
+  17:14 [​Atlas (Plan Executor)] review changes [commit|branch|pr], defaults to uncommitted (
+  16:53 [Momus (Plan Critic)] Momus review of icon-rotation plan (@Momus (Plan Critic) sub
+  16:33 [Metis (Plan Consultant)] Metis gap analysis for icon rotation (@Metis (Plan Consultan
+  14:43 [Metis (Plan Consultant)] Metis gap analysis for poi-minzoom-z8 (@Metis (Plan Consulta
+  14:17 [Momus (Plan Critic)] Momus high accuracy review (@Momus (Plan Critic) subagent)
+  13:57 [Metis (Plan Consultant)] Metis gap analysis for plan (@Metis (Plan Consultant) subage
+  11:21 [Metis (Plan Consultant)] Metis review of gap analysis plan (@Metis (Plan Consultant) 
+  10:01 [Sisyphus (Ultraworker)] OSM阿联酋地图下载与shp格式转换
+  09:58 [Prometheus (Plan Builder)] 世界地图转换为shp格式
+  09:28 [Momus (Plan Critic)] Momus review of poi-minzoom-z8 plan (@Momus (Plan Critic) su
+  09:19 [Metis (Plan Consultant)] Metis gap analysis for UAE SHP plan (@Metis (Plan Consultant
+  09:08 [Metis (Plan Consultant)] Metis gap analysis for POI plan (@Metis (Plan Consultant) su
+  …共 17 个主会话（上表前 15）
+  （合计 17 个主会话；subagent/截图判读等碎件已滤除）
 数据来源：上述仓库 git log（2026-06-10）
