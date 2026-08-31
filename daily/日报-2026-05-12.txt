@@ -1,0 +1,21 @@
+工作日报 2026-05-12（周二）· 补录（会话-only 日）
+================================================
+
+【今日要点】git 提交 0 次；主会话 10 个（调研/无提交工作日）。
+【说明】本日无代码提交（当日双轨核实），工作以 opencode 会话为主——
+原日报体系纯 git 视角未建档，本文件按会话信息纳入规则补录。
+
+── 当日会话活动（源：opencode SQLite 直查）──
+  19:33 [Momus (Plan Critic)] Momus review of zmq replacement plan (@Momus (Plan Critic) s
+  19:24 [Prometheus (Plan Builder)] 项目子项目结构查询
+  19:15 [Metis (Plan Consultant)] Metis gap analysis updated (@Metis (Plan Consultant) subagen
+  19:14 [Metis (Plan Consultant)] Metis gap analysis (@Metis (Plan Consultant) subagent)
+  18:51 [Metis (Plan Consultant)] Metis gap analysis for zmq replacement (@Metis (Plan Consult
+  17:54 [Sisyphus (Ultraworker)] Using system tmux.conf instead of ~/.tmux.conf
+  14:55 [Sisyphus (Ultraworker)] 音量设置原理
+  14:39 [Momus (Plan Critic)] Momus review of shared-libasan-fix plan (@Momus (Plan Critic
+  12:19 [Metis (Plan Consultant)] Metis gap analysis for shared-libasan fix (@Metis (Plan Cons
+  11:17 [Sisyphus (Ultraworker)] Greeting
+
+================================================
+数据来源：git log 双轨核实（2026-05-12，0 提交）、opencode 会话 SQLite 直查

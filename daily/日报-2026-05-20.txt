@@ -1,0 +1,24 @@
+工作日报 2026-05-20（周三）· 补录（会话-only 日）
+================================================
+
+【今日要点】git 提交 0 次；主会话 13 个（调研/无提交工作日）。
+【说明】本日无代码提交（当日双轨核实），工作以 opencode 会话为主——
+原日报体系纯 git 视角未建档，本文件按会话信息纳入规则补录。
+
+── 当日会话活动（源：opencode SQLite 直查）──
+  18:29 [Prometheus (Plan Builder)] QOpenGLWindow实现hx-map-widget-app
+  18:29 [Sisyphus (Ultraworker)] 修正 AGENTS.md 项目结构
+  11:19 [Sisyphus (Ultraworker)] Greeting
+  11:14 [Sisyphus (Ultraworker)] Initial greeting
+  10:53 [Prometheus (Plan Builder)] 用QOpenGLWindow改造hx-map-widget-app
+  10:14 [Sisyphus (Ultraworker)] Greeting
+  10:09 [Sisyphus (Ultraworker)] Greeting
+  10:04 [Sisyphus (Ultraworker)] Greeting
+  10:04 [Sisyphus (Ultraworker)] Greeting
+  10:02 [Sisyphus (Ultraworker)] Greeting
+  10:02 [Sisyphus (Ultraworker)] Greeting
+  09:51 [Momus (Plan Critic)] Momus review of QOpenGLWindow refactor plan (@Momus (Plan Cr
+  09:36 [Metis (Plan Consultant)] Metis gap analysis for QOpenGLWindow refactor (@Metis (Plan 
+
+================================================
+数据来源：git log 双轨核实（2026-05-20，0 提交）、opencode 会话 SQLite 直查
