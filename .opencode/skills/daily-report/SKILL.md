@@ -93,7 +93,8 @@ for r in con.execute("""SELECT id,title,agent,model,datetime(time_updated/1000,'
     print(r)
 EOF
 ```
-路径清单：当日活跃仓 + `/Workspace/Work` + `/home/guangbin` + `/Workspace` + `/HXAppPlatform`
+路径清单（IN 精确）：当日活跃仓 + `/Workspace/Work` + `/home/guangbin` + `/Workspace` + `/HXAppPlatform`
+另加前缀匹配：`OR directory LIKE '/home/guangbin/Documents/%'`（早期工作目录布局，含数千历史会话）
 
 信号判据与深挖：
 1. 剔除 subagent 碎会话（agent 含 Sisyphus-Junior/oracle 且标题以 T\d/F\d 开头的单任务件）；主会话看标题与 agent 构成
