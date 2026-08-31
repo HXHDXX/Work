@@ -79,8 +79,9 @@ printf 'Subject: =?UTF-8?B?%s?=\n' "$SUBJ_B64"
 
 ### 5. 会话信息纳入（调研类工作不遗漏）
 有些调研/规划不产生 git 提交，必须补查 opencode 会话：
-1. `session_list` 按 project_path 查当日活跃仓 + `/Workspace/Work`（定时/规划会话在此）
-   + `/home/guangbin`（家目录会话），取 Last 落在当日的会话
+1. `session_list` 按 project_path 逐个查：当日活跃仓 + `/Workspace/Work`（定时/规划会话在此）
+   + `/home/guangbin`（家目录）+ `/Workspace` + `/HXAppPlatform`（两根目录自身），
+   取 Last 落在当日的会话
 2. 有信号判据：消息数 >10，或 agent 构成含 Prometheus/explore/librarian（调研/规划特征）
 3. 深挖：`session_read` from_end 取首尾用户消息与结论，或 `session_search` 关键词
 4. 产出写入独立小节「会话调研工作（未提交）」：主题一句话 + 结论/产出位置
