@@ -1,0 +1,52 @@
+工作日报 2026-08-27（周四）· 补发（增会话信息）
+================================================
+
+【今日要点】共 19 次提交（4 仓）+ 3 项会话级调研（未提交）：
+主线：HXNativeApp(7)、HXMapWidgetNative(6)、OSMDataCompiler(3)、Work(3)
+今日三大主题：metatype 分层基线 / map pixelRatio 推导与性能 / sprite 1024 上限 BUG
+
+------------------------------------------------
+一、HXNativeApp metatype 分层基线（7 commits）
+1. NmeaService 26 类型就近双轨注册，确立基线约定
+2. RdssService 5 类型就近双轨注册
+3. 测试域维持最小化（NmeaCaptureCompare DECLARE 归位）
+4. HxApplication 移除内联注册，改启动钩子自动触发
+5. 决策沉淀：生产域 31 类型双轨注册 + 测试域最小化
+6. review 收尾：DECLARE 块对齐注册序、include 字母序、
+   Rdss 注册体全限定、钩子静态库边界注释
+
+二、HXMapWidgetNative pixelRatio 自动推导（6 commits）
+1. feat: map pixelRatio 按屏幕 DPI 自动推导 + 环境变量覆盖
+2. 文档补全（auto-derivation + env override）
+3. 重构 mappixelratio tier-4 简化
+4. 🔴 性能回退修正：DPI 推导值默认封顶 1.0（拖拽性能），
+   最终改为无条件默认 1.0（忽略 qtRatio/DPI）
+
+三、OSMDataCompiler sprite 1024 上限 BUG（3 commits）
+1. 隔离未使用的 1024px wetland 纹理——超 maplibre-native
+   @2x sprite 尺寸上限导致整个 sprite 加载失败
+2. 加固 guard 错误路径 + 扩展到 gjb 构建脚本
+3. 知识沉淀：sprite 1024-cap bug 经验
+
+四、Work 事务（3 commits）
+- update daily / 新增 daily index 脚本 / update obsidian workspace
+
+五、会话调研工作（未提交，源：opencode 会话 SQLite 直查）
+1. omo agent LLM 分配合理性评估（Prometheus 主会话）：
+   19 个分配位逐项评估，总体合理（旗舰=推理/flash=量/k3=异构兜底）；
+   3 个可调点：librarian k3→glm-5.3-flash（检索类降级）、
+   sisyphus 可放开 k3-256k（主会话上下文最长最先崩）、
+   glm 全系走 127.0.0.1:13579 本地代理的单点风险（10 agent 中 7 个失效）
+2. omo 中 sisyphus-junior 与 atlas 职责分工调研（Atlas 会话）
+3. NIGHT 样式地图多模态渲染验证（4 次 look_at 截图判读）；
+   pin-default 计划双评审（Oracle×2 + Momus×3 轮）
+
+------------------------------------------------
+关键决策：
+1. metatype 注册分层：生产域双轨 31 类型 + 测试域最小化，启动钩子统一触发
+2. pixelRatio 默认 1.0（性能优先于清晰度）
+3. sprite 图集单图案超限即整体失败，guard 前置到构建脚本
+
+================================================
+数据来源：/Workspace、/HXAppPlatform 各仓 git log（2026-08-27）、commit body、
+opencode 会话（SQLite 直查 opencode.db，路径含 /home/guangbin 等）

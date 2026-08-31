@@ -1,0 +1,31 @@
+工作日报 2026-08-30（周日）· 补发（更正+增会话内容）
+================================================
+
+【今日要点】0 次 git 提交；全天为工具链考察/实验日（会话级工作）。
+⚠️ 更正：原版误报「无其他工程活动」——系会话工具按 project_path 查询
+盲区（/home/guangbin 下 275 会话不可见）；本版以 SQLite 直查修正。
+
+------------------------------------------------
+一、Repowire.io 全生命周期考察（多会话接力，未产生提交）
+1. 调研评审（Prometheus：repowire.io review）
+2. 安装集成（Atlas 执行）
+3. mesh 互联实验：mesh-a/mesh-b 双 opencode 实例互发
+   （hello from mesh-a / peer README 询问 / mesh-b README 摘要）
+4. 卸载 + 残留清理（Sisyphus 会话）：
+   - 唯一残留 ~/.cache/repowire/（空 logs/ + opencode-peer-ids.json
+     peer 映射），已删除并复查干净
+   - 二进制/npm/pip/cargo 全局包、opencode 插件、systemd、crontab、
+     shell rc、进程、/etc /usr/share /opt 全无痕迹
+   - 结论：实验性工具试用一轮完整走完，环境零残留
+
+二、其他会话工作
+1. superpowers skill 就绪检查（×2，readiness 确认）
+2. 当晚定时日报正常生成（本报告的原版即 cron 产出）
+
+------------------------------------------------
+说明：工具试用/评估类工作不产生代码提交，纯 git 视角不可见——
+此为会话信息纳入规则（skill 第 5 条）要解决的目标场景。
+
+================================================
+数据来源：git log 双轨遍历（0 提交核实）、
+opencode 会话（SQLite 直查 opencode.db，/home/guangbin 等路径）

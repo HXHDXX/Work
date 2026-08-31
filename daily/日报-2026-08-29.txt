@@ -1,0 +1,54 @@
+工作日报 2026-08-29（周六）· 补发（增会话深挖）
+================================================
+
+【今日要点】共 21 次提交，涉及 2 仓：
+主线：HXMapWidgetNative(11)、OSMDataCompiler(10)
+今日两大主题：SharedTexture 直接 blit 呈现链重构 / OSM 全容器化构建环境
+另：ST/WC 三方性能实测 + map-right 灰底破案（会话深挖，见三）
+
+------------------------------------------------
+一、HXMapWidgetNative ST 直接 blit 呈现链重构（11 commits）
+1. 架构切换：importDmabuf 存 pending frame + fence notifier，
+   paintGL 非阻塞 fence poll 后直接 blit 子进程 dmabuf，
+   删除 RenderWorker 呈现链（-1 线程 -1 IPC 跳）
+2. 修复：pending fence fd 与 notifier 三条 teardown 路径全关闭
+3. 测试重建：fence-hold 语义测试为 direct-blit 重设计，
+   fd 断言改 inode 身份判别（防 fd 号复用误判）
+4. 回归证据：profile 对等 + child-kill 存活性
+5. [PROFILE-ST] 剖析 instrumentation 落地（日志过滤改 env 逃生口、
+   windowless ST 路径补 fps/paintMs 计数器、宿主 [PROMOTE] 限流埋点）
+6. review 修复：makeCurrent 引导冗余消除、promote 条件化简
+7. 沉淀：ST 呈现链知识重写为 direct-blit、notifier 生命周期勘误
+
+二、OSMDataCompiler 全容器化构建 + 离线部署（10 commits）
+1. build-in-env.sh 全容器编排 wrapper（bash-env 补 docker CLI）
+2. HOST_UID/HOST_GID 透传内层 docker，产物属主正确
+3. 离线 bundle 补 font-prep 镜像 + shapefiles-processed
+4. fix(gjb-9121)：wrapper 下 SMS 元数据路径不可达时显式报错
+5. review 打磨：DOCKER_HOST 透传、repo-root 守卫、双 fd TTY 探测
+6. git 卫生：N085005/china-* 构建中间产物退出 VCS
+
+三、会话深挖（未提交部分，源：opencode 会话 SQLite 直查）
+1. 🔬 ST/WC 三方性能实测（首次拿到 ST 侧一等公民数据）：
+   ST child 渲染成本 P50 4.64ms / P99 36.59ms / max 56.16ms（97 样本）
+   vs WC paintGL P50 3.62ms / P99 42.10ms（100 样本对照）
+   vs 旧架构帧产出间隔 P99 51.1ms（19% 超 33.4ms gate）
+   判读：child 渲染成本两代持平（同一 MapLibre render）；旧架构 51.1ms
+   ≈ 渲染峰+瓦片加载等待+旧链耦合叠加；瓦片等待为共有瓶颈、非本期范围
+2. 🕵️ windowed map-right 灰底破案——无产品缺陷：
+   GNOME keyring 密码弹窗遮挡（task-1 16:28 与 task-8 21:04 双基线
+   逐像素 diff=0.002 铁证）+ 探针点 (960,533) 恰落弹窗区 +
+   MapLibre 静态相机正常 idle；收帧→晋升→blit→呈现全链活
+   （人工项：关闭桌面凭据窗后可选复验，batch2/analysis.md 已文档化）
+3. 遗留战役收官 master@171fa53（3 commits 已在第一节 git 部分体现，
+   此处交叉印证：4 Minor 修正 + ST PROFILE 修复 + 灰底破案三项指令全交付）
+
+------------------------------------------------
+关键决策：
+1. ST 呈现链收敛为宿主 paintGL 内 fence-poll + 直接 blit
+2. 日志过滤改 env 逃生口，默认行为不变
+3. OSM 构建可再生中间产物退出 VCS
+
+================================================
+数据来源：OSMDataCompiler/HXMapWidgetNative git log（2026-08-29）、
+opencode 会话（SQLite 直查，st-leftovers/perf 证据链）
