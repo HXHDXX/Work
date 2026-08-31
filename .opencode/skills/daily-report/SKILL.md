@@ -78,14 +78,28 @@ printf 'Subject: =?UTF-8?B?%s?=\n' "$SUBJ_B64"
 - 提交计数、仓数、主线排序要准确（git 实查）
 
 ### 5. 会话信息纳入（调研类工作不遗漏）
-有些调研/规划不产生 git 提交，必须补查 opencode 会话：
-1. `session_list` 按 project_path 逐个查：当日活跃仓 + `/Workspace/Work`（定时/规划会话在此）
-   + `/home/guangbin`（家目录）+ `/Workspace` + `/HXAppPlatform`（两根目录自身），
-   取 Last 落在当日的会话
-2. 有信号判据：消息数 >10，或 agent 构成含 Prometheus/explore/librarian（调研/规划特征）
-3. 深挖：`session_read` from_end 取首尾用户消息与结论，或 `session_search` 关键词
-4. 产出写入独立小节「会话调研工作（未提交）」：主题一句话 + 结论/产出位置
-5. 纯 bash 兜底版做不到此项（工具受限），维持仅 git——已是降级标注，可接受
+有些调研/规划不产生 git 提交，必须补查 opencode 会话。
+
+🔴 **必须 SQLite 直查，不信 session_list 工具**（已实证：工具按 project_path 查
+/home/guangbin 静默返回空，实际磁盘有 275 个会话——工具层缺陷，DB 才是事实源）：
+```bash
+python3 - <<'EOF'
+import sqlite3, os
+con = sqlite3.connect("file:"+os.path.expanduser("~/.local/share/opencode/opencode.db")+"?mode=ro", uri=True)
+# D=当日，目录按下面路径清单 IN 查询，时间窗 [D 00:00, D+1 00:00) 打在 time_updated
+for r in con.execute("""SELECT id,title,agent,model,datetime(time_updated/1000,'unixepoch','+8 hours')
+  FROM session WHERE time_archived IS NULL AND directory IN (路径清单)
+  AND time_updated>=? AND time_updated<? ORDER BY time_updated DESC""", (ms0, ms1)):
+    print(r)
+EOF
+```
+路径清单：当日活跃仓 + `/Workspace/Work` + `/home/guangbin` + `/Workspace` + `/HXAppPlatform`
+
+信号判据与深挖：
+1. 剔除 subagent 碎会话（agent 含 Sisyphus-Junior/oracle 且标题以 T\d/F\d 开头的单任务件）；主会话看标题与 agent 构成
+2. 深挖用 `session_read`（by session id，跨项目可用）from_end 取结论，或 `session_search` 关键词
+3. 产出独立小节「会话调研工作（未提交）」：主题一句话 + 结论/产出位置
+4. 纯 bash 兜底版可用同一段 SQLite 查询（无需 agent 工具）——升为可选增强
 
 ### 6. 默认与可选参数
 - **默认**：当天日期，生成 txt + 发邮件
