@@ -1,12 +1,30 @@
-工作日报 2026-07-18（周六）· 补录（会话-only 日）
+工作日报 2026-07-18（周六）· 重建（原文件遗失，据 git+会话重生成）
 ================================================
 
-【今日要点】git 提交 14 次；主会话 1 个（调研/无提交工作日）。
-【说明】本日无代码提交（当日双轨核实），工作以 opencode 会话为主——
-原日报体系纯 git 视角未建档，本文件按会话信息纳入规则补录。
+【今日要点】共 14 次提交（OSMDataCompiler 14）；主会话 1 个。
+单工作线日：GJB9121 电子导航图全国化编译、渲染精修、Valhalla 路由准备。
+
+一、GJB9121 电子导航图（OSMDataCompiler | 14 commits）
+【图层诊断与质量 10:50–14:40】
+1. building/junction/sprite 图层诊断（A+B+C 三类问题）
+2. 修复 bridge 黑线 + traffic-light key 不匹配
+3. POI 图标覆盖 + 道路 6 级分级显示
+4. 移除 3 个永久空图层（wetland/sand/aeroway）
+【全国化编译 15:24】
+5. feat(national)：编译链参数化，支持全国区域
+【渲染样式精修 16:11–17:34】
+6. 道路色相分离 + poi-detail 标签延迟 + 境界加粗
+7. 3D 光照 + 建筑基底 + stops→interpolate + 水系样式
+8. POI text-optional 自适应标签（Oracle 建议）
+9. poi-detail 回退 z14（导航标准比例尺）
+【拓扑与 Valhalla 准备 19:12–20:52】
+10. Phase 4 自动准备 topology.osm 合并
+11. node_type 10 过滤（非路口连接点）
+12. poiClassRanks 车载导航排序 + OSM day 建筑 fade + POI sort key
+【知识】gjb-9121.md 新增 Topology node_type 分析（44 行）
 
 ── 当日会话活动（源：opencode SQLite 直查）──
-  18:31 [Sisyphus (Ultraworker)] gjb-sms-lhzz 样式种类查询
+  （主会话 1 个，内容与上述提交对应，无额外未提交调研）
 
 ================================================
-数据来源：git log 双轨核实（2026-07-18，14 提交）、opencode 会话 SQLite 直查
+数据来源：git log 双轨遍历（2026-07-18，14 提交）、opencode 会话 SQLite 直查
