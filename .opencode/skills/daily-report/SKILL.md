@@ -37,7 +37,7 @@ for repo in HXNativeApp HXMapWidgetNative HXPRShell maplibre-native TTSPlayer \
   d="/HXAppPlatform/$repo"; [ -d "$d/.git" ] || continue
   git -C "$d" log --since="$D 00:00" --until="$NEXT 00:00" --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
 # C. /home/guangbin/Documents — find|while-read，排除 qt5 上游源码树（45 仓噪声）
-# 实证：TitanNavi 现活于此（/Workspace/TitanNavi 已空），漏扫即漏报
+# 实证：TitanNavi 已整体迁至此（/Workspace/TitanNavi 不存在），漏扫即漏报
 find /home/guangbin/Documents -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
   repo=$(dirname "$g"); case "$repo" in */qt5/*) continue;; esac
   git -C "$repo" log --since="$D 00:00" --until="$NEXT 00:00" \
