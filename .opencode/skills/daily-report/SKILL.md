@@ -36,9 +36,15 @@ for repo in HXNativeApp HXMapWidgetNative HXPRShell maplibre-native TTSPlayer \
   lib-sherpa-onnx lib-GammaRay lib-hxprshell-app lib-ZMQClient; do
   d="/HXAppPlatform/$repo"; [ -d "$d/.git" ] || continue
   git -C "$d" log --since="$D 00:00" --until="$NEXT 00:00" --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
+# C. /home/guangbin/Documents — find|while-read，排除 qt5 上游源码树（45 仓噪声）
+# 实证：TitanNavi 现活于此（/Workspace/TitanNavi 已空），漏扫即漏报
+find /home/guangbin/Documents -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
+  repo=$(dirname "$g"); case "$repo" in */qt5/*) continue;; esac
+  git -C "$repo" log --since="$D 00:00" --until="$NEXT 00:00" \
+    --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
 done
 ```
-排除 `.repo/*`（repo 工具仓）。`lib-*` 二进制仓可选纳入（看是否当日有发布）。
+排除 `.repo/*`（repo 工具仓）与 `qt5/*`（Qt 上游源码依赖）。`lib-*` 二进制仓可选纳入（看是否当日有发布）。
 
 ### 2. 🔴 邮件标题 Base64 必须工具生成，禁止手敲
 中文邮件标题走 MIME RFC 2047：`=?UTF-8?B?<base64>?=`。**手敲 Base64 必然算错字节**（曾把「工作日报」编码成「工坊攱话」）。必须：
@@ -93,7 +99,8 @@ for r in con.execute("""SELECT id,title,agent,model,datetime(time_updated/1000,'
     print(r)
 EOF
 ```
-路径清单（IN 精确）：当日活跃仓 + `/Workspace/Work` + `/home/guangbin` + `/Workspace` + `/HXAppPlatform`
+路径清单（IN 精确）：当日活跃仓 + `/Workspace/Work` + `/home/guangbin` + `/home/guangbin/Documents`
+   + `/Workspace` + `/HXAppPlatform`（Documents 裸目录 62 会话需 IN，子目录走 LIKE）
 另加前缀匹配：`OR directory LIKE '/home/guangbin/Documents/%'`（早期工作目录布局，含数千历史会话）
 
 信号判据与深挖：

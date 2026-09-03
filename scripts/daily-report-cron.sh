@@ -25,9 +25,9 @@ RC=$?
 echo "[$(date '+%T')] opencode run 失败/超时(rc=$RC)，降级脚本版兜底"
 # 兜底：纯 bash 档案版 + 发邮件（保证当天必有一封）
 TMP=$(mktemp); : > "$TMP"
-for root in /Workspace /HXAppPlatform; do
+for root in /Workspace /HXAppPlatform /home/guangbin/Documents; do
   find "$root" -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
-    case "$(dirname "$g")" in */.repo/*) continue;; esac
+    case "$(dirname "$g")" in */.repo/*|*/qt5/*) continue;; esac
     r=$(basename "$(dirname "$g")")
     git -C "$(dirname "$g")" log --since="${D} 00:00" --until="${D} 23:59" \
       --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
