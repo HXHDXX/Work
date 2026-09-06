@@ -57,3 +57,7 @@
 ## [2026-04-07] ingest | infra
 - 项目初始化完成：AGENTS.md 清单式配置、docs/agents/knowledge/ 知识库骨架、project-compound skill
 - Types: Decision, Strategy, Module Info
+
+## [2026-09-06] ingest | skills
+- 新增 Decision: 知识闭环机制（Impact 回写 + Failed Approaches + Provenance 试水，复刻自 HXProjectTemplate de30dbc）
+- Types: Decision
