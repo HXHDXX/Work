@@ -19,7 +19,7 @@
 
 - 经验 = 原始事件流（一次次的经过，允许重复与噪音，保留细节）
 - 语义 = 去重综合结论（跨经验提炼，一句话可用，可被 ingest/query/lint）
-- 升华路径：confirmed 经验具普适性 → 手动 `project-compound ingest` → 语义层
+- 升华路径：confirmed 经验具普适性 → 手动 `project-compound ingest` → 语义层（成功策略 → Strategies 条目；失败教训 → Failed Approaches 条目）
 - 反向不成立：语义结论不回填经验层，保持原始痕迹可追溯
 - ECC 决策（2026-05-26）：自动提取不可行，升华必须人工触发，禁止自动批量 ingest
 

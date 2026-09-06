@@ -272,7 +272,7 @@ confirmed --(stale/superseded)--> archived
 | archived | Was valid, now stale or superseded | Exclude by default |
 | rejected | Human rejected, kept for audit | Exclude by default |
 
-**Promotion to semantic memory:** A confirmed experience with general, project-wide applicability can be promoted into `./docs/agents/knowledge/` via `project-compound ingest`. Promotion is a manual human decision, never automatic. Episodic record stays; the semantic wiki gets the distilled conclusion.
+**Promotion to semantic memory:** A confirmed experience with general, project-wide applicability can be promoted into `./docs/agents/knowledge/` via `project-compound ingest`. Promotion is a manual human decision, never automatic. Episodic record stays; the semantic wiki gets the distilled conclusion. Failure-oriented experiences (debug pitfalls, rejected approaches, recurring root causes) promote into the semantic layer's **Failed Approaches** entries (project-compound module template); success strategies into **Strategies**. Failure lessons are first-class knowledge, equal to successes.
 
 ### 定期整理（Periodic Review）
 
@@ -288,6 +288,7 @@ grep -l "^status: draft" experiences/*.md
 grep -l "^status: confirmed" experiences/*.md
 
 # 3. 升华普适：跨项目可复用的 confirmed → project-compound ingest，原记录标 archived
+#    失败教训 → Failed Approaches 条目；成功策略 → Strategies 条目（见 project-compound 模板）
 # （人工判断，ECC 禁止自动批量 ingest）
 
 # 4. 重建索引
@@ -487,6 +488,18 @@ The `[ -f "$f" ] || continue` guards against an empty store where the glob doesn
 | **`related:` 链深 > 3 跳** | 只链直接前驱，链深 ≤ 3；超长链说明该走 `Supersedes-candidate:` 或升华为语义记忆 |
 | **提问前漏跑 Pre-ask Query** | 凡抛 ≥2 候选单选，必先 grep `type: decision`；0 命中也需在 thinking 标注「无匹配决策」 |
 | **把约束当决策 capture** | 外部硬约束（平台限制、API 契约）不是用户选择，记 `type: other` 或不记；decision 只收「本来可走多条路、用户选了一条」的情形 |
+
+## Provenance
+
+> Rule provenance: key rules in this skill and the knowledge they came from. Read the source before changing a rule.
+
+| Rule | Source |
+|------|--------|
+| Drafts never auto-promote to confirmed (semi-auto capture) | knowledge: agent-guidelines decision "经验记忆：半自动捕获机制 (2026-08-07)" |
+| No automatic batch ingest (ECC ban) | HXProjectTemplate 知识基础设施铺设（infra rollout） |
+| decision-type captures confirmed immediately; rationale tagged `[inferred]` | design decision D3, this file's Capture Decision section |
+| Cross-project hits are advisory only (never silent apply) | design decision D5, this file's Pre-ask Query section |
+| Failure experiences promote to Failed Approaches | WikiSkill closed-loop adoption (arXiv:2608.27454 §3.1), recorded in knowledge log 2026-09-06 |
 
 ## Related Docs
 
