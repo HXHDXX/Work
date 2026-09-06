@@ -78,6 +78,7 @@ After task completion, ask:
 - Chose between alternatives? --> Decision
 - Used non-obvious approach? --> Strategy
 - Found and fixed a bug? --> Bug Experience
+- Tried an approach that failed and should not be repeated? --> Failed Approach
 - Created/changed module structure? --> Module Info
 
 Multiple types can apply to one task.
@@ -130,6 +131,14 @@ Create `./docs/agents/knowledge/modules/{module-name}.md`:
 - **Fix:** {what changed}
 - **Prevention:** {how to avoid}
 
+## Failed Approaches
+
+### {Failed Approach Title} ({date})
+- **Problem:** {what needed solving}
+- **What was tried:** {the approach that failed}
+- **Why it failed:** {root cause, with evidence}
+- **Do not repeat:** {what to avoid; `See also: [[module]]` if related}
+
 ## Open Questions
 <!-- Gaps that future work should address -->
 - {question or unknown}
@@ -147,6 +156,7 @@ Create `./docs/agents/knowledge/modules/{module-name}.md`:
 | Append-first | Append by default, revise only when superseding |
 | Cross-reference | Add `See also: [[module]]` for related modules |
 | Supersede | New decisions that override old ones: add **Supersedes** field, mark old entry with `> **Superseded by:** {new decision} ({date})` |
+| Impact writeback | When a task actually applied an existing Strategy / Bug Experience / Failed Approach entry, the closing ingest MUST append one line under that entry: `- **Impact:** YYYY-MM-DD used in {task}, {worked \| needed adjustment \| obsolete}`. Never write empty ritual Impact lines. An impact-only writeback is still an ingest operation - append one log.md entry (Types: Impact writeback) |
 
 ### Step 4: Cross-Reference
 
@@ -170,7 +180,7 @@ Edit `./docs/agents/knowledge/log.md`:
 ```markdown
 ## [{date}] ingest | {module-name}
 - {1-2 line summary of what was recorded}
-- Types: {Decision/Strategy/Bug/Module Info}
+- Types: {Decision/Strategy/Bug/Failed Approach/Impact writeback/Module Info}
 ```
 
 Log is append-only, parseable: `grep "^## \[" log.md | tail -5` shows last 5 entries.
@@ -198,6 +208,7 @@ digraph query {
 ```
 
 Good answers compound. If a query produces a comparison, analysis, or connection not yet in the wiki — file it back.
+Likewise: if this task actually applied an existing wiki entry, write back one Impact line at the closing ingest (see Writing Rules). Only on actual use - never as ritual.
 
 ## Operation: Lint
 
@@ -224,6 +235,7 @@ Fix issues found. Append lint result to `log.md`.
 | Add cross-reference | `See also: [[module-name]]` in Overview |
 | Supersede old decision | Add **Supersedes** in new, mark old with `> **Superseded by:**` |
 | Check recent activity | `grep "^## \[" ./docs/agents/knowledge/log.md \| tail -5` |
+| Write back impact | Task applied an entry -> append one Impact line at closing ingest (Writing Rules) |
 
 ## Common Mistakes
 
@@ -237,6 +249,8 @@ Fix issues found. Append lint result to `log.md`.
 | Query results evaporating | File valuable answers back into wiki |
 | Only ingesting, never linting | Periodic lint keeps wiki healthy |
 | Recording trivial changes | Only record non-obvious knowledge |
+| Applied knowledge never written back | Append the Impact line at closing ingest when a task used an existing entry |
+| Ritual empty Impact lines | Only write Impact on actual use; empty writeback degenerates into ceremony |
 
 ## Related Docs
 
