@@ -1,0 +1,28 @@
+工作日报 2026-09-06（周日）
+================================================
+【今日要点】共 113 次提交，涉及 27 仓：
+主线：HXNativeApp(15)、skills 批量落地 18 仓(68)、lib-* 发布仓 9 仓(33)、HXGuidance(5)
+------------------------------------------------
+一、RDSS 发送确认模型 v4 全线闭环（HXNativeApp | 11 commits）
+- 子状态视图族（asInFlight/asRetrying/asCompleted/asUnknown）+ DeliveryTier 梯度，Confirmed 折叠进 Completed
+- v4 统一发送状态流（breaking）：Disposition.Rejected、单一状态信号、asRejected 视图
+- frontPositionGained/Lost 双事件 + handleFor 桥 + 统一快照指令收集
+- 修复：链式快照回执路由进 applySnapshotOrder（resync 原为 no-op）
+- 测试：mapapitest v4 面板覆盖（views/tier/dict/front-events/bridge）+ 虚拟 TCQ 端到端套件（无板卡全生命周期）
+- 设计文档：disposition 模型参考、倒计时失效三代演进、queue-gate 机制与 GUI 关联范式（§10-§11）、DeliveryTier wire-mapping 卡片
+二、Agent skills 闭环改进批量落地（18 仓 | 68 commits）
+- project-compound：Failed Approach 条目类型 + Impact 回写
+- agent-experience：失败经验晋升路径 + Provenance 溯源
+- project-check：新增 Provenance 段
+- 知识库记录 skill 闭环采纳决策（源自 HXProjectTemplate de30dbc，参考 wikiskill 升级，同刻复制到全部仓）
+三、多平台二进制发布（9 个 lib-* 仓 | 33 commits）
+- 8 组件 × win/oh/linux/android 四平台发布（HXGISServer、HXNmeaParser、HXNavigation、HXRouteServer、HXPluginRuntime、HXSpatialMeasure、HXRdssSendingQueue、ZMQClient）
+- hxprshell-app 强制重建（99528ef）
+四、跨平台编译修复（HXGuidance | 1 commit）
+- gmtime 跨平台：Windows 走 gmtime_s，sim_utc_tm 统一封装（修复 Windows 编译失败）
+================================================
+会话收尾工作（当日会话，非独立提交）
+- RDSS TCQ 状态码 0/-1/5 语义确认后三仓收尾：任务 worktree 全清 + 临时分支删除，app/插件/lib 工作树全部 clean；lib-HXRdssSendingQueue 领先 origin 2 commits 待 push
+- HXProjectTemplate wikiskill 升级参考会话 → 驱动 18:50 skills 批量提交（见二）
+================================================
+数据来源：27 仓 git log（2026-09-06 00:00–24:00，/Workspace + /HXAppPlatform 双轨 + ~/Documents）、opencode SQLite 会话直查（5 会话，剔除 subagent 碎会话 2 个）

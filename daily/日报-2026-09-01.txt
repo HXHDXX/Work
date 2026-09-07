@@ -1,0 +1,35 @@
+工作日报 2026-09-01（周二）
+================================================
+【今日要点】共 23 次提交，涉及 5 仓：
+主线：HXNativeApp(7)、OSMDataCompiler(6)、maplibre-native-qt-test(5)、HXGISServer(4)、lib-HXGISServer(1)
+------------------------------------------------
+一、RDSS 发送链路句柄化重构（HXNativeApp | 7 commits）
+- RdssService 句柄化：RdssMessage 双终态句柄替代字符串 msgid 关联
+- snapshot/verify 兑现 exactly-once 契约：snapshot 应答缺 ids 视为失败，堵 SDK 泄漏回调盲配
+- 评审 Minor 四项修复 + moveTail 竞态守卫（句柄终态即 skip）
+- 知识沉淀：rdss-service-usage 使用指南（TCQ 发送与状态监控）+ 完整示例五例 + 句柄化决策 ingest
+
+二、GeoTIFF 栅格链与离线交付包（OSMDataCompiler | 6 commits）
+- geotiff2mbtiles.sh 栅格链 + 离线包构建器（Sentinel-2 样例）
+- 离线交付拆分三包（env/shp-sample/mif-sample），casablanca 样例开箱即建
+- 部署文档对齐实际镜像 tar 名；清理 spreet 遗留引用对齐 sprite-one:0.1.3
+
+三、MapLibre 影像叠加功能（maplibre-native-qt-test | 5 commits）
+- 新增 ImageryOverlayManager（raster source + satellite layer）并接入 MapContainer
+- UI：影像叠加 toggle 复选框 + Casablanca 跳转按钮
+- tst_imageryoverlay 单测（state + full-map + no-data cases）
+- 多轮实机截图 QA：叠加/取消叠加状态切换、卫星影像正确性
+
+四、mbtiles 目录聚合 best-fit 选库（HXGISServer | 4 commits）
+- 目录聚合选库改为 best-fit 最小 bounds 优先（实测两 mbtiles 重合特征驱动）
+- 评审 minor 修复：复用 xyz2lnglat、反写 bounds 垫底
+- 文档：重扫触发条件与无效 bounds 语义、best-fit 行为说明
+
+五、插件库仓初始化（lib-HXGISServer | 1 commit）
+- HXGISServer 插件库入库（LFS initial commit）
+
+【会话调研工作（未提交）】
+- master 被强制推送问题排查（HXNativeApp）：定位 MSC-26-RW033 历史重写，--force-with-lease 完成推送并验证服务端=本地（1bd517c）；留备份分支 MSC-26-RW033-bak/pre-rebase-0901，同事需 git pull --rebase 对齐
+- API 测试面板 HXNavigation/HXGuidance 演示测试详解：梳理 MapApiTestPanel 约 4400 行实现——HXNavigation 事件流驱动完整导航演示（转向卡/信息栏/TTS/车标跟随），HXGuidance RPC 全接口 + 状态机确定性驱动（3 航路点/RMC 三帧注入/配置正负用例），产出分析文档于会话内
+================================================
+数据来源：HXNativeApp / HXGISServer / maplibre-native-qt-test / OSMDataCompiler / lib-HXGISServer git log（2026-09-01）、opencode 会话 DB（SQLite 直查）

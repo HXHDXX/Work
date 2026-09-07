@@ -1,0 +1,40 @@
+工作日报 2026-09-05（周六）
+================================================
+【今日要点】共 23 次提交，涉及 6 仓：
+主线：HXNativeApp(12)、HXNmeaParser(4)、HXRdssSendingQueue(3)、
+　　　lib-HXNmeaParser(2)、HXMapWidgetNative(1)、lib-HXRdssSendingQueue(1)
+------------------------------------------------
+一、RDSS 终态裁决体系落地（HXNativeApp | 12 commits）
+- verdict() 五值消费 API + -7 Unknown 终态支持，mapapitest 改用
+  裁决名显示；disposition() 六值命名定稿（Confirmed 收编 st4 证据，
+  sendStatus 降级为诊断字段）
+- 句柄生命周期 fixture 钉住终态门（4 证据帧保持 in-flight）
+- 知识沉淀：裁决范式 v3、packageProgress 槽位歧义警示、
+  disposition 消费范式⑥ + 交互式状态图
+二、line_hex 字节透明链路（HXNmeaParser→HXNativeApp | 5 commits + lib 同步 2）
+- LineIoCodec/LineIoService 发布 line_hex：非 ASCII 行（GB2312
+  裸字节）经 hex 通道端到端保真，line 回退兼容
+- TCI 注入验收转绿——汉字端到端保真
+- 评审清理：删不可达 return、from_hex 改 inline、补奇长/大写
+  hex 回退用例
+- lib-HXNmeaParser 二进制仓两次发布同步（d0e50ec/50364d9）
+三、RDSS 发送队列 B3 偏差处置（HXRdssSendingQueue | 3 commits + lib 重建 1）
+- terminal -7 用于未确认包移除（B3 偏差 ×2 场景）
+- 测试加固：verdict 锚点预留 status 向量（clang-tidy performance）
+- lib-HXRdssSendingQueue prebuilt 从 ac0cab8 重建（含 freq-cap 修复）
+- 昨日评审 minors 收尾：enc4 拒绝腿长度断言（574bit）+ 修订说明
+四、VMware 地图黑屏弧线收官（HXMapWidgetNative | 1 commit）
+- 评审加固合入 master（fa4cad6）：单点黑名单谓词、STRICT 措辞、
+  SVGA triage 提示；0796fec→fa4cad6 完整 8 笔链闭环
+  （诊断→双策略导入→SVGA3D→WC 回退→child 特判删除→沉淀→加固）
+------------------------------------------------
+【会话调研工作（未提交/规划中）】
+- RDSS TCQ 状态码 0/-1/-5 语义深挖：定位 InFlight 分型/链级裸码
+  契约漏洞，产出执行包（advancing()/chainLabel()/词典服务化/
+  rejectedPackages()/别名）——大部分已随当日提交落地
+- rdss 服务 charBudget 预算机制规划（Prometheus 计划稿，未实施）
+- TCQ 发送长度资料来源考证（资料调研）
+- 待办：VMware 黑屏 master 未 push；VM 部署 fa4cad6 实机验收
+================================================
+数据来源：六仓 git log（2026-09-05）、commit body、opencode 会话
+（35 会话，含 3 主调研会话 + 子代理执行件）

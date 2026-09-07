@@ -1,0 +1,53 @@
+工作日报 2026-09-03（周四）
+================================================
+【今日要点】共 59 次提交，涉及 5 仓：
+主线：TitanNavi(43)、HXMapWidgetNative(8)、HXNativeApp(3)、OSMDataCompiler(3)、Work(2)
+今日双主线：TitanNavi Android 实机移植收口 + 实测体系建成；RDSS charBudget 测试补全。
+------------------------------------------------
+一、TitanNavi 车载导航——Android 实机收口与全方位实测（Documents/TitanNavi | 43 commits）
+- 实测体系建成（24 提交，跨午夜落库）：adb runner 分级报告框架 + 纯 Python PNG 像素分析；
+  A 系列性能稳定性（冷启动循环、按键/触摸压力、monkey 漫游、资源采样、崩溃 ANR 审计钩子，
+  A5 增长率改尾头对比消除方向误报）；B1–B15 功能验证（环境/数据就绪、启动链与主库映射、
+  瓦片服务 HTTP、地图渲染像素、交互响应、日志健康、菜单区区域判定）；D1–D4 UI 合理性
+  静态审计（触控目标、静态重叠、对比度主题色、密度与边缘裁剪）+ 汇总评分；quick 首跑全绿。
+- Android 构建链修复（12 提交）：CMake 源列表对齐目录重构、构建脚本 LF/androiddeployqt、
+  库名与 JNI 导出修复、qmake 工程对齐 CMakeLists、补 MapLibre RPATH、pro 增 Qt6Sql、
+  目标名 lib_name 对齐修复设备黑屏、目标名统一重命名 TitanNavi；配套实机截图验证
+  （黑屏修复前后对比、重命名后确认地图与 UI 正常渲染）。
+- 稳定性与整改：INS/UDAI 缓冲区溢出修复、Qt6 弃用 API 迁移消警、主窗口按键事件过滤器
+  空指针防护、时区默认值与惯导页本地化、pngutil 模块拆分（F2 整改）。
+- 文档：测试计划文档、修复记录与产品界面评测文档。
+- 另 TiTan 账号 6 次提交：INS DHV CRC 标定、惯导备份数据显示、右侧按键修复、
+  系统设置按钮、两次合并。
+
+二、HXMapWidgetNative——触控输入与渲染修复（8 commits）
+- 触控：触摸悬停 overlay 按钮合成鼠标事件至最深子控件；双指点击缩放 sequential-lift 时序修复。
+- 渲染：VMware SVGA3D 跳过 GBM transport 回退 Mesa export。
+- 集成测试套件全绿（无服务时诚实 skip）；code review 整改（5 Important + 4 Minor）。
+- 知识沉淀：双指时序 bug + IPC 注入方法论；触摸按钮合成 + Qt5 触控架构约束 + SOURCE_DIR 分支纪律。
+（会话：Linux build.sh 不构建子程序排查；arm64 地图多点触控失效调试）
+
+三、HXNativeApp——RDSS charBudget 测试与知识沉淀（3 commits）
+- charBudget 接口全面用例：probe 全 5 编码 + freq 枚举透传 + budgetFromVerify 参数化
+  推导表（9 行）+ error 优先级 + 接口层 exactly-once 失败路径。
+- 参数矩阵实测：freq×encoding×mode/level 全组合 250 行（env 门控 HX_RDSS_LIVE_MATRIX，
+  活 shell + RDSS 插件 verify 真值）。
+- 知识库 ingest：RdssMessage 三信号契约速查页（三信号一览、sendStatus 全状态表、
+  finished/rejected 路径归属、GUI 关联两模式、生命周期悬垂纪律）。
+（会话：RdssMessage 三信号差异调研、statusReceived msgid 唯一性问题、
+  TITAN4 前三提交合并至 MSC-26-RW033 + review、lib-sherpa-onnx 分支确认）
+
+四、OSMDataCompiler——离线地图转换 HTTP 服务交付（3 commits）
+- conversion-service HTTP API：shp/mif/tif → mbtiles 离线转换服务（单文件交付，SIZE_OK）。
+- Win10/WSL2 详细离线部署文档。
+（会话：小型 shp/mif 演示数据下载验证；OSM 样式未匹配数据显示调研）
+
+五、工具链——daily-report skill 增强（Work | 2 commits）
+- 收集范围纳入 /home/guangbin/Documents（TitanNavi 整体迁移后防漏报）+ 注释勘误。
+
+================================================
+会话补充（无提交产出）：除上述支撑会话外，/home/guangbin 下另有多个新建会话（Greeting/
+未命名）当日活跃，未见明确产出。
+数据来源：git log（2026-09-03 00:00–24:00，/Workspace find、/HXAppPlatform 18 仓逐仓直连、
+~/Documents find 排 qt5 三轨采集）+ opencode 会话库 SQLite 直查（当日 79 会话，
+剔除 subagent 碎片后按主会话归纳）

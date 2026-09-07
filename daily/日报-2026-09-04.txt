@@ -1,0 +1,65 @@
+工作日报 2026-09-04（周五）
+================================================
+
+【今日要点】共 35 次提交，涉及 7 仓；主会话 23 个：
+主线：OSMDataCompiler(16)、HXNativeApp(7)、HXMapWidgetNative(4)
+今日三大主题：raw-data 通用渲染管线 / RDSS TCQ 编解码链路 / VMware ST 黑屏终策
+
+------------------------------------------------
+一、OSMDataCompiler raw-data 通用渲染管线（16 commits）
+1. 服务端：/tiles/raw/ 端点 + raw-data source 重写
+2. 样式：day.json 增 raw-data source + raw-* 通用图层，
+   并复制到全部 18 个样式
+3. 转换器：shp-to-raw-mbtiles.sh（gdal:3.6.3 容器）
+4. 校验：raw-data/global-base 源豁免 AC-7；POI 检查限 OSM 族；
+   接受 rank-tiered poi-level-* 设计
+5. test-server：index.html 每次 load 的 pageerror 修复
+6. 打包：--with-raw 旗标；raw styles 默认烘焙（两态语义定稿，
+   --with-raw 仅追加数据文件）
+7. 知识：raw-data 通用渲染管线 + raw 打包语义（两态/三态演化记录）
+意义：任意 shp 数据零样式适配即可上屏渲染
+
+二、HXNativeApp RDSS TCQ 编解码链路（7 commits + 关联 4）
+1. TcqCodec 字符集分类：GB2312 区位码判定（排除 AA-AF 未定义行）
+   + 候选编码集
+2. TcqCodec 五类别解码：GB2312 / ASCII / 混编 A4 自定界 /
+   14bit 区位码（含越界校验）/ 类别 5 尽力透传 + mixedWireBits
+3. decodeTcq hex 优先 + 旧插件 legacy 回退；NmeaTci.commDataHex
+4. charBudget 内容驱动重构：候选竞标（插件计账 + valid/ok 判定 +
+   enc3 垫高）+ 推荐最小码 + fits；删单字探针旧路径
+5. LiveMatrix 内容驱动改造：3 类内容 × freq × mode/lvl 竞标实测
+6. TCI hex 链路注入验收：GB2312 句 → commDataHex → decodeTcq 端到端
+7. 知识：charBudget 内容驱动契约 + tcq-codec 速查页
+关联（HXNmeaParser 3 + lib 分发 2）：
+- RDSS 编码类别位宽参考（TCQ 表2-3-1-16 + GB/T 44086.2-2024）
+- fix: comm_data_hex 字节安全传输（GB2312 裸字节句 dump 不再抛 316）
+- lib-HXNmeaParser 分发同步（e59be7e）；lib-HXRdssSendingQueue
+  bump 4a097e6（terminal -7）
+
+三、HXMapWidgetNative VMware ST 黑屏终策（4 commits）
+1. 根因：INVALID modifier 驱动分歧（VMware vs 真机 GBM）
+2. fix: dual-strategy dmabuf import——恢复 VMware 渲染
+3. 终策：SVGA3D renderer 模式级自动降级 ST→WindowContainer
+4. refactor: 删 child 侧 SVGA3D GBM skip（模式级黑名单后不可达）
+
+四、HXProjectTemplate skill 文档增强（3 commits）
+- WikiSkill 式 impact writeback、failed-approach 条目、provenance
+- review 打磨 + Types 枚举补 Impact
+
+── 会话调研工作（源：opencode SQLite 直查，23 主会话摘录）──
+1. 微软 WiKiSkill 相关信息检索（Atlas）——为 skill 文档增强提供参照
+2. 地图初始闪黑问题：历史解决方案查询 + 解决状态确认
+   （与 VMware 黑屏线互补）
+3. Metis 评审 RDSS 终态分型计划（下一阶段规划）
+4. Task1-7 子任务战役会话（TCQ 链路 TDD 实施，对应第二节提交）
+
+------------------------------------------------
+关键决策：
+1. raw 样式默认烘焙进包（两态语义），数据文件按需追加
+2. TCQ 走内容驱动竞标（插件计账为准），弃单字探针
+3. SVGA3D 上 ST 模式级降级 WC（驱动分歧不可修则绕）
+4. comm_data_hex 字节安全传输，GB2312 裸字节不再炸 dump
+
+================================================
+数据来源：三轨 git 遍历（/Workspace、/HXAppPlatform 直连、
+~/Documents 排 qt5）、commit body、opencode 会话 SQLite 直查

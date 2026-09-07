@@ -1,0 +1,37 @@
+工作日报 2026-09-02（周三）
+================================================
+【今日要点】共 17 次提交，涉及 3 仓：
+主线：HXNativeApp(10)、HXMapWidgetNative(5)、OSMDataCompiler(2)
+
+------------------------------------------------
+一、NMEA GSV 汇总信号 + RDSS 字数预算（HXNativeApp | 10 commits）
+- 背景：GPGSV/BDGSV 混淆排查与 GSV 报文封装调研，修订 2026-08-06 既有决策
+- feat(nmea): GSV 轮次收齐式汇总信号 gsvSummaryReceived；panel 监听全部 NMEA 信号补挂
+- test(zmq): 汇总信号 6 用例 + 收紧 gsv 前缀 grep 锚点
+  流程：Metis 缺口分析 → Momus/Oracle 计划双评审 → todo1-5 TDD 流水线 → F1-F4 四路审计 → build+pytest 验证门
+- feat(services): RdssService charBudget 字数预算接口——单字探针复用 verify 三维表（行+实测字宽）、静态纯函数可测、metatype 双轨注册
+- 知识库沉淀 5 篇：GSV 汇总决策、charBudget 探针模式（缓存本地计数/encoding 3-4-5 近似边界/exactly-once）、
+  verify 选表参数专题（mode 0通播/1全球/2区域/-1粗筛 + level ICP 真值链 + min(期望,授权)判级）、
+  msgid 两层 id 结论（业务键闭包捕获、勿作业务主键）、Commits 重定位至 rebase 后 SHA
+
+二、地图渲染传输 + 多点触控修复（HXMapWidgetNative | 5 commits）
+- 背景：arm64 构建后地图多点触控失效调试（oracle 架构决策会话）
+- feat(st): GBM 反向流 child transport，覆盖 no-export EGL 驱动（D3000M 激活路径）
+- fix(input): arm host touch forwarding——WA_AcceptTouchEvents + any-surface touch capture
+- refactor(st-probe): 清理过时 shareGroup 谓词；GBM 反向流与触摸转发两篇知识 ingest
+
+三、MVT raster 修复（OSMDataCompiler | 2 commits）
+- fix(mvt): raster mbtiles 边缘透明度——dstalpha + PNG tiles
+- fix(mvt): raster 自检全量迁入 gdal 容器运行，去除宿主 Pillow 依赖
+
+四、会话调研工作（未提交）
+- TitanNavi Android 设备化测试体系（T1-T8）：adb runner 自动化框架、纯 Python PNG 截图分析模块；
+  部署北京/阿尔及利亚地图数据并截图确认渲染；冷启动循环耗时、按键/触摸压力回归、
+  Monkey 漫游、内存/CPU 基线、崩溃审计钩子
+- HXNativeApp master 被强制推送问题排查
+- synapse-a2a / agent 间通信（A2A）仓库调研
+- repo forall git lfs pull 无法同步 lib-GStreamer 排查
+
+================================================
+数据来源：HXNativeApp / HXMapWidgetNative / OSMDataCompiler git log（2026-09-02 双轨遍历）、
+commit body、opencode 会话库 SQLite 直查（当日 51 条会话记录，已剔除 subagent 碎片）
