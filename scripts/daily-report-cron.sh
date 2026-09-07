@@ -33,6 +33,13 @@ for root in /Workspace /HXAppPlatform /home/guangbin/Documents; do
       --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
   done
 done | sort >> "$TMP"
+# 家目录直下仓（maxdepth 2，与 Documents 轨不重叠；排工具自管仓）
+find /home/guangbin -maxdepth 2 -name ".git" -type d 2>/dev/null | while read g; do
+  r=$(basename "$(dirname "$g")")
+  case "$r" in .oh-my-zsh|.nvm|.popos_shell) continue;; esac
+  git -C "$(dirname "$g")" log --since="${D} 00:00" --until="${D} 23:59" \
+    --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
+done | sort >> "$TMP"
 
 REPORT="/Workspace/Work/daily/日报-${D}.txt"
 SUBJ_TEXT="工作日报 ${D}（自动兜底版）"

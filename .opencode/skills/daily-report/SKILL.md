@@ -45,6 +45,15 @@ find /home/guangbin/Documents -maxdepth 3 -name ".git" -type d 2>/dev/null | whi
 done
 ```
 排除 `.repo/*`（repo 工具仓）与 `qt5/*`（Qt 上游源码依赖）。`lib-*` 二进制仓可选纳入（看是否当日有发布）。
+```bash
+# D. /home/guangbin 直下仓（maxdepth 2；Documents 已由 C 轨覆盖，深度 2 不重叠）
+# 排工具自管仓（oh-my-zsh/nvm/popos_shell 自更新属噪声）；.dotfiles/gpt-load 等真工作仓纳入
+find /home/guangbin -maxdepth 2 -name ".git" -type d 2>/dev/null | while read g; do
+  repo=$(dirname "$g"); case "$(basename "$repo")" in .oh-my-zsh|.nvm|.popos_shell) continue;; esac
+  git -C "$repo" log --since="$D 00:00" --until="$NEXT 00:00" \
+    --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
+done
+```
 
 ### 2. 🔴 邮件标题 Base64 必须工具生成，禁止手敲
 中文邮件标题走 MIME RFC 2047：`=?UTF-8?B?<base64>?=`。**手敲 Base64 必然算错字节**（曾把「工作日报」编码成「工坊攱话」）。必须：
