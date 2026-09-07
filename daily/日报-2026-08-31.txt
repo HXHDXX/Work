@@ -1,0 +1,44 @@
+工作日报 2026-08-31（周一）
+================================================
+【今日要点】共 28 次提交，涉及 5 仓：
+主线：OSMDataCompiler(9)、Work(9)、HXPRShell(7)、lib-hxprshell-app(2)、maplibre-native-qt-test(1)
+------------------------------------------------
+一、OSMDataCompiler：矢量格式往返演示管线 + 字体治理（9 commits）
+- 晚间主线（19:39-21:17）矢量往返（roundtrip）演示：osmium 导出配置 →
+  vector2osm.py（SHP/MIF→OSM XML 转换器，带 selfcheck）→
+  build-vector-demo.sh 一键 SHP/MIF→mbtiles 演示管线 →
+  3-way mbtiles 一致性比对器；沉淀 osm-format-roundtrip 知识模块文档
+  （格式损失/映射/编码/bbox 技巧）
+- 全程 subagent 驱动执行（T1-T11）：morocco 数据下载/casablanca 提取、
+  基线 mbtiles 构建、白名单+field-map+tags-filter 导出、分几何
+  GeoJSONSeq→SHP、SHP→MIF/MID、三联渲染验证、三源对账；计划经
+  Metis 缺口分析 + Oracle/Momus 四轮评审
+- 上午字体治理（08:45-09:00）：untrack data/fonts glyph PBF（构建产物，
+  历史重写）、fontnik 工具链决策（librarian 调研后继者）、docker 镜像
+  报告补 fontnik/font-prep、明确 cross-library 为宿主侧依赖
+二、HXPRShell：hxprshell-app 信号健壮性 + 存量告警清理（7+2 commits）
+- 信号关闭路径四项修正：幂等打印、如实信号名、EINTR 即醒、插件子进程补
+  SIGINT；SIGPIPE 忽略 + 双进程 SIGHUP 优雅退出
+- 评审 Minor 修正：handler 部分写防护 + 信号审计注释
+- 存量清理：10 处 clang-tidy 警告、QT_DISABLE_DEPRECATED_BEFORE 消除
+  clazy overloaded-signal 误报、移除 extra_args 死变量
+- lib-hxprshell-app 二进制仓同步 2 次（信号修正版 + 死变量清理版）
+三、maplibre-native-qt-test：比例尺 1:N 分数标注（1 commit）
+- scale bar 下方新增 1:N representative-fraction 标签；完整 TDD +
+  计划评审（Metis/Oracle/Momus 三轮）+ 截图 QA 流程
+四、Work：日报体系增强 + 历史补录（9 commits）
+- daily-report skill 增强：会话信息纳入规则（调研类工作不遗漏）、会话
+  查询改 SQLite 直查（修复 session_list 静默漏 /home/guangbin）、
+  路径清单扩展（~/Documents 前缀匹配早期布局数千会话）
+- 历史日报补录：94 天机械补录「当日会话活动」小节、7 个会话-only 日
+  建档（git 双轨核实）、07-18 日报重建（原文件遗失）、08-27/29/30 补
+  会话信息（omo LLM 评估、ST/WC 三方实测、灰底破案、repowire 全流程）
+------------------------------------------------
+会话调研工作（未提交）：
+- synapse-a2a GitHub 仓库调研（21:54，~/guangbin 目录主会话）
+- 阿尔及利亚 GeoTIFF 下载规划——MapLibre 展示用（16:09，规划完成待执行）
+- 小型 shp/mid/mif 演示数据下载（21:55，演示数据扩充，接续晚间主线）
+================================================
+数据来源：OSMDataCompiler/Work/HXPRShell/lib-hxprshell-app/maplibre-native-qt-test
+git log（2026-08-31 00:00 - 2026-09-01 00:00 双轨遍历）、commit body、
+opencode SQLite 会话直查（剔除 subagent 碎会话后主会话 8 个）
