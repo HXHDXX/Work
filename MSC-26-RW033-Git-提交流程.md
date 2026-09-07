@@ -60,6 +60,7 @@ master (基线, 团队维护)
 mkdir HXAppPlatform && cd HXAppPlatform
 
 # 初始化版本库
+export REPO_URL='ssh://git@192.168.1.100:2222/HXHDXX/git-repo.git'
 repo init -u ssh://git@192.168.1.100:2222/HXHDXX/app-platform-manifest.git -b master -m MSC-26-RW033.xml
 
 # 同步版本库
