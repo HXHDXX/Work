@@ -61,3 +61,9 @@
 ## [2026-09-06] ingest | skills
 - 新增 Decision: 知识闭环机制（Impact 回写 + Failed Approaches + Provenance 试水，复刻自 HXProjectTemplate de30dbc）
 - Types: Decision
+
+## [2026-09-09] ingest | agent-guidelines
+- 治理决策：AGENTS.md 去重——删除与全局 AGENTS.md（~/.config/opencode/AGENTS.md）重复的通用规则（题记/读写元规则/核心原则/行为准则/经验记忆/知识查询与沉淀），仅保留项目专属小节（标题 ### → ##）
+- 依据：OpenCode 会话恒注入全局 AGENTS.md，通用规则以全局文件为唯一事实源，项目 AGENTS.md 仅留项目专有物（对齐 HXProjectTemplate 拆分标准）
+- Cross-ref: [[agent-guidelines]]
+- Types: Decision
