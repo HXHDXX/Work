@@ -1,37 +1,6 @@
 # AGENTS.md
 
-> **意图驱动：AI 为剑，概念为刃，约束为柄**
-
-## AGENTS.md 读写元规则
-> 详细: `./docs/agents/index.md`
-- 只写清单，不写说明
-- 说明写在 `./docs/agents`
-- 遵循渐进式披露
-
-## 开发指南
-
-### 核心原则
-> 详细: `./docs/agents/core/principles.md`
-- 英语思维，中文交互
-- 先理解再行动
-  - 静态：优先检索 `./docs`
-  - 跨项目静态：若需参考外部项目，必须首要检索目标项目的 `./docs` 目录以对齐设计上下文
-- 验证贯穿始终：前置设计验收标准，后置交付验证方案
-
-### 行为准则
-> 详细: `./docs/agents/core/principles.md`
-- 澄清意图：需求存在歧义禁止假设，必须向用户提问
-- 深度调研：编码前必须输出概念现状，清理技术盲区
-- 简单优先：禁止编写超出当前需求的代码与过度抽象
-- 精准修改：聚焦目标，禁止在非相关区域附带重构
-- 验证先行：行动前必须设计并交付可执行的验收标准
-- Trivial 豁免：单次变更 ≤ 1 文件且 ≤ 20 行允许直接执行，禁止通过连续拆分规避限制，且仍必须通过链接/引用验证
-- 系统调试：禁止猜测式修复，必须先复现问题、读完整错误与堆栈，一次只改一处并验证；连续 3 次尝试失败必须回滚至已知良好状态，并升级提示用户介入
-- 根因优先：禁止用判空或 try-catch 掩盖非预期值，必须追溯其产生根因；症状式修补不视为修复
-- 沟通纪律：交付时必须说明变动内容、演进逻辑、潜在顾虑与未覆盖项，禁止仅抛出孤立代码块；禁止使用"应该可以/大概能行"等模糊表述，不确定性必须量化为明确的待验证点
-- 反模式自检：命中以下任一模式必须立即停止而非硬推——大扫除（借机重构无关区域）、过早抽象（未出现两次重复即抽象）、乐观路径（只处理成功流忽略异常分支）、失控重构（修复跨文件级联扩散）
-
-### 上下文与沙盒策略 (Context-Mode)
+## 上下文与沙盒策略 (Context-Mode)
 > 详细: `./docs/agents/core/context-strategy.md`
 - 默认粗筛: 优先使用 `ctx_batch_execute` / `ctx_search` / `ctx_execute_file`（98% 压缩率）
 - 按需放行: 涉及内存安全、跨进程寻址、构建环境修改时，通过钩子请求原始数据
@@ -42,20 +11,5 @@
 - 工具路由: `ctx_batch_execute`(采集+索引+搜索) → `ctx_search`(查索引) → `ctx_execute`/`ctx_execute_file`(处理) → 原生 `Edit`/`Read`(输出 <20 行)
 <!-- 来源: https://github.com/mksglu/context-mode -->
 
-### 知识查询与沉淀
-> 详细: `./docs/agents/knowledge/knowledge-index.md`
-- 操作前必须加载 `project-compound` skill（提供 ingest/query/lint 模板）
-- 开始模块任务前，先检索 `./docs/agents/knowledge/` 继承已有经验
-- 跨项目借鉴：依赖或参考兄弟项目时，禁止盲目复制逻辑，必须先执行对目标项目 `./docs` 的 ingest 与 query
-- 功能迭代后，必须通过 `project-compound ingest` 更新知识库
-- 任务完成后，必须在当前分支生命周期内归档记录核心决策、技术策略与 Bug 经验（非 trivial 变更必选）
-<!-- 来源: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f -->
-
-### 经验记忆
-> 详细: `./docs/agents/core/experience-memory.md`
-- 任务前查询：非 trivial 任务（尤其 debug/architecture/integration）开始前，MUST 通过 `agent-experience` skill query 相关历史经验，结果注入上下文
-- 任务后捕获：非 trivial 任务完成后，MUST 通过 `agent-experience` skill capture 生成经验草稿（status: draft），等待人类确认
-- 确认流程：人类审核 draft → 改 status: confirmed 或 rejected
-- 升华：confirmed 经验若具普适性，可手动通过 `project-compound ingest` 升华为语义知识
-- 跨项目：经验存储在 `~/.dotfiles/.agent-experiences/`，跨项目共享，按 project 字段标注来源
-- 边界：经验记忆（原始经验）≠ 语义记忆（综合结论，project-compound）
+## Trivial 豁免验证
+- 本仓库无构建系统：Trivial 变更（≤1 文件且 ≤20 行）的验证以链接/引用验证替代全局 AGENTS.md 的构建验证
