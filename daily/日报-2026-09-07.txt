@@ -1,0 +1,45 @@
+工作日报 2026-09-07（周一）
+================================================
+【今日要点】共 28 次提交，涉及 7 仓：
+主线：HXNativeApp(9)、.dotfiles(7)、Work(5)、TitanNavi(3)、HXNmeaParser(2)、OSMDataCompiler(1)、lib-HXNmeaParser(1)
+------------------------------------------------
+一、RDSS/CCMSS 通信链路（HXNativeApp | HXNmeaParser | lib-HXNmeaParser，12 commits）
+- CCMSS builder 对齐协议 v1.9.3.5（表 2-2-1-5/表 6-1），插件仓同步修复；
+  HXNativeApp 新增 sendMss() 封装适配变更后插件契约（mode/test_item int→string、freq/branch 交错），知识库存档
+- RDSS 发送侧 TCQ 字符集域按业务规则收紧：先收窄为可打印 ASCII，再放宽为「可打印 ASCII 减逗号」
+- inFlight() 更名 liveHandles()，消除与 Disposition::InFlight 状态语义歧义
+- charBudget 确立为发送前主 API，verify 降级为底层工具（知识库归档）
+- 新增 RdssService 业务使用调用链图（信号 + as*() 视图族）与 RDSS 应用业务概览 brief
+  （9/9 交付，含 visual-check 环境超时回执）；图件经多轮截图质检
+
+二、MSC-26-RW033 分支管理与团队约定（Work | HXNativeApp 会话，2 commits + 多会话）
+- MSC-26-RW033-0902 变基到 MSC-26-RW033、再变基到 master，多轮操作验证
+- 新增 MSC-26-RW033 Git 提交流程团队约定文档并修复其一处问题
+
+三、TitanNavi 评测与设备调试（TitanNavi | 会话，3 commits）
+- 界面评价 HTML 文档完善：评测问题加全局编号便于指代跟踪，区分评测/更新日期
+- 测试用例完善与设备调试（会话）；INS 数据标定更新（TiTan）
+
+四、OSMDataCompiler 矢量上传改造（1 commit）
+- conversion-service 支持任意命名矢量上传：sidecar 分组 + CRS 规范化 + 单 zip 重打包
+  （配套调研：下载小型 shp 与 mid/mif 演示数据验证）
+
+五、日报与经验体系维护（Work | .dotfiles，10 commits）
+- 补录归档 08-31、09-01~09-06 共七日日报；daily-report skill 遍历增 D 轨
+  （/home/guangbin 直下仓，排 oh-my-zsh/nvm/popos_shell 噪声仓）
+- agent-experience 体系治理：确认 14 条 reviewed drafts、新摄入 2 条、
+  重复教训折叠为规范指针、标签变体统一并同步 INDEX；追加 0907 LFS 指针复发注记
+
+================================================
+会话调研工作（未形成提交）：
+- 将应用服务集成到 hx-map-sdk 供第三方使用——规划会话（Prometheus），产出计划待执行
+- 独立进程运行的插件——可行性调研（HXNativeApp）
+- RDSS 发送 TCQ 后状态码 0/-1/-5 含义——协议侧排查
+- repo sync -d -c 后 lib-HXGISServer 未同步 master——repo 工具行为排查
+- Qt 5.14.2 arm64 Linux SDK 及配套 QtCreator 可用性查找（含 librarian 检索）
+- SSH 密钥密码反复要求输入——原因排查；随后批量推送 Workspace/HXAppPlatform 全部版本库至 origin/ff
+- eli5 与 archify skill 结合使用分析；Boss briefing skill 预研
+- charbudget 函数说明（已沉淀知识库条目）
+================================================
+数据来源：/Workspace、/HXAppPlatform、~/Documents、~/ 直下各仓 git log（2026-09-07），
+opencode 会话库 SQLite 直查（45 会话，剔除 look_at/subagent 碎片后归纳）

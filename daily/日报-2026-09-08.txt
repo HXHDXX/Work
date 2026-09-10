@@ -1,0 +1,64 @@
+工作日报 2026-09-08（周二）
+================================================
+【今日要点】共 105 次提交，涉及 3 仓：
+主线：HXNativeApp(75)、TitanNavi(28)、OSMDataCompiler(2)
+个人（guangbin）77 笔：sdk 服务迁移、TCQ/TCI 二进制混编链路、
+ADAS 构建/NPU 打包、TitanNavi P0 修复轮 + INS 解析重构
+------------------------------------------------
+一、hx-map-sdk 服务迁移·供第三方使用（HXNativeApp | 12 commits）
+- SDK 构建基座（AUTOMOC/Widgets）+ TcqCodec/JsonHelpers 迁入
+- 七个服务迁入 hx-map-sdk，RouteService 注册 DI，消费方全部重接线
+- HXMapSDK facade 新增 gisBaseUrl/routeBaseUrl/styleUrl
+- 单测目标与 mainwindow UI 聚合解耦；北京地图数据 GUI 复跑 + 残差分类；F1-F4 终审证据归档
+- feat/sdk-services 并入 master（变基语义冲突逐一处理：commandFkiResult→statusReceived、setNmeaService 移除适配）
+二、NMEA/RDSS 二进制混编链路 TCQ/TCI（HXNativeApp | 10 commits）
+- TcqCodec：binary↔mixed(A4+hex) 编解码对 + 码域收窄 [0-9A-F]（用户实测确认）、PureAscii→PureCode 更名
+- RdssService.sendTcqBinary（mixed enc3 通道）+ NmeaService.decodeTcqBinary 信封解析，均带单测
+- MapApiTestPanel：二进制 RDSS 硬件环回 + 无超时回环模型 + 串口守卫；二进制混编 TCI 注入回归
+- charBudget 动态选择抽出纯函数并补单测
+三、NMEA 数据缺陷修复（HXNativeApp | 4 commits）
+- TCI freq / EPI rx_freq 读空：wire 为 JSON number，裸 toString() 丢数据
+- PWI/TCI 时间解析小数截断回退；zmq 注入 fixture 对齐真实 wire
+- EPI rx_freq 直接覆盖测试（epi 日志补 rxFreq token）
+四、RDSS 契约与集成修复（HXNativeApp | 4 commits）
+- rdsswidget 补迁 v4 契约（disposition() 收敛终态判定、Rejected 拒因走 error）
+- MSC TcqParams 适配重构：恢复 communicationMode/Level 参数化，msgid 改自动生成
+- OFQ 功率上报改走 RdssService 队列 API；deinit SEGV 守卫适配 findService 键迁移
+五、hx-ADAS-app 构建与打包（HXNativeApp | 7 commits）
+- 接入 hx-ADAS-app 与 lib-GStreamer 预构建，恢复 x86_64/check/arm64 三路径；GST_ROOT 消费、撤销 orc 外部补丁
+- 构建树 RPATH 对齐产物策略（QtCreator 构建运行时走系统 GStreamer）；运行模型修正：产物仅发可执行、回退运行时闭包
+- 打包中文 TTS 语音模型 vits-piper-zh_CN-huayan-medium
+六、arm64 NPU 打包（HXNativeApp | 2 commits）
+- arm64 SDK 替换 FT-D3000M NPU 版 onnxruntime 库集（排除 pybind11）
+- NPU overlay 覆盖 stock libsherpa-onnx-c-api.so（FT-D3000M 配套重建版）
+七、应用杂项修复（HXNativeApp | 4 commits）
+- titan 合并重放回归修复（SidebarSectionHost DI、setNmeaService、deinit 退订顺序）
+- 罗盘 m_targetAzimuthValid double→bool + normalizeAngle 静态化
+- 样式链路：darkBlue_bak.css→style.css 对齐运行时加载路径；data/appstyle POST_BUILD 部署；ENABLE_MAP_API_TEST_PANEL 默认关
+八、知识沉淀（HXNativeApp | 9 commits docs）
+- ingest：sdk services migration、TCQ 二进制混编实测收紧、TCI freq 读空 Bug Experience、
+  NmeaService 同族审查 + PWI 时间修复、EPI rx_freq 收口、NPU c-api 配套重建、linux-packaging、infra 双入口坑
+- rdss-service-api-usage 图补 4 张 PNG 导出
+九、团队协作（HXNativeApp 同仓 | 28 commits）
+- tianzengchun(18)：辅助驾驶软件全日推进（子工程、串口交互/配置、语音模块、hdmiIn 视频渲、热键、单实例控制、健康管理路径）、授时界面、航点/标注管理、titan 分支合并、样式文件
+- qinchuan(5)：发送指令/ICP 修改、测试
+- wangfx(5)：rdss dev 系列调试、出站波束修改
+十、TitanNavi UI 修复轮 + INS 重构（28 commits）
+- P0 界面修复轮：UI-08/14/22 + 航迹数据两缺陷；B_MENU_X 校准至实际列范围；BACK 键启动期空指针崩溃修复；修复轮入册 v2.1（61 条）
+- INS/DHV 解析重构：dhvparse 纯函数提取（CRC 死分支/零输出/精度 P2/P3/P4）、dealportArecvInfo 接线纯行处理器 + 坏行跳过 + 缓冲上限（P1/P5）、死代码清理、88 句真实捕获主机回放回归
+- UI 走查文档：复评文档 v2 + 尺寸审计节 + 09-08 修复记录、问题总表按优先级重排/前置/锚点互链、补录 UI-54~60（累计 60 条）、评测条目全局编号
+- 新工具：按钮/图标运行时尺寸审计（D1 静态审计运行时补位）
+- hxgis 3d4dfae 多平台二进制/头文件同步（Windows/OpenHarmony/Android/Linux）
+十一、OSMDataCompiler conversion-service（2 commits）
+- bbox 与数据范围无交集 fail fast + 明确报错；清理误粘贴的重复 vector chain 块
+- 配套下载小型 shp / mid-mif 演示数据
+================================================
+会话调研工作（未形成提交）：
+- swap 占用排查（10G 空闲仍见 24Mi swap）：结论为历史残留冷页，si/so=0 无性能损失，无需处理
+- 达梦数据库字符集/大小写敏感调研：两参数仅随新建实例确定，GUI 走 /dm8/tool/dbca.sh 重建（manager 不可改）
+- Qt 5.14.2 SDK 及配套 QtCreator 查找（含 fork 续查）：老版本构建环境定位
+- MSC-26-RW033 分支集成：0907 变基回 RW033、RW033 变基到 master、master 重置保 tip 与分叉勘察
+- charbudget 函数机制说明（RDSS 字符预算动态选择）
+================================================
+数据来源：/Workspace、/HXAppPlatform、~/Documents 各仓 git log（2026-09-08）
++ opencode 会话库（当日 102 会话，筛出 15 个主会话）

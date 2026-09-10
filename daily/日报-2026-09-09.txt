@@ -1,0 +1,57 @@
+工作日报 2026-09-09（周三）
+================================================
+【今日要点】共 82 次提交，涉及 21 仓：
+主线：HXNativeApp(22)、HXNmeaParser(8)、.dotfiles(8)、lib-HXNmeaParser(5)、
+HXMapWidgetNative(5)、HXProjectTemplate(4)、其余 15 仓各 2（AGENTS.md 去重批次）
+------------------------------------------------
+一、HXNativeApp 慢设备 GUI 测试稳定性与构建纪律（HXNativeApp 20 + HXMapWidgetNative 3 | 23 commits）
+- 零警告清理：TEST_F 移出匿名命名空间（clazy non-pod-global-static）、去除 _GNU_SOURCE
+  内建宏重复定义、qobject_cast 替代 static_cast 下转型
+- 远程真机部署测试修复：screenshot host 由 --target 派生（去硬编码 192.168.1.1）、
+  ssh 会话接入 remote wait multiplier（默认 3.0x，HX_REMOTE_WAIT_MULTIPLIER）
+- 构建纪律：fire-and-poll 长构建纪律与超时归因判据文档、check 接入 ccache 探测守卫
+  （clazy 工具链不武装）、SIGKILL 归因对账（鉴定工具超时孤立案例，作废 OOM 误归因）
+- 慢设备动画时序修复：camera 动画改 wall-clock 进度替代固定 16ms 步数
+  （HXMapWidgetNative）、settle-poll 相机断言替代 fixed singleShot 延时、
+  zoom/pitch 边界使能判定 fp epsilon、onAnimationFinished 补 syncProperties
+  （陈旧 m_animating 误导 TestBridge）、zoom floor 实测值、guidance-sim 滑窗基线竞态容忍
+- RDSS 面板回归：EXPECTED_BUTTON_COUNT 321→325（v4 面板改版）、无 ttyUSB 跳过 fw suite
+- 配套多批 docs(knowledge) 归档（部署坑、fp epsilon、settle-poll 策略、F/G 类闭环）
+
+二、HXNmeaParser TCQ 汉字 GB2312 编码链路（HXNmeaParser 6 + lib-HXNmeaParser 5 | 11 commits）
+- 确立 TCQ 汉字裸 GB2312 内码原字节发送证据链（kb ingest）
+- 实现 enc1 线格式转换：UTF-8 总线 <-> raw GB2312，转换职责终裁归插件；
+  command-builder TCQ/TCI enc1 契约更新
+- GB2312 转换统一 crosslib libiconv，修复 android 链接失败（supersede LIBICONV_PLUG gotcha）
+- 发布：linux(c99a622) 及 linux/oh/android/windows(98e7378) 四平台二进制；
+  gitignore 构建残留
+
+三、全局 Agent 规则导出与 skill 跨语言激活（.dotfiles 8 + HXProjectTemplate 4 | 12 commits）
+- 经验记忆规则提炼为全局 AGENTS.md：意图驱动 header、章节重排（经验记忆上移）、
+  principles 模块悬空引用修复（评审 I-1）
+- .agent/ 全局规则源与共享 skills 落地 dotfiles，install.sh 更新，
+  wiki 经 project-compound ingest
+- skill 跨语言激活规则入 AGENTS.md（先内部翻译英中再语义匹配，禁语言不一致漏激活）
+- HXProjectTemplate writing-guide 陈旧章节引用修正
+- 俄语/中文混合探针会话验证多语言激活生效
+
+四、跨仓 AGENTS.md 去重批量治理（18 仓 | 36 commits，20:56 批次）
+- 统一「去除与全局重复的通用规则，仅保留项目专属小节」+ 回链引用修正与治理记录归档
+- 覆盖：HXNativeApp、HXMapWidgetNative、HXPRShell、TTSPlayer、HXNmeaParser、
+  HXGISServer、HXGeoConverter、HXGuidance、HXNavigation、HXPluginRuntime、HXPOISearch、
+  HXRdssSendingQueue、HXRouteServer、HXSpatialMeasure、OSMDataCompiler、ProductDesign、
+  Work、ZMQClient
+
+================================================
+【会话调研工作（未提交/进行中）】
+- API 测试面板 TCQ 自发自收功能：规划进行中（22:01 会话），未落 commit，待继续
+- MSC-26-RW033-0907 分支变基至 MSC-26-RW033（真机会话线）
+- 内存占用过高分析：oomd/内核 OOM 日志只读取证，最终鉴定工具超时孤立案例，
+  作废 OOM 归因（结论已提交，见一）
+- tool-timeout-global-fix 计划经 Oracle/Momus 多轮评审后落地为 fire-and-poll 纪律
+  与 ccache 守卫（已提交，见一）
+
+================================================
+数据来源：/Workspace、/HXAppPlatform、~/Documents、~/.dotfiles 各仓 git log
+（2026-09-09 00:00–24:00 Asia/Shanghai）；opencode.db 会话 167 条
+（剔除 subagent 碎会话后取主会话）
