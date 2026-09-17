@@ -67,3 +67,8 @@
 - 依据：OpenCode 会话恒注入全局 AGENTS.md，通用规则以全局文件为唯一事实源，项目 AGENTS.md 仅留项目专有物（对齐 HXProjectTemplate 拆分标准）
 - Cross-ref: [[agent-guidelines]]
 - Types: Decision
+
+## [2026-09-17] lint | 3 issues found, 0 auto-fixed
+- Broken wiki-link: agent-guidelines -> [[context-mode]]
+- Broken wiki-link: agent-guidelines -> [[ref]]
+- Orphan modules (no inbound link): agent-guidelines
