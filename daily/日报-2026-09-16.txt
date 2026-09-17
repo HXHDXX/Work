@@ -1,0 +1,39 @@
+工作日报 2026-09-16（周三）
+================================================
+【今日要点】共 18 次提交，涉及 4 仓：
+主线：HXNativeApp(10)、TitanNavi(4)、HXNmeaParser(3)、HXGISServer(1)
+------------------------------------------------
+一、GBQ 组管理实测定案与 SDK 名实对齐（HXNativeApp | HXNmeaParser | 13 commits）
+- 双板实测 GBQ 组管理全生命周期（建组/加员/退组/散组/查询）：
+  padded member-ID 判别测试、空建组 A/B 探测、TCQ 探测+散组+配额
+  检查、板端 TX 健康核查、SDK member-add 实证（07:00-18:30 多轮）
+- 根因定案并入库：加员未落册系成员不在线（用户当日确认）；
+  leaveGroup 前置定案——删除 NmeaGbi 头部跨表错映射
+- SDK 组查询三 API 更名（名实对齐），同步适配测试断言，
+  ICR 组列表按钮断言键与 GBQ 分离
+- fix(rdss)：GBQ 五方法补 member_count 队列契约字段
+- 文档沉淀：组管理方案时序图（简版）、GBQ 组管理 API 调用参考
+  （含示例代码）、GBI 类别表按实测定案勘正、知识库定案双仓同步；
+  HXNmeaParser 侧新增问题单并完成两项根因定案
+- MSC-26-RW033 分支变基 master 并推送
+
+二、TitanNavi Android 构建修复（TitanNavi | 4 commits）
+- 修复 Android 链接错误：注册缺失的 MapMeasureInfo 源文件
+- MyActivity 启用 HOME 键拦截；包名拼写对齐 TitanNai→TitanNavi
+- build_android.sh 补执行权限；量测总距离指针显示（TiTan）
+- 会话驱动：Android Debug 版本构建 + 构建测试
+
+三、HXGISServer 控制台中文乱码修复（HXGISServer | 1 commit）
+- Windows 服务控制台按 UTF-8 解码中文提示
+  （SetConsoleOutputCP(CP_UTF8)）
+- 经 Prometheus 规划 + F1-F4 四维评审（合规/质量/复现/范围）后落盘
+
+------------------------------------------------
+会话调研工作（未提交）
+- Qt 5.14.2 SDK 及配套 QtCreator 查找（/home/guangbin，17:48）
+- 入站指令查询（HXNmeaParser，18:11）
+- HXNativeApp 构建验证（Documents 副本仓，11:58）
+- GBQ 组生命周期接口说明梳理（HXNativeApp，18:32）
+================================================
+数据来源：/Workspace、/HXAppPlatform、~/Documents、~ 双轨 git log（2026-09-16）、
+commit body、opencode 会话库 SQLite 直查（42 会话，剔除 subagent 碎件）

@@ -1,0 +1,63 @@
+工作日报 2026-09-15（周二）
+================================================
+【今日要点】共 116 次提交，涉及 27 仓：
+主线：lib-*发布仓(33)、HXProjectTemplate(8)、.dotfiles(8)、HXPOISearch(6)、
+　　　HXGuidance/HXRdssSendingQueue/HXPluginRuntime/HXSpatialMeasure/HXNavigation/
+　　　ZMQClient/HXGeoConverter(各5)、HXGISServer/HXNmeaParser/HXNativeApp(各4)、
+　　　HXMapWidgetNative/HXPRShell/TitanNavi/HXRouteServer(各3)、OSMDataCompiler(2)
+------------------------------------------------
+一、SDK 仓批量治理 + 四平台发布（/Workspace 13 仓 62 commits + lib-* 10 仓 33 commits）
+- 批量落地四项通用修复：裸 WIN32 宏改 _WIN32（11 仓）、copy-from-list 打包
+  过滤 .placeholder 占位、file-list 文档目录更名 sdk-doc 并预置空目录、
+  ignore 根目录平台构建 tarball
+- 分层 AGENTS.md 批量生成（root + container/源码/docs 三子域）；HXPOISearch
+  同步 poi-search-api create 签名登记
+- 专项清理：HXSpatialMeasure 删 Testing 空转遗留；ZMQClient 删零引用
+  hx-plugin.h 模板残留；HXProjectTemplate 修 build.sh SC2155、README 契约
+  勘误、build-system 打包契约 ingest
+- 8 个 SDK 库四平台发布（android/linux/oh/windows，source hash 对齐）；
+  lib-hxprshell-app 二进制重建（build-opt merge）
+
+二、HXNativeApp：NMEA JMS/MSI 封装 + GBQ 组管理实测（4 commits + 20 余会话）
+- 新增 sendJms 无线电静默发送接口、msiReceived 静默状态接收信号；
+  rdss-nmea-bus 文档记录 JMS/MSI 封装
+- GBQ/GBI 全量矩阵实测（/dev/ttyUSB0、双 member card、5min 窗口）：
+  member_count 5 处方法修复、cat=8 线下增员 API 缺失与应答类指令机制
+  发现、create 后 query 矩阵最终验证、ASAN rebuild + 全 SDK 重测
+- 5 参与方时序图交付 + 中文图视觉 QA；kylin-onboard-ime 模块知识 ingest
+  （6 条 confirmed 经验升华）
+
+三、平台仓治理：HXPRShell 测试链路 + init-deep（6 commits）
+- HXPRShell 接通 --with-tests：根工程 ENABLE_TESTS+enable_testing，
+  qhxprshell 门控注册 add_test（ctest 期 LD_LIBRARY_PATH 解 Qt）；
+  同步修正 AGENTS.md Test 坏写法与 build-system.md 开关矩阵为实测行为
+- HXMapWidgetNative / HXNativeApp init-deep 分层知识库生成
+  （root 六节 + 三子目录 AGENTS.md）
+
+四、TitanNavi GNSS 显示优化（3 commits）
+- SNR 柱状图按系统排序（BDS→GPS→GLONASS→GALILEO）
+- SNR 柱状图/星空图隐藏时暂停刷新、显示时缓存恢复；
+  增设数据流停止看门狗
+- 全流程评审协作（Metis gap / Momus / Oracle）+ F1/F2/F4 合规审计
+
+五、经验记忆体系维护（.dotfiles | 8 commits）
+- 周报 digest 0911-0914（18 条零积压）；确认 15+1 drafts、修复 2 个
+  畸形 ID、补全 schema 字段；两轮 draft review 建议（含 micro cycle）
+- skill capture 自检（ID 格式 + frontmatter 必填键）；
+  .omo/.sisyphus 运行态 gitignore
+
+六、OSMDataCompiler（2 commits）
+- mvt/ gitignore 锚定根目录，修复误吞 products/mvt 新增文件；
+  init-deep 层级知识库（root/scripts/products-mvt）
+
+【会话调研工作（未产生提交）】
+- NMEA 协议调研线：EPQ/EPI 介绍、GBQ 命令类型、MSI 指令、ICG、
+  静默状态设置方法、GBQ 组生命周期接口（HXNmeaParser/HXNativeApp）
+- 环境与工具：Qt 5.14.2 SDK 及配套 QtCreator 查找、麒麟 V10 开源
+  触屏输入法选型、OCR 配置健康检查、init 与 init-deep 区别
+- 清晨发布收尾：v29.1 五遍重启最终门禁、仓库状态与包完整性核查、
+  布局漂移裁决 + MANIFEST + 最终包（Documents）
+================================================
+数据来源：27 仓 git log（2026-09-15，四轨遍历：/Workspace、/HXAppPlatform、
+~/Documents（排除 qt5）、~ 直下（排除工具自管仓））、commit body、
+opencode 会话库（当日 120 会话，SQLite 直查）

@@ -1,0 +1,52 @@
+工作日报 2026-09-10（周四）
+================================================
+【今日要点】共 92 次提交，涉及 20 仓：
+主线：HXNativeApp(22)、HXNmeaParser(8)、HXRdssSendingQueue(6)、.dotfiles(5)、
+HXPOISearch(4)、HXGISServer(4)、HXPluginRuntime(4)、HXSpatialMeasure(4)、
+HXProjectTemplate(4)、HXNavigation(4)、ZMQClient(4)、HXRouteServer(4)、HXGeoConverter(4)、
+HXPRShell(3)、lib-HXNmeaParser(3)、HXGuidance(3)、HXMapWidgetNative(2)、Work(2)、
+maplibre-native-qt-test(1)、lib-HXRdssSendingQueue(1)
+------------------------------------------------
+一、RDSS 实机联调：316 崩溃族根治 + 总线统一三件套（3 仓 | 27 commits）
+- 316 崩溃族根治：RPC 应答回显裸字节崩溃修复，replace handler 整类根除（实机 09:12
+  铁证），实机 15/15 全绿收口，终版架构收口 ingest
+- 总线恒 UTF-8 契约：应答回显 GB2312→UTF-8 转换（取代 replace 遮丑）；契约修复批
+  F1-F5 + 出向/入向 line 可读视图 + NmeaCapture hex 优先消费，总线三件套统一
+- TCQ 发送侧改造收尾（09-09 实机裁定落库）：charBudget 混编 in-out wire 替换、
+  encodeMixed/decodeMixed 对称混编对、5-payload 无硬件闭环仿真、面板二进制回环移除
+- 测试仪器三假 FAIL 根治（cb15f 终裁）：raw_hex 配对基线、tx.N 每帧记录、白名单补全
+  OCZ legacy 别名（指标③收敛）；cbLoop 90s 频度窗终态模型 + 发送状态取证键
+- 评审与契约注释：test_05 docstring 锚定、RdssMessage 生命周期契约注释（含 cancel()
+  析构 UB 警告）、Windows CP936 严格化；Metis gap 分析 + Oracle/Momus 三轮计划评审
+  + Oracle 三仓契约审计护航
+- 发布：lib-HXNmeaParser linux x86_64 三连发（对应 7b9c0b0/fcab26b/7f62a29 源）
+
+二、构建体系统一：fire-and-poll 纪律 + fleet 级 check 改造（17 仓 | 56 commits）
+- fire-and-poll 全局构建纪律 skill 发布（.dotfiles 软链）：后台发射+短轮询+退出码确认
+- 统一 check 模板落地 14 仓：增量默认 + --clean/j4 + 退出码捕获（Workspace 11 仓 +
+  HXGuidance 字旗→契约旗迁移 tidy ON + HXPRShell 双 check 合并 + maplibre android
+  增量化 CLEAN=1 全量）
+- 修 check Test 假绿：Test/NoTest 桥同步置 TESTS_FLAG（11 仓）
+- project-check skill 追加 fire-and-poll 指路（12 仓）；build-opt 知识 ingest
+  （14 仓，含 /HXAppPlatform 3 仓）
+- 执行形态：W2 双车道 + P13-P19/F1-F5 子任务舰队并行改造，HXNativeApp 构建优化
+  专项会话收口（F2 全流程演练/互杀回归审计/tidy 验证）
+
+三、HXRdssSendingQueue 硬化（2 仓 | 3 commits）
+- 锁内分发回调 catch exceptions + publish_epq stoi 防护（LATENT queue-1/queue-3）
+- 评审 #1..#4 落地：测试目录创建、日志取证补全、catch(...) 兜底、拒发语义注释
+- lib-HXRdssSendingQueue linux 发布 1 次
+
+四、文档与经验沉淀（2 仓 | 6 commits）
+- 车机软件环境批量交付方案介绍（麒麟 V10 + Android 车机总览）
+- 09-07~09-09 三日日报补档
+- agent-experience：25 条 draft 审核确认 + 逐项修正 + INDEX 重建（含 worktree
+  submodule .git-pointer 复发注记）
+
+五、会话调研工作（未提交）
+- SSH 密钥密码每次要求输入的原因排查（08:37 会话）
+- RDSS 发送队列消息移动与删除支持（Atlas 执行启动，功能提交当日未见）
+- API 测试面板 TCQ 自发自收功能规划（Prometheus 计划）
+================================================
+数据来源：/Workspace(14 仓) + /HXAppPlatform(5 仓) + ~/.dotfiles git log（2026-09-10）、
+commit body、opencode 会话 DB 直查（78 会话，剔除 subagent 件后主线 6 会话）

@@ -1,0 +1,24 @@
+工作日报 2026-09-14（周一）
+================================================
+【今日要点】共 22 次提交，涉及 3 仓：
+主线：HXNativeApp(13)、HXGISServer(5)、TitanNavi(4)
+------------------------------------------------
+一、HXNativeApp 屏幕键盘中英切换攻坚（v7.15→v29 | 13 commits）
+- 行为基线重构：回滚至 v7.15 基线（LFSH 键名+原生三态色+sticky cycle，移除误杀锁定的自愈状态机）；v7.19 中=橙/英=蓝配色对调贴合用户心智模型；v7.20 中/英键回归控制键家族色、指示仅靠动态单字
+- 切换性能与正确性：v25.4 show() 快速返回优化→实测弹出即消失缺陷后即时回退；v25.5 toggle 去 theme 写入省 ~150ms + Shift_L 回声 0.8s 无应答自动回翻；v25.8 根治反转死循环（toggle 前双 Shift keyup 无条件清粘滞，用户序列"Shift 大写后点中英键"复现全绿）；v25.9 修复 theme 竞态致锁定态纯红（写入后 150ms 显式补写矩阵 scheme）
+- 开机自现/闪现根治链：v27 封堵 _apply_color 写后逃逸（写后 0.3s 已隐藏态立即恢复隐藏，定位失配 boot 的 lang_reset 写逃逸）；v28 onboard 持久位 1090 + 渲染翻转移启动期，7 轮冷启动零闪现；v29 位置守卫 mode_loop 轮询 Y 偏离 3s 自愈回移，覆盖昼夜切换等一切外部 yank，隐藏态零误愈
+- 配套：触摸地图 TouchBegin 清除文本框焦点；五轮重启全功能回归 + Metis/Momus/Oracle/F1-F4 计划与代码审计 + T1/T2 实机构建部署全程护航
+二、HXGISServer INI 驱动服务交付（5 commits）
+- 新增 hxgisserver-service INI 驱动服务目标；服务 exe/ini/bat 打入全平台包（Windows 附 7 依赖 DLL）
+- 修复显式配置路径不存在时静默回退→立即报错；docs 记录 service/ 目录与宿主单测约定 + knowledge ingest 归档
+三、TitanNavi 地图崩溃修复（4 commits：本人 1 + TiTan 3）
+- 分析 log0914.txt 崩溃日志，定位主题切换后重复 addSource 致 SIGABRT；mapReady 初始化加 run-once 守卫修复
+- TiTan：annomodel 标题资源、默认值补充、测试样式调整
+四、会话调研工作（未提交）
+- Windows Server 2016 测试虚拟机搭建（真 ISO 交互式安装，截图逐环节验证引导/安装/OOBE/登录至桌面）
+- 麒麟 V10 开源触屏输入法选型调研（部署方案计划 + fork 深挖两轮）
+- MapLibre 加载栅格 XYZ 瓦片调研
+- open-code-review 仓库讨论
+================================================
+数据来源：HXNativeApp/HXGISServer/TitanNavi git log（2026-09-14）、opencode 会话 DB（SQLite 直查）
+注：/HXAppPlatform 本日无提交；Documents/HXAppPlatform 仅 HXNativeApp 活跃（find|while-read 漏扫已按清单直查补回）

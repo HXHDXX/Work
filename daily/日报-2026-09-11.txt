@@ -1,0 +1,26 @@
+工作日报 2026-09-11（周五）
+================================================
+【今日要点】共 44 次提交，涉及 6 仓：
+主线：HXNativeApp(17)、.dotfiles(13)、HXRdssSendingQueue(5)、HXNmeaParser(4)、TrendRadar(3)、TcqCodec(2)
+------------------------------------------------
+一、RDSS 字符预算与 TCQ 编码统一（TcqCodec|2 · HXNmeaParser|4 · HXRdssSendingQueue|5 · HXNativeApp|4 代码提交）
+- 新建共享编解码仓 TcqCodec：classify/encode/decode 一体共享 TU + 规范 GB2312 后端，清 clang-tidy modernize-use-auto 告警
+- HXNmeaParser 迁移：gb2312 后端切共享 TcqCodec（行为等价），parse_tci 支持 enc3 comm_data 解码（恒 UTF-8 闭环）
+- HXRdssSendingQueue：char_budget 改服务端内容驱动编码竞价（单 RPC），移植 TCQ 规则用例与 golden 语料进 ctest
+- HXNativeApp：charBudget 首参 in-out 退役（发送串经 CharBudget::wire 下发，翻 09-09 案）；修复传输失败/畸形应答路径 wire 契约；补 TCI enc3 接收解码总线用例守护已部署 S0 链
+二、boss-brief 系统架构图（HXNativeApp|13 docs 提交）
+- 11 节点进程边界版系统架构图：HXPRShell 宿主 region、P1 子进程、北斗插件链路、HXMapSDK 独立产品定位；删除 8-28 过期旧图
+- disposition 图扩容：发前 charBudget 预算段 + 接收 decodeMixed 解码段，源规格 json 入库，9/9 showcase 0 错 0 警
+- 四视口明暗截图 + visual-check 取证包（containment/captures pass，最小投影 8.87px）；知识库存服务端 charBudget + 共享 TcqCodec 拓扑
+三、麒麟 V10 触屏输入体验治理（会话工作，未提交）
+- 银河麒麟 V10 SP1 ARM 设备：Onboard 虚拟键盘底部停靠 + Android 式焦点显隐，适配 GIS 应用搜索框拼音输入（搜狗/fcitx）
+- 多轮远程截图验收：键盘弹出/收起、候选框、全屏恢复，最终交付状态确认通过
+四、工具链与经验体系（.dotfiles|13 提交）
+- fire-and-poll skill 修复：轮询改零占用等待（sleep 合入调用 + watcher 三绊线）、PID sidecar 防 compaction 丢 PID/LOG 配对
+- agent-experience：adopt summary 键与升华证据底线；批量回填 0828-0911 周摘要（71 条）与 155 条遗留记录，INDEX 重建；WikiSkill 机制对照调研（oracle/momus 复核）
+五、TrendRadar 增强（3 提交）
+- 行情快照接入 AI 分析（12 标的新浪行情源 + IPv4 强制回退）；RSS 抓取代理→直连→代理三级回退；退跟踪 docker/.env 防凭据入库
+六、其他（会话）
+- MSC-26-RW033-0907 变基到 MSC-26-RW033；IBD 总站应答信息甄别；opencode/插件/skill 升级检查；清晨 27 仓推送状态核验
+================================================
+数据来源：六仓 git log（2026-09-11）、opencode 会话 DB（57 会话，剔除 subagent 碎件）

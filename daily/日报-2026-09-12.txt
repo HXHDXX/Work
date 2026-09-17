@@ -1,0 +1,29 @@
+工作日报 2026-09-12（周六）
+================================================
+【今日要点】共 8 次提交，涉及 2 仓：
+主线：lib-HXNmeaParser(4)、lib-HXRdssSendingQueue(4)
+另有大量未提交的麒麟V10 触屏键盘/输入法落地工作（86 个 opencode 会话，仅本日）
+------------------------------------------------
+一、RDSS 整合管线收尾与库发布（lib-HXNmeaParser、lib-HXRdssSendingQueue | 各 4 commits，06:26）
+- 两库四平台（linux/android/oh/windows）chore(release) 发布提交入库；
+  经活体远端逐仓复核（git ls-remote）：六仓全部同步——四仓源码（内网 origin + GitHub ff 双远端）
+  与 lib-* 八平台 26 个部署二进制、VERSION 全部收敛，无本地滞留
+- 配套会话：RDSS 接口迁移 HXMapWidgetNative 独立进程方案讨论（Prometheus 规划）
+
+二、麒麟V10 车机触屏键盘与输入法落地（~/Documents | 未提交，79 次视觉验证迭代）
+- Onboard 键盘主题定制：MSC-Navy（深青军工风）→ MSC-Ice-Day/Night 昼夜双主题，
+  与 GIS 应用日间/夜间地图样式联动验证通过
+- 自定义"车机精简拼音键盘"布局迭代 v2→v6.6b（MSC-Auto）：四行结构、退格跨两行、
+  宽空格、分区分手（RH 右手版/频率优先）多方案截图逐轮验证定型
+- 搜狗输入法链路打通：配置工具中英切换（KeyEnCnSwitch 枚举、Shift/Ctrl 方案）、
+  fcitx-remote 激活、watcher v10/v11 自动激活 fcitx 与候选框定位；设备重启持久化验证通过
+- 收尾决策：回滚 CursorFollow=1 与 watcher 候选框定位实验，候选框恢复默认跟随光标
+- 选型调研：麒麟V10 开源触屏输入法推荐（主会话 + fork 复核）
+- 配套：UKUI 任务栏自动隐藏、应用无边框最大化部署验证
+
+三、评审
+- 触屏输入法与昼夜联动方案评审（general 子代理评审会话）
+================================================
+数据来源：/Workspace、/HXAppPlatform（18 仓直连）、~/Documents、~ 直下仓 git log
+（2026-09-12 窗口）；opencode SQLite 直查 86 会话（79 个 look_at 视觉验证子件
++ 6 个主线会话 + 本日报会话）
