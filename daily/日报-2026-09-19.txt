@@ -1,0 +1,32 @@
+工作日报 2026-09-19（周六）
+================================================
+【今日要点】共 12 次提交，涉及 2 仓：
+主线：cross-library(6)、.dotfiles(6)
+------------------------------------------------
+一、交叉编译依赖库修复（cross-library | 6 commits）
+- fts5-snowball：Android 弃 -lpthread（bionic 已将 pthread 并入 libc）
+- libarchive：改用项目自带 libiconv——先构建 iconv，cmake 检索限定到 prefix
+- breakpad：symupload 补 -lzstd 链接（curl zstd content-encoding 闭包）
+- icu4c：交叉构建修复——native 工具清洁环境构建 + 安装真实数据归档
+- mapserver：宿主缺 protoc-c 工具时快速失败，不再深潜报错
+- osg：静态链接顺序修复——zstd 必须排在 curl/tiff 之后
+
+二、需求纪律 req-discipline v2 落地（.dotfiles | 2 commits，晚间）
+- Metis 缺口分析 + 5 路敌意评审（日常摩擦/工程接线/逻辑状态机/挑战框架/深层假设）驱动计划收敛
+- 产出五件：req-check 门禁脚本、AGENTS.md 需求纪律三行、install.sh 幂等链接、
+  知识库文档三件套（req-discipline 模块）入库
+- /tmp 排练仓 E2E 取证 + F1-F4 四路审计（计划合规/代码逐字一致性/全新仓独立重放/
+  范围忠贞度）通过后双 commit 落库
+
+三、经验库夜间治理（.dotfiles | 4 commits，凌晨）
+- nightly groom 报告 2026-09-19 生成，追加 push 执行记录
+- ingest 1 条 backlog 经验入库
+- GROOMING 规则 5 修订：补 SKILL.md quick-ref 同步豁免例外
+
+------------------------------------------------
+会话调研工作（未提交）
+- goal skill 选型调研：检索并理解流行的 goal skill（Prometheus 规划会话），
+  结论待后续规划技能落地时引用
+================================================
+数据来源：cross-library、.dotfiles git log（2026-09-19）；
+opencode 会话库当日 20 条（已剔除 subagent 碎会话，保留主线会话 6 条）

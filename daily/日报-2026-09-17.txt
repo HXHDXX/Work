@@ -1,27 +1,46 @@
 工作日报 2026-09-17（周四）
 ================================================
-【今日要点】共 54 次提交，涉及 21 仓：
-主线：全库知识库治理 19 仓(38)、cross-library(7)、.dotfiles(6)、HXNativeApp(5，含治理 2)
+【今日要点】共 80 次提交，涉及 21 仓：
+主线：cross-library(29)、全库知识治理(19仓/38次)、Work(6)、.dotfiles(6)、HXNativeApp(5)
 ------------------------------------------------
-一、全库知识库治理（19 仓 | 38 commits，10:45 批量）
-- 全库 project-compound lint：Tier1 索引补缺，Tier2/3 问题记入 log
+一、第三方库自建与链接闭环（cross-library | 29 commits，午后至夜间主线）
+- 新增构建：zstd-1.5.6（自包含静态库、关多线程）、Clipper2-1.5.4、
+  libarchive-3.8.9（改用 release tarball 修复上游 build/ 冲突，禁 bsdunzip）、
+  xxHash-0.8.3（补全 tag archive 溯源）、libstemmer_c-2026.08（官方发行版，含阿拉伯文）
+- SQLite 深度定制：启用 FTS5/RTREE/JSON1/GEOPOLY、math functions、stat4、dbstat、stmtvtab，关闭 DQS
+- fts5-snowball 自研构建：阿拉伯文剥变音符号、hamza 折叠、拉丁转写共置、y/i 罗马化变体折叠
+- 链接闭环：libtiff-zstd pthread 链接修复、curl 启用 zstd content-encoding、mapnik 补 zstd link closure
+- DuckDB 离线加固：禁用 extension autoload/autoinstall
+- 知识沉淀：build-system/fts5/三方库模块更新，vendor 溯源规则与 libarchive 事故记入知识库
+
+二、全库知识治理与 skill 统一（19 仓 | 38 commits，10:45 批量）
+- 全库 knowledge lint：Tier1 索引补缺，Tier2/3 问题记入 log（19 仓同步落地）
 - 移除各仓全局 skill 本地副本，统一走全局版（配置去重）
-二、cross-library 三方库构建（7 commits）
-- 新增 zstd-1.5.6、Clipper2-1.5.4 构建产物，gdal 链接 zstd
-- SQLite 构建启用 SQLITE_ENABLE_FTS5
-- 新增 build-system / sqlite-fts5-simple / third-party-libs 知识模块与索引
-三、Agent 基建（.dotfiles | 6 commits）
-- agent-experience：确认 10 篇 draft、回填 6 篇摘要、新增 digest 0915-0916（11 条）
+
+三、HXNativeApp（5 commits；其中 2 笔计入治理线）
+- createGroup API 重构：移除手工计数参数，空员建组改为零参默认
+- 引入 DESIGN.md 设计系统（google design.md 规范：12色/7字号/4圆角/15组件，lint 0/0），
+  AGENTS.md 接入设计系统条目并归档 design-system 知识模块
+
+四、专利交底书（Work | 3 commits）
+- 「智能体项目知识库复利沉淀」交底书定稿（md+docx+附图）
+- 国知局查新：6 条在先技术对比笔记归档
+- 留存过程草稿与修订对话记录（另含昨日日报补提交 update daily ×1）
+
+五、Agent 基建（.dotfiles | 6 commits）
+- agent-experience：确认 10 篇 draft、回填 6 篇摘要、digest 0915-0916（11 条）、
+  修复 7c2a summary 去重、新增 draft 评审建议
 - project-compound 借鉴 karpathy-llm-wiki 六项强化
 - 新增跨项目委托规则与八要素委托模板
-四、HXNativeApp 设计系统 + RDSS（3 commits；该仓另 2 笔计入治理线）
-- 引入 DESIGN.md 设计系统（google design.md 规范：12色/7字号/4圆角/15组件，lint 0/0），AGENTS.md 接入条目并归档 design-system 模块
-- RDSS createGroup 重构：移除手工计数参数，空员建组改为零参默认
+
+六、会话调研工作（未提交，36 会话剔除子代理碎会话后归并）
+- MSC-26-RW033 变基到 master 并推送；子分支 0907 变基到 RW033
+- 开源库欠缺分析与引入推荐（Prometheus 调研）
+- Qt 5.14.2 SDK 与配套 QtCreator 定位；MapLibre Native Qt 仓库调研
+- project-compound skill Baseline/GREEN A/B 对照测试（改进版胜出后合入 .dotfiles）
+- libtiff zstd pthread 链接故障排查（对应第一线修复提交）
+- 其他：QtCreator AI 插件调研、repowire 仓库评审、「AI 开发时代项目意义」评估
 ================================================
-【会话调研工作（未提交）】
-- project-compound 原理发明专利交底书撰写（含专利 skill 选型调研）
-- QtCreator 可配置 ds4flash 的 AI 插件调研
-- MapLibre Native Qt 仓库调研
-- skill review 与 review-work 职责边界辨析
-================================================
-数据来源：/Workspace、/HXAppPlatform、~/Documents、~/.dotfiles 各仓 git log（2026-09-17）+ opencode 会话 DB（当日 26 会话）
+数据来源：40 仓 git log（2026-09-17；/Workspace、/HXAppPlatform、~/Documents、~ 四轨扫描）、
+opencode 会话 SQLite 直查（36 会话，剔除 subagent 碎会话）
+（本版为刷新版：较 15:03 版补入晚间 cross-library 22 笔与专利线 3 笔）

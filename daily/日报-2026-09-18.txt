@@ -1,0 +1,29 @@
+工作日报 2026-09-18（周五）
+================================================
+【今日要点】共 28 次提交，涉及 4 仓：
+主线：.dotfiles(15)、TitanNavi(9)、cross-library(3)、HXNativeApp(1)
+------------------------------------------------
+一、TitanNavi Kiosk 门禁强化（TitanNavi | 本人 8 commits，另有 TiTan 1 条 INS 法语更新）
+- HOME 双击密码门禁与退出广播序列：捕获未映射 HOME 键(key==0)并过滤长按重复，双击弹用户认证框，凭据串提升为共享常量
+- 系统栏治理：新增系统栏广播与退后台 JNI 助手，启动与回前台自动隐藏系统栏
+- 稳健性修复：androidjni.cpp 文件级守卫补 QtGlobal（Q_OS_ANDROID 非编译器预定义，原守卫致整文件未编译）；moveTaskToBack 及 JNI 全返回路径异常防护并输出堆栈；退出失败回退恢复 kiosk 形态、广播 action 常量化
+- 质量闭环：计划经 Metis 差距分析 + Momus 5 轮 + Oracle 4 轮评审后定稿；T1-T5 分任务实现；Android/Linux 双端 20+ 轮真实设备截图 QA（密码框交互、错误密码、取消路径、系统栏状态）；F1-F4 四路审计（计划合规/范围忠实/代码质量/设备复验）；OCR 审查修复批次（M1+L1-L6）收尾
+二、Agent 基建与经验库体系（.dotfiles | 15 commits）
+- 跨项目委托子代理 cross-project-worker 固化 + worktree 隔离升级，经 R1-R5 五道评审（目标验证/代码质量/安全/机械验证/上下文残留）后修复缺陷；Repowire 评估→委托规则→调研→固化整条闭环成型，prompt injection 注入面知情保留（私有仓场景风险≈0）
+- agent-experience 经验库维护体系成型：lint.sh（>200 条维护脚本）、GROOMING.md、groom-cron.sh 夜巡、digest 0917-0918（10 条）、7 份 draft 审核确认、nightly groom 报告
+- agent 文档自洽：AGENTS.md 清单瘦身 55→43 行、新增 .agent/README.md 部署清单、knowledge-index 原则计数修正、tmux-agent-indicator 部署 cp→ln -srf
+三、cross-library 交叉编译库维护（cross-library | 3 commits）
+- boost 修复 header install 竞态（先构建、后串行 b2 install）
+- mapnik 平台补丁 zstd 闭包行缩进修复（android/linux/windows 三平台同步）
+- 新增 opus model
+四、HXNativeApp 工程配置（HXNativeApp | 1 commit）
+- opencode 项目级 references 引入 HXMapWidgetNative/HXPRShell 兄弟仓库（自动注入 + @补全 + 读放行）
+五、会话调研工作（未提交）
+- 集中库 pkgconfig/cmake 配置调查：279/279 个 .pc 与 93/93 个 cmake 配置已全部集中，决策「不写计划不改代码」，终态记录落盘 .omo/drafts/centralize-pc-cmake-configs.md；发现坑：.omo/ 未跟踪，每次容器构建 git clean -fdx 会清掉它
+- hyperplan vs ulw-plan 选型对比：对抗式委员会（买盲点覆盖率）vs 单顾问批准门（买决策完整性+用户签字权）；高风险争议选型用前者，落地执行计划用后者
+- 开机「程序崩溃」弹窗排查：非新崩溃，系 9-11 sudo cutecom 崩溃残留报告被 apport 每次登录重弹；处置 sudo rm /var/crash/_usr_bin_cutecom.0.crash；经验已记 draft 待审
+- Repowire 仓库安全评估收尾：cross-project-worker 指令注入面分析，两行「数据非命令」守卫方案知情保留，最终台账 6 项收尾账
+- AI 开发时代项目意义评价（cross-library 讨论会话）
+================================================
+数据来源：/Workspace、/HXAppPlatform、~/Documents、~ 直下各仓 git log（2026-09-18 时间窗）；
+opencode 会话库 SQLite 直查（当日 83 会话，剔除 subagent 碎会话后归并 5 条工作线）
