@@ -1,0 +1,35 @@
+工作日报 2026-09-20（周日）
+================================================
+【今日要点】共 65 次提交，涉及 6 仓：
+主线：.dotfiles(31)、TitanNavi(20)、ctx-semantic(9)、gpt-load(3)、HXPluginRuntime(1)、Work(1)
+------------------------------------------------
+一、Agent 基建与技能体系（.dotfiles | 31 commits）
+- skill-evolution 模块从零落地：契约入库（状态机+写入者矩阵+append-only 铁律）→ 事件血缘日志脚手架 → dogfood #0001/#0002/#0003 入血缘 → OCR 评审驱动契约硬化（M1-M3）→ #0002/#0003 结案处置注记（eval_failed 终态）
+- AGENTS.md 全量瘦身至「触发+动作+指针」形态（4332B→3007B）；新增 agents-md-lint 字节门禁（单条 120B/全文件 3.5KB+指针形态校验）；澄清意图与深度调研顺序显式化；Skill 跨语言激活模块入库
+- session-stats 台账体系：ledger + collector.py + 2026-04..08 数据回填 + crontab 月度自动化；经 Oracle/四维评审（F1 合规/F2 质量/F3 QA/F4 范围）修正加固
+- agent-experience 经验沉淀 6 篇草稿（TitanNavi 夜间主题丢钉/主题宽度抖动、MapLibre 符号碰撞、gpt-load 流式卡死、Rheinmetall 对比、skill-up 污染注册表）+ nightly groom
+- skill-up evals：3 技能 9/9 全绿 + opencode 自定义引擎 wrapper
+
+二、TitanNavi 车载导航（TitanNavi | 20 commits）
+- 主题切换链路修复：显示模式自动切换改以左上角显示时间为准（时间基准可注入 setAppTime/appTime/onAppTimeJumped）；switchTheme 重入排队防护；themeChanged 不再清表重灌（根治切夜丢钉抹盘）；切主题分组框宽度抖动修复（删布局破坏型 hack）
+- 地图样式重载自愈体系：Annotation/Polygon/Route/ImageryOverlay 四管理器 setMapReady 自愈，切主题后注记、围栏、路线、卫星图层不再丢失；位置指示器自愈 v3；导航线重载重画（锚定已重建层）；箭头图标改按段计数
+- 可读性与常显：航点图钉防符号碰撞剔除（常显策略上收 MapContainer::applyAlwaysVisiblePolicy）；符号层标签白字+半透明黑描边昼夜可读
+- 启动体验：.ui 定真机尺寸消除首布局跳变；.gitignore 排除 .omo/
+- 真机 QA：构建部署到设备运行，multimodal-looker 截图走查 30+ 次（昼夜地图对比、图钉标签、围栏渲染、路线、设置页、启动三帧）
+
+三、ctx-semantic 语义检索新项目（ctx-semantic | 9 commits，当日从零启动）
+- 逆向 context-mode 项目哈希解析 → 只读 DB 适配器（schema 断言）→ sidecar 向量存储（懒同步）→ jina-v2-base-zh 嵌入（设备自动回退）→ RRF 混合检索核心（对齐 ctx_search 输出）→ FastMCP server（warmup CLI + stdio e2e）→ 注册入 opencode + recall harness 报告
+
+四、gpt-load 网关运维（gpt-load | 3 commits）
+- zai-glm 分组超时调优与流式转发卡死诊断结论归档；新增 diag.sh 卡死现场抓取脚本；start.sh 默认直连（PROXY_URL 可选）
+
+五、知识归档（HXPluginRuntime、Work | 2 commits）
+- Rheinmetall 中间件对比报告入库（归档页+索引+日志）；daily 目录更新
+
+------------------------------------------------
+会话调研工作（未产生 git 提交）：
+- Kimi 模型无法使用问题排查（13:39 主会话）
+- 开源仓调研：Laya、ai-memory、OpenDraft GitHub repo review（Atlas 会话）
+- 8月21日至9月20日主要工作内容汇总（月度盘点，daily 目录会话）
+================================================
+数据来源：/Workspace、/HXAppPlatform、~/Documents、~/ 直下各仓 git log（2026-09-20 00:00-24:00）+ opencode 会话 DB 直查（当日 131 会话，含 subagent 碎片）
