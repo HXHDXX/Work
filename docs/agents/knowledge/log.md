@@ -72,3 +72,6 @@
 - Broken wiki-link: agent-guidelines -> [[context-mode]]
 - Broken wiki-link: agent-guidelines -> [[ref]]
 - Orphan modules (no inbound link): agent-guidelines
+
+## [2026-09-24] remove | context-strategy.md
+- 项目 AGENTS.md 删除「上下文与沙盒策略」章节并清理本文档：全局 AGENTS.md 已覆盖，项目级不再重复

@@ -9,7 +9,6 @@ docs/agents/
 ├── index.md              ← 本文件：文档索引与元规则
 ├── core/                 ← 核心规则
 │   ├── principles.md     ← 原则与行为准则
-│   ├── context-strategy.md ← 上下文与沙盒策略
 │   ├── structure.md      ← 项目目录结构规范
 ├── writing-guide.md      ← 文档编写规范
 └── knowledge/            ← 知识库（project-compound 管理）
@@ -37,5 +36,5 @@ docs/agents/
 
 ### 文档命名
 
-- 小写 + 连字符: `context-strategy.md`
+- 小写 + 连字符: `experience-memory.md`
 - 模块知识页: `{module-name}.md`（与 knowledge-index 中的模块名一致）
