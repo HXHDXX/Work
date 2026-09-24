@@ -1,0 +1,39 @@
+工作日报 2026-09-21（周一）
+================================================
+【今日要点】共 63 次提交，涉及 21 仓：
+主线：ctx-semantic(17)、Context-Mode 文档同步(16仓/29提交)、TitanNavi(6)、OSMDataCompiler(4)、.dotfiles(4)、HXProjectTemplate(3)、HXGuidance(3)、TrendRadar(2)…
+------------------------------------------------
+一、ctx-semantic 向量检索优化（~/ctx-semantic | 17 commits）
+- 性能：per-(db,model) 内存矩阵缓存；warmup --prune 清理死路径向量行；chunk 级 content-hash 过期判定
+- 测试加固：补 warmup/harness/embedder 覆盖缺口并钉住覆盖率工具；强化 masked/weak 断言
+- 评审修复（OCR findings 四轮）：13+8+2 项逐批修复；e2e 增加 --db 逃生口与可移植 PROJECT 锚点；阈值语义与文档对齐并基于真实库重采样
+- 文档：embedding 模型选型模块归档与 ingest 日志
+
+二、Context-Mode 工具路由升级：全仓文档同步（16 仓）
+- 先做 context-mode 1.0.169 引用方式合理性分析（HXProjectTemplate），确认后由 cross-project-worker 分 A/B/C 三组批量同步
+- 「ctx_hybrid_search 语义检索分工」补入各仓 docs/agents 工具路由；context-strategy 记录验证版本 1.0.169
+- HXGuidance 顺带移除 GitHub Actions workflow（排查推送 origin 自动触发 CI 后清理）
+
+三、TitanNavi 界面稳定性（~/Documents/TitanNavi | 6 commits）
+- 修复启动期触摸地图空指针崩溃（mapClicked 槽补 mAnnotationManagerModel 空守卫）、设置返回钮 m_Pingtimer 空指针隐患
+- 双指手势改每帧独立判定：修复缩放误判俯仰、旋转不可用
+- 数据交互页崩溃点审计修复：越界/线程收尾/重入/零长文件/批量发送
+- 新增界面触控测试用例 104 条（人工真机专项，补 ADB 套件硬件盲区）
+
+四、OSMDataCompiler 离线部署（4 commits）
+- Win10 WSL2 离线部署一键脚本与文档
+- 离线包内置 valhalla 时区包（二段 tar rf 追加），修正解包结构与安装校验清单
+
+五、环境与工具链
+- .dotfiles：opencode.json、install.sh 更新；agent-experience nightly groom 报告 + 2 条 backlog 经验入库
+- TrendRadar：修复 Ars Technica 失效 RSS 源，新增 5 个国际英文源（卫报/NYT/ANN）
+- Work：日报仓例行更新
+
+================================================
+会话调研工作（未形成提交）：
+- fcitx5 输入法需重启两次才能正常使用（含剪贴板浮窗行为核查、librarian 上游调研）
+- MSQ 与 MSI 的关系（HXNmeaParser 协议概念调研）
+- Terminal 升级可能性与必要性评估
+- Laya GitHub repo review
+- OSMDataCompiler 数据源列举（离线部署后续铺垫）
+数据来源：git log（/Workspace、/HXAppPlatform、~/Documents、~/maxdepth2）+ opencode 会话 SQLite（48 会话，剔除 subagent 碎片）

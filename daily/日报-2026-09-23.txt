@@ -1,0 +1,57 @@
+工作日报 2026-09-23（周三）
+================================================
+【今日要点】共 139 次提交，涉及 21 仓：
+主线：TitanNavi(47)、.dotfiles(34)、AGENTS.md 全局化跨 17 仓(56)、
+知识升华 ingest(4)、WeMM-Embedding 评测(2)、HXNmeaParser Windows 发布(1)
+------------------------------------------------
+一、TitanNavi 导航 App（TitanNavi | 47 commits）
+1. 航迹/路径管理架构重构（单日最大主题）：
+   - 航迹单文件合并存储：QSaveFile 原子写 + 迁移标记门控，根治 title 兼任文件名缺陷族
+   - UUID 身份制：路径存储迁移合并档，title 去重保留幂等语义，过滤态视图行对位根除
+   - 双容器 id 对位同步：根治过滤冻结、行号穿透明除与空 id 错删
+   - 删除失败反馈区分录制拒删与落盘异常；导出消毒去重、数据源改走模型
+   - 路径导入三连修：空 title 兜底去重、open 失败封锁全量重写（根治瞬时读失败升级整档丢失）、冲突扫描改 any_of 消除脆弱手写重扫
+2. 状态栏惯组跑马灯 MarqueeLabel：新控件（放得下静止/溢出 30px/s 循环滚动）+ 三修加固
+   （滚动相位重置/隐藏停表/停顿期免重绘）+ test_marqueelabel 六分支回归；Release 隐藏 CPU 温度对
+3. 认证框 PasswordDlg：校验失败红字 TipLabel 提示可重试、弹框上移避软键盘、静态绝对布局与
+   QSS 按钮（Android 度量失真根因）、空输入缺 return 修复；en/fr 译文补齐 + 测试钩子修复
+4. i18n 体系：update-translations.sh + translations target、lupdate 三语源机翻填满、
+   启动对话框/运行时字符串接入翻译、zh_CN 源语言直通（空 qm 中断根因）、同语言快速通道
+5. 地图主题链：lastTheme 组内读取（冷启动恒回 Day 根因）、冷启动主动应用样式（夜间刺眼根因）、
+   applyMapTheme 共用（夜间测量线不可见、Day 整图重载闪烁）
+6. QSS ::item 伪态 border 致表格选中项文字截断（宽度≈行高）根因定位，4 运行时主题同改
+7. 知识沉淀：航迹管理/路径管理模块知识入库，R16~R19 真机回归验证
+二、AGENTS.md 治理全局化跨仓落地（17 仓 | 56 commits）
+   - Worktree 铁律与 Context-Mode 路由两节上提全局，项目级去重、strategy 转指针桩
+   - agents-md-lint 阈值 3584→5120B，worktree/context-mode 机器级模块页
+   - 评审收尾：拦截终验措辞对齐（curl 实测未拦截改约定禁用）、决策表 <20 行改「20 行内」
+   - 落点：HXProjectTemplate(7)、HXGISServer/HXNmeaParser/其余 Workspace 9 仓、
+     HXNativeApp/HXMapWidgetNative/HXPRShell/TTSPlayer、.dotfiles(4)
+三、agent-experience 经验记忆体系治理（.dotfiles | 30 commits）
+   - 治理 v2 上线：lint v2 + GROOMING v2（夜间深梳理 5 新检查）、weekly digest 25 条经验、
+     0923 人工裁定执行（21 drafts confirmed、3 条升华跨仓归档）
+   - 复用闭环：reuses.md 帮扶记录 + write-back（借 agent-beacon #0005/#0006 落地）
+   - 根因修复：groom-cron SSH_AUTH_SOCK（3 夜推送积压根因）、OCR 插件 symlink 挂起改 copy 部署、
+     archify fast-uri 3.1.8 清 6 高危告警
+   - manifest v2：自研技能/OCR 插件入 git，第三方（patent-disclosure-skill）转安装清单
+四、知识升华 ingest（4 commits，源起 agent-experience）
+   - HXNativeApp linux-packaging（arm64 NPU onnxruntime 打包替换）
+   - HXGISServer 服务运行形态决策（控制台常驻，不做 Windows SCM）
+   - HXNmeaParser platform-adaptation（iconv/bionic）
+   - TitanNavi 知识库 bootstrap + Qt 触控用例
+五、发布与分支管理（HXAppPlatform）
+   - lib-HXNmeaParser 发布 Windows 版 1013bf3
+   - MSC-26-RW033 变基 master 并推送；RW033-0907 变基到 MSC-26-RW033
+六、WeMM-Embedding 评测（ctx-semantic | 2 commits）
+   - 评测归档入库并建模块交叉引用，评估替换当前嵌入模型
+七、会话调研工作（未提交，26 主会话摘录）
+   - 排障：USB 键盘突然断开原因分析、npm 升级 ocr-review 卡死 + ocr-review 消失排查、
+     重启后保持 tmux 内容不变、当前系统优化空间分析
+   - 工具链：opencode 写 Word 是否需装插件、将 .dotfiles/.agent 目录化供 opencode 还原配置、
+     agent-beacon 与 agent-experience skill 对比、全局 AGENTS.md 脚本用途及路径核查
+   - TitanNavi 规划调研：路径/航点/航迹底层数据结构区别（Prometheus）、状态栏间距评估、
+     Android 法文界面截图文档、Qt tr 国际化介绍
+   - 其他：GitHub 今日趋势榜（Atlas）
+================================================
+数据来源：四轨 git log（/Workspace 13 仓、/HXAppPlatform 5 仓、~/Documents 2 仓、~ 直下 1 仓，
+日期 2026-09-23 全天）+ opencode SQLite 会话直查（288 会话，其中主会话 26、子代理件 262）

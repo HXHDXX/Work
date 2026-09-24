@@ -1,0 +1,55 @@
+工作日报 2026-09-22（周二）
+================================================
+【今日要点】共 59 次提交，涉及 4 仓：
+主线：TitanNavi(37)、HXNativeApp(13)、.dotfiles(8)、HXNmeaParser(1)
+------------------------------------------------
+一、TitanNavi 车载导航 UI/UX 加固（TitanNavi | 37 commits）
+- INS/导航数据流修复：静止场景去掉 0.12m/s 速度下界（面板如实显示静止数据）、
+  速度负值过滤防假位置上送、数据源活性看门狗（惯组断流 3s 自动回退卫星）
+- 航迹改名五连修：重名查重、旧名文件残留清理、按 id 对位全量列表（修过滤态
+  行号错位）、trim+非法文件名字符校验、非模态列表漂移陈旧行守卫
+- 状态栏间距体系化：关联 4px/分隔 12→20px 统一、遥测配对分组、孤儿空标签
+  隐藏、图标素材归一化（裁透明边+3%边距）、CPU 温度组右贴边、值标签 hug 内容
+- 新增 MarqueeLabel 滚动标签（放得下静止/溢出 30px/s 循环滚动/轮首停 2s），
+  惯组状态文本升级为滚动并扩展至状态栏末尾；Release 版隐藏 CPU 温度对
+  （QT_NO_DEBUG 宏，qmake/CMake Release 均定义，消除双构建系统分叉）
+- 认证框整体重构：TipLabel 自绘红字提示（规避 Android 主题深色底块）、校验
+  失败框内提示可重试+弹框上移避让软键盘、静态绝对布局（QFormLayout 列宽不可
+  控）、确认/取消样式并入 InitUIBtnStyle 单点管理、tr 化 + zh/en/fr 译文补齐
+- 主题/i18n 修复：lastTheme 组内读取（原读根键恒回 Day）、冷启动主动应用地图
+  样式（夜间冷启动刺眼）、zh_CN 源语言直通免翻译器、同语言快速通道
+- 全天实机 QA：Android 设备反复部署截图验收（状态栏/认证框/语言切换/比例尺/
+  航迹弹窗），双击 Home 弹认证框链路验证
+- 其他：移除左缘滑动检测死代码（DEFECT-3 功能废弃），触控用例文档同步 104→99
+- OCR 评审 MEDIUM 两项修复：mapClicked 标注守卫收窄为命名块
+
+二、NMEA EPI 信号链治理（HXNativeApp 13 + HXNmeaParser 1 | 14 commits）
+- 问题定界：EPI 接收问题分析（会话深挖）定位三缺口——centerIndicator/time
+  字段缺失、经纬度 ddmm 未归一十进制度（S/W 负号丢失）
+- 修复路线收口：坐标归一上收 NmeaEpi 插件（插件仓修复 S/W 负号+补 time），
+  app 侧退役坐标补偿代码（Supersedes 补偿路线），分发刷新插件三件套+内嵌 .so
+- 响亮失败：陈旧插件 ddmm 漂移越界坐标运行时告警（OCR 3bbf2cfd LOW 项）
+- NmeaEpi 补 sarDataHex——非 ASCII 载荷 hex 侧车透传；EPI 实机用例（envelope
+  形状/坐标界/time/校验和）
+- 串口发送载荷 qInfo 日志（txLogView 助手+单测）；OCR 两轮评审共 8 项修复
+  （root time ISODate 回退、epiCoordToDegrees 静态化带边界单测等）
+- 构建适配：本环境 gnutls 追加 zstd、port_scanner_test ASAN 插桩
+- 知识沉淀：EPI 三缺口收口 ingest、归一收口决策、OCR 二轮加固 Impact 回写
+
+三、Agent 工具链与经验库（.dotfiles | 8 commits）
+- agent-experience candidate #0004 完成演化循环：uplift → L0 决策 → 人工批准
+  晋升（含 misakanet 借鉴）→ 确认记录
+- skill-up eval wrapper 经 AE_SKILL_SRC 隔离被测候选（评测独立性）
+- nightly groom 报告 + ingest 4 条 backlog 经验；misakanet 集成草案 capture
+
+四、会话调研工作（未产生提交）
+- antirez/ds4 双 Mac 运行高精度模型可行性调研（结论经 Oracle/Momus 两轮评审）
+- NEMA EPI 信号问题分析双会话（fork 深挖，支撑第二工作线定界）
+- OFD 返回协议说明、nema 服务 msq 发送函数介绍（协议梳理）
+- Qt tr 国际化调研 + Android 设备法文输入法可用性检查（支撑认证框 i18n 实装）
+- 界面触控测试用例制定（10:32–21:19 跨天会话，产出用例方案）
+- 经验库升级计划（Metis 缺口分析 + 独立 Oracle 评审 + Momus 评审 + 二轮确认）
+================================================
+数据来源：/Workspace、/HXAppPlatform、~/Documents、~ 四轨 git log（2026-09-22，
+作者含 TiTan 1 笔）；opencode 会话库 SQLite 直查 173 会话（已剔除 look_at/T\/F
+编号 subagent 碎会话）
