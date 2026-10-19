@@ -10,7 +10,7 @@ set -euo pipefail
 bash -n "$0" || { echo "[FATAL] 脚本自身语法错误，拒绝执行"; exit 9; }
 TARGET=${1:?用法: a3-hot-read-image.sh kylin@192.168.1.222}
 REMOTE_DEV=${REMOTE_DEV:-/dev/sda}
-DEST_DIR=${DEST_DIR:-/Workspace/Work/outputs/golden-images}
+DEST_DIR=${DEST_DIR:-/home/guangbin/Documents/Work/outputs/golden-images}
 SSHOPTS="-o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30"
 
 mkdir -p "$DEST_DIR"

@@ -21,7 +21,7 @@ sudo bash a1-usb-disk-image.sh /dev/sdb
 #   跳过修ESP/封版: --no-fix-esp / --no-seal
 
 # A2：Live 环境里推到工作站
-sudo bash a2-live-usb-image.sh guangbin@<工作站IP>:/Workspace/Work/outputs/golden-images
+sudo bash a2-live-usb-image.sh guangbin@<工作站IP>:/home/guangbin/Documents/Work/outputs/golden-images
 
 # A3：不停机拉取（选空闲时段）
 bash a3-hot-read-image.sh kylin@192.168.1.222

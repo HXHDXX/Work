@@ -2,7 +2,7 @@
 # =============================================================================
 # a2-live-usb-image.sh —— 路线 A2：Live U 盘冷读（车机 Live 环境里运行）
 # 功能: 整盘只读镜像 → 经 ssh 推送到工作站（或落第二块 U 盘/移动硬盘）
-# 用法: sudo bash a2-live-usb-image.sh kylin@<工作站IP>:/Workspace/Work/outputs/golden-images
+# 用法: sudo bash a2-live-usb-image.sh kylin@<工作站IP>:/home/guangbin/Documents/Work/outputs/golden-images
 #    或: sudo bash a2-live-usb-image.sh /media/usb-target   （本地落盘模式）
 # 前提: 从 arm64 Live U 盘启动；设备盘 /dev/sda 未挂载（或已 umount）
 # 教训对应: L4(原方案本意) L2(不再碰运行中的系统)

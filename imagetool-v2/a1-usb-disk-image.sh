@@ -21,7 +21,7 @@ done
 [ "$(id -u)" -eq 0 ] || { echo "[FATAL] 须 root"; exit 1; }
 command -v pigz >/dev/null || { echo "[FATAL] 缺 pigz"; exit 1; }
 
-DEST_DIR=${DEST_DIR:-/Workspace/Work/outputs/golden-images}
+DEST_DIR=${DEST_DIR:-/home/guangbin/Documents/Work/outputs/golden-images}
 mkdir -p "$DEST_DIR"
 STAMP=$(date +%Y%m%d-%H%M)
 IMG="$DEST_DIR/kylin-v10-arm64-golden-$STAMP.img.gz"
