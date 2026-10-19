@@ -75,3 +75,8 @@
 
 ## [2026-09-24] remove | context-strategy.md
 - 项目 AGENTS.md 删除「上下文与沙盒策略」章节并清理本文档：全局 AGENTS.md 已覆盖，项目级不再重复
+
+## [2026-10-19] ingest | daily-report
+- Work 目录迁移（/Workspace、/HXAppPlatform 双根消亡 → ~/Documents 各子目录、~/Documents/HXAppPlatform）断裂夜间日报链路三层：crontab 入口、cron 脚本内路径、skill 提示词（落盘/扫描根/会话 IN 清单）。教训：绝对路径散落「调度层+脚本层+提示词层」，迁移只改入口必漏，须全链 grep 写死路径逐层替换
+- 收集根裁定：~/Documents 各子目录（find maxdepth 3）+ ~/.dotfiles（~ maxdepth 2 轨覆盖）；会话 SQLite IN 清单补 /home/guangbin/.dotfiles
+- Types: Bug Experience, Decision
