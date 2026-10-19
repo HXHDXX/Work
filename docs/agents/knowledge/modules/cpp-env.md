@@ -4,7 +4,7 @@
 
 ## Overview
 - C++ 开发环境完整配置指南（Ubuntu 22.04）
-- Key files: `./C++开发环境配置.md`
+- Key files: `./docs/reference/C++开发环境配置.md`
 - IDE: CLion（联网）/ QtCreator（内网，latest 版本）
 - 构建容器: `code-compiler` (Docker, `linux_gcc_cl:v1.3`)
 - 跨平台 Qt SDK: `/opt/qt5-x86_64-gl`

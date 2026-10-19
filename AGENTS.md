@@ -6,7 +6,7 @@
 ### 工作区性质
 - 文档优先；可执行代码仅 `imagetool-v2/*.sh` 与 `scripts/` 两处
 - 无构建/测试/lint 体系；脚本验证靠 `bash -n` 自检与实跑
-- 根目录 `*.md` 为专利/环境/Git 流程/方案参考，保持原状不重构
+- 根目录只留 `AGENTS.md` 与 `plan.md`；专利/方案/环境参考归档于 `docs/patents|solutions|reference/`
 
 ### 目录结构
 - 详细规范：`./docs/agents/core/structure.md`

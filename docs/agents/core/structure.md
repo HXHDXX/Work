@@ -13,6 +13,9 @@
 ├── scripts/                     ← daily-index.py + daily-report-cron.sh
 ├── outputs/                     ← 交付产物（gitignored）
 ├── docs/
+│   ├── patents/                  ← 专利（发明/交底书/权利要求）
+│   ├── solutions/                ← 技术方案文档
+│   ├── reference/                ← 环境/Git 流程等技术参考
 │   ├── agents/
 │   │   ├── index.md             ← 文档索引与元规则（Layer 2）
 │   │   ├── core/                ← principles / structure
@@ -21,8 +24,7 @@
 │   └── superpowers/specs/       ← 设计文档
 ├── .opencode/                   ← opencode 配置与 skills（daily-report 等）
 ├── plan.md                      ← 项目路线图
-├── pics/                        ← 图片资源
-└── *.md（根目录）               ← 专利/环境/Git 流程/方案等参考文档
+└── pics/                        ← 图片资源
 ```
 
 ## 目录用途
@@ -51,7 +53,9 @@
 |------|------|---------|
 | `AGENTS.md` | Agent 入口 | 每次修改需同步更新知识库 |
 | `plan.md` | 项目路线图 | 路线图变更需更新 infra.md |
-| `*.md`（根目录） | 技术参考文档 | 保持原状，不重构 |
+| `docs/patents/` | 专利文档 | 手动维护 |
+| `docs/solutions/` | 技术方案文档 | 手动维护 |
+| `docs/reference/` | 环境/Git 流程等技术参考 | 手动维护 |
 
 ## 新增目录规则
 

@@ -36,4 +36,4 @@ echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH' >> ~/.bashrc
 
 安装Qt SDK 6.6.3 和 QtCreator
 
-![](./pics/qt-sdk.png)
+![](../../pics/qt-sdk.png)
