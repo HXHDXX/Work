@@ -120,7 +120,7 @@ EOF
 ## 已知失败模式（实战教训）
 | 症状 | 根因 | 对策 |
 |------|------|------|
-| `/HXAppPlatform` 仓全漏 | find\|while-read 子 shell 漏读 | 双轨，B 轨逐仓直连 |
+| `/HXAppPlatform` 仓全漏（历史，根已退役） | find\|while-read 子 shell 漏读 | 现役双轨：Documents find 轨 + /home/guangbin 直下 find 轨 |
 | 仓库列表不遍历 | zsh 不分词未引号变量 | 用 `while read` 或数组 |
 | 邮件标题乱码（工坊攱话） | 手敲 Base64 算错字节 | `printf\|base64` 工具生成 |
 | 星期显示「周�」 | `cut -c` 按字节切中文 | case 映射数字→中文 |

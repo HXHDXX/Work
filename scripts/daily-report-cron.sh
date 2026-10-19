@@ -25,13 +25,11 @@ RC=$?
 echo "[$(date '+%T')] opencode run 失败/超时(rc=$RC)，降级脚本版兜底"
 # 兜底：纯 bash 档案版 + 发邮件（保证当天必有一封）
 TMP=$(mktemp); : > "$TMP"
-for root in /home/guangbin/Documents; do
-  find "$root" -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
-    case "$(dirname "$g")" in */.repo/*|*/qt5/*) continue;; esac
-    r=$(basename "$(dirname "$g")")
-    git -C "$(dirname "$g")" log --since="${D} 00:00" --until="${D} 23:59" \
-      --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
-  done
+find /home/guangbin/Documents -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
+  case "$(dirname "$g")" in */.repo/*|*/qt5/*) continue;; esac
+  r=$(basename "$(dirname "$g")")
+  git -C "$(dirname "$g")" log --since="${D} 00:00" --until="${D} 23:59" \
+    --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
 done | sort >> "$TMP"
 # 家目录直下仓（maxdepth 2，与 Documents 轨不重叠；排工具自管仓）
 find /home/guangbin -maxdepth 2 -name ".git" -type d 2>/dev/null | while read g; do
@@ -65,6 +63,6 @@ SUBJ=$(printf '%s' "$SUBJ_TEXT" | base64 | tr -d '\n')
   printf 'From: guangbin79@icloud.com\nTo: guangbin79@icloud.com\n'
   printf 'Subject: =?UTF-8?B?%s?=\n' "$SUBJ"
   printf 'MIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n\n'
-  cat "/home/guangbin/Documents/Work/daily/日报-${D}.txt"
+  cat "$REPORT"
 } | msmtp guangbin79@icloud.com && { echo "[$(date '+%T')] 兜底版已发"; exit 0; }
 echo "[$(date '+%T')] 兜底邮件也失败"; exit 1
