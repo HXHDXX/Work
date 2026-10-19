@@ -11,21 +11,21 @@ mkdir -p /tmp/opencode
 exec >>"$LOG" 2>&1
 echo "===== $(date '+%F %T') 日报定时任务启动 ====="
 
-cd /Workspace/Work || { echo "ERR: 无法 cd /Workspace/Work"; exit 1; }
+cd /home/guangbin/Documents/Work || { echo "ERR: 无法 cd /home/guangbin/Documents/Work"; exit 1; }
 D=$(date +%F)
 
 # 主路径：opencode run 非交互执行 skill（深度版 + 发邮件）
 # 模型固定 zai-coding-plan/glm-5.3（本地代理，避开 Kimi 5 小时配额；撞配额史见 08-27）
 # 超时 15 分钟兜底（agent 偶发卡住不阻塞 cron）
 timeout 900 opencode run --auto -m zai-coding-plan/glm-5.3 \
-  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /Workspace/Work/daily/日报-${D}.txt，并发邮件到 guangbin79@icloud.com。标题用 printf|base64 生成禁止手敲。" \
+  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /home/guangbin/Documents/Work/daily/日报-${D}.txt，并发邮件到 guangbin79@icloud.com。标题用 printf|base64 生成禁止手敲。" \
   && { echo "[$(date '+%T')] 成功（深度版）"; exit 0; }
 
 RC=$?
 echo "[$(date '+%T')] opencode run 失败/超时(rc=$RC)，降级脚本版兜底"
 # 兜底：纯 bash 档案版 + 发邮件（保证当天必有一封）
 TMP=$(mktemp); : > "$TMP"
-for root in /Workspace /HXAppPlatform /home/guangbin/Documents; do
+for root in /home/guangbin/Documents; do
   find "$root" -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
     case "$(dirname "$g")" in */.repo/*|*/qt5/*) continue;; esac
     r=$(basename "$(dirname "$g")")
@@ -41,7 +41,7 @@ find /home/guangbin -maxdepth 2 -name ".git" -type d 2>/dev/null | while read g;
     --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
 done | sort >> "$TMP"
 
-REPORT="/Workspace/Work/daily/日报-${D}.txt"
+REPORT="/home/guangbin/Documents/Work/daily/日报-${D}.txt"
 SUBJ_TEXT="工作日报 ${D}（自动兜底版）"
 if [ -s "$REPORT" ]; then
   # ponytail: 降级数据不覆盖更好的既有数据（如早前手工/深度版），只重发
@@ -65,6 +65,6 @@ SUBJ=$(printf '%s' "$SUBJ_TEXT" | base64 | tr -d '\n')
   printf 'From: guangbin79@icloud.com\nTo: guangbin79@icloud.com\n'
   printf 'Subject: =?UTF-8?B?%s?=\n' "$SUBJ"
   printf 'MIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n\n'
-  cat "/Workspace/Work/daily/日报-${D}.txt"
+  cat "/home/guangbin/Documents/Work/daily/日报-${D}.txt"
 } | msmtp guangbin79@icloud.com && { echo "[$(date '+%T')] 兜底版已发"; exit 0; }
 echo "[$(date '+%T')] 兜底邮件也失败"; exit 1

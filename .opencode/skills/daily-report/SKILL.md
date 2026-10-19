@@ -6,7 +6,7 @@ description: 生成工作日报并（可选）发送邮件。默认当天，可�
 # Daily Report
 
 ## Overview
-从 git 提交记录自动生成工作日报（txt），提炼要点，可选发送到邮箱。覆盖 `/Workspace` 与 `/HXAppPlatform` 全部仓库。日报落盘到 `/Workspace/Work/daily/日报-YYYY-MM-DD.txt`。
+从 git 提交记录自动生成工作日报（txt），提炼要点，可选发送到邮箱。覆盖 `/home/guangbin/Documents` 与 `/home/guangbin` 直下全部仓库。日报落盘到 `/home/guangbin/Documents/Work/daily/日报-YYYY-MM-DD.txt`。
 
 ## When to Use
 - 「生成今天/昨天的日报」
@@ -22,22 +22,10 @@ description: 生成工作日报并（可选）发送邮件。默认当天，可�
 ## 核心规则（必须遵守）
 
 ### 1. 遍历用双轨，杜绝漏仓（已踩坑）
-zsh 不对未加引号变量分词，且 find|while-read 子 shell 会漏 `/HXAppPlatform` 仓。**必须双轨**：
+zsh 不对未加引号变量分词，且 find|while-read 子 shell 会漏仓（历史教训：曾漏读整个 /HXAppPlatform）。旧根 `/Workspace`、`/HXAppPlatform` 已随 2026-10 目录迁移消亡，现役双轨：
 ```bash
-# A. /Workspace — find|while-read（zsh 安全）
-find /Workspace -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
-  repo=$(dirname "$g"); git -C "$repo" log --since="$D 00:00" --until="$NEXT 00:00" \
-    --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
-done
-# B. /HXAppPlatform — 逐仓直连（find|while-read 漏读，必须显式列举）
-for repo in HXNativeApp HXMapWidgetNative HXPRShell maplibre-native TTSPlayer \
-  test-bridge lib-HXGISServer lib-HXNmeaParser lib-HXNavigation lib-HXRouteServer \
-  lib-HXPluginRuntime lib-HXSpatialMeasure lib-HXRdssSendingQueue lib-maplibre-native \
-  lib-sherpa-onnx lib-GammaRay lib-hxprshell-app lib-ZMQClient; do
-  d="/HXAppPlatform/$repo"; [ -d "$d/.git" ] || continue
-  git -C "$d" log --since="$D 00:00" --until="$NEXT 00:00" --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
-# C. /home/guangbin/Documents — find|while-read，排除 qt5 上游源码树（45 仓噪声）
-# 实证：TitanNavi 已整体迁至此（/Workspace/TitanNavi 不存在），漏扫即漏报
+# A. /home/guangbin/Documents — find|while-read（zsh 安全），排除 qt5 上游源码树（45 仓噪声）
+# 实证：TitanNavi 已整体迁至此，漏扫即漏报
 find /home/guangbin/Documents -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
   repo=$(dirname "$g"); case "$repo" in */qt5/*) continue;; esac
   git -C "$repo" log --since="$D 00:00" --until="$NEXT 00:00" \
@@ -46,7 +34,7 @@ done
 ```
 排除 `.repo/*`（repo 工具仓）与 `qt5/*`（Qt 上游源码依赖）。`lib-*` 二进制仓可选纳入（看是否当日有发布）。
 ```bash
-# D. /home/guangbin 直下仓（maxdepth 2；Documents 已由 C 轨覆盖，深度 2 不重叠）
+# B. /home/guangbin 直下仓（maxdepth 2；Documents 已由 A 轨覆盖，深度 2 不重叠）
 # 排工具自管仓（oh-my-zsh/nvm/popos_shell 自更新属噪声）；.dotfiles/gpt-load 等真工作仓纳入
 find /home/guangbin -maxdepth 2 -name ".git" -type d 2>/dev/null | while read g; do
   repo=$(dirname "$g"); case "$(basename "$repo")" in .oh-my-zsh|.nvm|.popos_shell) continue;; esac
@@ -69,7 +57,7 @@ printf 'Subject: =?UTF-8?B?%s?=\n' "$SUBJ_B64"
   printf 'From: guangbin79@icloud.com\nTo: guangbin79@icloud.com\n'
   printf 'Subject: =?UTF-8?B?%s?=\n' "$(printf '%s' "工作日报 $D" | base64 | tr -d '\n')"
   printf 'MIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n\n'
-  cat "/Workspace/Work/daily/日报-$D.txt"
+  cat "/home/guangbin/Documents/Work/daily/日报-$D.txt"
 } | msmtp guangbin79@icloud.com
 ```
 退出码 0 = 成功。临时邮件文件写 `/tmp/opencode/` 用完即删。
@@ -108,8 +96,8 @@ for r in con.execute("""SELECT id,title,agent,model,datetime(time_updated/1000,'
     print(r)
 EOF
 ```
-路径清单（IN 精确）：当日活跃仓 + `/Workspace/Work` + `/home/guangbin` + `/home/guangbin/Documents`
-   + `/Workspace` + `/HXAppPlatform`（Documents 裸目录 62 会话需 IN，子目录走 LIKE）
+路径清单（IN 精确）：当日活跃仓 + `/home/guangbin/Documents/Work` + `/home/guangbin` + `/home/guangbin/Documents`
+   （Documents 裸目录 62 会话需 IN，子目录走 LIKE）
 另加前缀匹配：`OR directory LIKE '/home/guangbin/Documents/%'`（早期工作目录布局，含数千历史会话）
 
 信号判据与深挖：
@@ -125,7 +113,7 @@ EOF
 - **不发邮件**：用户明说不发，或只说「整理日报」
 
 ### 7. 落盘与去重
-- 路径：`/Workspace/Work/daily/日报-YYYY-MM-DD.txt`
+- 路径：`/home/guangbin/Documents/Work/daily/日报-YYYY-MM-DD.txt`
 - 同日重生成：覆盖（以最新提交为准），重发邮件标注「刷新版」
 - 批量追溯（多日）：逐日独立文件；4-03 起的补录已有档案式版本，勿覆盖手工深度版
 
@@ -140,7 +128,7 @@ EOF
 
 ## 验证清单（生成后自检）
 - [ ] 邮件标题解码回中文正确（`echo <b64> \| base64 -d` 含「工作日报」）
-- [ ] `/HXAppPlatform` 仓未漏（至少检查 HXNativeApp/HXMapWidgetNative）
+- [ ] 本仓（Documents/Work）git log 已纳入（旧 /HXAppPlatform 轨已随迁移退役）
 - [ ] 提交计数与 git 实查一致
 - [ ] 星期中文正确显示
 - [ ] txt 已落盘 daily/ 目录
