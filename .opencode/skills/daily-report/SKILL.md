@@ -6,7 +6,7 @@ description: 生成工作日报并（可选）发送邮件。默认当天，可�
 # Daily Report
 
 ## Overview
-从 git 提交记录自动生成工作日报（txt），提炼要点，可选发送到邮箱。覆盖 `/home/guangbin/Documents` 与 `/home/guangbin` 直下全部仓库。日报落盘到 `/home/guangbin/Documents/Work/daily/日报-YYYY-MM-DD.txt`。
+从 git 提交记录自动生成工作日报（txt），提炼要点，可选发送到邮箱。收集根：`/home/guangbin/Documents` 各子目录 + `/home/guangbin/.dotfiles`。日报落盘到 `/home/guangbin/Documents/Work/daily/日报-YYYY-MM-DD.txt`。
 
 ## When to Use
 - 「生成今天/昨天的日报」
@@ -96,7 +96,7 @@ for r in con.execute("""SELECT id,title,agent,model,datetime(time_updated/1000,'
     print(r)
 EOF
 ```
-路径清单（IN 精确）：当日活跃仓 + `/home/guangbin/Documents/Work` + `/home/guangbin` + `/home/guangbin/Documents`
+路径清单（IN 精确）：当日活跃仓 + `/home/guangbin/Documents/Work` + `/home/guangbin/.dotfiles` + `/home/guangbin` + `/home/guangbin/Documents`
    （Documents 裸目录 62 会话需 IN，子目录走 LIKE）
 另加前缀匹配：`OR directory LIKE '/home/guangbin/Documents/%'`（早期工作目录布局，含数千历史会话）
 
