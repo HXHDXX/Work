@@ -84,3 +84,7 @@
 ## [2026-10-19] refactor | 结构
 - 根目录 11 个参考 md 经 git mv 归档至 docs/patents(3)/solutions(4)/reference(4)，根目录只留 AGENTS.md 与 plan.md；同步更新 AGENTS.md 合同、structure.md 目录树、cpp-env.md Key files、imagetool-v2/README.md 引用、Qt-Android 文档图片相对路径
 - Types: Decision
+
+## [2026-10-20] ingest | daily-report
+- 仓扫描符号链接盲区：HXAppPlatform 的 repo 清单布局下子仓 .git 为符号链接（HXPRShell/.git -> ../.repo/projects/HXPRShell.git），daily-report 双轨遍历 `find -name .git -type d` 不跟随符号链接→漏仓（实证 2026-10-20：HXPRShell 当日 1 commit 漏扫，靠直查 git log 补回，日报计数幸免失真）。对策：遍历条件改 `( -type d -o -type l )` 或对已知 .repo 清单子仓直查兜底；.opencode/skills/daily-report/SKILL.md 待修（上报待确认）
+- Types: Bug Experience
