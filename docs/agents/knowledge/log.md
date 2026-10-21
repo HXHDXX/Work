@@ -88,3 +88,7 @@
 ## [2026-10-20] ingest | daily-report
 - 仓扫描符号链接盲区：HXAppPlatform 的 repo 清单布局下子仓 .git 为符号链接（HXPRShell/.git -> ../.repo/projects/HXPRShell.git），daily-report 双轨遍历 `find -name .git -type d` 不跟随符号链接→漏仓（实证 2026-10-20：HXPRShell 当日 1 commit 漏扫，靠直查 git log 补回，日报计数幸免失真）。对策：遍历条件改 `( -type d -o -type l )` 或对已知 .repo 清单子仓直查兜底；.opencode/skills/daily-report/SKILL.md 待修（上报待确认）
 - Types: Bug Experience
+
+## [2026-10-21] ingest | daily-report
+- opencode.db 会话表迁移 session→session_v2（schema 演进无兼容别名），skill 第 5 节 SQLite 模板 `FROM session` 直接报 no such table：session_list 工具不可信之外再添一层「表名漂移」——SQLite 直查前先查 sqlite_master/PRAGMA table_info 校表名再取数；.opencode/skills/daily-report/SKILL.md 查询模板待同步（上报待确认，与 2026-10-20 符号链接待修项合并处理）
+- Types: Bug Experience
