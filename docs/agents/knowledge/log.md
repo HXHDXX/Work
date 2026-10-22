@@ -92,3 +92,7 @@
 ## [2026-10-21] ingest | daily-report
 - opencode.db 会话表迁移 session→session_v2（schema 演进无兼容别名），skill 第 5 节 SQLite 模板 `FROM session` 直接报 no such table：session_list 工具不可信之外再添一层「表名漂移」——SQLite 直查前先查 sqlite_master/PRAGMA table_info 校表名再取数；.opencode/skills/daily-report/SKILL.md 查询模板待同步（上报待确认，与 2026-10-20 符号链接待修项合并处理）
 - Types: Bug Experience
+
+## [2026-10-22] ingest | daily-report
+- 双轨命令分支盲区（第三条 skill 待修实证）：git log 不带 --all 只扫各仓 HEAD，worktree/PR 分支提交整段漏扫——实证 2026-10-22：TitanNavi worktree 分支当日 50 commits（本人侧 37）与 HXNativeApp 18（本人 5）双轨全漏，靠 `--all`＋作者过滤（guangbin＋review bot）补回；不补则当日主线 TitanNavi 计零、日报严重失真（10-21 报 32 疑同源低估）。个人计数须按作者分流（同事 wangfx/TiTan/qinchuan 另计不入本人 N）。session→session_v2 表漂移当日再实证（skill 模板仍 stale）。对策：双轨命令统一加 --all、个人计数加 --author 过滤、计数用 `--oneline|wc -l`（`--pretty=format` 无尾换行少 1）；与符号链接（10-20）、表名漂移（10-21）合并为 SKILL.md 三项待修清单（上报待确认）
+- Types: Bug Experience
