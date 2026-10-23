@@ -1,0 +1,47 @@
+工作日报 2026-10-21（周三）
+================================================
+【今日要点】共 89 次提交，涉及 5 仓（另 agora 账本自动事件 99 条）：
+主线：TitanNavi(32)、dotfiles(27)、semantic-memory(15)、agora-mcp(14)、sherpa-onnx/NPU(1)
+------------------------------------------------
+一、TitanNavi 车机导航修复（issue-agent 工作流 | 32 commits）
+- issue#166 转弯播报：改一次性触发＋固定 70 米，修密集点/短航段漏播与
+  播报距离漂移；互耦门限 setter 增仅告警守卫；裁决 PR#168 四文件冲突
+- TTS 链路：应用启动预创建 TTS 单例，消除触发到播报的模型加载延迟；
+  回填双平台 libttsplayer.so 修 setLeadPadMs 链接断；同步 ttsplayer-1.0.0
+  （cpu/4 线程配置，实机 RTF 0.123→0.075，-40%）
+- issue#167 HOME 门禁：双击改 500ms 内连续 5 次触发；再改滚动间隔窗
+  （修匀速连击永不触发）；窗口放宽至 1s＋触发日志
+- issue#138 偏航重算：续 7——偏航汇合前跳收窄至 NearestFirst
+- 协作：wangfx 合入 PR #168-#171；TiTan 控制器转速转弯、quickNavi 轨迹改用路线数据
+二、dotfiles 工具链（27 commits）
+- ghostty 终端链路：配置纳入管理（Nord 主题）＋alternatives 切默认终端
+  ＋tmux 自启动 wrapper（snap argv[0] 分发修复）
+- 新插件 agora-delegation-enforcer：跨仓编辑机械闸
+- issue-agent：长任务心跳评论（回合超 heartbeat_interval 报进度）
+- review-loop：终闸豁免扩记录类＋知识积累前置；R1 终闸修复
+- 经验库：批量同步 21 日经验 10+ 篇；夜间治理（groom/judge 报告）
+三、semantic-memory 记忆系统（15 commits）
+- TUI 侧边栏记忆注入面板：会话视图、冻结头块上报、零态显示「已连接」
+- 稳定性：CUDA 熔断器（服务反复死亡根治层）＋INFER_LOCK 全局推理互斥
+  （并发 embed/解码 GGML abort 根治）
+- 质量：捕获质量三防、REMEMBER_RE 冒号强制、distiller 显存适配
+  （n_ctx 8192→4096，6GB 卡三模型共存）
+四、agora-mcp 协作广场（14 commits）＋账本运作（99 事件）
+- 三连版：v1.29 dispatch worktree 感知（路径归一主 repo 唯一口径）；
+  v1.30 project 裁决归一＋plan-gate＋心跳口径；v1.31 pre-push smoke 钩
+  ＋board 心跳 age＋post.sh 读取侧收口
+- 跨仓任务闭环 6 件（TTSPlayer leadPadMs、issue#10 显示、TUI 零态等）；
+  rl-e2e 16 实体端到端演练
+五、NPU 推理加速（sherpa-onnx worktree | 1 commit + 会话推进）
+- PHYNPU execution provider 落地（vendor FT-D3000M onnxruntime）
+- 会话推进：TTSPlayer NPU 加速 arm64 适配、Android onnxruntime 硬件加速库选型
+------------------------------------------------
+会话调研工作（未提交/进行中）
+- issue#173 偏航距/偏航角度语音播报逻辑：晚间开发，Round2 评审进行中（22:00）
+- HXAppPlatform issue#10 多段路径规划后完全显示：修复＋终闸评审
+- OSMDataCompiler gjb-sms-lhzz 导出 maritimeareas 报错排查
+- HXRouteServer 规划服务接口概览；路径规划策略参数/途经点/Language 枚举化评审
+- dotfiles 排查：Superpower 技能未加载、review-loop 过度审查 token 分析、
+  opencode v2 会话标签快捷键、OpenCode 升级 notes
+================================================
+数据来源：各仓 git log（2026-10-21）、commit body、opencode 会话库（当日 94 会话）

@@ -1,0 +1,46 @@
+工作日报 2026-10-19（周一）
+================================================
+【今日要点】共 70 次提交，涉及 5 仓：
+主线：TitanNavi(25)、.dotfiles(21)、OSMDataCompiler(15)、Work(7)、HXNativeApp(2)
+------------------------------------------------
+一、TitanNavi 多议题修复（issue-agent 并行）（TitanNavi | 25 commits）
+- #138 NearestFirst 起始点从距当前位置最近航路点开始，NavResult 锚定语义随之修正；
+  经二/三/四轮评审持续收紧：visited 集先重置、(0,0) 未定位喂入守卫改真实定位门控、
+  stop() 清残留位置、GPS 喂入提取 helper；两轮 PR 合入 master（#142/#144）
+- #140 路径样式统一：宽 8(4×2 取大者)/路径绿/白箭头五落点；续修补档案加载样式归一，
+  parseRoutes 收口为唯一样式真源＋删除死解析；OCR 评审 F1/F2 落地
+- TTS：语音包跟随系统语言切换、播报文本三语 tr 收口、开始/结束导航播报补全
+- #143 罗盘：INS 模式航向经 calnewDirection 低速滤波，治低速乱串
+- #118 收尾合入；另有多条 issue-agent 知识沉淀（门控标志同步置位、哨兵值核对写入点等）
+二、OSMDataCompiler gjb-sms-lhzz 导入链修复（OSMDataCompiler | 15 commits）
+- 修复五连环：discover_layers 按 ogrinfo 编号列表解析（防 set -e 中止）、
+  dms_to_dd 右对齐解析（0° 起算图幅崩溃）、Phase3 空几何防空＋还原被吞写盘块、
+  A 组缺失自动补 ASX/AZB 空占位（免借用开包）、Phase5 QA 阈值自适应
+  （highway 下限改 LandTransport 输入 25%，bridge 降 WARN）
+- 源码级确认 A 组拒开机制（Identify 硬编码识别指纹）、Y 组语义（图外整饰层）；
+  修正借 A 组污染教训（武汉控制点被错误变换）
+- MCP toolbox-postgres 切 remote HTTP（systemd user 托管，凭据对齐 gis 账号）
+三、.dotfiles 工具链与体验（.dotfiles | 21 commits）
+- review-loop 修复链：dbg 通道 TUI 改 --standalone 私有 server 根治、
+  v2.0.32 二批漂移（task→subagent 更名＋相对编辑路径）、孤儿旗标守卫＋e2e S15
+- tmux/剪贴板：鼠标拖选直进系统剪贴板、autocutsel 双守护 PRIMARY→CLIPBOARD、
+  OSC52 桥＋terminfo 变体（TUI 拖选拷贝落地）、needs-input 边框默认收口
+- 经验库夜间自动化：nightly judge/groom 报告；cli.json 快照备份
+  （实证 symlink 模型不成立，原子改名覆盖）；session 后台键位调整
+四、Work 日报链路与文档重组（Work | 7 commits）
+- 日报链路迁移收尾：收集根扩至 ~/Documents 子目录＋~/.dotfiles、
+  夜间链路 repoint 至 ~/Documents/Work、imagetool-v2 默认路径同步修复
+- 根目录文档重组：参考文档归档入 docs/{patents,solutions,reference}
+五、HXNativeApp #8 修复（HXNativeApp | 2 commits）
+- /route_strategies 策略级失败显式暴露：§3.7 契约失败策略静默 continue
+  令 highway 失败不可诊断；配套两条知识沉淀
+------------------------------------------------
+会话调研工作（未提交）
+- TitanNavi issue#139：测试进行中（18:23 起）
+- .dotfiles：issue-agent opencode 会话被拒绝排查、opencode 启动自动打开
+  dashboard 排查、引入 .agent 的 skill 与插件（进行中）
+- cross-library：大资源文件提交检查；HXNativeApp：.clang-tidy 修改取舍；
+  OSMDataCompiler：git push 慢/LFS locking 运维排查
+================================================
+数据来源：Work/OSMDataCompiler/TitanNavi/HXNativeApp/.dotfiles git log（2026-10-19）、
+TitanNavi 含 --all 分支与 review worktree（issue 分支提交计入）、opencode session_v2 库（63 会话）

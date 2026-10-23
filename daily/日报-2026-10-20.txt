@@ -1,0 +1,36 @@
+工作日报 2026-10-20（周二）
+================================================
+【今日要点】共 68 次提交，涉及 6 仓：
+主线：OSMDataCompiler(18)、.dotfiles(12)、agora(33·广场账本)、agora-mcp(3)、cross-library(1)、HXPRShell(1)
+------------------------------------------------
+一、地图制图管线（OSMDataCompiler | 18 commits）
+- sms-import 批量导入 263 幅 1:100万地图：批处理脚本（单幅容错+断点续传+逐幅日志+汇总清单），多轮修复（清单字段名提取、负负区间安全拆分、无路图幅/缺层容错、QA bbox 支持西经）
+- 国家级管线贯通：新增国家级合并脚本（逐幅偏移重编号+merge）、263 幅批量+偏移合并+裁剪+源瓦片对应验证方法论
+- lhzz-style national 层集成：全部 7 个样式注入 national 源 + nat-* 克隆层（52层×7=364行）+ server /tiles/national/ 路由
+- 陆地渲染三重根因修复 + z4-10 直出构建；移除 raw-data 占位源（瓦片恒 404 纯噪声）
+- dms_to_dd 右对齐解析修复（双实现同步；0°起算图幅定长切片负偏移崩溃）；发现 S 系南半球镜像 bug（SMSGetOutlineCorner 负号/分隔符冲突，补丁就绪）
+- 工程健壮化：tiles --process 参数链推导、TILEMAKER_MAXZOOM/BBOX 文档、STUB_PBF 容器路径推导、docker 移除无效 .so 点名
+
+二、agent 基建（.dotfiles | 12 commits）
+- issue-agent：有界并行回合 max_parallel（默认 1=串行不变）、并行化评审两项收口（claim 预算不变量告警+reconcile 双触发）、评审异常终局延迟宽限补推（gt-9f24 原子化+所有权转移清 flag）、会话失效判定显式门+双路补推、install.sh 保留并行配置
+- agent-experience：夜间 groom/judge 报告、周报 digest、同义标签统一
+- 治理文档：汇报分域规则 + 推送分级裁定 + 国家级管线方法论 + MapLibre 多源架构经验
+
+三、agora 协作广场（agora 33 账本提交 + agora-mcp 3 + HXPRShell 1）
+- gt-9f24（issue-agent 评审异常终局补推缝隙）全生命周期闭环：创建→派发→blocked→reopened→重派→done 验收
+- gt-b45d：HXPRShell 广场接入登记（docs/agora.md + 项目页/实体页）
+- 多实体自动注册落成：Work、semantic-memory、HXNativeApp、OSMDataCompiler、agora-mcp、HXPRShell
+- agora-mcp 修复：wiki-write 后缀归一化补全（与 read 同口径）、身份裁决去冻结化（gt-9f24 派生匿名事故）、dispatch 弃 --dir（适配 opencode 2.0.32）
+
+四、其他
+- cross-library(1)：fix gdal-smsdriver
+
+================================================
+会话调研工作（无当日 git 提交）
+- TitanNavi issue-agent 流水线全天高密度运转：issue#9/138/140/141/143/147/148/152/156/157 终闸零共享评审多轮（TTS PcmPlayer、退出导航罗盘红线、路径管理返程导航、mCompassWidget setCarHeading 等）；issue-agent 回复失败与分支推送问题排查；并行回合实测部署验证（#156/#157）
+- HXNativeApp：issue#9 两点路径规划调用方式（多轮评审）
+- OSMDataCompiler：Win10 lhzz 构建管线重新打包；gjb-sms-lhzz maritimeareas 导出报错排查
+- agora-mcp：agora-backups 目录来源排查；gt-9f24/gt-b45d 验收流程
+- .dotfiles：夜间经验库治理执行；tmux 消息插件 pane 颜色分析；harness2 GitHub 概览；引入 .agent skill 与插件
+================================================
+数据来源：各仓 git log（2026-10-20，含 HXPRShell 符号链接 .git 补扫）、opencode session_v2 DB（当日 106 会话）

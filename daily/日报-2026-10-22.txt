@@ -1,0 +1,68 @@
+工作日报 2026-10-22（周四）
+================================================
+【今日要点】共 94 次提交（本人侧），涉及 6 仓（另 agora 账本自动事件 158 条；
+同事 26 条未计：wangfx PR 合入×6、TiTan×7、qinchuan TCI 测试×13）：
+主线：TitanNavi(37)、dotfiles(30)、OSMDataCompiler(15)、HXNativeApp(5)、
+semantic-memory(4)、agora-mcp(3)
+------------------------------------------------
+一、TitanNavi 车机导航（issue-agent 工作流 | 37 commits，issue/173 分支线）
+- issue#173 偏航距/偏航角：报警门限 500→50m；偏航距改全路线最近距离＋
+  切段改投影过点（去提前量）；播报数值保留整数；NearestFirst 入口统一
+  收口（死入口补设＋启动喂入契约补齐）；passedVertex 补同拍换靶门＋
+  临时 visited 保员；PR #176/#181 合入，合并最新 master 可行性评审入库
+- 导航窗口状态：导航中 mHideLeftBtn 常显＋入口防重入守卫；导航防清航线
+  补洞（航迹表选行/删除行守卫＋leftState 同步）；折返探测补沿线掉头盲区、
+  折返计数随 stop/navigateRoute 归零
+- issue#177 SNR 柱状图：X 轴首末分类标签不再被 Qt 边缘槽 forceHide 隐藏
+  （撤首尾 pad 改绘制前显回，用户否决空槽位移方案）；PR #179/#180 合入
+- TTS：生命周期句恒垫 1500ms 修到达终点/停止导航吞头（用户口径）；
+  tts 静音窗条目对齐 master 终态；PR #178 合入
+- 知识沉淀 12 篇（nav-window-state/偏航距全路线口径/折返探测/GNSS
+  图表模块页等）＋多轮终闸评审（轮2/轮3 收敛，ocr high/medium 全修复）
+二、OSMDataCompiler 瓦片数据管线（15 commits）
+- 标准化国家级构建管线 build-gjb-sms-lhzz-national.sh（osmium 三铁律/
+  set-e 短路陷阱/完整性闸门）
+- REGIONAL.mbtiles 接入 openmaptiles 层；/fonts/ 空字形优雅降级＋rewriter
+  style_ds 门槛（修 glyph 404 致死）
+- lhzz 多源打包支持：national 源/文件＋--skip-routing
+- 辅助数据集隔离：data/base→data/aux 全仓更名＋OSM 线 gb-* 补偿层修
+  双路取瓦片（agora gt-aad1 委托，验收通过）
+- 数据洞样式级补全 nat-* maxzoom 10→22；sorted 中间件清理剥 /data/ 前缀
+三、dotfiles 工具链治理（30 commits）
+- review-loop 终闸改制三分册（A 需求符合性/B 崩溃风险/C 安全＋固定裁决，
+  security-review 并入 C 册）＋轮1修复＋dogfood 实证捕获
+- agentctl memory capture 能力线（agora gt-24a8 委托）：--from 草稿落盘
+  （捕获流去 write 直写）＋写阶段加固 F1-F7＋锁与回滚 R2＋selftest 硬化 9 项
+- 行为准则治理：新增「假设确认门」；去复述瘦身；agora 机械闸消歧（闸
+  豁免≠协议许可）；OpenCode 运维节下沉 README（三条正道考古定案）
+- opencode 滚轮滚动优化：ghostty multiplier＋cli.json speed/acceleration/
+  行滚动 alt+u/d 三轮迭代（gt-dcf2 根因链与分工定案 ingest）
+- 经验库：夜间治理报告＋merge proposals×2＋lint 修复 15 项；agentctl 经
+  ~/.local/bin 入 PATH；捕获 Qt Charts forceHide 经验（TitanNavi #177）
+四、HXNativeApp（5 commits）
+- 启动 SIGSEGV 双根因修复（RTC per-section＋裸表）＋initConnect 缺 return UB
+- TCI 混编解码适配 v4 契约 decodeMixed（rebase 语义冲突裁决，撤销
+  charBudget 物化回 const 引用）
+- linux-packaging 知识 ingest（arm64 NPU onnxruntime 打包替换经验）
+五、semantic-memory 记忆系统（4 commits）
+- 稳定性：解析抖动与硬件失败分流——蒸馏输出无 JSON 不再触发全局熔断
+- TUI 东亚模糊宽度补尾随空格（▼ 占 2 格吃 gap）；injectTail v2 part 数组
+  契约测试对齐；gpu-breaker 知识页勘误（双观测面/积压口径）
+六、agora 协作广场（agora-mcp 3 commits＋账本 158 事件）
+- 通知桥注入通道改走 opencode api CLI＋自检回执（gt-b12d，评审轮1/轮2
+  修复：timeout -k 硬上界、sid 信任边界校验、locale 钉死）
+- actor 归属坍缩修复（gt-49fb→gt-eefd）：agora_post 可选 actor＋dispatch
+  env 反查 child_actor 兜底＋run-id 逐层剥后缀＋账本读异常闸（评审 Round1
+  三处修复）
+- derive-board retired 语义修复：共享实体身份去永久拉黑、done 任务滞留
+  无限重派（gt-abe8）；bg-wait 配方修正任务收尾（gt-9086）
+------------------------------------------------
+会话调研工作（未提交/进行中）
+- TTSPlatform：数字播报中文口音问题排查、TTS 文本与数字处理链路摸底
+- HXGISS：map_data 目录结构分析
+- .dotfiles：Code Mode 沙箱调用 MCP 上下文隔离验证、ai-memory 开源库调研、
+  同名仓库同时安装冲突风险、跨项目经验写入方式探讨
+- HXNativeApp：sherpa-onnx wt-npu-capi2 目录问题、issue#11 planRoutes 调用
+================================================
+数据来源：各仓 git log --all（2026-10-22，含 worktree/PR 分支）、commit
+body、opencode 会话 128 个（opencode.db session_v2 直查）
