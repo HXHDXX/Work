@@ -1,0 +1,85 @@
+工作日报 2026-10-23（周五）
+================================================
+【今日要点】共 104 次提交（本人侧），涉及 6 仓（另 agora 账本自动事件
+1116 条；同事 13 条未计：TiTan×12、wangfx×1）：
+主线：TitanNavi(38)、agora-mcp(33)、dotfiles(16)、OSMDataCompiler(14)、
+semantic-memory(2)、HXGISServer(1)
+------------------------------------------------
+一、TitanNavi 车机导航（issue-agent 工作流 | 38 commits）
+- issue#173 偏航收尾：播报偏航态抑制＋重锚冷却窗（口径 A/B 落地，真空门
+  几何证明入库）；投影过点切段补在航门——偏航态不切不标 visited（C2 口径）
+- issue#183 导航入口守卫：主菜单导航入口即拒＋导航中开栏恒落主菜单（按
+  用户简化方案收敛）；移除旧版分散 blockIfNavigating 守卫（用户裁决密度）
+- 多轮终闸评审修复：导航中重开导航孤儿红线/航点标记残留、开栏漏斗隐藏
+  CenterStackedWidget、按钮字形同步、越界早退停旧仿真定时器等 ocr/终闸项
+- issue#188 语音播报 i18n：补齐 TTS 播报 fr/en 译文（偏航距/转向提示/
+  试听串）；坑3「播报串未登记 .ts 致回退中文」入 i18n-translations
+- issue#189 新开：设置页新增导航设置——导航/TTS 参数 QSettings 配置化
+  ＋垫长/静音窗长配置化决策知识沉淀（20:25 落地）
+- 构建与链路：CMakeLists 补登记分支侧链 GNSS 新源＋positioning-private
+  头路径；183 分支远端不可见根因（错名 issue/182-fix 致 daemon 推送落空）
+- TTS：回填 matcha 版 libttsplayer.so 与 zh 模型目录（gt-56e0）；播报
+  数值整数化约束入 log；导航中 mHideLeftBtn 常显＋入口防重入守卫
+二、agora-mcp 全量委托闭环（L1/L2 | 33 commits）
+- L1 收口（凌晨设计定稿→实施）：task-create WT=1 建树＋idem 幂等；
+  dispatch 发射加固（预检/补偿落账先行/有界重试/凭据幂等）；verify
+  两段制（done 在 wt_dir 执行）；merge 合并闭环（ff-only＋目标二分＋
+  原子回滚＋脏目标守卫）；poll/doctor done-unmerged 恢性重派＋孤儿档
+  ＋wt 树 GC＋BOOT 链式协议（规格 v1.32／委托协议 v2）
+- L2 服务 API 适配层（gt-d154）：opencode.sh 五契约 health/create/
+  inject/alive/status；dispatch API 双轨＋ack→注入闭合 plan-ack 死锁；
+  smoke L2 批 36 断言离线跑通
+- 稳定性：账本扫描按 ts 序重放修 done-unmerged 误诊（gt-db15）；点分
+  片盲修——glob/cat 含 .dotfiles 等隐藏分片（gt-3ea2 波次根因）；梯子
+  风暴双修复：终态不派核查棒＋git 层已合并短路（gt-99af）
+- 守卫 v2（gt-ae6f）：mention 拾取环断路＋BOOT 心跳卫生——治 gt-bb0b
+  14 派风暴根因；在飞去重改「末次 reopened 后活跃 dispatched」
+- A/B/D 批：B 批多仓关联测试场（跨仓链/删树重建/深度边界＋teardown
+  竞态修复，gt-2153）；A 批 K3 verify 锚点重建＋MAX_DEPTH 5（gt-2845）；
+  D 批 poll.sh 跨日闸门督报整页重写（gt-abcd）
+- 已知风险批次＋终审修复批（gt-caf3/a2226c3）：孤儿判据改「最后事件
+  ==dispatched 且 run log 缺失」、GC 只认 merged/cancelled 防数据丢失
+  等 13 项守卫收口
+三、dotfiles 工具链治理（16 commits）
+- 全量委托闸落地（gt-3ea2）：闸扩面——树内拦截反转＋凭据交叉核验＋
+  ~/agora 账本面 hard-block；repoRoot 对 worktree 少剥一层修复（issue#183
+  回合实证）；selftest node 兜底补 nvm 治裸 PATH 假红
+- req-gate 加固（gt-944f）：bg-wait 前台同步硬禁令＋/tmp/opencode·非
+  git 豁免对齐委托闸；.omo 豁免按折叠后路径判堵 traversal 整门绕过＋
+  锚定会话自身 .omo 根；kill switch 并入 AGORA_DELEGATION_OFF=1
+- perf：zsh 启动提速 0.67s→约 0.26s——删重复 compinit＋nvm 懒加载
+  （gt-23b8）
+- mcp-shell 输入压缩模块（AGENTS 清单行＋知识页＋索引）；AGENTS worktree
+  节定位声明＋lint 压回 6KB 帽内（gt-bb0b）
+- 经验库：夜间 groom/judge 报告＋13 条积压 ingest＋全量委托日经验批量
+  捕获（9 草稿）；review-loop round2 Trivial 条目收敛 190B
+四、OSMDataCompiler 瓦片数据管线（14 commits）
+- 原生端接缝格网治理：lhzz 水系 offset 补偿层→实证 offset 对 native
+  无效→规范修法定稿 outline=fill 全量清扫（水系 4 层＋OSM/9121 线对
+  齐）；桌面端用户确认格网消除；知识沉淀十五/十六修
+- 9121 数据链（gt-8351 委托多轮 verify 后收口）：bbox 推导与数据位置
+  解耦——SMS 随导入链落位 data/input/＋tiles 两级来源；sidecar 命名
+  回归合同定稿 {REGION}-9121.SMS
+- import 修复：--src-root flag 可达＋SRC_ROOT 环境变量保留（gt-08c2）
+- LAYERS_FALLBACK 14→17 层：补 Seabed/Obstructions/MilitaryAreas
+  （gt-cf65，maritimeareas 导出报错排查转化）
+五、semantic-memory 记忆系统（2 commits）
+- 蒸馏 prompt 预算收口：MEMORIES 近邻段纳入硬预算——治 4356≥4096
+  蒸馏熔断根因（gt-e696）
+- lifecycle：蒸馏条数≠输入条数不再 fail 整组——治 112 条队列积压
+  根因（gt-7dda）
+六、HXGISServer（1 commit）
+- gitconfig 更新
+------------------------------------------------
+会话调研工作（未提交/进行中）
+- TTSPlayer：数字播报中文口音问题排查（fork 会话续查）
+- HXNativeApp：issue#13 航路点图标不显示（gt-7c2d/gt-6d1d 委托 done
+  未合入主仓）；issue#12 地图数据目录加载咨询
+- OSMDataCompiler：北京/阿尔及利亚数据打包与 lhzz 遗漏分析
+- semantic-memory：CUDA 4096 上下文熔断排查（转化 gt-e696）；CPU 过热
+  降频排查
+- .dotfiles：终端启动缓慢分析（转化 gt-23b8）；电脑变慢分析；Code
+  Mode 沙箱 MCP 上下文隔离验证；dotfiles_bak 保留裁决
+================================================
+数据来源：各仓 git log --all（2026-10-23，含 worktree/PR 分支）、commit
+body、opencode 会话 366 个（opencode.db session_v2 直查）
