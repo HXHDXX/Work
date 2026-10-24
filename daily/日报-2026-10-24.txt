@@ -1,0 +1,65 @@
+工作日报 2026-10-24（周六）
+================================================
+【今日要点】共 62 次提交（本人侧），涉及 3 仓（另 agora 账本自动事件
+912 条）：
+主线：agora-mcp(35)、dotfiles(25)、semantic-memory(2)
+------------------------------------------------
+一、agora-mcp 委托链路治理日（35 commits）
+- merge 闭环：merge.sh 非 wt 派发任务合法落 merged＋LEDCAT 硬化＋
+  claimed→done actor 链闸 fail-closed（gt-e0a4/gt-7117）；derive-board
+  补 merged handler＋缓存 v4 强制重放——看板 todo 69→35、65 条积压
+  自愈（gt-5a59）
+- poll 看门狗：blocked 泳道滞留档（gt-ef98，出泳道集对齐 derive-board
+  防心跳误清）；探活拉起 notify 桥替代 @reboot（gt-edc4）；通知投递
+  静默根因——sessions.map 无注册写入方，dispatch 补登记＋TTL 双落
+  兼容（gt-8a3c）
+- 扰动演练 drill.sh：四场景（busy 守卫/kill 恢复闭环/quota fail-closed/
+  wave 并发/restart 脱附）＋真跑六败修复＋场景双域隔离 provision
+  （gt-ef4c/gt-f8ed）
+- 稳定性：配额 MAX_SPAWN per-actor 分域＋全局总闸根治跨会话互顶
+  （gt-8c5b）；9 路并发派发账本写完整性红测＋保险丝 TOCTOU 收口
+  （gt-2e4f）；四缺口红测先行——actor 碰撞/链死循环/配额自锁/idle
+  停转自恢复（gt-7ca0）
+- 终闸核销：gt-caf3 五条（poll 同秒 tie 事件语义定序/GC owner 盘上
+  反查防 RCE/branch -D 双验等，gt-40cc）；verify 合同静态守卫＋任务页
+  机械字段修正通道（gt-b9fb）
+- 其他：在场委托收窄——dispatch 仅认委托子会话 alive（gt-0ed3）；
+  adjudicate 自动注册 /tmp 与 fixture 域拒注册保名册（gt-583b）；
+  账本周报 report.sh 毕业度量（gt-77a8）；①②⑥ 三缺陷（cancel 字面
+  美元符/tools-call TypeError/顶层帧守卫，gt-35b5）；C 一/二期收编
+  （agora_cancel/redispatch＋kill 能力，gt-b5e9/gt-0a34 跨日）
+二、dotfiles 工具链治理（25 commits）
+- deploy.sh 新机恢复面：打印完整 cron 参考快照（gt-93a4）＋T5 cron
+  三改 planned-crontab 块同步（gt-66ee）＋drill cron 行四修版（gt-4f0d）
+- agentctl：session-open 开场腿聚合（sync+inbox+board→单行 JSON）＋
+  daemon 链路环境自举（HOME 兜底＋nvm PATH）；mcp-shell 白名单放行
+- 闸与守卫：enforcer 堵符号链接逃逸（账本 hard-block 提前＋scratch
+  豁免折叠口径）；nudge 重启提醒文件集+mtime 指纹去重（多进程重复
+  投递压制）
+- 治理条款：agents-md-lint 全文件上限 8192→12288B（gt-90bf）；AGENTS
+  记忆门条款 v2（gt-fd07，替代 gt-6cad）；删 Trivial 豁免条目（豁免
+  语义归机械闸）；ae knowledge query 中文多词恒空修复＋评审轮单遍
+  扫描计分（801e4eb/ea61eae）
+- 经验库：夜间 groom/judge 报告＋周 digest＋7 条积压 ingest＋lint
+  清零（16 条 Evidence 定级回填）；practice 轮次协议两轮
+  PASSED_VERIFIED
+三、semantic-memory 记忆系统（2 commits）
+- 热层一致性巡检 sweep 子命令——悬空路径引用候选报告＋评审轮 WAL
+  读快照与 file:// authority 守卫（gt-61cf）
+四、agora 账本运维（912 条自动事件，不计入提交数）
+- 看门狗 gt-8351 全天诊断/升级循环（OSMDataCompiler 9121 链）；drill
+  四实体自举演练（kill/restart/quota/wave 独立域）；post.sh R1/R2
+  评审修复——set 值域拒回车与前导块标量指示符（gt-064b）；脚本单源
+  收敛任务发起（gt-f6e4：SCRIPTS 指向产品仓＋账本去脚本化）
+------------------------------------------------
+会话调研工作（未提交/进行中）
+- .dotfiles：Agent 协作架构有效性与完备性分析；Agent 协作记忆架构
+  有效性评估；Dogfooding 在 OC2 与 DSH 运行时中的应用（build 会话）
+- agora-mcp：poll 兜底失效与 notified 通知延迟排查（转化 gt-edc4/
+  gt-0ed3）；任务派发与服务重启后的恢复机制调研（转化 drill 线）；
+  派发链与 watchdog 问题汇总
+- 全局 AGENTS.md 治理：知识库检索规则新增＋agents.md 瘦身优化（转化
+  gt-90bf/364f202 等）
+================================================
+数据来源：各仓 git log（2026-10-24）、commit body、opencode 会话 161 个
+（opencode.db session_v2 直查）

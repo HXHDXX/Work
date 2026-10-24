@@ -1,6 +1,6 @@
 # 日报索引
 
-> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 162 篇，2026-04-03 ~ 2026-10-23。
+> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 163 篇，2026-04-03 ~ 2026-10-24。
 
 ## 主题索引（按工作线关联各日）
 
@@ -222,3 +222,4 @@
 - [2026-10-21](日报-2026-10-21.txt)：TitanNavi 车机导航修复；dotfiles 工具链；semantic-memory 记忆系统；agora-mcp 协作广场（14 commits）＋账本运作；NPU 推理加速
 - [2026-10-22](日报-2026-10-22.txt)：TitanNavi 车机导航；OSMDataCompiler 瓦片数据管线；dotfiles 工具链治理；HXNativeApp；semantic-memory 记忆系统；agora 协作广场
 - [2026-10-23](日报-2026-10-23.txt)：TitanNavi 车机导航；agora-mcp 全量委托闭环；dotfiles 工具链治理；OSMDataCompiler 瓦片数据管线；semantic-memory 记忆系统；HXGISServer
+- [2026-10-24](日报-2026-10-24.txt)：agora-mcp 委托链路治理日；dotfiles 工具链治理；semantic-memory 记忆系统；agora 账本运维
