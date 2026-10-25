@@ -1,0 +1,58 @@
+工作日报 2026-10-25（周日）
+================================================
+【今日要点】共 35 次提交（本人侧），涉及 2 仓（另 agora 账本自动事件
+423 条）：
+主线：agora-mcp(19)、dotfiles(16)
+------------------------------------------------
+一、agora-mcp 派发链路修复与路由升级（19 commits）
+- 两层路由（gt-236a）：task-routing 单源写面——(task,role) 亲和
+  定向＋兜底广播全活行双收＋角色订阅＋退出注销（2508 done 投错
+  会话实证）；smoke 夹具变量撞名实证＋去抖断言收敛 (entity,sid)
+  粒度；评审环 R1 三分册＋ocr——routed sid 白名单堵 debounce
+  路径逃逸、evt_in 空针恒真、TTL 非数字杀 daemon 三收口
+- dispatch 在场判定（gt-762a）：done 后 delegated 会话残留命中收窄
+  status=running——四笔 notified 死信根因；逐 sid 异常退回宁
+  notified 不重复 spawn
+- notify 桥注入（gt-893a）：runtime who 契约（interactive|dead|
+  delegated）＋同实体 ts 降序鉴别注入首个 live＋失败计数水位不
+  推进重试＋notify-debug 全路径落痕；评审环 R1-R3——消费侧 sid
+  白名单拒 ../ 与 glob、raw 计数语义分叉、bump_fail sanitize
+- 准入制与校验加固（gt-6bef/gt-e96d/gt-2508）：sessions.map 单源
+  注册面＋dispatch 准入门＋BOOT 轮询语义；register-session 行
+  伪造字符校验——[[:class:]] locale 退化改 python 消费端二次闸
+  ＋原子写治清零；amended wt_dir 拒绝场景分流＋doctor 账本面
+  dirty 审计（check#11）
+- 治理尾巴（gt-ca34/gt-d31a/gt-3c7e/gt-f6e4）：AGORA_HOME 缺省
+  15 脚本 fail-fast；history 点分片读盲收口——陈旧拷贝/落后检出
+  冒充活缺陷实证，产品零改动；账本仓路径引用 ~/agora→~/plaza；
+  poll 保洁 pathspec 漏迁＋init 幂等迁移
+二、dotfiles enforcer 与授权治理（16 commits）
+- enforcer 注册 hook 三件（gt-6fa8）：懒注册＋活性刷新＋dispatch
+  准入（自愈注册→check-only）；R1-R2 修复——准入 fail-close、
+  sessionDir 形状漂移回退链、订阅退避可中止、SKIP 态显式标记
+- 授权表达统一（gt-78da）：凭据查找双路径（会话锚定先＋声明式
+  后，inTree 防 worktree:/ 借道）＋wt_dir 三语义收敛＋merge.sh
+  跨仓 wt 显式拒；R1-R3 修复——norm 归一物理同一性（symlink
+  会话根）、声明式伪造负面用例、B1 页池全局放大注记
+- 采集面扩展（gt-236a dotfiles 侧）：task_create 解析 gt-id 分配
+  dispatcher 行、agora_post 方向表 upsert 自动「谁消费谁接管」、
+  session.deleted 注销
+- 经验库夜间四件：reflect/groom/judge 报告＋6 条积压 ingest（含
+  Wave 1 tag 空间修复）
+三、agora 账本运维（423 条自动事件，不计入提交数）
+- 看门狗 gt-8351 全天诊断/升级循环；20:11 九任务批量 merged 波
+  （f6e4/e96d/d31a/ca34/78da/61cf/2a69/167a/583b）
+- 七任务全生命周期事件流（6bef/893a/e96d/2508/78da/236a/762a
+  claimed→done→merged）；anon@proj proposal 噪声 138 条
+- 镜像仓自举（gt-3c7e 配套）：~/agora init converge＋
+  delegation.md seed
+------------------------------------------------
+会话调研工作（未提交/进行中）
+- .dotfiles：Agent 协作架构有效性与完备性分析（跨日延续，build
+  会话）
+- 今日会话 47 个＝主会话 16（12 任务线＋调研 1＋夜间治理 2＋日报
+  1）＋评审循环三分册机械波 31（每任务 A意图/B崩溃/C安全三发）
+  ——终闸评审已全机械化
+================================================
+数据来源：各仓 git log（2026-10-25）、commit body、opencode 会话 47 个
+（opencode.db session_v2 直查）
