@@ -1,0 +1,37 @@
+工作日报 2026-10-26（周一）
+================================================
+【今日要点】共 88 次提交，涉及 6 仓（主检出 74 ＋ TitanNavi issue 分支补扫 14）：
+主线：opencode-agora(44)、.dotfiles(14)、TitanNavi(14·分支)、OSMDataCompiler(10)、semantic-memory(5)、cross-library(1)
+------------------------------------------------
+一、opencode-agora：agorad 任务编排守护——需求获批到核心落地（44 commits）
+- 需求→设计全链定稿：需求 v1.0（F 层收口：人中止权/自主姿态失败两层/verify 完整性/取消语义）→设计稿多轮用户逐题裁定（三访问层 oc/store/gitx、append-only 账本、会话牌认证、B1 收缩 11 件五族），15:57 状态翻转为已批准
+- agorad 核心实现（access/core/transport＋main 分层，逐任务 TDD）：auth 角色矩阵/牌持久化 → state 迁移矩阵/fail_streak → msg 链边/落库先行/幂等补拉 → task 保险丝/级联中止/verify 登记 → gate done 前置/verify 门/自动合并/回滚 → health·recover 只管死/状态复查重注入 → report 五桶/链视图/doctor → httpd 传输（鉴权矩阵/后台门/健康定时）
+- 质量收口：终审 5 blocker 单波收口（F-1..F-5）、分层守卫（import 方向＝架构铁律）、117→132 验收用例锚映射零红项
+- 实施计划②接入层落盘：MCP 壳/插件四段/install/真 opencode 对账/T2·T3 e2e——7 任务 TDD
+二、TitanNavi：issue 修复波＋review 循环（14 commits，issue/* 分支，未并 master）
+- issue#173：终点锚定结束门（访问尽不即结束，须在终点旁）＋回指当拍/末程 alongTrack·里程重算，根因与契约入库
+- issue#189：configFilePath 补 mkpath——Android 全新安装导航设置持久化静默失败修复
+- issue#191：网络状态图标加大红叉，绿色✅替换黄色块
+- issue#192：顶栏时间统一 yyyy-MM-dd hh:mm:ss UTC±HH:MM 真实偏移＋invalid QDateTime 守卫＋time-label-text 契约沉淀
+- issue#188：PR #190 合并
+三、OSMDataCompiler：lhzz 数据管线交付＋review-r1 修复批（10 commits）
+- lhzz 专用构建：100万/25万 拆分交付脚本、package --split/--output-dir、N1358 类数据兼容（大小写容错/源目录自动链接）
+- 质量闸与修复：PBF 缓存漂移闸、lhzz-tiles BBOX 改 PBF 实测推导、.sha256 标准化（sha256sum -c 可校验）、9121 valhalla 冒烟 JSON 修复、T7 失败传播退出码
+- review-r1 修复批 F1-F9：25w 清单容器路径/完整性闸、NATIONAL 命名冲突守卫、batch 死代码删除、100w 预删旧合并产物
+四、.dotfiles：经验记忆判据成文化＋基建治理（14 commits）
+- capture 三信号判据成文化（踩 bug/权衡决策/可复用坑位替换裸词「非 trivial」）＋unified-memory 激活描述同步——Loop4 评审修复
+- 基建：nvm 全退役改系统 node v24.22.1、context7/playwright npx 绝对路径修复（MCP spawn 修复）
+- agora 仓内全退役：MCP 块/AGENTS 任务分配节/心跳 cron/enforcer/agora-delegation 模块——gt-aad1 溯源保留
+- 夜间自动化：groom/judge 夜报、gt-7cd9「工作树净」断言治理（多会话仓永假红根治）
+五、semantic-memory：记忆污染治理＋集成测试收口（5 commits）
+- 记忆污染三层治理：W 写侧门/D 蒸馏判据/C 冲突聚簇标注
+- 集成评审 R1/R2 收口：test-integration.sh 端口守卫 TOCTOU 封口（flock 全生命周期互斥）、HARNESS_NOISE_RE 行首锚定（B 册误伤根治）、MEMORY_DISTILL_BATCH=0 钉死 flaky、npm test 自持测试服务生命周期
+六、cross-library（1 commit）
+- gdal-smsdriver 解析加固＋F/H 字段数 off-by-one 修复
+
+【会话调研/未提交】
+- HXNativeApp issue#14：文本文件界面背景透明/透明度/字体大小设置设计（暂无提交）
+- dotfiles：tmux 指示器插件与会话状态 pane 颜色、Agent 协作架构有效性与完备性分析、MCP 加载失败原因分析（均无当日提交）
+- 清理类：遗留 worktree 清查咨询 ×2（dotfiles/OSMDataCompiler）
+================================================
+数据来源：各仓 git log 2026-10-26（Documents＋家目录双轨扫描）＋opencode session_v2 会话表（26 主会话）；TitanNavi 主检出 HEAD 无提交，经 --all 补扫 issue 分支（分支盲区，知识库 1b16839 已记录）
