@@ -1,0 +1,42 @@
+工作日报 2026-10-27（周二）
+================================================
+【今日要点】共 97 次提交，涉及 5 仓（主检出 62 ＋ --all 分支补扫 35）：
+主线：opencode-agora(53)、TitanNavi(17·分支)、HXNativeApp(15·分支)、.dotfiles(10)、OSMDataCompiler(2)
+------------------------------------------------
+一、opencode-agora：agorad 交付日——启用域全仓上线＋狗粮第一批（53 commits）
+- 启用域今晨上线：中央名册按仓休眠＋agora_* 拒、agora-dispatch/agora-ops 双 skill、install skills＋名册骨架接入＋T3 审计两笔修复、F12 需求获批＋计划③——委托闸自此对本机各仓强制（本日报落盘亦走委托派发）
+- 狗粮摩擦第一批：BOOT 角色声明（可用/不可用/等待策略/verify 双路指引）＋dispatch skill 预登记纪律＋MCP 壳 wait 本地休眠（12 工具）；done 纪律补全（每次提交后重跑评审环使锚追上 HEAD）
+- 用户批次（六件前三＋标题）：verify 登记推送通知、名册去缓存即改即生效、board_tui 启动器、task_create 可选 title；会话命名全链「gt-xxxxx: 任务简介」（oc.create 传 title→FakeOc stub→BOOT 断言→board_tui 显示）
+- board_tui 看板：Agent View（链树/五桶/事件流/会话 tail，vi motion）、主循环去 N+1（按键即时重画不等 HTTP）、CJK 宽度感知对齐、列对齐精修系列、取消失败误标「离线」纠偏
+- gate 评审环硬化：评审环缺失探测（verify 绿不自动合并）、B 册 4 findings（门毕还原分支位/门内崩转 reopened/target_branch 信任边界校验）、R2 解析点全限定 refs；task target_branch 字段（外部工作流兼容）
+- 核心与 e2e：main_sid 绑真实 root 会话（R25A 拍人通道真链可达）、access 终审 fix wave（root 附牌回落/自愈接线）、T2 强制七例、T3 十二场景全链、seed_credential 密钥最小面、enforce 旗按需拉取
+- 文档：双语 README＋Runbook、事实一致性核查修正、项目知识库首次归档
+- 进行中：gt-32c051 AGORA_HOME 指针文件（MCP 配置单点、四组件统一发现）评审环 R2/R3 修复中（3 commits 在分支，22:22 仍在跑）
+二、TitanNavi：issue 波五线并行（17 commits，issue/* 分支＋PR 合并，主检出无）
+- issue#173：在航锚定方案B——问题1/2/3（在航不报角度偏航、前跳偏航态门、方案B在航锚定、顺序下一未访问点）＋ocr 评审修复（gt-b93261 经闸自动合并）＋跑车四问顺序优先入库
+- issue#197：长距离直线航段（>2000m）每 30s 定时播报精确剩余距离＋播报条目（段长口径/停表语义）入库
+- issue#196：导航两浮层车机糊字/重影——可见期异步刷新合成＋移动后即时重绘，PR #199 并入 master
+- issue#198：静音按钮图标改静音标志＋NaviAnnoList 航点绿底白框专用标记
+- 图标收口：卫星四态图标三轮迭代（银灰家族→恢复轮廓→恢复原图结构仅配色重映射）；昨日 #191 网络图标/#192 顶栏时间随 PR #193/#194/#195 相继并入 master
+三、HXNativeApp：Gitea issue 五线修复（15 commits，issue/*-fix 分支，master 未动）
+- issue#14：导航三浮层切页重影——切回地图页强制重绘＋挂入地图组件覆盖层根治跨页重影；DataPanel 墨色玻璃半透明化＋字体收敛样式表单源；Bug Experience 入库
+- issue#16：快速导航规划路径落盘（复用 routepaths＋routetype 判别）＋路径管理查看规划页（查询/删除）
+- issue#17：MapTools 注册态改内存跟踪、drawMapLine 恢复可调用并适配 MainWindow；ocr＋二轮评审修复（防抖全参数化、自愈挂 themeChanged、重入导航摘旧线）
+- issue#18：TrajectoryManagerModel 支持导入外部航迹 JSON 文件
+- issue#19：点击地图无法到达此处——激活 mapClicked 快速标点回填＋m_AnnotationManagerModel 初始化（gt-c444f1 委托修复，21:35 经闸自动合并）；接入定位/卫星信号显示（星座图＋信号强度柱形图）；快速标点成员模型恒空 Bug 条目入库
+四、.dotfiles：tmux-calm 一日生死＋经验库共写安全（10 commits）
+- tmux-calm 诞生与退役：opencode TUI 重绘风暴一键恢复（respawn-pane 保留会话）→ 实弹三轮修复（{} 字面量/pane 目标缺失/路径塌缩/会话撞车）→ 终因实弹两缺陷＋同项目会话撞车退役移除（用户改选 TUI 手动退出路线）
+- 经验库共写安全约束：批处理流对既有 experience 文件只读＋CAS 校验（mtime/哈希），增量一律新 capture（判例 090312-d7d1 被并发回写覆盖 ~30 行）
+- 夜间自动化（02:0x）：groom/judge 10-27 夜报（M 0/3 E 0/2，H-1 续 H-2 闭环，抽样 1 账实不符呈人工）、ingest 11 积压经验、recorder artifacts
+- README 部署清单账实同步（审计抓 6 处漂移）；TitanNavi QML 浮层糊字/重影对策经验草稿
+五、OSMDataCompiler（2 commits）
+- lhzz import：iconv 非法序列容错降级（严格优先，-c 兜底＋WARN）
+- offline-export：guide/README 增补 2026-10-26 管线更新说明（一键构建/拆分交付/9121 源切换/驱动修复）
+
+【会话调研/未提交】
+- Work 仓：车机镜像存储位置咨询
+- HXNativeApp：GGA 高程异常值返回字符串调试（未见提交）；导航面板结构探索（explore）
+- .dotfiles：Worktree 遗留问题咨询
+- opencode-agora：gt-32c051 AGORA_HOME 评审循环进行时（R3 裁定 A 已落，verify 未过）
+================================================
+数据来源：各仓 git log 2026-10-27（双轨扫描：.git 目录/符号链接/worktree 文件全形态＋--all 分支补扫＋哈希去重；HXNativeApp 为 .repo 符号链接仓，旧扫描 -type d 盲区本轮已修复）＋opencode session_v2 会话表（64 会话＝主 28＋评审件 36）；计数截至 22:22，gt-32c051 仍在提交
