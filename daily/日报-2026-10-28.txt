@@ -1,0 +1,39 @@
+工作日报 2026-10-28（周三）
+================================================
+【今日要点】共 144 次提交，涉及 7 仓（主检出 75 ＋ --all 分支补扫 69）：
+主线：opencode-agora(59)、TitanNavi(34·分支)、HXNativeApp(26·分支)、.dotfiles(12)、OSMDataCompiler(5)、semantic-memory(5)、HXRouteServer(3)
+今日模式：issue-agent 评审环＋终闸三册（A需求符合性/B崩溃风险/C安全）在 TitanNavi、HXNativeApp、HXRouteServer 三仓大规模运转（当日 147 个活跃 opencode 会话）
+------------------------------------------------
+一、opencode-agora：委托闸安全加固＋看板 TUI＋性能救火（59，主检出 52＋分支 7）
+- 鉴权安全：bind_worker 拒已占 caller sid 防跨任务冒充（终闸 C 册 blocker）；worker 牌换号自愈——活动任务 worker 漂移即改绑；wait 指针读加固（torn shapes/CR token/401·403 吸收）
+- 合并闸堵 TOCTOU：accept→run 窗口锚重验——锚缺失/落后/未绿驻留 done 不合并（兼堵 done 后偷提交）；评审环缺失时降级放行
+- F13 参数契约硬化（gt-e103ae 三连拒实证驱动）：post.kind 六词汇枚举＋done=纯 40 位 sha 契约＋accept_done 三拒扩五拒＋bad_request 审计留痕
+- board TUI 大改：全局森林视图＋server buckets＋repo 列；数字键 1-5 bucket 切换；两行键提示＋可折叠链树（h=3 崩溃修复、深树 DFS 显式栈防爆栈）；sticky bucket header 防 G/g 滚丢；k 键首行驻留＋last_seen 列宽单测
+- 性能救火：last_seen 心跳改内存态——每工具调用快照 append 把 tasks.jsonl 放大至 4.4GB，现仅真实变更落盘；ledger 引导解耦（1MB 尾读＋500 行有界压缩）
+- 稳定性：F5 二批僵态免判（touch 只认 worker、busy/in_gate 免判、启动清残闩）；F16 sid 血统 dispatcher 换号链边连续；agorad setsid 存活改造；agora wait 阻塞 CLI（F14）＋timeout 拒 nan/inf/负值；env 活性观测＋remove_env 回收兜底补漏
+- 知识沉淀：TUI 三坑（行算术/深树遍历/origin 回滚）入 knowledge；review-loop 开源用户标准指导
+二、TitanNavi：直行播报全链＋偏航走廊解耦（34·全在 issue 分支，主分支未合）
+- issue#197 直行播报：离航计拍与归零分离（R1 冻结门成真，用例34 回归）；播报带目标点名＋周期可配置；i18n 补 en/fr；i==0 虚拟航段冻结门豁免；存量缺翻译勘误（实测 14 条）
+- issue#205 偏航走廊：偏航态分类改独立在航走廊门限——解耦偏航距播报门限 50↔500 回调；ETA 改用平均行驶速度承载剩余时间（issue#204）；NearestFirst 剩余里程自当前目标链式累加
+- 评审钳制：用例 35/36/37 显式钳制到达 25m/走廊 50m/播报 70m 门限防缺省漂移；首弯播报 index==0 豁免
+- issue#173 到达链：级联到达信号名错配修复＋三轮 master 吸收合流
+- 构成：本人 26＋wangfx 4 PR merge＋TiTan 3＋issue-agent 1
+三、HXNativeApp：浮层重影＋航迹导入＋电子围栏契约（26·全在分支，本人 18＋qinchuan1 8）
+- 导航三浮层跨页重影：挂入地图组件 overlayLayer 根治（补 overlay-manager Bug Experience）
+- issue#18 TrajectoryManagerModel 导入外部航迹 JSON：R1 三分册＋R2 零共享验证（查重种子双键）＋title 清洗对齐编辑弹窗不变量；航迹导入边界三坑入知识（特殊文件 size()/录制末行约定/迁移标记门控）
+- issue#20 电子围栏 Qt 原生后端注册失败：经纬度顺序契约违反——widget 变量名交叉致 MapPolygon 产序翻转为 (lat,lon)；坐标契约方向性勘误入知识
+- issue#21 AnnotationEditDialog：图标下拉＋地图点击回填经纬度；新建/编辑航点对话框共享单实例守卫
+- DataPanel 墨色玻璃样式（rgba 半透明底＋字体样式表单源化，删 15 个逐标签 font）
+四、HXAppPlatform 工具与服务（8：OSMDataCompiler 5＋HXRouteServer 3）
+- OSMDataCompiler：repack-aux-data.sh 一次性重打包（dist tar aux/→aux-data/，gt-961483 salvage）＋三轮评审加固；aux/ 改名 aux-data/（AUX 是 Windows 保留设备名）
+- HXRouteServer：降级模式——缺规划数据不再杀插件（含 worktree 分支恢复版）；HandleGuard e2e 加固防拷贝
+五、.dotfiles（12，主检出 11＋分支副本 1）
+- review-loop 欠债账本修复：审计写后置＋评审产物不计编辑测试
+- bg-wait 配方表收编 agora wait 阻塞 CLI；opencode.json 接入 agora mcp server＋semantic-memory 进 mcp-shell allowlist
+- agent-experience 夜批：22 条积压经验 ingest（Wave 1 机械修复）＋weekly digest 1024-1027＋nightly judge/groom
+六、semantic-memory（5）
+- hybrid 检索：min_cosine 相关性地板扩展至全部命中（BM25 不再豁免）＋两轮评审边界声明收窄
+- supersede admin 子命令（手动退役）；verify-env 补 pytest subprocess PYTHONPATH 变体
+================================================
+【落盘说明】cron 主路径直写（900s 硬超时窗口内派发链不可完成；软闸无硬拦截，req-gate 已留痕）
+数据来源：七仓 git log --all（2026-10-28 Asia/Shanghai；含 worktree 分支）＋opencode 会话库（session_v2）
