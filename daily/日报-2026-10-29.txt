@@ -1,0 +1,29 @@
+工作日报 2026-10-29（周四）
+================================================
+【今日要点】共 78 次提交，涉及 5 仓：
+主线：opencode-agora(48)、TitanNavi(19)、.dotfiles(8)、semantic-memory(2)、OSMDataCompiler(1)
+------------------------------------------------
+一、agora 多 agent 协作引擎（opencode-agora | 48 commits）
+- 合并闸健壮化（F29）：ff 判定改按祖先关系分类、merge-base 失败显式抛错不再伪装非 ff、拒绝信息带实际 ref 与双 sha；任务 id 前缀演进 gt-→task-→ag- 三形态兼容
+- verify 硬闸（F23）：task 创建时原子注册 verify、派发缺 verify 硬拦、httpd 边界参数类型校验
+- attach/pull 面（F27）：拒因三分流封根回退、节流窗内重放末次判定修复主会话二次附着、macOS 启动路径
+- 自愈与闸门：worker 凭据周期重注入＋拉取式自愈（F25 根因：合成提示绕过 prompt hook，exec-vector 锁死）、task_cancel 忙闸＋status 三态读数（F28）、闸拒因分流＋wrong-door 文案（F26）
+- 积压治理：triage 11 项 backlog（board_tui 错误语义、bind_* TOCTOU、install.sh token 泄漏面等）＋4 轮评审收敛至绿；README 双语重写（split-authority 定位）；lift 记忆化 success 复验
+二、TitanNavi issue-agent 修复（TitanNavi | 19 commits，含 4 次他人合入）
+- issue#204：NavResult 增终点距离字段、面板改终点距离＋在途时间/瞬时速度冻结口径、terminalDistanceMeters 缺省初始化补漏；master 冲突消解；navigation-controller 冻结口径入库
+- issue#208：TTS 派发看门狗兜底终结信号彻底丢失（车机音频栈死亡防 TTS 链楔死）；看门狗主动 stop 补吞旗记账、下界钳 1ms；tts.md 定界入库
+- issue#198：marker_green.png 改纯换色版、去多余加宽白边
+- 知识页维护：eta-average-moving-speed 标注已被取代、末程剩余里程门改前向链空判定、用例号回填 38/39＋QThread 清理
+三、经验记忆与基础设施（.dotfiles | 8 commits；semantic-memory | 2 commits）
+- agent-experience 夜间治理三件套（groom/自用/裁判报告）＋16 条积压经验批量 ingest（含 Wave 1 机械修复）
+- semantic-memory：recentUserText 查询侧污染闸（注入块回流＋hex 主导不召回）、rerank_model=auto 按启动空闲显存自适应 2/3 模型常驻
+- opencode 配置：mcp-shell 增 MCP_SHELL_SAFE_PATH；README C 节补 agora 插件恢复路径
+四、会话调研工作（未提交/进行中）
+- TitanNavi 新 issue 派发修复中：#213 退出导航按钮样式、#214 PathProgressWidget 未走过线颜色主题跟随、#217 自动切换功能模式（worktree 修复流，当日未见 master 落点）
+- HXNativeApp issue 线：#17 MapTools、#18 TrajectoryManagerModel json 解析、#20 围栏注册失败、#24 模拟导航调用流程 docs、#25 地图缩放后恢复导航耗时（评审会话密集）
+- HXGISServer：hxgisserver.ini 地图数据根目录与 mvt 配置
+- 调研：MapLibre Native Qt Win10 性能（.dotfiles）
+五、OSMDataCompiler（1 commit）
+- gjb-sms-lhzz 图层按 kind 跨 nat/regional 组重排
+================================================
+数据来源：各仓 git log（2026-10-29 双轨遍历）、commit body、opencode session_v2 直查（当日 133 会话，剔除评审碎片后归纳）
