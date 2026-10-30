@@ -1,0 +1,42 @@
+工作日报 2026-10-30（周五）
+================================================
+【今日要点】共 65 次提交，涉及 6 仓：
+主线：kiln(23)、opencode-agora(18)、.dotfiles(11)、OSMDataCompiler(6)、HXNavigation(4)、semantic-memory(3)
+------------------------------------------------
+一、kiln——Keil 工程 Linux/Docker 离线质量 CLI 环境（全新立项 | 23 commits）
+- 设计文档获批后一日贯通全链：CLI 骨架→uvproj(x) 解析器（容忍性契约）→构建生成器（Makefile/compile_commands/manifest）→kiln-ac5 镜像+build 子命令+gcc 后备轨→analyze 镜像+lint 双引擎基线门禁→宿主测试管线（ASAN+Unity/CMock）→QEMU sim 管线（超时假绿防护）→release 门禁+bundle 离线打包（sha256）→acceptance 脚本+README/AGENTS 契约（Task 7-10）
+- 三轮评审收敛：解析消毒（BOM/路径归一/引号转义）、注入防护（uvprojx/scatter 注入）、安全加固（TargetName 越界、_SHELL_META 防重定向绕过、缺校验和拒装）
+- 知识沉淀批2/批3（构建管线踩坑与决策）随绿入库
+
+二、opencode-agora 平台强化（18 commits）
+- F31 PyPI 分发：pipx 一条链完整安装＋评审修复（userbase 数据面/argv 假象）
+- F32 合并门内自动 rebase（non-ff 自愈）＋环境消毒＋凭据半条缓存＋收口
+- F33 豁免面收编 req-gate 门记录目录（.omo/.req-gate 新旧同收）
+- F34 req 编号服务端发放——并行撞号根治＋数值判重/种子解码兜底
+- 安全：write_ephemeral 建 tmp 即 0600（tokens 不再 0644）；F25 拉取自愈补逆半条缓存；F30 nested dispatch 生命周期收口＋pinned 测试
+- 知识沉淀：O_CREAT mode 仅建时生效、wheel 数据面两坑
+
+三、.dotfiles 工具链治理（11 commits）
+- req-gate 状态目录改名 .omo→.req-gate：插件路径/双豁免/gitignore/selftest 三态断言
+- isExemptPath 折叠 ./.. 段封穿越放行（评审轮1 C1/O1/O3＋OCR）
+- 第7维测试用例盘点并入开工前需求快检；bg-wait 配方补 agora wait 实证语义
+- agent-experience 夜间波：groom/judge 报告、15 条积压 ingest、他会话遗留 capture 落库×3
+
+四、HXNavigation 引擎（4 commits）
+- progress 契约增强：position/heading＋signal_restored＋state_changed 事件（signal_restored 挂 raw RMC 有效性而非门验收）
+- 长失锁大位移恢复修复（跳点门楔死 recover matching）；清理 write-only last_valid_ts_
+- lib-HXNavigation linux 重发布（ag-954665）
+
+五、OSMDataCompiler sms-lhzz 图层（6 commits）
+- 岛屿面路由进 landuse＋属性顺序修正＋合并产物 --overwrite；nat-landuse-island 改指 gjb_landuse/class=island
+- 面层简化参数统一 level=0.0001/ratio=1；行政区面（210304）倍级插值透明度渲染为陆地底色
+
+六、semantic-memory（3 commits）
+- POST /supersede 人工退役端点（会话冲突裁决确定性通道）＋uid==by 自我退役拒绝＋README 端点表
+
+七、会话调研/进行中（未提交）
+- HXNativeApp：issue#24 progress 位置来源补正、issue#25 缩放后恢复导航耗时、issue#26 along/lateral 反算经纬度、issue#27 二次导航无图标；H5 对接（总结页/到达判定/route_strategies 协议 MD＋图文指南）；测试面板新导航契约 e2e（进行中）
+- TitanNavi：issue#198 图标、issue#221 用户使用手册更新，多轮三册评审收敛
+- gjb-sms-lhzz 图层遮挡优化、L0 持续拒绝⇒重基线自愈策略（进行中）
+================================================
+数据来源：各仓 git log（2026-10-30）、opencode session_v2 库（112 会话，剔除评审子件）
