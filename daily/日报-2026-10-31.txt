@@ -1,0 +1,33 @@
+工作日报 2026-10-31（周六）
+================================================
+【今日要点】共 47 次提交，涉及 6 仓：
+主线：HXNavigation(13)、HXNativeApp(10)、.dotfiles(8)、kiln(7)、lib-HXNavigation(6)、OSMDataCompiler(3)
+------------------------------------------------
+一、车机导航·引擎与偏航重构（HXNavigation | 13 commits）
+- 偏航判定重设计：方向主判据锚定当前路线（ag-ab990c），空转 no-fire 测试改真实阈值边界 pin
+- 角度分级确认窗：180° 逆行 ~2s 秒判（ag-4ff037），三轮配置守卫评审修复（degenerate RPC 值 clamp）
+- 备选路线：显式 switch_route RPC 替代自动级联（ag-abc803），start 回复携带全量 routeset 几何；终闸修复（winner 捕获/状态守卫/switch_point_radius_m clamp）
+- RPC 线协议：全部回复补顶层 ok 键（ag-dae3e4）+ 线契约定档 + guidance_status 文档纠偏
+- 引擎修复：模拟暂停静默后 relock 的 signal_lost/restored 配对回火
+二、车机导航·App 端与实机测试（HXNativeApp | 10 commits）
+- 实机注水测试能力：RMC 五剧本生成器 + 面板实机注水按钮（真实模式 /nmea/RMC 逐帧注入 + 会话令牌守卫）
+- 剧本6 reversal 逆行秒判 e2e（≤4s 断言）；备选路线应用接线（routeset 渲染 + 显式切换）
+- 导航 UX 三小活：wrong_turn 剧本 / 导航线宽加粗 / NavCard 常显（含两轮评审修复）
+- RouteService 途径点名字必填（worktree 分支待并）；bearing 单位标注 km→m；qAsConst 警告清理
+- lib-HXNavigation 五连发（6 commits）：linux 6c2c8d4→0e073df0 重发布 ×5 + PX 笔误头文件删除
+三、地图数据线（OSMDataCompiler | 3 commits）
+- gjb-sms-lhzz 全类型体检工具 + cat27 军事面路由拦截（landuse=military 改道 gjb_military_area）
+- server 修复：daemon pid 错位 + 端口占用静默假成功
+四、kiln·ARM Keil Docker 化（kiln | 7 commits）
+- bundle 打包清单补 AGENTS.md（ag-9017dc：hermetic docker shim 跑真 cmd_bundle 脱离 license 镜像 + 两轮评审修复）
+- kiln arch 架构快扫子命令 + kiln-arch-review skill（计划外新需求）
+五、agent 治理线（.dotfiles | 8 commits）
+- granularity-gate skill 落地：派发粒度闸 + AGENTS.md 清单节（ag-f7b6de）
+- 经验库夜间治理：ingest 8 条积压（Wave 1 机械修复）+ groom/judge 例报；practice 轮次 2 连 PASSED_VERIFIED
+------------------------------------------------
+会话调研工作（未提交）：
+- 途径点提示 / 渐进式语音提示 / 起终点搜索范围及配置——导航功能规划三题（HXNativeApp/HXNavigation）
+- gjb-sms-lhzz 25 万图是否含单行道与转向限制调研（OSMDataCompiler）
+- 智能体任务粒度与自主权判断标准（.dotfiles，granularity-gate 后续讨论）
+================================================
+数据来源：六仓 git log（2026-10-31，含 --all 补扫 worktree 分支）、opencode 会话库 session_v2（当日 105 会话，已剔评审子代理碎片）
