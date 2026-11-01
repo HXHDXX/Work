@@ -1,0 +1,37 @@
+工作日报 2026-11-01（周日）
+================================================
+【今日要点】共 73 次提交，涉及 8 仓：
+主线：HXNavigation(24)、opencode-agora(17)、HXNativeApp(11)、HXRouteServer(6)、.dotfiles(6)、TTSPlayer(5)、lib-HXNavigation(3)、TitanNavi(1)
+------------------------------------------------
+一、HXNavigation 语音引导体系攻坚（24 commits）
+- 渐进式语音阶梯 GREEN：4 级 pre 阶梯（far/s1/s2/s3）每机动一次播报＋重叠/警戒线双门丢弃；评审修 far 档时序陈旧与 1e5 上界钳制（ag-c91e5d）
+- lateral 语义根修：off_route 偏航改用真垂距（原投影簿记值=沿轨间隙，实机在线会话被 lateral=190 误杀）；永久 pin 审计＋4 组 RED 先证测试（ag-04de3d）
+- 话术双雷填坑：post 档不再借用近时态叙事、pre 档叙事原文直出不加距离前缀防双报（ag-0fe9a2）；到达机动 pre 借 alert、post 回退 instruction（ag-b9772f）
+- 多语言链路：start_guidance 叙事语言透传＋全 valhalla 文案六语种距离前缀（ag-1d7cd5）；est 语种化 cps＋en 恰 1 公里单复数（ag-92030b）
+- 语速标定落地：speech_rate_cps 4.0→4.5（huayan 生产音实测 4.79-5.18cps，保守 ~6%，ag-b110e9）
+- 隧道恢复宽限期：signal_restored 重置偏航分类器＋全扫描重锚，3 轮评审收口残留路径/间隙零证据/快通道时间戳（ag-c2ddab）
+- 工程质量：GuidanceConfig::sanitize() 抽取＋边界守卫族（ag-c355da）；clang-tidy 40 条存量警告清零＋知识沉淀（ag-0d59bc）；off_route 终局化＋session id 上线（ag-5b29a8/ag-1b13b1）
+二、HXNativeApp SDK 与实机注水联调（11 commits）
+- 途径点命名体系：名字必填→Cf 类过滤→契约演进（六语种默认名＋连接符白名单）→默认名退役收敛服务层
+- 实机注水修复链：几何源改取引擎 routeset 活动线（尾段 lateral=215 根修）→步长守卫 fail-fast→逐拍 DIAG 对照插桩；注水定时器泄漏排查（步长翻倍）
+- SDK 清偿包：ghost 过滤＋polyline6 UB 根治＋facade 守卫评估；off_route 终局契约消费＋e2e 重构 3 会话；导航启动静默透传规划语言（ag-086641）
+三、HXRouteServer 路由服务（6 commits）
+- 叙事语言透传＋代理侧校验，2 轮评审堵语言门洞＋拒绝重复 directions_options
+- 服务端途径点默认名（六语种表）＋UTF-8 解码加固＋重名键线性重建
+四、opencode-agora 派发治理平台（17 commits）
+- 闸门健壮性三连：F35 未跟踪名册 .git/info/exclude 机制化；F36 verify 超时软硬双顶＋驻留 done 取消直结；F38 终闸停链显式栈（visited 只消环不消链深）
+- F37 收回 worker 验收授权：全局角色判定＋子任务继承＋豁免旗收权
+- ag-0d2daa gate env 供给：检出预置 submodule＋检出依赖 LFS 物化＋push 失败附输出尾（3 轮）
+- F33 名册收编 .review-loop（issue#222 实测误伤面，用户批准）；issue-agent inject 单消息双标记自举＋回合 prompt 发牌过 write 闸（配 .dotfiles Task 1/2）
+五、支撑线
+- TTSPlayer(5)：中文语速离线标定探针＋报告 4 轮评审收口（探针健壮/方差口径/LFS 自举），产出 docs/speech-rate-calibration.md 支撑语速落地
+- lib-HXNavigation(3)：3 次重发布（e10c33f1/cbe98c51/9e7de5e9）
+- .dotfiles(6)：issue-agent 回合发牌；agent-experience 夜间流水线（groom/reflect/judge/周报 digest/ingest 4 条积压）
+- TitanNavi(1)：agora 闸连通性探针（issue#222）
+------------------------------------------------
+【会话调研工作（未提交）】当日 109 个活跃会话（含派发 worker 与终闸三册评审件），主线外补充：
+- ag-b04254 引擎自拼中文退役调研（叙事真源收敛，22:01 仍在进行）
+- HXNativeApp 实机联调验证：引导提示触发与车速、路径规划后的引导模块、途径点提示
+- .dotfiles：agora 对 issue-agent 连续提问影响分析；经验库夜裁判＋GROOMING 协议执行（凌晨）
+================================================
+数据来源：各仓 git log --all（2026-11-01，author-date 去重，含 symlink-.git 仓补查）、commit body、opencode session_v2 SQLite（时间窗 +8 区）
