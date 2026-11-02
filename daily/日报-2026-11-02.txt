@@ -1,0 +1,40 @@
+工作日报 2026-11-02（周一）
+================================================
+【今日要点】共 35 次提交，涉及 5 仓：
+主线：OSMDataCompiler(16)、opencode-agora(8)、HXNavigation(5)、HXRouteServer(3)、.dotfiles(3)
+------------------------------------------------
+一、GJB 25 万图制图规范落地（OSMDataCompiler | 16 commits）
+- 水面纹理符号全套：沼泽横线纹／盐田格网／泥滩沙色纹（gjb-sms-lhzz）
+- 规范修正：160603/160604 沼泽水系青专层渲染；1607 堤改路由灰线（GJB8023）
+- 政区面与内陆水体透明度分层定稿：gjb_admin_face 独立政区面层 z4-14；
+  water-inland-restore 层经 Revert→Reapply→归因定稿（恢复排除无 gjb_code 版）
+- 工程侧：瓦片 URL 注入 build 版本参数＋/styles JSON 禁缓存（样式迭代即生效）；
+  移除外部 shapefile 引用（架构裁定）；inspect-gjb-types 遮盖检查前缀可配
+
+二、导航播报引擎化（HXNavigation 5 + HXRouteServer 3 | 8 commits）
+- 终局话术迁引擎：到达/偏航六语言列＋到达后豁免填充＋偏航 verbal_instruction（ag-58626c）
+- 中文数字串逐位读：speech_units 音节展开估算＋review 修正（ag-fff2fa）
+- 三级语言优先级链：顶层 > directions_options.language > 默认（ag-76135d）
+- HXRouteServer：apply_language 重复语言键 O(k²)→单遍重建，两轮评审修复
+  （零触碰阈值常量化、精确保留、守卫保真）
+
+三、agora 工具链与经验库（opencode-agora 8 + .dotfiles 3 | 11 commits）
+- agorad.env 旋钮缺省层：env>文件>代码默认，supervisor 重生免疫（ag-fc67bc）；
+  评审环两轮修复（agorad.env 收权 0600、坏键容错、重复键首见生效）
+- UTF-8 解码加固：verify 输出管道／分支处理路径 errors=replace（ag-fa17e4 门崩根因、ag-e96140）
+- F33 名册收 .superpowers：SDD 账本/workspace 写入免拦（部署实测误伤修复）
+- 知识索引瘦身至 12KB 门内（同域两并，零实体删除）；agent-experience 夜间
+  治理/裁判波自动化＋5 条积压经验入库
+
+四、会话工作与缺陷处置（当日未落主仓提交）
+- HXNativeApp 缺陷：#27 导航结束二次导航无图标、#28 电子围栏异常、#29 导航测量异常；
+  MSC-26-RW033 变基 master；比例尺 mpp 常数改 MapLibre 512 系（ag-332d55）；
+  到达/偏航提示语六语种化（ag-449e95）；话术切引擎＋recency 观测（ag-5410aa）；
+  叙事链终验 verbal 非空契约（ag-fa17e4，R2-R6 多轮评审收敛）
+- 发布链：lib-HXNavigation 多轮重发布（叙事链/语言优先级/终局话术/数字音节）
+- TitanNavi：issue#221 v2 基线守卫、#225 ins.ini 门控惯导显示、#229/#230 发牌 e2e 探针验证
+- 调研：阿联酋 OSM 数据构建 MVT 与 Valhalla；gjb-sms-lhzz 25 万图单行道/转向限制覆盖；
+  引导提示触发与车速关系；Work 仓 4-11 月日报能力信号分析（4 批）
+================================================
+数据来源：OSMDataCompiler/HXNavigation/HXRouteServer/opencode-agora/.dotfiles git log（2026-11-02）、
+commit body、opencode 会话 DB session_v2（当日 107 条会话，剔 subagent 碎片后聚类）
