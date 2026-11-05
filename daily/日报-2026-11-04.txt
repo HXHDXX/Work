@@ -1,0 +1,42 @@
+工作日报 2026-11-04（周三）
+================================================
+【今日要点】共 52 次提交，涉及 6 仓：
+主线：kiln(17)、HXNavigation(11)、opencode-agora(11)、HXNmeaParser(5)、.dotfiles(5)、HXGuidance(3)
+另有 HXNativeApp/TitanNavi 大量派发与评审会话（成果在 worktree 分支，主仓无当日提交）
+------------------------------------------------
+一、kiln：ARM Keil Docker 质量环境（17 commits）
+- bundle 自包含 runtime 载荷：kiln-runtime.tar.gz（git archive 快照+VERSION）＋installer 三步指引＋sha256 sidecar 前置校验＋版本链全链包位置锚定（多轮评审收口）
+- 外部工程容器挂载：源+include 公共根同路径挂载接入 lint/test/_build_ac5；挂载面信任边界收口（不可信 uvprojx 路径不得直通 docker -v、LCA 逃逸复核），commonpath 陷阱入知识库
+- ByteQueue 表征测试 13 例＋ASAN 实弹探针（默认关）＋TypeDef.h 大小写垫片
+- lint manifest [lint-exclude] 节：厂商目录账本瘦身
+- OLED 工程宿主测试 manifest 草稿＋逐文件证据表
+- .gitignore 补 dist/（派发方授权治本，防归档产物误入库）
+二、HXNavigation：导航引擎引导（11 commits）
+- 引导全路况测试矩阵：10 路线 fixture 冻结＋NmeaSimulator stopngo/hdg_jitter 钩子＋15 格 road_type×sigma 矩阵全绿
+- 途径点到达话术收窄：到达播报指令化、终末端短语仅在最后机动、单一 final-post 权威＋去重
+- 评审修复：wrongturn 2s 下界恢复、pre-onset 守卫、road-matrix 零警告门 3 处 clang-tidy 清理
+三、opencode-agora：派发治理（11 commits）
+- F50 跨仓交付编排纪律：维持一任务＝一仓交付；跨仓交付＝两顶层任务＋after 串依赖
+- F51 verify 任务级 timeout 预算（超时双顶语义沿用 F36，上界按硬顶系数收口）
+- F52 stalled 拍人附末次活动摘要（供给文本拍平防伪造、降级省略年龄段）
+- F53 派发上下文留痕纪律
+四、HXNmeaParser：MSS 协议插件（5 commits）
+- MSS 频点-支路对 3 组固定→变长列表（业务 7 组），测试先行
+- 终闸 blocker 修复：ns() 兜底对 boolean/array/object 置空，防 type_error.302 跨 C ABI；freqs 元素守卫
+- 决策入知识库：MSS 变长布局，旧 3 组条目标注 Superseded-by
+五、.dotfiles：经验库治理（5 commits）
+- agent-experience 夜间 groom：ingest 7 条 backlog、同义标签统一（hxnativeapp→HXNativeApp）、INDEX 同步、groom 报告
+六、HXGuidance：GJB 5067A 标准（3 commits）
+- GJB 5067A-2012 转录对齐 PDF 扫描件（图引用/示例句/交叉引用），记 2 条原文异常
+- 补齐 §3.5 高程基准与顺序导航设置项（config 13→15 字段落账）
+------------------------------------------------
+七、会话派发/调研工作（成果在 worktree 分支，未入主仓当日提交）
+- HXNativeApp issue 修复线：#32 电子围栏新建不显示、#34 ThemeManager 主题切换、#36 强制删除用户数据、#38 卫导状态图标与昼夜切换、#41 点击地图测量、#42 startGuidance、#33 buildSegments、#37 json 字段解释
+- 地图交互修复：缩放按钮双击误触、旋转按钮屏幕中心旋转＋跟随暂停/恢复、启动自动进跟随态恢复、定位模块双初始化收敛、MapControlWidget easeTo 过期缓存
+- 平台基建：ccache 容器内自动自举、check 门语义翻转＋ccache 目录预建、tidy-diff 门三项补强、MapApiTestPanel 单开关化；HXMapWidgetNative 程序化暂停/恢复跟随 API＋overlay 子控件门控
+- NmeaMssParams 列表化＋freqs 序列化（SDK+UI）
+- 构建部署：HXNavigation 全平台 Release＋dev-lib 部署、libplugin-HXNavigation 全平台重建、HXNmeaParser 四平台产物发布
+- TitanNavi：issue#221/235/240/241 多轮评审＋当前功能清单摸底（无当日提交）
+- GJB 5067A-2012 导航协议阅读理解（HXGuidance/Work 会话）
+================================================
+数据来源：kiln/HXNavigation/HXGuidance/HXNmeaParser/opencode-agora/.dotfiles git log（2026-11-04 双轨收集）、opencode 会话库（当日 234 会话，含派发/评审子会话）

@@ -1,0 +1,30 @@
+工作日报 2026-11-03（周二）
+================================================
+【今日要点】共 63 次提交，涉及 7 仓：
+主线：TitanNavi(28)、semantic-memory(9)、HXNavigation(8)、opencode-agora(7)、kiln(5)、.dotfiles(5)、OSMDataCompiler(1)
+------------------------------------------------
+一、车机导航·TitanNavi 三 issue 线收官（TitanNavi | 28 commits）
+- issue#221 手册黑方块：缩进改全查看器通用写法（剥离 firstLineChars 扩展属性，补表格单元格 5 处盲区——d.paragraphs 不含表格段）；按任务书需求对齐补齐（地图格式/基准转换/比例尺系列）；issue/221-fix 多轮连夜合入（#231~#239）
+- issue#225 惯导门控：关于系统五连击+密码认证切换惯导模块显示（弃 ins.txt 文件方案）→ 惯导可见性改 SystemSetupWidget 状态自管 + 确认弹窗换自研 autoMessageBoxWidget；判例知识页 ×2
+- issue#235 断点恢复导航：navstate.json 断点档 + 首个真实定位静默恢复 + 知识模块（nav-state-restore）四接线点入库
+- scalebar：mpp 改用 MapLibre 512 系常数，修刻度与 1:N 比例虚大 2 倍（ag-3993f3 修复→ag-960d63 rebase 落库 master）
+- review 线：状态栏吸收 spacer 改跑马灯原位插入；三分册+ocr 评审 Trivial 修复包（4 项）
+二、车机导航·HXNavigation 引擎双修（HXNavigation | 8 commits）
+- guidance progress 降采样拍频（ag-62d7ff）：阈值 1.0→0.6 消 1Hz 输入隔帧发射跳过 + R1 回归边界收紧 + knowledge ingest（gate==period 陷阱判例）
+- off_route@545m 确定性误触发（ag-624b72）：终态通道归因 + 证据快照；锚窗扫描改沿投影定位（修急弯顶点自锁）；R1/R2 评审修 first-win 守卫可达性与深锚几何；knowledge ingest（窗口锚须跟位置非索引）
+三、地图数据线（OSMDataCompiler | 1 commit）
+- gjb-sms-lhzz sprite 产物更新：纹理套件 127 图标
+四、kiln·ARM Keil Docker 化（kiln | 5 commits）
+- bundle --without-ac5 部分打包：三非 AC5 镜像/缺省 bundle-noac5.tar.gz/installer 按 tar 清单警示 AC5 缺位（+评审轮1：OCI 全限定名容错、pipefail 空匹配防中止）
+- kiln-vcs 镜像 + clone 子命令：唯一带网运行面（默认桥接网、限内网 VCS）；终闸 B/C+ocr 安全修复（dest 拒越界、git/svn argv -- 分隔防选项注入、svn 密值键名继承、回显剥 userinfo、network 允许集 {none,bridge} 收口离线红线）+ 评审轮2 边界归一
+五、agent 治理线（opencode-agora 7 + semantic-memory 9 + .dotfiles 5 | 21 commits）
+- agora：任务终态/reopened 实时注入 dispatcher 会话（merged 直投 + reopened 拒因摘要，TDD 路由/幂等/分级三分线）+ 评审环 R1 三修；board 数据面 N+1 根治（full view 单调用+懒 detail）；门基线先 fetch 防误拒假 non-ff；F46/F47/F49 补账
+- semantic-memory：噪声闸两族独立短路（凭据硬拒 + 派发页回显）；夜扫噪声清扫 noise_sweep（定时全库+疑似晨报+手动端点）过评审环 R1/R2；agora 插件停发闸 + supersede 真源回搬；noise 模块页沉淀
+- .dotfiles：agent-experience 夜间治理三连（ingest 16 积压 + groom/judge 例报）；req-gate 快检记录出仓至 <TMPDIR>/opencode/req-gate（不再脏仓）；他会话 capture 残留收编（+8 drafts）
+------------------------------------------------
+会话调研工作（未提交）：
+- HXNativeApp 一批 worktree 修复待落库（主仓当日 0 提交）：旋转/缩放/俯仰/复位按钮过期缓存 easeTo（ag-57b094）、LocationSelf 相机终态事件去抖（ag-b198ea）、定位模块双初始化收敛消启动静默相机飞行（ag-e8c800）、起终点线控件 setTarget 方案（ag-c978e5）、叙事链×rmc_real 场景交叉验证（ag-105d82，凌晨多轮零共享复审）
+- HXNativeApp 调研与基建：地图旋转未以屏幕中心旋转、当前位置图标被路线遮盖、比例尺刻度比高德短（结论→scalebar 修复落库）、引导提示触发与车速、issue#28/#29、MSC-26-RW033 rebase 与合并情况、构建栈共享 ccache 接入（ag-3e36fa）、2026-11-03 master 基线纯净落档（ag-d5352e）
+- lib-HXNavigation 全平台补齐发布←b80316d（ag-b0c9f8，lib-* 仓未计入上数）
+================================================
+数据来源：七仓 git log --all（2026-11-03，按作者|主题去重剔 rebase 副本；含 --all 补扫 worktree 分支）、opencode 会话库 session_v2（当日 113 会话，已剔评审子代理碎片）
