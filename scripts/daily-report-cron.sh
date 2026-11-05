@@ -18,7 +18,7 @@ D=$(date +%F)
 # 模型固定 zai-coding-plan/glm-5.3（本地代理，避开 Kimi 5 小时配额；撞配额史见 08-27）
 # 超时 15 分钟兜底（agent 偶发卡住不阻塞 cron）
 timeout 900 opencode run --auto -m zai-coding-plan/glm-5.3 \
-  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /home/guangbin/Documents/Work/daily/日报-${D}.txt，并发邮件到 guangbin79@icloud.com。标题用 printf|base64 生成禁止手敲。" \
+  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /home/guangbin/Documents/Work/daily/日报-${D}.txt，并发邮件到 guangbin79@icloud.com。标题用 printf|base64 生成禁止手敲。落盘发信后必须收尾：python3 scripts/daily-index.py 重建 INDEX，git add daily/ 并 commit（docs(daily): add ${D} daily report），git push origin master 与 git push ff master（禁 force）。" \
   && { echo "[$(date '+%T')] 成功（深度版）"; exit 0; }
 
 RC=$?
@@ -57,6 +57,15 @@ else
   } > "$REPORT"
 fi
 rm -f "$TMP"
+
+# 日报落盘即提交推送（溯源 11-03/04 漏提交；ff-only 禁 force）
+git add "daily/日报-${D}.txt" daily/INDEX.md 2>/dev/null
+if ! git diff --cached --quiet; then
+  git commit -m "docs(daily): add ${D} daily report" \
+    && git push origin master 2>/dev/null \
+    && git push ff master 2>/dev/null \
+    || echo "[$(date '+%T')] 提交/推送失败（日报已落盘，可事后补提交）"
+fi
 
 SUBJ=$(printf '%s' "$SUBJ_TEXT" | base64 | tr -d '\n')
 {

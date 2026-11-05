@@ -117,6 +117,17 @@ EOF
 - 同日重生成：覆盖（以最新提交为准），重发邮件标注「刷新版」
 - 批量追溯（多日）：逐日独立文件；4-03 起的补录已有档案式版本，勿覆盖手工深度版
 
+### 8. 🔴 落盘发信后必须提交推送（cron 与交互同责）
+日报落盘＋邮件发出后必须收尾提交，禁止把「落盘即可」当终点（11-03/04 实证漏提交，agent 自由发挥不可靠）：
+```bash
+python3 scripts/daily-index.py          # INDEX 为生成物，重建后一并提交
+git add "daily/日报-$D.txt" daily/INDEX.md
+git commit -m "docs(daily): add $D daily report"
+git push origin master && git push ff master   # ff-only，禁 force
+```
+- 同日刷新版：追加独立提交（`docs(daily): refresh ...`），禁 amend
+- 未跟踪日报残留主树会阻塞 agora ff 合并（10-27 实证），提交即消险
+
 ## 已知失败模式（实战教训）
 | 症状 | 根因 | 对策 |
 |------|------|------|
@@ -125,6 +136,7 @@ EOF
 | 邮件标题乱码（工坊攱话） | 手敲 Base64 算错字节 | `printf\|base64` 工具生成 |
 | 星期显示「周�」 | `cut -c` 按字节切中文 | case 映射数字→中文 |
 | 同日多封邮件混淆 | 刷新重发 | 主题标「刷新版/最终版」 |
+| 日报落盘未提交（11-03/04，agent 误判「cron 不 commit」） | 提交未成死规则，随 agent 发挥 | 规则 8：落盘发信后必 commit＋push origin+ff |
 
 ## 验证清单（生成后自检）
 - [ ] 邮件标题解码回中文正确（`echo <b64> \| base64 -d` 含「工作日报」）
@@ -132,3 +144,4 @@ EOF
 - [ ] 提交计数与 git 实查一致
 - [ ] 星期中文正确显示
 - [ ] txt 已落盘 daily/ 目录
+- [ ] 已提交推送：`git log -1 --oneline` 为当日日报提交，origin/master 与 ff/master 均到该提交
