@@ -127,6 +127,7 @@ git push origin master && git push ff master   # ff-only，禁 force
 ```
 - 同日刷新版：追加独立提交（`docs(daily): refresh ...`），禁 amend
 - 未跟踪日报残留主树会阻塞 agora ff 合并（10-27 实证），提交即消险
+- 经 agora 派发交付时 worker 禁 done 前推送任何远端：worker push 会把共享 .git 的 tracking 引用推前，令门 contains 捷径（ag-49312d）误判「已落库」跳过主树推进（ag-900670 实证主树滞留旧基线）；origin 由门 merged 后自动推（ag-0d2daa），ff 由派发方 merged 后推。主树直写路径（交互/cron 兜底）仍按本节上序自推
 
 ## 已知失败模式（实战教训）
 | 症状 | 根因 | 对策 |
