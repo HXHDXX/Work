@@ -1,0 +1,31 @@
+工作日报 2026-11-05（周四）
+================================================
+【今日要点】共 151 次提交，涉及 6 仓：
+主线：HXNativeApp(100)、TitanNavi(16)、HXMapWidgetNative(14)、.dotfiles(14)、opencode-agora(4)、Work(3)
+统计口径：git log --branches --remotes（当日 HEAD-only 会漏未检出的 issue 分支，今日 HXNativeApp HEAD 66 vs 全分支 100）
+------------------------------------------------
+一、车机导航主战场 HXNativeApp（100 commits｜issue 分支并行＋MSC-26-RW033 集成线）
+- 电子围栏 issue#53（全天主线）：主根因列序互换修复→多轮评审环（输入门严格 ASCII 校验/尾°容忍、isValid 拒存门双侧封堵、编辑保存旁路封死）→设备反馈①-⑤六点修复（面积恒0双坑、启动加载上图、绘制会话 hxmapdraw 迁移、插删点语义）→OCR 终轮收编＋终闸 R2 draw 共享层按 id 精准增删；改动域 tidy 告警 78 条清零；知识页同步沉淀
+- issue#51 QSettingsManager 单例统一配置落盘＋昼夜模式启动主题分流；issue#52 测量连击丢点（双击合成吞 mapClicked 根修）；issue#41 测量连线迁移 HXMapDraw 绘制层＋标注增量前缀快照守卫
+- issue#38 昼夜主题图标＋卫导状态灯（资产 day/night 契约、消费点分治裁定、satellite 资产变基）；全局列表样式调整（蛋黄整行选中/禁编辑/列宽自适应）＋三轮 OCR 裁决修复
+- 集成线 MSC-26-RW033-wfx114：串行合入 issue/32/34/38/41-fix；tidy 批量＋手工 17 处残余清零
+- GUI 回归测试：匿名途径点播放沿 shape 逐帧走完 Valhalla 航路（ag-68793a）；反复启停导航×位置图标 5x5 实心盘判据＋阈值钉 130（ag-fc5db0）；资产引用交叉检查＋加载日志双闸（ag-1e2e34）
+- 其他：定位图标资产名漂移恢复、UserDataWiper 一键销毁＋编译期清理总开关、NmeaMssParams 变长列表（业务 7 组）
+二、TitanNavi 文档治理（16 commits）
+- issue#240 八~十一轮反馈整治：目录收敛扁平两级 391 条目重建＋LO 实测页码 0 偏差；九轮表格去加粗 418 处/表题 68 条/引用《》规范化；十轮补回误删「目 录」标题段；十一轮目录标题按范本还原；评审还原未声明目录区改动与悬空引注
+- issue#251 用户手册按模板功能化重构——逐屏截图式改 12 章叙述式结构
+三、HXMapWidgetNative 地图引擎（14 commits）
+- 定位图标 overlay 消失双根修：Fixed 模式二次进入 applyFixedMode 补 show+raise（ag-a27cfc）；overlay 宿主取图链加固——失败诊断＋有界重试＋show 时点重踢（ag-4b6f73）
+- ag-ae99f3 check 体系硬化：container/check 退出码分层传播＋ctest 真跑分层门禁＋clazy qcolor-literal 清零＋ASAN 白名单补全（OCR 采纳锚定正则与 0 测试守卫同口径）
+- ag-5fdb8a ccache 共享缓存接入 checker 门（compose bin ro＋cache 卷挂载）
+- easeTo margins 双重校正根修——QMapLibreGL insets 语义反汇编实证其已应用 insets；build-system/location-indicator 知识条目沉淀
+四、Agent 基建 .dotfiles＋opencode-agora（18 commits）
+- issue-agent：推送 non-fast-forward 弹性自愈（range-diff 孤儿门＋force-with-lease）；评审收口三处加固（空 range 守卫/ls-remote 退出码/孤儿正则锚定）；协议模板补回合内禁变基条款；欠账巡检定时器（blocked reply 存账＋周期补推补发）；merge-flow 铁律与 titannavi 变体知识沉淀
+- agent-experience：夜间治理波（groom/judge 报告、27 条 backlog ingest、周报 20261101-1104）；#0028-ae-conflict-sweep 候选归档＋注册批准；他会话 residue 落库解 ag-a8a85c 门脏态（先例裁定：勿 stash 勿放宽门）
+- agora：F54 验证中间态两边会话可见——门启动拍双边＋board 投影 in_gate，评审环 R0/R1 通知面包 try 尽力而为防残闩卡死；插件并发附牌单飞——cred 拉取在途共享灭空窗拒（ag-6099ba 根修）
+五、Work 日报工作流治理（3 commits）
+- 补录 11-03/04 两日日报＋重建 INDEX（ag-900670）
+- 落盘即提交推送死规则入 SKILL＋cron（origin+ff 双推，禁 force）
+- agora 派发下 worker 禁 pre-done push 闸捷径条款（治 ag-900670 触发链，ag-293e27）
+================================================
+数据来源：各仓 git log --branches --remotes（2026-11-05）、opencode session_v2 DB（当日 150+ 会话含派发/评审）
