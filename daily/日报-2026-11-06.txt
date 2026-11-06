@@ -1,0 +1,33 @@
+工作日报 2026-11-06（周五）
+================================================
+【今日要点】共 182 次提交，涉及 8 仓：
+主线：HXNativeApp(111)、TitanNavi(26)、.dotfiles(24)、opencode-agora(8)、HXMapWidgetNative(7)、OSMDataCompiler(4)、HXNavigation(1)、lib-HXNavigation(1)
+------------------------------------------------
+一、车机导航主战场 HXNativeApp（111 commits | MSC-26-RW033 主线＋issue/agora 分支）
+- 编译警告清零战役（warnzero T1-T7）：vendored/qcustomplot/QHotkey 文件级抑制＋外部 TU clazy；mainwindow/App/RNSS/Geo/MapOverlay/NaviManage/ADAS/RDSS 分区逐一清零（RDSS 含 memcpy 栈越界根因修复与 clang-tidy 改动域存量债 184 条）；终扫 NOLINT 补齐＋门债清偿；OCR 评审回滚行为回归
+- 功能 issue 线（issue-agent 驱动）：#65 卫导星空图/柱状图（四系统旗标＋HiDPI DPR 渲染 6 项收敛）、#66 位置共享 EPI 勾选框居中与地图显隐双向调和、#63 卫导连接与 5 状态图标入状态栏、#64 航路名查重、#61 定位图标、#53 电子围栏 DM/DMS 拦截、#52/#58 测量与事件处理、#51 QSettingsManager 模式切换、#60 表格列；设置键自举、取消静默恢复音量
+- 内存与稳定性：ASAN/UBSan 三缺陷（过滤器时序/枚举越界/野指针 delete）、退出路径泄漏根因（shared_ptr 保留环＋Qt 对象归父）、QTouchDevice 32B LSan 收口、闪烁定时器构造期重入、pactl 无界等待收割
+- 相位契约：相机相位 L1 三处 cameraDidChange 双 connect＋GUI 回飞回归（主树）；L2 动画/手势相位发布修复＋ZmqBusClient 静默丢消息（widget 分支持合并）
+- 其他：导航-测量三缺陷（连点双击采点/测量线迁层/夜间标注）、MapControlWidget 跟随暂停恢复＋LSAN 门修复、objectName 恢复修 GUI 测试桥断裂、部署清单补 map_data 修样式 404 黑地图、匿名途径点播放回归测试、MSC-26-RW033-wfx114 变基
+
+二、TitanNavi 交付文档线（26 commits）
+- issue#251 手册格式对齐全量闭环：封面版式/签字栏复原、一级标题黑方块根治、目录页码 LO 闭环回写、doc3 分节编号链根治（40 条目录字面值按页脚实测重写）、跨项目自包含 SOP 沉淀；PR#252/#253/#254 合入
+- issue#256 航点/航迹管理页返回时关闭未保存编辑窗
+
+三、HXNavigation / OSM 地图数据线（5 commits）
+- cardinal_text 按会话语言本地化（六语种封闭集＋zh 兜底）；lib-HXNavigation 四平台发布 5850efa
+- OSMDataCompiler：preferred_language "en"→nil（地名纯 OSM name）、PREFERRED_LANG 语言覆写钩子（overlay 临时 lua 不动源 profile）、STRIP_NAME_EN 剥 name:en 钩子；语言控制与 valhalla name_en 机制知识 ingest
+
+四、Agent 基建（.dotfiles 24 ＋ opencode-agora 8 commits）
+- issue-agent：汇报回发链路修复（采集幂等＋重发通道＋串行化＋CAS pending 门）、sweep 汇报补发探针（iid 锁互斥）、install.sh 重装合并保留自定义 config（ocr R2/R3 全修）
+- opencode-agora：派发即挂终态看门狗（spawn 异步 error 不炸宿主）、401 凭据自愈重试恰一次、review_absent_no_merge 驻留实时通知
+- wait skill 演化：bg-wait 退役并入 fire-and-poll 更名 wait（§0 统一等待入口）、评测集 +5 用例
+- 经验库：nightly groom/judge 报告、7 条 backlog ingest、遗留 capture 落库解合并门脏态
+
+五、会话调研工作（未产生提交）
+- 本周各项目 agent 使用统计（HXNativeApp）
+- Agora 主会话任务编排的 MCP 与 skill 增强（调研）
+- mcp-memory-service repo 调研（.dotfiles）
+- 路径导航英文混杂原因分析（引出 OSM preferred_language 修复）
+================================================
+数据来源：8 仓 git log（2026-11-06 全分支，剔除 stash 快照）＋ opencode 会话库（当日 295 条会话，已滤评审碎会话）
