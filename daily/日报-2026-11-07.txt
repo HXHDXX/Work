@@ -1,0 +1,36 @@
+工作日报 2026-11-07（周六）
+================================================
+【今日要点】共 66 次提交，涉及 5 仓：
+主线：.dotfiles(21)、silicon-memory(20)、opencode-agora(14)、HXMapWidgetNative(10)、HXNativeApp(1)
+------------------------------------------------
+一、车机相机相位契约 L2/L3 落地（HXAppPlatform | 11 commits）
+- L3 惯性相位接管（ag-bbb7c4）：四路径 changing/did 真落定＋契约测试＋文档缺口改写；评审环两轮采纳——相位 epoch 深度计数、打断补停 zoomAnim、did 推迟一次性化；测试侧 xdotool 卡死超时防护
+- L3 终闸后收口（ag-acf55d）：mousePress 打断/真停分流——不开手势括弧的受理路径点击真停发终态 did；强停 arm 门收紧至输入手势旗、defer 旗随纪元生死
+- L2 相位契约（ag-d9f08a）：app 仓逐帧消费者迁移双 connect＋回归保持
+- 可观测性收口（ag-d999f0）：相位 source 归因字段＋changing 30Hz latest-wins 总线合并；知识速览拥塞条目标注已解决
+二、silicon-memory 独立记忆 CLI 建仓（silicon-memory | 20 commits）
+- 建仓导入：语义记忆服务＋脱敏 memory skills 迁入，store 解析链参数化
+- 幂等安装器：本地 CUDA wheel 嵌入＋cudart/cublas 拷贝＋BM25 优雅降级；vector extras 与残缺 venv 自愈
+- 独立 CLI 声明模型（撤 agentctl ext drop-in，用户裁定）；检索入口 memory→knowledge 语义修正
+- 产品级双语 README＋LICENSE；capture 写入自检 22 例移植；wrapper 禁 cd 仓根（cwd-walk 回归修复）
+三、agora 派发治理 F56-F64（opencode-agora | 14 commits）
+- ag-084a22 死锁修复：done 受理无条件先验锚＋合并复验锚败自动 reopened＋fail_streak 防抖
+- 任务经济性：F57 done 附 usage＋board 按 model 分桶；F58 stats 漂移校验（窗口对照＋drift 三值旗）
+- F59 卡住证据包（stalled 拍人附证据）；F60 merged 沉淀提示；F61 wait 超时可外部定义（缺省抬至 1h）
+- 看门狗机制重构：删插件侧终态记录全链，唤醒归 agent 侧纪律；dispatch/watch 一体化＋MCP sleep 改名
+- 终态迁移邮件必达；F64 dispatch 真机首验探针
+四、dotfiles 记忆体系配套（.dotfiles | 21 commits）
+- agentctl ext 扩展机制＋memory/knowledge 族接入 silicon-memory；project-compound 指针重定向
+- memory-store 治理：INDEX 规范重建（in sync rc0）、GROOMING CLI 表述对齐；夜间 groom/judge 波——17 条 backlog ingest＋同义标签归一
+- 载体仓落库改制：写后提交落库、永不 push（用户裁定，撤方案 A commit 禁令）
+- 经验捕获：ensure-clean 卡门处置先例（.git/info/exclude 本地忽略）、跨会话残留 capture、ensure_skills_perlink 补部署器注释
+- 杂项：tmux 全局注入 COLORTERM=truecolor、移除 oh-my-opencode PATH export
+五、会话调研工作（未提交）
+- 地图拖动后当前位置蓝色图标消失与归中问题（HXNativeApp）——当日排查，未见落库提交
+- 三种自定义记忆能力设计／silicon-memory 与 opencode-agora 结合 super agent——设计调研，产出在会话
+- Agora agent 记忆共享与留言机制评估；semantic-memory 价值评估（结论：转独立 CLI）
+- Nord 主题颜色问题（dotfiles）；经验库 Practice 轮次协议模板 4 轮
+- 终闸 A/B/C 册评审（需求符合性/崩溃风险/安全）多轮随 L2/L3 主线走
+================================================
+数据来源：各仓 git log（2026-11-07，含 worktree 分支 --all）、opencode 会话库 session_v2 直查（主会话 23＋子代理 16）
+注：HXAppPlatform 提交在 ag-* worktree 分支，经主仓 --all 检出；worktree .git 为文件，常规 -type d 扫描不命中
