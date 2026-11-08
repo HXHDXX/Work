@@ -1,6 +1,6 @@
 # 日报索引
 
-> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 177 篇，2026-04-03 ~ 2026-11-07。
+> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 178 篇，2026-04-03 ~ 2026-11-08。
 
 ## 主题索引（按工作线关联各日）
 
@@ -240,3 +240,4 @@
 - [2026-11-05](日报-2026-11-05.txt)：车机导航主战场 HXNativeApp；TitanNavi 文档治理；HXMapWidgetNative 地图引擎；Agent 基建 .dotfiles＋opencode-agora；Work 日报工作流治理
 - [2026-11-06](日报-2026-11-06.txt)：车机导航主战场 HXNativeApp；TitanNavi 交付文档线；HXNavigation / OSM 地图数据线；Agent 基建；会话调研工作
 - [2026-11-07](日报-2026-11-07.txt)：车机相机相位契约 L2/L3 落地；silicon-memory 独立记忆 CLI 建仓；agora 派发治理 F56-F64；dotfiles 记忆体系配套；会话调研工作
+- [2026-11-08](日报-2026-11-08.txt)：评审/门禁产品化——独立仓提取；agora quick 微任务车道；环境与配置修复；经验库夜间治理自动化；silicon-memory

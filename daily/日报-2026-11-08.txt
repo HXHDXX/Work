@@ -1,0 +1,31 @@
+工作日报 2026-11-08（周日）
+================================================
+【今日要点】共 21 次提交，涉及 5 仓：
+主线：.dotfiles(8)、coding-gates(5)、issue-agent(4)、opencode-agora(3)、silicon-memory(1)
+------------------------------------------------
+一、评审/门禁产品化——独立仓提取（coding-gates＋issue-agent＋.dotfiles | 10 commits）
+- coding-gates 新仓落成：从 dotfiles 提取 req-gate＋review-loop 为独立产品仓（bootstrap → 双 install 目标＋沙箱测试 → 评审环 2 轮修复）
+- 评审环第 1 轮三册 findings 修复：自定位单级化、遗留安装器改指本仓源、断链守卫、e2e stub 逐跑唯一
+- e2e 收尾：S10 期望钩路径与插件单级派生锁步＋WSTUBBIN 逐跑回收
+- coding-gates README 双语化（结构对齐 opencode-agora）＋Super Agent 三支柱
+- issue-agent 收仓出仓：提取为独立仓（installer 反覆写守卫兼容旧配置 schema，TDD）、README C 节＋harness-lock 首条、dotfiles 侧源删
+二、agora quick 微任务车道（opencode-agora | 3 commits）
+- 新增 quick 微任务车道：仓级清单准入＋包络门＋BOOT 减配
+- F65 quick 微任务车道架构决策条目落档
+- README Super Agent 三支柱注释＋互引（双语）
+三、环境与配置修复（.dotfiles | 3 commits）
+- zshrc 补 ~/.local/bin PATH export——根因修复 tmux 冻结环境丢本机 CLI（agora-board command not found）
+- plan agent 模型切换 kimi-code-plan-cn/k3.1-pro
+- agent-experience 落库他会话经验 capture 脏态（merge 门报主仓工作区不净的先例处理）
+四、经验库夜间治理自动化（.dotfiles | 4 commits，02:00–02:23 自动波）
+- nightly groom report＋judge report（评分与路由 grooming）＋reflect report 2026-11-08
+- mechanical fixes per lint（10 findings）
+五、silicon-memory（1 commit）
+- README 增 Super Agent 三支柱 blockquote＋跨仓互链
+
+会话调研工作（未提交）
+- 「semantic-memory 还有用吗」（延续 11-07 会话，17:01 收尾）：评估 semantic-memory 去留 → 结论落 README 三支柱互链
+- 「WeChat article link」（opencode-agora，20:11–21:57）：文章调研
+- 杂项：查找 uowork 账号密码（dev-mono，1 分钟）
+================================================
+数据来源：/home/guangbin 直下 5 仓 git log（2026-11-08）；Documents 轨当日 0 提交；opencode session_v2 DB（当日 10 会话，剔除本次日报自会话）
