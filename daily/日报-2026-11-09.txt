@@ -1,0 +1,69 @@
+工作日报 2026-11-09（周一）
+================================================
+【今日概览】共 187 次提交，涉及 10 仓：
+主线：HXNativeApp(96)、.dotfiles(33)、kiln(17)、HXMapWidgetNative(16)、opencode-agora(8)、issue-agent(6)、coding-gates(5)、silicon-memory(4)、Work(1)、TitanNavi(1)
+- 今日工作：车机应用 issue 队列批量推进（状态栏时间/时区/系统指标、音量亮度 kylin V10 适配、开机自检页、罗盘接线等十余单修复并过终闸评审）；地图控件并行修 6 项缺陷并完成 L4 定位单轨化；kiln 接入 x7k325t SDK 工程 lint 轨并入库 MISRA 规则文本；agent 基础设施四仓同步强化（done 判退、增量拉取、review-loop 收尾、TUI 安装器）；经验库批量落库 22 篇。
+- 整体进度：HXNativeApp issue 队列持续出单（多单已完成过闸，#63 图标回归已修复）；地图 L4 单轨化已合入；kiln SDK lint 轨已完成（真板集成实证过）；agora/issue-agent/coding-gates 当日改动均已合入；3 项 agora 任务在飞跨日。
+- 风险阻塞：无硬阻塞；ag-9afc90（光标同步链）、ag-d74da0（ASAN 裸启诊断）等在飞任务待明日收尾。
+- 明日重点：收尾在飞地图任务与 ASAN 诊断；HXNativeApp 剩余 issue（#53 电子围栏、#63 复验）继续；x7k325t SDK lint 轨真板集成后续。
+------------------------------------------------
+【工作详录】
+一、车机应用缺陷批量修复（HXNativeApp | 96 commits | 进行中）
+- 目标：经 issue-agent 流水线批量消化车机应用 issue 队列（#60-#85 区间十余单）。
+- 当日进展（按主题聚类）：
+  · 状态栏时间/时区（#71）：时区真实态唯一呈现＋GNSS 自动对时（UTC 重建时间戳，修 ZDA 墙钟 LocalTime 整体错偏）＋12/24 时制显式改写＋单飞代际守卫；timedatectl FailedToStart 补告警；契约沉淀知识页。
+  · 状态栏系统指标（#72）：新增可用存储/CPU 温度/软件 CPU 占用显示；三项采集语义修正（占用率核数归一、CPU 采样改单调钟防 NTP 步进、statfs 瞬时失败守卫）；kylin 真机（192.168.1.20）实测口径定案。
+  · 音量/亮度（#81 kylin V10 新板）：音量改 amixer、亮度 sysfs 失败回退 ukui 电源服务；取消静音合并单进程原子 sset＋回放内存音量；三层根因经验入知识模块。
+  · 开机自检页（#84）：组件就绪监视/百分比动画/超时弹窗/点击跳过；R1/R2 评审修复（模态期停动画封 UAF、键盘抓取封穿透、EventBus 判空降级）。
+  · 罗盘（#85）：箭头接入导航数据（车头/终点方位/结束复位）；幽灵箭头默认隐藏＋paintEvent raw/display 跨域比较修法。
+  · 其他修复：QTableView 角落白框（#83）、航路点多行删除＋名称查重下沉模型层（#64）、卫星/状态图标资产 qrc 契约刷新＋陈旧链并入图标回归修复（#63）、测量信息面板迁 overlay 层修背景不透明与残留（#78）、引导流终点同步维护（startGuiderRoute）、tidy 清扫 google-default-arguments 四模型。
+- 当前结果：全部修复经零共享终闸三册评审＋review-loop 修至绿后合入；配套 docs(issue-agent) 知识页同步落库。
+- 产出依据：git log --all（ca83fff0…f2f44b25 等 96 主题）；docs/ 知识页（status-bar-metrics、volume-brightness、时间时区契约等）。
+- 遗留与下一步：#53 电子围栏异常在审；#63 图标加载回归已修待复验；多单真机复验依赖设备在线。
+二、地图控件修复与 L4 定位单轨化（HXMapWidgetNative | 16 commits | 进行中）
+- 目标：修复 SharedTexture/定位/测量标注系列缺陷，完成 L4 定位链路单轨化重构。
+- 当日进展：
+  · 定位与手势：打断回中 chase 瞬移自滑（ag-e91cc2，两轮评审环）；按住跨回中后拖动图标钉屏（ag-fba12c）；拖动起手 overlay→symbol 交接空帧——代理确认式延迟隐藏（ag-508a7e）。
+  · 测量标注：两轮测量会话 pin-red 不渲染——addAnnotation 补 updateFilter 重同步（ag-4d4646）；与底图文字碰撞偶发不渲染——symbol 层 allow-overlap 恒显＋测试自引用恒真修复（ag-85fb14）。
+  · IPC：mapClicked ST 模式经直连通道回传宿主，绕开 ZMQ 总线丢包＋seq 追踪（ag-246cdb）。
+  · L4 单轨化（ag-7a186d）：删 Fixed 态 QWidget overlay 改 symbol 层全态常显＋跟随共动画＋默认图标本地资产化，接口零变化。
+  · 文档：AGENTS 构建节三组重排——linux-x86_64=日常构建，check=静态检查门（ag-196220）。
+- 当前结果：上述各项均已过终闸评审合入主支；L4 文档（qt-api/zmq-bus-api）同步更新。
+- 产出依据：git log --all（8a54cdf…0cd23d2）；agora 任务 ag-e91cc2/fba12c/508a7e/4d4646/246cdb/85fb14/7a186d。
+- 遗留与下一步：ag-9afc90（SharedTexture 模式光标同步链失效）终闸评审进行中，跨日收尾。
+三、x7k325t SDK lint 轨接入（kiln | 17 commits | 已完成）
+- 目标：让 kiln 支撑 Xilinx SDK（x7k325t）应用工程的 init/lint 形态。
+- 当日进展：SDK 应用工程解析器（Debug/**/subdir.mk → Project/Target）；compile_commands 按扩展名分流（.cc/.cpp → clang++ gnu++14）；init --target lint-only 形态＋目标名两行登记契约（.kiln-project）；lint --target 显式名重解析补计划缺陷（真板集成实证）；目标名路由缺陷修复（ag-22ebd3 事故回归：错配拒 usage 2）；review 终闸修复（B 册 glob→os.walk 不跟随链接、C++ defines 透传双引擎一致）。
+- 当前结果：SDK 形态 init/lint/契约文档全链落地；MISRA C 2012 中文规则文本入库 docs/misra/（ag-090d32）；SDK lint 轨知识沉淀入仓（ag-a0cbd0）。
+- 产出依据：git log（93b4e2c…845a252）；docs/misra/、知识页 3 文件。
+- 遗留与下一步：真板集成后续需求（FPGA 新需求环境配置推进中，本地态无提交物）。
+四、agent 基础设施强化（opencode-agora/issue-agent/coding-gates/silicon-memory | 23 commits | 已完成）
+- 目标：派发门禁、issue 流水线、评审环、记忆服务四条基础设施线同步加固。
+- 当日进展：
+  · opencode-agora(8)：F69 vacuous-done 拒收（零提交 done 判退）；review-only done 通道（deliverable=out_of_band 零提交豁免）；每窗口独立派发牌（cred_for_sid root 签发）；非 ff 检测基线取实时分支 ref；stalled 的 running 可重派；lift 换牌缓存；granularity-gate 迁入更名 agora-dispatch-gate。
+  · issue-agent(6)：增量 reconcile pulls（since store 原子写＋重叠窗口去重，堵增量窗口静默丢评论）；范围外回复自动关单；probe 交付前置条件放宽 session-only；安装拒因锐化区分 legacy/解析两类。
+  · coding-gates(5)：review-loop ocr 轮3/4 收尾（wait_log 同步交替正则、同形映射扩类 ӏ→l、gitQuiet 锁类瞬时错误单次重试、零欠债 BLOCK 容差）。
+  · silicon-memory(4)：插件/TUI 安装器实体部署（部署命令先删再拷）；热服务 CUDA/显存启动门＋rerank auto 剩余显存判据。
+- 当前结果：全部合入各仓主支。
+- 产出依据：各仓当日 git log；agora 任务 ag-af96bb/ag-bf61e7/ag-7b3415/ag-8128ba。
+- 遗留与下一步：ag-32a5e2 lift 换牌后续观察。
+五、经验库与载体仓治理（.dotfiles | 33 commits | 已完成）
+- 目标：跨会话经验沉淀批量落库＋载体仓 README/技能收仓治理。
+- 当日进展：落库 22 篇跨会话经验稿＋INDEX/reuses/skill-uses＋supersede 清理（ag-f0dbb5 判例）；issue#71/72/81/85 修复经验草稿（时区三重脱节、系统指标采集四坑、kylin V10 适配三层根因、罗盘接线双坑、变基断推送双谱系保 FF）；README 迁移收尾全面改写＋harness-lock 4 锚＋L1 演练缺口 G1-G8 修复；skills 收仓出仓（agora-dispatch-gate、coding-gates、blast-radius 移除）；nightly groom/judge report 与 weekly digest。
+- 当前结果：经验库与载体仓当日全部推送。
+- 产出依据：git log（f8bb28d…d32e5d0）；agent-experiences INDEX。
+- 遗留与下一步：部分经验稿待夜裁判波转正。
+六、日报两层格式与 TitanNavi 版本号（Work/TitanNavi | 2 commits | 已完成）
+- 目标：日报格式改造落地；TitanNavi 版本号定稿。
+- 当日进展：日报 SKILL 改概览＋详录两层格式（ag-80236b，防过度压缩丢可再分析事实）；TitanNavi 软件版本号 03_4.AA.00→03_4.U.00 并同步英法翻译（issue#259）。
+- 当前结果：均已合入。
+- 产出依据：Work d87474c；TitanNavi 219d7f2b。
+- 遗留与下一步：无。
+------------------------------------------------
+【会话调研工作（未提交）】
+- x7k325t FPGA 新需求环境配置——SDK 工具链环境配置推进，产出为本地环境态无提交物（kiln 主会话，16:17）
+- ag-9afc90 SharedTexture 模式光标同步链失效——修复已进终闸三册评审（21:58 在飞，HXMapWidgetNative worktree）
+- ag-d74da0 平台 ASAN 部署裸启失败诊断——readelf 对比分析进行中（21:59 在飞，HXNativeApp worktree）
+- 地图拖动后当前位置蓝色图标消失与归中问题——调研结论转入 ag-9afc90 修复线（HXNativeApp 会话 21:48）
+================================================
+数据来源：各仓 git log --all（2026-11-09 00:00–24:00 窗口，HXNativeApp/HXMapWidgetNative 变基双生提交按主题去重：105→96、17→16）、commit body、opencode 会话 DB（session_v2）
