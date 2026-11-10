@@ -1,0 +1,53 @@
+工作日报 2026-11-10（周二）
+================================================
+【今日概览】共 81 次提交，涉及 6 仓：
+主线：HXNativeApp(42)、HXMapWidgetNative(19)、.dotfiles(11)、opencode-agora(7)、HXPRShell(1)、silicon-memory(1)
+- 今日工作：车机两线并进——HXNativeApp issue 派发线批量落地（罗盘常显/时区/状态栏/自检页等 10 个 issue 并入），HXMapWidgetNative 地图 IPC/标注全管线 8 卡收官待实机终验；agora 治理三修（root 牌解耦、done gate 空集、僵态退避＋F70 自检提示）；经验库夜间治理＋热层卫生大清障。
+- 整体进度：已完成——issue 线 10 个 issue 并入 MSC-26-RW033、地图管线 8 卡全闭环（构建绿＋探针全过）、opencode-agora pytest 779 全绿；进行中——地图管线实机终验、ag-432e8a 验证门＋应用迁移排队、TitanNavi/HXNativeApp 后续 issue 在飞评审。
+- 风险阻塞：ag-432e8a（合包命令）当日三次同步冲突＋僵态重派仍未过门；经验库捕获路径存在新漏网形态（shell stderr/对话切片被存为记忆）待系统性审计。
+- 明日重点：地图管线实机五场景终验收官＋ag-2819ae 应用迁移；消化在飞 issue 队列。
+------------------------------------------------
+【工作详录】
+一、车机主应用 issue 派发线（HXNativeApp | 42 commits | 已完成 10 项并入，后续在飞）
+- 目标：经 agora issue-agent 流水线批量消化车机主应用需求池
+- 当日进展：
+  * 并入 10 个 issue（12 次合并，#71/#85 各两次）：#63 短报文图标、#65 卫导国旗图标（官方规范 SVG＋图例条）、#69 经纬度全局显示、#71 时区设置、#72 状态栏信息、#77 列表模型更新检查、#78 测量面板背景透明、#81 音量亮度设置、#84 自检面板、#85 罗盘角度显示
+  * 罗盘线：双箭头常显（默认指北）＋绿线接卫导星空图同源航向；绿线守卫改查抗抖值 reDirection 防 NaN 窗口
+  * 状态栏线（#72）：顶部右侧新增可用存储/CPU 温度/软件 CPU 占用；评审修三项采集语义（CPU 采样改单调钟防设时/NTP 步进失真、statfs 瞬时失败守卫）；真机实测记录（kylin 192.168.1.20）＋status-bar-metrics 知识页定案
+  * 时区线（#71）：静默弹回复修——特权两段式（timedatectl→sudo -n）＋两程皆败弹窗告警；终态回调身份清 m_tzProc 封换选后悬挂 kill UAF；手动对时失败面诚实化
+  * 自检页（#84）：组件就绪监视/百分比动画/超时弹窗/点击跳过；R1/R2 评审修（弹窗模态期停动画封 UAF、键盘抓取封穿透、EventBus 判空降级）
+  * 工程卫生：NaviManage/RDSS 四模型 override 默认实参清扫显式化；arm64 TTS 默认 CPU 播放（翻转 TTSPLAYER_USE_FT_NPU=OFF 并移除 NPU overlay）
+- 当前结果：上述全部已并入 MSC-26-RW033 分支
+- 产出依据：HXNativeApp git log（当日 42 提交，351d59eb 等）
+- 遗留与下一步：#92-106（NavigationPanel、短报文族、状态监测页、图层管理、电子围栏、模拟导航提示框等）在评审门或排队
+二、地图组件 IPC/标注全管线（HXMapWidgetNative＋HXPRShell | 20 commits | 8 卡全闭环，待实机终验）
+- 目标：根治「地图拖动后位置图标消失/图标自滑/命令静默丢失」问题族
+- 当日进展：
+  * 标注可靠化三连修：动作重排缓冲 Drop 改 Flush＋窗口活跃度有界＋缓冲硬上界（ag-8559ae）；迟到 straggler 改 deliverLate 派发＋宿主 DEALER 重入队（ag-4217d8，Flush 后残余 6/71 丢失归零）；图标引用计数乱序守卫——递减前校验存活实体引用（ag-13708d）
+  * 观感修：L4 heading 对齐恒 viewport——旋转/俯视图标不随地图动（ag-d1c268）；守卫活性超时自愈＋浏览态重锚退役——图标滑行根灭（ag-3bb87c）
+  * 通道可靠化：ST 模式手势括弧迁 IPC 直连——告别广播丢包（ag-98eaa3）；23 条低频命令迁 map-query 可靠通道——query 并入 seq 重排流＋回执重试，评审环 R1 修复（高频误迁分流/假ok门控/回执超时）一并落地（ag-078bd5）
+  * 诊断与知识：msgbus 队列丢＋乱序三铁证取证页（HXPRShell ag-1b3b32）；WC/ST IPC 基座共享性验证（完全共享）；四通道选型规律＋全量选型表知识页（ag-e3ba9a，经 R1/R2 评审修）；deliverLate 顺序敏感性 99 类型判定清单（ag-962583）；总线 SUB 活性看门狗——15s 静默重建 socket（ag-5f6663）
+  * 新能力：原子合包命令 applyAnnotationWithTrace——polyline/polygon＋标注一条命令原子应用带回执（0f27a98）
+- 当前结果：全管线 8 卡闭环；构建绿＋部署自动刷新＋内容探针全过（sendCommandWithRetry×9＋GestureStarted×10）；终验环境就绪
+- 产出依据：HXMapWidgetNative git log（当日 19 提交，89cf645 等）＋HXPRShell 6370dd4
+- 遗留与下一步：实机五场景终验（①拖动图标全程可见 ②按住跨回中不回中 ③拖缩混合每次超时必回中 ④旋转俯视图标不变 ⑤跟随态观感无自滑无抖动）；ag-2819ae 应用迁移排队——ag-432e8a 当日三次同步冲突＋僵态重派仍在验证门
+三、agora 派发治理与工具链（opencode-agora＋silicon-memory＋.dotfiles | 19 commits | 已完成）
+- 目标：修复派发系统身份/门禁/降噪三类缺陷，维持经验记忆体系运转
+- 当日进展：
+  * root 牌彻底解耦＋归属迁移（ag-f80309 B 案）：bind_main 摘除 R25-A rebind 根除污染源；任务建单/派发/验收归属改记对齐调用 sid；存量会话 sid 一次性迁移；两窗口并发派发归属各归各窗；验收①②③④全红转绿
+  * done gate 空集误拒修正（ag-1ae0f1）：rev-list 空集不再自动拒收——env 前进（hotfix 挂目标支）或既有 commit 留痕（reopen 重受理）两判据放行，真零提交照拒（F69 护栏不破）
+  * 僵态升级节奏指数退避（ag-0f537d）：同任务重复升级首档 1200s 逐档×4 封顶 24h，降误报；F70 stalled 边沿 worker 自检提示——入僵态后经 prompt 通道注入一次自检（核对目标/动作/状态），不强制处置不重试
+  * sid 跨对话复用调查（ag-ff7dae）：存储层否证（session_v2 主键唯一全库单行）——实为 dispatcher 记账伪影（已修）＋req-gate 目录最新会话启发式两个消费层伪影；建议消费面改用 OPENCODE_SESSION_ID env 自证源
+  * silicon-memory：捕获/冲刷路径里程碑 relay 拒收族上线——任务号＋紧随动词形态整条拒收，噪声从源头断流
+  * .dotfiles：经验库夜间治理（groom/judge/ingest/冷提案/标签统一/去重）；三条实战经验沉淀（罗盘默认指北常显翻案、issue#71 sudo 特权调用静默死根因与两段式修法、issue#72 变基后 tidy 域污染 HX_TIDY_BASE 修正）
+- 当前结果：opencode-agora pytest 779 全绿；热层里程碑噪声洪流消失（注入块实测只剩健康锚点）
+- 产出依据：opencode-agora git log（当日 7 提交，4607d82 等）＋silicon-memory a15bf95＋.dotfiles 11 提交
+- 遗留与下一步：捕获路径系统性审计（shell stderr/对话原文被存为记忆的更深口子）列入待派清单
+------------------------------------------------
+【会话调研工作（未提交）】
+- semantic-memory 热层卫生——单日退役 200+ 噪声条目；11-09 诊断结案修正归因（真凶 bind_main 活绑定，非 cred_for_sid 语义）；暴露新漏网形态两条（shell 报错输出、对话切片被存）待派审计（产出位置：会话 ses_e4a4d868＋silicon-memory a15bf95）
+- HXMapDraw 适用边界调研——结论：非整体废弃，但不适合导航测量「点击采点＋线只显示」场景：Draw 层 12px 命中容差吞后续采点点击、测量线可进 DirectSelect 被拖变形，issue#52 已迁 Polyline 被动显示层（产出位置：HXNativeApp docs/agents/knowledge/modules/map-layers.md:35-39、hx-native-app/App/mainwindow.cpp:2025-2033）
+- Ubuntu 22.04 启动盘制作——pkexec+dd 后台写入 4.4GiB 成功，U 盘呈现标准混合 ISO 三分区（主/ESP/BIOS），旧 Kylin 盘已抹除；未做官方 SHA256 校验（写入字节数已核对）（产出位置：会话 ses_e3caea36）
+- TitanNavi 在飞 issue 线——#261 航点图标、#262 网络不可用提示、#263 音量/夜间模式图标、#264 菜单按钮高度、#273 软件版本双 label、#276 惯组样式、#286 目标点翻译等派发评审中，当日尚无 master 落地（产出位置：TitanNavi 会话群＋终闸 A/B/C 册评审会话）
+================================================
+数据来源：HXNativeApp/HXMapWidgetNative/HXPRShell/.dotfiles/opencode-agora/silicon-memory git log（2026-11-10）、commit body、opencode 会话库（session_v2 直查）
