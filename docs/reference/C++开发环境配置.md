@@ -2,13 +2,14 @@
 
 ##### 操作系统
 
-Ubuntu 22.04
+Ubuntu 24.04
 
 建议采用最小安装
 
 ##### 配置开发环境
 
 ```shell
+sudo apt update
 sudo apt install -y \
 	build-essential clangd pkg-config \
 	cmake ninja-build lcov \
@@ -21,19 +22,25 @@ sudo apt install -y \
 	libxi-dev libxrender-dev \
 	filezilla imagemagick lua5.1 luarocks
 sudo luarocks install luacheck
-npm install -g @ast-grep/cli
-sudo apt install -y docker.io docker-compose docker-clean
+
+# Node.js 24（与当前开发机一致，npm 随 NodeSource nodejs 提供）
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+sudo apt install -y nodejs
+sudo npm install -g @ast-grep/cli
+
+# Compose V1 供现有 HXAppPlatform 脚本使用；V2 用于逐项目迁移验证
+sudo apt install -y docker.io docker-compose docker-compose-v2 docker-clean
 sudo gpasswd -a $USER docker
-#以下为可选性能分析工具
-sudo apt install linux-tools-common linux-tools-generic linux-tools-`uname -r`
-sudo snap install kcachegrind
+
+#以下为可选性能分析工具；HWE 内核按当前内核安装匹配版本
+sudo apt install linux-tools-common linux-tools-$(uname -r)
 ```
 
-**此步操作后需要重新启动电脑*
+**加入 docker 用户组后需注销并重新登录；Docker Compose V1/V2 可并存，现有脚本继续用 `docker-compose`，迁移验证用 `docker compose`***
 
-###### 解决GCC 11兼容问题
+###### 配置GCC 9（项目必需）
 
-Ubuntu 22.04默认安装GCC11，该版本对GCC8构建的absl、sqlite_orm等库可能存在不兼容问题，解决方案是使用GCC9替换GCC11
+Ubuntu 24.04默认安装GCC 13；项目需兼容GCC 8构建的absl、sqlite_orm等库，必须切换到GCC 9
 
 ```shell
 sudo apt install -y gcc-9 g++-9
@@ -197,7 +204,7 @@ git merge feature --ff-only
 
 *ASAN问题*
 
-*在GCC-8\Linux6.5情况下，发现激活ASAN后程序启动会随机崩溃，原因如下：*
+*遗留构建环境注记：GCC-8/Linux 6.5下曾发现激活ASAN后程序启动随机崩溃，原因如下：*
 
 https://github.com/google/sanitizers/issues/1716
 
@@ -307,67 +314,3 @@ valgrind --tool=helgrind --log-file=log ./demo --license=./license.dat --navi_da
 ```shell
 valgrind --tool=massif --log-file=log ./demo --license=./license.dat --navi_data=./navi_data --plugins=./libs/plugins --breakpad=./apps/crash_log --rw_data=./apps
 ```
-
-##### OpenCode
-
-HXAppPlatform、HXProjectTemplate均已经使用AGENTS.md支持OpenCode开发
-
-###### OpenCode 安装
-
-```shell
-curl -fsSL https://opencode.ai/install | bash
-```
-
-###### oh-my-opencode插件安装
-
-在OpenCode中输入
-
-```shell
-Install and configure oh-my-openagent by following the instructions here:
-https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/dev/docs/guide/installation.md
-```
-
-###### 配置OpenCode
-
-```shell
-/connect 连接购买的模型服务
-/models 选择使用的模型
-
-#查看OpenCode支持的模型
-opencode models
-
-#修改omo使用的模型
-vim ~/.config/opencode/oh-my-openagent.json #建议使用GLM5.1作为Sisyphus使用的LLM
-```
-
-###### 安装Superpowers Skill
-
-在OpenCode中输入
-
-```shell
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
-
-装完插件后，把 superpowers 缓存里的各 skill 目录逐个软链到 `~/.config/opencode/skills/`（该路径须已在 `opencode.json` 的 `skills.paths` 中声明），然后完全重启 OpenCode 并开新会话，superpowers skills 才能被 `skill` 工具和 `/` 斜杠激活。superpowers 升级后软链可能失效，重建即可。
-```
-
-###### 修正中文提示与英文Skill激活失败问题
-
-在OpenCode中输入
-
-```shell
-为了使中文对话也能够激活 Skills，为每个 Skill 补充详细的中文功能描述，并明确定义 3-5 个中文激活词（触发词），并测试所有 Skill 是否能够正常激活
-```
-
-###### Context整理
-
-```shell
-https://github.com/mksglu/context-mode
-```
-
-###### 改进Agent环境、学习Agent协作
-
-```shell
-https://github.com/forrestchang/andrej-karpathy-skills
-https://github.com/shanraisshan/claude-code-best-practice
-```
-
