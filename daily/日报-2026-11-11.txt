@@ -1,0 +1,86 @@
+工作日报 2026-11-11（周三）
+================================================
+【今日概览】共 94 次主线提交，涉及 6 仓：
+主线：HXNativeApp(35)、opencode-agora(22)、.dotfiles(19)、silicon-memory(10)、HXMapWidgetNative(5)、Work(3)；另 TitanNavi 33 次提交在 issue 分支评审流转（未合 master）
+- 今日工作：车机三线并进——HXNativeApp issue 线大批落地（#120 航路导航线六轮根因修、自检页七修收官、数据交互新页、并入 #119/#121/#124/#128），HXMapWidgetNative 定位图标状态切换系列根治，TitanNavi 提示条/BDS 星空图多轮流转；基建线 opencode-agora F71-F81 系列修复（env 自愈、派发错址、消息并发、question 三分支）＋silicon-memory 维护面统一＋.dotfiles groom 改造；Work 仓落 206 车机环境安装文档三件套。
+- 整体进度：已完成——HXNativeApp 35 提交并入 MSC-26-RW033、HXMapWidgetNative 5 提交入 master、opencode-agora pytest 888 全绿、groom 契约测试先红 26 FAIL 后绿 35 ok；进行中——TitanNavi issue#265/#266 等 33 提交在分支评审流转未合 master（master 停在 11-03）。
+- 风险阻塞：dotfiles 私有仓确认 key 泄露——origin/master 含 2 个活跃 key（Kimi/ZAI），git 历史另留存 2 个旧 key，轮换与历史清理未做；车机串口主动探测确认无在工作的 GNSS 设备（物理层问题，非软件可修）。
+- 明日重点：dotfiles key 轮换与历史清理；TitanNavi 在飞 issue 合 master 收口；HXNativeApp qc1111 后续评审项。
+------------------------------------------------
+【工作详录】
+一、车机主应用 issue 派发线（HXNativeApp | 35 commits | 多项并入 MSC-26-RW033，qc1111 在飞）
+- 目标：经 agora issue-agent 流水线批量消化车机主应用需求池
+- 当日进展：
+  * issue#120 航路导航线「加而不显」六轮：转换器补 Segment.id 根因修；路径导航策略选择框按 routetype 门控（trace 直航不弹框，四轮）；精简算法对齐参考项目 V5（迭代版 DP）＋生成路径统一样式与途径点命名；r5 变基轮收口
+  * 自检页系列七修定案：SDK 重定向生效门与层内/层外双族收口、比例尺独漏终解（层外直挂浮层恢复枚举否决兜底）、overlay 层整体隐藏（跨机器随机性终解）、自检监测项独立宏控
+  * 数据交互页：新页 DataExchangeWidget 支持 U 盘航迹/路径批量导入导出，旧串口页 define 门控退役；导入修复（路径重命名副本重生成 id/routeId 防地图 overlay 撞车、航迹预检 title 清洗后再判空）
+  * 并入四个 issue：#119 航迹管理列表、#121 导航模式禁用入口、#124 删除用户数据增加地图文件、#128 设备亮度（_sysfs 补 ssh 返回码与 stderr 断言）
+  * issue#140 出站波束表格调整（表格区占比/占满页宽/行高加大）；模拟导航起点锚定路线起点（车标当前位置只喂驾驶链）
+  * qc1109/qc1111 变基合入 MSC-26-RW033；qc1111 评审定点修 R1-H1 m_selectStrategy 未接线、R1-H2/H3 偏航重规划硬编码策略
+  * 知识页批量沉淀与冲突标记清理（issue-agent docs/review 系列，#104/#119/#120/#128 遗留并入）
+- 当前结果：上述主线工作已全部在 MSC-26-RW033 分支
+- 产出依据：HXNativeApp git log（当日主线 35 提交，774c6a5c 等）
+- 遗留与下一步：qc1111 评审后续项、#103-106 等在飞评审
+二、地图组件定位图标状态切换线（HXMapWidgetNative | 5 commits | 已完成）
+- 目标：根治定位图标「跟随/浏览切换丢包闪烁、alignment 不随状态」问题族
+- 当日进展：
+  * 图标 alignment 按状态切换——跟随=viewport 正朝上，Free/浏览=map 跟地图（ag-d56a9b）
+  * 双层根治——跟随 viewport/浏览 map 互斥 visibility，alignment 建层固定（ag-bb9379）
+  * switchTrackVisibility 单命令原子切换双层 visibility——治丢包＋治闪烁（ag-acc22e）
+  * 诊断日志两批——headingStrategy 入口＋setLayoutProperty 调用（ag-2c442c）、switchTrackVisibility 全链路三环 qInfo（host 发送/子进程 handler/query 回执，ag-d50b03）
+- 当前结果：5 提交全入 master（HEAD 601815c）
+- 产出依据：HXMapWidgetNative git log
+- 遗留与下一步：配合 HXNativeApp「地图拖动蓝标消失」MapLibre 渲染层定位结论继续收敛
+三、TitanNavi issue 线（33 commits | 分支在飞，未合 master）
+- 目标：惯导测试软件 issue 池批量消化
+- 当日进展：
+  * issue#265 限制区域提示条定位多轮——安全带定位（列表右缘↔罗盘左缘主窗坐标）→置顶布局（状态栏下方罗盘左侧）→宽度下限随可用宽收缩，r9/r10 终闸收口；车机实证浮层逃逸父裁剪经验沉淀
+  * issue#266 星空图 BDS 圆形裁剪——canton 锚点旗面左上 1/4 星群中心＋垫旗底红修复圆冠/左缘背景漏出，PR #299 合入
+  * issue#264 左侧菜单按钮统一高度/字号（以惯组页拉满列高为基准，度量机制含隐藏按钮）
+  * i18n en 驻车寻北译文缩短消侧栏截断；柱图同系统重复 GSV 复合键去重修 set 值错位
+  * 知识条目 Source 重锚（变基重写 SHA 后悬空引用修复）
+- 当前结果：33 提交在 issue 分支与评审门流转
+- 产出依据：TitanNavi git log --all（aab12410/ee69dd4d 等）；master 与 origin/master 均停在 11-03
+- 遗留与下一步：在飞 issue 合 master 收口
+四、agora 派发系统治理（opencode-agora | 22 commits | F71-F81 系列完成，pytest 888 全绿）
+- 目标：修复派发系统 env 失联/身份错址/并发与纪律四类缺陷
+- 当日进展：
+  * F71 dispatch 重派 env 不在盘自愈重建（/tmp 清理/误删视同无 env 走全新建路，ag-724152 触发）
+  * F72 env 丢失任务一次性 env-gone 升级（边沿记忆不重拍，恢复在盘回常规 stalled 边沿）
+  * F73 board 选中任务手动 worker 提示 p/P 键（内置自检/自定义输入）＋目标锁定防漂移；! 键手动拍僵入口（F77）
+  * F75 CLI 派发错址自动修复与积压消息补交——root_sid 保真建单、存量归属修复扫描、to=root 积压 replay_of 幂等补交（ag-7a0f5a/ag-40a1fa 触发）
+  * 并发与身份：消息号配给 _next_mid 加锁串行（httpd/gate/health 三线程写者丢更新撞号，注入探针钉确定性红）；bind_main 守卫收窄到活动行——曾任 worker 的主会话不再永久 headless 化（ag-7bea59）
+  * 门与纪律：merged 前锚一致性双守卫（no-op rebase 与 ff 幂等假成功三幻影根因，ag-c3de0f 等）；stalled/env-gone 升级改走通知通道唤醒 idle dispatcher；BOOT kind 纪律禁令化＋no-op 申报走 question；question 原生三分支（worker 拒并引导 post/主会话放行/邮件外呼联动）；F79 verify 命令死分类（死类 escalate 不弹 worker）；F80/F81 撞号让渡改号
+  * 口径修正：F55 分拣与 task_create model 描述显式传 zai-coding-plan/glm-5.3-flash 全名（勿依赖 opencode 默认）
+- 当前结果：pytest 888 全绿
+- 产出依据：opencode-agora git log（当日 22 提交，aa9ed9f 等）
+- 遗留与下一步：无阻塞遗留；F75 知识页与 reqs 已归档
+五、记忆基础设施统一（silicon-memory＋.dotfiles | 29 commits | 已完成）
+- 目标：经验/知识双层记忆体系维护面收敛为单一入口
+- 当日进展：
+  * silicon-memory：统一记忆根命令控制面 load/settle/maintain/promote/retire；统一热服务与插件接线（/api/memory/settle|retire＋维护面走本地 CLI）；蒸馏默认模型升级 Qwen3-1.7B-Q8_0→Qwen3-4B-Instruct-2507-Q4_K_M（setup 磁盘门槛 3G→4G 随之重校）；README GPU 条款改写——wheel 移植性警示＋sm_120 源码构建配方（L2b 真机实证回流）；集成测试钉 BM25-only 根因修（/recall 500）；main() 未知命令 rc2 拒绝
+  * .dotfiles：groom-cron 改造为 silicon-memory maintain 内部 runner——经验治理统一维护入口（参数面五项/越界 rc2/阶段门/JSON 摘要经 fd3），agentctl groom 转兼容别名，契约测试先红 26 FAIL 后绿 35 ok（ag-606850）
+  * .dotfiles opencode-plugin 修复：claim 坏档数组拒收＋failed/idle→gone 断言（终闸 B-F2/A-S1）；resume 名册 ts 单调保序；config-restart-nudge 重启恢复能力
+  * .dotfiles 文档：wait SKILL 退役引用追认（agora wait→watch）；silicon-memory 锚刷新＋CUDA wheel 同构限定注记
+- 当前结果：groom 维护入口统一；契约测试全绿
+- 产出依据：silicon-memory git log（10 提交，5a25c4a 等）＋.dotfiles git log（19 提交，cd8adf0 等）
+- 遗留与下一步：夜间治理（judge/groom/ingest）持续运转
+六、Work 仓 206 车机环境文档（Work | 3 commits | 已完成）
+- 目标：沉淀 206 车机环境安装记录，供整机镜像与现场部署复用
+- 当日进展：
+  * 新建 docs/reference/env-setup 车机环境安装记录目录
+  * 206 客户加装 Python 依赖记录——numpy/pandas/statsmodels/openpyxl：aarch64 离线 wheelhouse 制备（同架构优先、x86 交叉旗标）、传递依赖警示、离线 venv 安装、pip check＋import 验收、install_dm8_qt.sh 的 dmPython-only 范围界定
+  * Python DM8 访问指南（车机 env-setup）；INSTALL.md 哈希同步 SHA256SUMS.txt
+- 当前结果：3 提交入 master 并同步远端
+- 产出依据：Work git log（b8cb458 等）
+- 遗留与下一步：无
+------------------------------------------------
+【会话调研工作（未提交）】
+- TitanNavi 显存内存需求调查——结论：单进程 Qt 应用稳态 RSS ~400-700MB（Qt6 框架 ~120-250MB＋sherpa-onnx TTS 模型中文 144MB 常驻），显存 ~80-150MB；整机 ≥2GB 可跑、≥4GB 稳定、显存建议 256MB；实机 HD_DH35 8GB 余量充足（产出位置：会话 ses_e36de61d6）
+- 串口 GNSS/NMEA 主动探测——结论：$JASC 指令全部串口零应答；真实串口仅 ttyACM0-3＋ttyAMA0（ttyS0-7 为 8250 空节点），证据链闭合——机器串口无在工作的 GNSS 设备，问题在物理层（产出位置：会话 ses_e36d1957）
+- tmux「崩溃」排查——结论：死亡链＝exit-empty 默认 on，末会话关闭即 server 退出；已设 exit-empty off 即时生效并持久化 ~/.tmux.conf；防不了 kill-server 与断电（产出位置：会话 ses_e375b54f＋~/.tmux.conf）
+- 模型 key 泄露检查——结论：确认泄露。dotfiles origin/master 的 .agent/opencode/auth.json 含 2 个活跃 key（Kimi/ZAI），git 历史另留存 2 个旧 key；轮换与历史清理待做（产出位置：会话 ses_e360ebbb；风险已列概览）
+- 地图拖动后蓝标消失与归中——诊断：ZMQ 三环链路（host 发出/子进程 handler/query 回执）多轮 100% 畅通，问题定位收窄到 MapLibre 渲染层（产出位置：会话 ses_e504db23）
+- 206 设备环境安装记录查证——结论：本仓与经验/知识库均无「206 设备环境安装」历史记录，相关仅有车机软件环境批量交付方案与 C++ 环境指南两类；当日已新建 env-setup 目录开始沉淀（产出位置：会话 ses_e3780559）
+================================================
+数据来源：HXNativeApp/HXMapWidgetNative/TitanNavi/opencode-agora/silicon-memory/.dotfiles/Work git log（2026-11-11，主线 HEAD 口径；TitanNavi 为 --all 分支口径）、commit body、opencode 会话库（session_v2 直查）
