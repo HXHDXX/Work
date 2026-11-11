@@ -36,7 +36,7 @@ sudo gpasswd -a $USER docker
 sudo apt install linux-tools-common linux-tools-$(uname -r)
 ```
 
-**加入 docker 用户组后需注销并重新登录；Docker Compose V1/V2 可并存，现有脚本继续用 `docker-compose`，迁移验证用 `docker compose`***
+**加入 docker 用户组后需注销并重新登录；Docker Compose V1/V2 可并存，现有脚本继续用 `docker-compose`，迁移验证用 `docker compose`**
 
 ###### 配置GCC 9（项目必需）
 
