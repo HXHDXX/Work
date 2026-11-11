@@ -15,7 +15,7 @@
 ├── docs/
 │   ├── patents/                  ← 专利（发明/交底书/权利要求）
 │   ├── solutions/                ← 技术方案文档
-│   ├── reference/                ← 环境/Git 流程等技术参考
+│   ├── reference/                ← 环境/Git 流程等技术参考（env-setup/ 各项目车机环境安装记录）
 │   ├── agents/
 │   │   ├── index.md             ← 文档索引与元规则（Layer 2）
 │   │   ├── core/                ← principles / structure
