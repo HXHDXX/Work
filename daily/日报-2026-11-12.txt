@@ -1,0 +1,56 @@
+工作日报 2026-11-12（周四）
+================================================
+【刷新版说明】本文件为交互刷新版，覆盖 22:09 cron 自动兜底版（agent 路径
+当日失败走脚本兜底）。刷新补全：.git 符号链接仓（HXNativeApp/HXMapWidgetNative
+原被 -type d 漏扫）、23 时后提交、派发隔离仓与会话工作线。
+================================================
+【今日概览】共 79 次提交，涉及 5 仓：
+主线：HXNativeApp(33)、opencode-agora(26)、HXMapWidgetNative(10)、.dotfiles(9)、Work(1)
+另：五处派发隔离仓（__wt-*，独立克隆）合计 60 笔在飞待回流（TitanNavi 两仓间有同提交可见重叠）。
+- 今日工作：agora 平台 F94–F99 六段功能序列收口＋安全/稳定性修复；agents-md-lint 解析链修复与记忆生命周期文档化；车机应用 issue 大批量清还——HXNativeApp 自检页/航路导航/TTS 等八线落主仓，地图组件视角手势系列全部落库。
+- 整体进度：agora、.dotfiles、HXMapWidgetNative 当日线已完成；HXNativeApp 主线已落仓；TitanNavi/HXNmeaParser 修复进行中（派发仓提交待回流主检出）。
+- 风险阻塞：日报 cron agent 路径 22:09 失败走脚本兜底（本版已交互刷新覆盖），根因待查；TitanNavi 主检出停 11-03 基线，派发仓成果未同步。
+- 明日重点：派发隔离仓评审回流收口；cron 日报 agent 路径失败根因排查。
+------------------------------------------------
+【工作详录】
+一、agora 平台功能扩展与稳定性加固（opencode-agora | 26 commits | 已完成）
+- 目标：完善任务派发平台的建单、交付与验证链路
+- 当日进展：
+  * 功能序列：F94 建单钉死目标分支与 delivery 投影；F95 client_key 幂等建单；F96 实例隔离与仓级交付锁；F98 managed 远端优先交付；F99 verify 卫生四段（纯静态检查器→闸接入登记面→doctor_view 审计→文档收尾）
+  * 安全与核心修复：dispatch 响应不再回传 worker token；凭据变更串行化＋原子落盘；消息在线投递与补拉竞态封闭；满池允许既有任务重派；deliverable 契约对齐与字符串校验统一；仓库路径身份统一；快照版本与任务行集中校验；评审加固缓存顺序与交付游标；邮件游标不越过在途消息
+  * agorad：merged 终局删远端任务支（force-with-lease CAS＋ancestor 校验）；clean_ignore 自豁免 roster 目录 .agora/
+  * 性能与测试：消息/事件读取缓存（perf/store）；S3 e2e 两项（注入计时前等待会话真空闲、空闲前置失败不中止全套）
+  * 知识沉淀：稳定性性能完善不变量
+- 当前结果：F94–F99 全段落库，e2e 与知识文档同步收尾
+- 产出依据：opencode-agora git log 当日 26 commits（bfdc67e/d4bd84e/e1ec0bd/3708910/dddb789…a8c4eae）
+- 遗留与下一步：无
+
+二、.dotfiles 工具链修复与知识沉淀（.dotfiles | 9 commits | 已完成）
+- 目标：lint 解析正确性、记忆生命周期文档化、运行事故修复
+- 当日进展：
+  * agents-md-lint：无参目标三级解析（显式参数＞git 根 .agent/AGENTS.global.md＞HOME 回退）＋输出 checked 对账行（ag-df192c 假红根因）；评审环 R1 修复（显式参数路径不 deref $HOME、4 处 grep 加 -- 封选项误解析）；selftest 新增 G/H 两用例；实证驳回 ocr「awk 加 --」提案（busybox awk 裸传即正确）；沉淀 modules/agents-md-lint.md
+  * 记忆体系：AGENTS 经验记忆节迁移 silicon-memory load/settle 公开面＋experience-memory「Agent 生命周期入口」小节；agentctl ext 族残根清除
+  * restart-resume：pid 存活守卫——热重载被当重启向仍存活 busy 会话群发误报（本日事故）
+  * 配置：pin agora MCP codemode=true 防漂移
+- 当前结果：lint 假红/假绿向量封堵，selftest 全绿；记忆生命周期文档落库
+- 产出依据：.dotfiles git log 当日 9 commits（e94854b/6b2580e/96aa09a/3600c20/1d937d4 等）
+- 遗留与下一步：无
+
+三、车机应用 issue 清还与地图组件治理（HXNativeApp/HXMapWidgetNative 落主仓＋TitanNavi/HXNmeaParser 派发仓 | 主仓 43 笔落库 | 进行中）
+- 目标：清还车机应用 issue 列表与地图组件视角/手势体验问题
+- 当日进展（按仓）：
+  * HXNativeApp（33 笔落主仓）：issue#120 航路导航八轮（起航即收路径管理页、Segment.id「加而不显」根修、删除处理器 m_map 守卫终闸）；issue#84 自检页六修/七修定案（overlay 层整体隐藏、监测项独立宏控、比例尺层外直挂、SDK 重定向生效门）；issue#141 模拟导航车标链（起点锚定路线首点、heading 取证探针、三元回退不可达知识更正）；issue#142 恢复 qc1109 调试遗留短路的全局 TTS 播报链路；新增「记录时频」航迹记录间隔设置；RDSS rescueType/areaFlag 码点直转＋串口 TX 可读日志；航迹导入导出评审修复（FAT 非法字符替换、IO 失败入 failed、路径预检 trimmed）；EpiWidget 末列勾选→地图标注实机验证（kylin）；数据交互按钮统一宽度；#104/#119/#128 并入遗留清理
+  * HXMapWidgetNative（10 笔落主仓）：地图视角/手势系列收口——alignment 烘焙进 addLayer layout（事后 setLayoutProperty 渲染层忽略实证）；updateTrackRotation 单命令原子落刷（治随机丢）；视角手势永不断跟随（手势分类透传＋程序命令不发 external-api）；松手缓动回正＋层切换先显后隐去闪（含终闸/ocr 两轮修复）；子进程 22 命令统一注册表＋host 声明式路由＋E2E 走公共 API；回正延时＋切层角度补偿去闪
+  * TitanNavi（主检出停 11-03，派发仓推进）：issue#306 切语言控件未切换——运行时刷新矩阵沉淀、卫导柱状图图题轴标题切语言即时刷新、en.qm 疑缺译文误判实证推翻（派发仓 16 笔，已在该派生仓并入其 master #310）；issue#311 地图缩小最小限制——视口对角线判据堵世界外黑底＋轨迹表宽修复（派发仓 19 笔）；#302 英语翻译/#305 启动默认位置/#309 多语言菜单按钮显示不全
+  * HXNmeaParser：EPQ wire 字段序恢复＋查询帧保留尾空数据字段/LZM 读取帧定帧（派发仓 2 笔）；CCEPQ 报文校验和差异分析、EPI 指令含义调研会话
+- 当前结果：HXNativeApp 与地图组件修复已落主仓；TitanNavi/HXNmeaParser 修复在派发仓就绪待回流
+- 产出依据：各主仓与 __wt-* 派发仓 git log 实查（16/15/8/19/2 笔派发仓计数）
+- 遗留与下一步：派发仓改动回流主检出（TitanNavi 基线同步）；剩余 issue 线继续
+------------------------------------------------
+【会话调研工作（未提交）】
+- 206 车机部署方案构想（Work 会话 13:54）——浏览 206 目录构想法；产出未落盘，待后续会话或方案文档补充
+- issue-agent 任务未显示在 agora-board（23:23 会话）——排查中
+- TTS NPU 改 CPU 后无声音、串口 NMEA 115200 检查、地图拖动后定位蓝标消失与归中（plan/build 会话）——设备/应用侧诊断进行中，无当日落盘
+- OpenCode 服务重启打断提示（23:19 会话）——同晚已落 pid 存活守卫修复（.dotfiles 1d937d4，热重载误判事故）
+================================================
+数据来源：五主仓＋五派发仓 git log（2026-11-12 窗口，含 .git 符号链接修正）、opencode 会话库（session_v2）
