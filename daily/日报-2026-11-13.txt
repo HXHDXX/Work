@@ -1,0 +1,93 @@
+工作日报 2026-11-13（自动兜底版）
+================================================
+
+【说明】agent 路径失败，此为脚本兜底档案版（按仓分组列提交）。
+
+### .dotfiles（43）
+  00:11 e51bbc2 feat(core): F100 无origin本地权威交付与恢复17:49
+  00:14 d5a84ca chore(lock): issue-agent 锚刷新 58ce841→027f34c（ag-21ea9f B4/B6/B7＋issue#65 跟进＋install 16c）；README checkout hash 同步12:21
+  02:05 0e3e2b5 fix(agent-experience): mechanical fixes per lint (4 findings)
+  02:05 513b2c2 chore(agent-experience): commit in-flight modifications
+  02:07 39610be chore(agent-experience): unify synonymous tags (session-move→session_move, 2 files; test-bridge→testbridge, 3 files)
+  02:11 3980bcf feat(agent-experience): add cold proposals 20261113
+  02:11 6d9d810 feat(agent-experience): weekly digest 20261109-1112
+  02:12 8634eb8 feat(agent-experience): ingest 32 backlog experiences
+  02:14 ef7ac81 feat(agent-experience): nightly groom report 2026-11-13
+  02:15 c88b21e chore(agent-experience): skill-uses double-log for groom run 2026-11-13
+  02:20 beae27b feat(agent-experience): nightly judge report 2026-11-13
+  06:51 51e3ca2 tests: req-gate-path-selftest 适配插件新形态（修路径或依据退役）
+  09:30 5104d2b fix(tmux): default-terminal 换用系统 tmux-256color
+  09:31 a886961 fix(tmux): default-terminal 改用系统 tmux-direct——自定义 terminfo xterm-256color-osc52 从不随 install.sh 分发，全新 Ubuntu 24.04 缺该条目致 tmux 面板 TERM 指向不存在 terminfo、OpenCode TUI 启动即退（实机实证）；系统 tmux-direct 自带 Ms(OSC52)+RGB(真彩) 完整替代（前会话 infocmp 已验证）；install-contract-selftest 增两条契约断言（先红后绿取证）钉住 tmux-direct 并禁自定义 terminfo 回归；ag-2a3c61（前会话 2026-11-11 17:15 API key 耗尽中断的 TDD 尾巴补完）
+  09:47 1100170 tests(install): contract 补 tmux-direct 拒绝断言（ag-abb395 收尾 onto 328a0cb）
+  10:21 328a0cb fix(tmux): default-terminal 翻回系统 tmux-256color——前案 a886961（ag-2a3c61）改用 tmux-direct 被真机考古推翻：tmux-direct 属可选包 ncurses-term（dpkg -S 实锤），Docker 全新 ubuntu:24.04＋apt install tmux 后 /usr/share/terminfo/t/ 仅 tmux/tmux-256color、infocmp tmux-direct MISSING；真机 192.168.1.108 存在该条目系 2026-11-10 装 openssh-server 时依赖链自动拉入 ncurses-term（apt history 实锤、automatic 标记）——两个会话均被这台"免疫机"误导；tmux-256color 随 tmux 包必然存在、OSC52 Ms 齐备，真彩由既有 terminal-overrides ",*256col*:Tc"（正则匹配 tmux-256color）覆盖；install-contract-selftest 断言同步翻转（先红后绿取证、51 例全绿、六套件全过）；ag-c80f55
+  10:42 e5c1fa5 feat(install): stage-one apt 列表增补 git-lfs（ag-abb395 新增需求）
+  10:55 9ef46a0 feat(install): split base and agent setup for ubuntu 24.04
+  11:04 db7182f docs(knowledge): 语义同步审计修复——AGENTS 清单×详解页 7 处漂移全修
+  11:22 d4c87f3 chore(security): 移除 Kimi 凭据快照（key 曾随仓推送 GitHub）；Z.AI 为本地服务 key 保留入仓
+  11:24 30bdec0 fix(install): propagate oh-my-zsh installer failures
+  11:27 ed33b51 feat(groom): AGENTS 同步防护三件套——lint 计数闸＋Wave 1.6 草案＋notify-owner 邮件通知
+  11:30 8b33bd0 docs(groom): Wave 1.6 AGENTS 同步面签署生效（2026-11-13 起）
+  11:35 fe2fb1c fix(install): bootstrap tmux before plugin setup
+  11:39 6fe636c fix(install): tolerate absent GitHub proxy
+  11:44 e92b6d2 chore(backup): 删除 git bundle 定时备份——GitHub remote 已近实时覆盖（每次 push＋groom 夜间自动 push），bundle 同盘无灾备价值（2026-11-13 用户裁定）
+  11:51 06a10ce fix(install): harden stage one idempotency and validation
+  11:52 057d8a5 chore(stats): 删除 session-stats 月度采集——opencode v2 库表全换致 collector 静默失败 3 个月无人察觉，台账无消费面（2026-11-13 用户裁定）
+  11:56 235fd2f fix(install): isolate public clones from local git proxy
+  12:01 8a812c5 fix(install): change login shell through sudo
+  12:12 9c47ec3 fix(install): clone oh-my-zsh directly
+  12:22 cfc7dfa fix(install): isolate and shallow-clone public repositories
+  12:24 483173a fix(install): keep clone destination in fixed argument position
+  12:46 6ac86f5 fix(install): validate repo links and defer req-check
+  13:10 19827fc fix(install): make stage-one clones synchronous and proxy-tolerant
+  13:17 cc4a1d0 feat(cron): 定时器收归单一入口 bin/cron-dispatch——三行 crontab 并一行，时间表入仓
+  13:39 b2c7a77 feat(notify): 发信面全集中——notify-owner v2 吸收 RFC2047 编码成唯一设施；cron-dispatch 增邮报层
+  13:43 e851168 feat(notify): 收编第四发信面 tmux-agent-indicator——email-command 缝指向唯一设施
+  14:00 94977a7 docs(agent): A#3 行补 2026-11-13 实证×2——重同步还原激活态须重做激活步；激活树 selftest 唯一预期 FAIL 属设计内
+  14:25 3bc7779 config(opencode): unpin agora codemode——写回器必抹，钉守不住（撤销 d7c9053）
+  15:01 e8988d2 chore(experience): 收编 11-13 白天增量＋记录 capture 即提交工具强制
+  15:02 7187c3c memory(capture): 20261113-150257-8c1b
+  15:15 1e078e5 chore(experience): 摘除 info/exclude 整库误排，收编搁浅 13 文件
+  16:52 3587ea0 memory(capture): 20261113-165239-7de5
+
+### opencode-agora（11）
+  00:11 e51bbc2 feat(core): F100 无origin本地权威交付与恢复17:49
+  00:30 9e60379 feat(core): F101 external_branch 外部交付确认与 task_deliver 协议
+  01:39 52b9ab2 test(e2e)+docs: F102 多实例交付端到端证明与文档收尾
+  02:29 73d5736 feat(core): F103 push ok 后复核探针不可得单列 push_unconfirmed 终局
+  10:03 42f3d10 agorad: 任务页生命周期刷新——gate _audit 单点挂钩，终态不再停在派发快照（ag-0f60fd 判例）
+  10:12 a285a25 feat(cli): F104 agora cancel 子命令——他池任务取消的 root 通道
+  10:17 2b0cca2 test(e2e): S3 注入失败文案携带就位与到达
+  10:24 d219a1b docs(knowledge): F104 CLI cancel root 通道决策入册（ag-f72278）
+  10:40 aaf2f95 fix(gate): 集成段消费 done sha——env 名分支零增量不再覆写交付/假终态（ag-f77d90/ag-2f6c8a 判例）
+  14:17 0e6b8d7 feat: 纳入 .env/admin 凭据/gpt-load.db，换设备 clone 即用10:48
+  18:44 e2892d7 agorad: 全脏面根级未跟踪隐藏目录自动入名册同轮自愈（DirtyWorktree 携带 porcelain 脏面；全隐藏整目录→追加中央名册+重写 exclude+同轮重试+merged 通知清单+并入闸体检测面；混合脏面照旧弹回）
+  21:27 5a017a2 docs: F97 根级未跟踪隐藏目录自动豁免知识入册
+
+### Work（10）
+  10:58 a526f19 docs(reference): adapt cpp environment to ubuntu 24.0411:31
+  12:31 ca23314 docs(reference): fix compose note emphasis
+  13:39 cc124f6 chore(scripts): 日报发信收归 dotfiles 唯一设施 notify-owner——兜底段直调 msmtp 改设施调用（RFC2047 编码随设施走），主路径 prompt 发信指令同步改指设施（2026-11-13 用户裁定：全系统发信面集中 dotfiles）
+  16:01 48c2686 docs(206): record python3 default switch to 3.12 via /usr/local/bin symlinks
+  16:13 6043695 docs(206): record pycharm/qtcreator install and libGL dev fix
+  16:24 fc1f7e6 docs(knowledge): log 206 device env deployments and agora delivery note
+  16:49 cb4d6f9 feat(206): script python3 default, libGL dev, venv four-package and PHM account stages
+  17:29 2a4800f feat(206): extend stage 8f pins with web stack and record wheelhouse
+  17:37 8f2d9fa fix(206): extend stage 8f idempotence gate to 11 pins
+  17:50 e3ad9c6 fix(206): case-insensitive freeze gate and refresh stage 8f wording
+
+### TitanNavi（2）
+  06:31 b6b0ec5d chore(tws): master 存量行尾空白机械清理（跳过在飞 306/311 lane 文件清单见 note）06:36
+  09:30 13de003e docs(issue-agent): issue#221 黑方块渲染根因与 docx 写法通用化 log-only 记录
+  10:58 a526f19 docs(reference): adapt cpp environment to ubuntu 24.0411:31
+
+### silicon-memory（1）
+  00:14 d5a84ca chore(lock): issue-agent 锚刷新 58ce841→027f34c（ag-21ea9f B4/B6/B7＋issue#65 跟进＋install 16c）；README checkout hash 同步12:21
+  11:02 5fb58a2 docs(skill): project-compound 补知识层语义承载两则00:45
+
+### issue-agent（1）
+  00:33 9f59895 fix(orch): sweep 已投递欠账清账脱离 push_ok 门控——推送失败不再无限重发留言（#119/#264 刷屏根因）
+  11:02 5fb58a2 docs(skill): project-compound 补知识层语义承载两则00:45
+
+### gpt-load（1）
+  14:17 0e6b8d7 feat: 纳入 .env/admin 凭据/gpt-load.db，换设备 clone 即用10:48
+
