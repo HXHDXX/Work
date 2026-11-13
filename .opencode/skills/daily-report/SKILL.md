@@ -26,8 +26,8 @@ zsh 不对未加引号变量分词，且 find|while-read 子 shell 会漏仓（�
 ```bash
 # A. /home/guangbin/Documents — find|while-read（zsh 安全），排除 qt5 上游源码树（45 仓噪声）
 # 实证：TitanNavi 已整体迁至此，漏扫即漏报
-find /home/guangbin/Documents -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
-  repo=$(dirname "$g"); case "$repo" in */qt5/*) continue;; esac
+find /home/guangbin/Documents -maxdepth 3 -name ".git" 2>/dev/null | while read g; do
+  repo=$(dirname "$g"); case "$repo" in */.repo/*|*/qt5/*|*/Work__wt-*) continue;; esac
   git -C "$repo" log --since="$D 00:00" --until="$NEXT 00:00" \
     --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
 done
@@ -36,12 +36,13 @@ done
 ```bash
 # B. /home/guangbin 直下仓（maxdepth 2；Documents 已由 A 轨覆盖，深度 2 不重叠）
 # 排工具自管仓（oh-my-zsh/nvm/popos_shell 自更新属噪声）；.dotfiles/gpt-load 等真工作仓纳入
-find /home/guangbin -maxdepth 2 -name ".git" -type d 2>/dev/null | while read g; do
+find /home/guangbin -maxdepth 2 -name ".git" 2>/dev/null | while read g; do
   repo=$(dirname "$g"); case "$(basename "$repo")" in .oh-my-zsh|.nvm|.popos_shell) continue;; esac
   git -C "$repo" log --since="$D 00:00" --until="$NEXT 00:00" \
     --pretty=format:"%h|%ad|%an|%s" --date=format:"%H:%M"
 done
 ```
+- 不加 `-type d`：`.git` 为 symlink（repo 工具）或 gitfile（git worktree）的仓才能入列；此类工作树与母仓同 hash 提交按 hash 去重、`__wt-*` 后缀名归母仓名聚类（A 轨 `*/Work__wt-*` 排除 env 工作树防重复计数）
 
 ### 2. 🔴 邮件标题 Base64 必须工具生成，禁止手敲
 中文邮件标题走 MIME RFC 2047：`=?UTF-8?B?<base64>?=`。**手敲 Base64 必然算错字节**（曾把「工作日报」编码成「工坊攱话」）。必须：
@@ -156,6 +157,7 @@ git push origin master && git push ff master   # ff-only，禁 force
 | 星期显示「周�」 | `cut -c` 按字节切中文 | case 映射数字→中文 |
 | 同日多封邮件混淆 | 刷新重发 | 主题标「刷新版/最终版」 |
 | 日报落盘未提交（11-03/04，agent 误判「cron 不 commit」） | 提交未成死规则，随 agent 发挥 | 规则 8：落盘发信后必 commit＋push origin+ff |
+| HXNativeApp 全漏（.git symlink 不匹配 -type d；review 工作树 gitfile 同漏） | find -type d 只匹配真目录，symlink/file 均不命中 | 双轨去 -type d＋Work__wt 排除＋hash 去重 |
 
 ## 验证清单（生成后自检）
 - [ ] 邮件标题解码回中文正确（`echo <b64> \| base64 -d` 含「工作日报」）

@@ -28,14 +28,14 @@ RC=$?
 echo "[$(date '+%T')] opencode run 失败/超时(rc=$RC)，降级脚本版兜底"
 # 兜底：纯 bash 档案版 + 发邮件（保证当天必有一封）
 TMP=$(mktemp); : > "$TMP"
-find /home/guangbin/Documents -maxdepth 3 -name ".git" -type d 2>/dev/null | while read g; do
-  case "$(dirname "$g")" in */.repo/*|*/qt5/*) continue;; esac
+find /home/guangbin/Documents -maxdepth 3 -name ".git" 2>/dev/null | while read g; do
+  case "$(dirname "$g")" in */.repo/*|*/qt5/*|*/Work__wt-*) continue;; esac
   r=$(basename "$(dirname "$g")")
   git -C "$(dirname "$g")" log --since="${D} 00:00" --until="${D} 23:59" \
     --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
 done | sort >> "$TMP"
 # 家目录直下仓（maxdepth 2，与 Documents 轨不重叠；排工具自管仓）
-find /home/guangbin -maxdepth 2 -name ".git" -type d 2>/dev/null | while read g; do
+find /home/guangbin -maxdepth 2 -name ".git" 2>/dev/null | while read g; do
   r=$(basename "$(dirname "$g")")
   case "$r" in .oh-my-zsh|.nvm|.popos_shell) continue;; esac
   git -C "$(dirname "$g")" log --since="${D} 00:00" --until="${D} 23:59" \
