@@ -6,6 +6,8 @@ export PATH="/home/guangbin/.opencode/bin:/usr/local/sbin:/usr/local/bin:/usr/sb
 export HOME=/home/guangbin
 export TZ=Asia/Shanghai
 export GIT_TERMINAL_PROMPT=0
+# SSH 凭据走登录 keyring（cron 无 agent 环境 push 128 的修复，2026-11-13 实证）
+export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 LOG=/tmp/opencode/daily-cron.log
 mkdir -p /tmp/opencode
 exec >>"$LOG" 2>&1
