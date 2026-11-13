@@ -445,9 +445,9 @@ stage 8f "venv 依赖链 numpy/pandas/statsmodels/openpyxl＋Web 七件（可选
 # =============================================================================
 WH_CUST="$DM_DIR/wheels/wheelhouse-cust"
 if [ -z "$PYTHON_VENV" ]; then
-  warn "未设置 PYTHON_VENV，跳过四包阶段"
+  warn "未设置 PYTHON_VENV，跳过依赖链阶段"
 elif [ ! -x "$PYTHON_VENV/bin/python" ]; then
-  warn "PYTHON_VENV 下无 bin/python（非有效 venv），跳过四包阶段"
+  warn "PYTHON_VENV 下无 bin/python（非有效 venv），跳过依赖链阶段"
 else
   # 与 8b 同款降权：kylin 属主 venv 内安装/验证以属主执行，防 root 落属主文件卡死后续 kylin pip/import
   VOWNER=$(stat -c %U "$PYTHON_VENV" 2>/dev/null || echo root)
@@ -458,18 +458,18 @@ else
       || fail "$WH_CUST 缺 ${p} 顶层 wheel（按 INSTALL.md §7 制备补齐）"
   done
   # 幂等门：11 个精确 pin 全部就位才跳过（freeze 逐条全字匹配）
-  if [ "$(run_as_owner "$PYTHON_VENV/bin/pip" freeze 2>/dev/null | grep -cE '^(numpy==2\.5\.4|pandas==3\.1\.1|statsmodels==0\.15\.0|openpyxl==3\.1\.5|fastapi==0\.162\.5|uvicorn==0\.54\.0|python-can==4\.6\.1|websockets==17\.4|pydantic==2\.14\.3|apscheduler==3\.11\.3|python-multipart==0\.0\.33)$')" -eq 11 ]; then
-    info "四包精确 pin 已就位，跳过安装"
+  if [ "$(run_as_owner "$PYTHON_VENV/bin/pip" freeze 2>/dev/null | grep -icE '^(numpy==2\.5\.4|pandas==3\.1\.1|statsmodels==0\.15\.0|openpyxl==3\.1\.5|fastapi==0\.162\.5|uvicorn==0\.54\.0|python-can==4\.6\.1|websockets==17\.4|pydantic==2\.14\.3|apscheduler==3\.11\.3|python-multipart==0\.0\.33)$')" -eq 11 ]; then
+    info "11 个精确 pin 已就位，跳过安装"
   else
     run_as_owner "$PYTHON_VENV/bin/pip" install --no-index \
       --find-links "$DM_DIR/wheels" --find-links "$WH_CUST" $PIN11 \
-      || fail "四包离线安装失败（wheel 与 venv python 版本/架构不匹配？）"
-    info "四包已安装（传递依赖 11 个 wheel 由 pip 从 wheelhouse-cust 自解析）"
+      || fail "依赖链离线安装失败（wheel 与 venv python 版本/架构不匹配？）"
+    info "11 个 pin 已安装（传递依赖 31 个 wheel 由 pip 从 wheelhouse-cust 自解析）"
   fi
   run_as_owner "$PYTHON_VENV/bin/python" -c "import numpy,pandas,statsmodels,openpyxl,fastapi,uvicorn,can,websockets,pydantic,apscheduler,multipart" >/dev/null 2>&1 \
-    || fail "venv 四包导入验证失败"
+    || fail "venv 依赖链导入验证失败"
   run_as_owner "$PYTHON_VENV/bin/pip" check >/dev/null 2>&1 || fail "pip check 报告依赖问题"
-  info "venv 四包验证通过（import + pip check）"
+  info "venv 依赖链验证通过（import + pip check）"
 fi
 
 # =============================================================================
