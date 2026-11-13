@@ -287,6 +287,8 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 
 > **8d–8g 已脚本化（2026-11-13）**：`install_dm8_qt.sh` 新增四阶段，均幂等（条件已满足即跳过）——8d python3/pip3 默认指向 3.12（`/usr/local/bin` 符号链接，系统 `/usr/bin/python3` 不动）；8e libGL 开发链落位（`debs/libgl-dev_*.deb` 经 `dpkg-deb -x` 整树拷入，不走 `dpkg -i`）；8f venv 四包安装（numpy/pandas/statsmodels/openpyxl 精确 pin，验收 import＋`pip check`）；8g PHM 业务面（建 PHMAPP 账号授 PUBLIC/RESOURCE、写 `/home/kylin/.config/phm/dm.ini`、落位 `phm-app.service` 不 enable）。PHMAPP 密码经环境变量 `PHMAPP_PWD` 覆盖，缺省 `PHMapp2026`（8~48 位含大小写数字）。
 
+> **Web 七件扩充（2026-11-13，.20 设备已装验讫）**：stage 8f pin 扩至 11 件——fastapi==0.162.5 / uvicorn[standard]==0.54.0 / python-can==4.6.1 / websockets==17.4 / pydantic==2.14.3 / apscheduler==3.11.3 / python-multipart==0.0.33；wheelhouse-cust/ 现 42 wheel（四包闭包 15＋Web 闭包 27，均 aarch64 cp312 精确 pin 制备）。⚠️ Web 链约束 wrapt<2：安装时 wrapt 2.5.2→1.17.3 降级，statsmodels/numpy/pandas/openpyxl 复验 import 绿＋pip check 无告警。设备验收：七件 import OK（fastapi 0.162.5 / uvicorn 0.54.0 / pydantic 2.14.3）。
+
 ## 六、真机 E2E 验证记录（2026-09-16）
 
 部署包已在目标设备（kylin@192.168.1.222）全脚本实跑通过，逐阶段结果：DM8 幂等跳过→disql/LICENSE→DPI 注册→QDM→**Qt↔DM 中文冒烟通过**→dmPython 干净环境连接通过→Python _ssl 验证→清理，全绿。原始日志见 `验证记录/`。重启后复查：达梦双服务 active+5236 监听+disql OPEN+python _ssl 正常，均开机自启级稳定。修复记录：PY_FIX_SSL 变量缺省值 bug（set -u 下崩溃）已修。
