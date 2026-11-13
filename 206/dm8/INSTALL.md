@@ -275,6 +275,10 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 
 > **客户需求对齐（2026-09-16）**：Python 以客户基准 **3.12.2** 编译，命令逐字对齐客户文档（`./configure --enable-optimizations --prefix=/usr/local` + `make -j$(nproc)` + `sudo make altinstall`；PGO 构建约 30~60 分钟）。基础工具 build-essential/gcc/g++/make/curl 设备已有，wget 已入 debs/。**PyCharm 与 CAN 调试助手经确认不安装**。sqlite3 CLI 已入 debs/（universe 池，3.31.1；目标设备本就已安装）。
 
+> **Python 3.12 设为默认（2026-11-13，设备 kylin@192.168.1.20，sudo 密码 `qwer1234`）**：altinstall 装法不会产生 `python3` 命令，靠 `/usr/local/bin`（PATH 优先于 `/usr/bin`）补两条符号链接即可：
+> `sudo ln -sf /usr/local/bin/python3.12 /usr/local/bin/python3 && sudo ln -sf /usr/local/bin/pip3.12 /usr/local/bin/pip3`
+> 交互 shell 默认 `python3`/`pip3` → 3.12.2；系统 `/usr/bin/python3`（3.8.10）与 `python`（2.7.18）**刻意不动**，防破坏麒麟系统工具。venv（`/home/kylin/venvs/phm`）与 systemd 服务用绝对路径，不受影响。
+
 ## 六、真机 E2E 验证记录（2026-09-16）
 
 部署包已在目标设备（kylin@192.168.1.222）全脚本实跑通过，逐阶段结果：DM8 幂等跳过→disql/LICENSE→DPI 注册→QDM→**Qt↔DM 中文冒烟通过**→dmPython 干净环境连接通过→Python _ssl 验证→清理，全绿。原始日志见 `验证记录/`。重启后复查：达梦双服务 active+5236 监听+disql OPEN+python _ssl 正常，均开机自启级稳定。修复记录：PY_FIX_SSL 变量缺省值 bug（set -u 下崩溃）已修。

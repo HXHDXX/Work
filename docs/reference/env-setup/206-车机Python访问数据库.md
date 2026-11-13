@@ -10,7 +10,7 @@
 | 数据库 | DM8，`dmdba` 用户运行，systemd 服务 `DmServiceDMSERVER` 管理 |
 | 监听 | `127.0.0.1:5236`（仅本机 TCP） |
 | 库 / 实例 | DAMENG / DMSERVER |
-| Python | 3.12.2（客户基准，`/usr/local/bin/python3.12`） |
+| Python | 3.12.2（客户基准，`/usr/local/bin/python3.12`；2026-11-13 起 `python3`/`pip3` 经 `/usr/local/bin` 符号链接默认指向 3.12，系统 `/usr/bin` 未动，复现命令见 `206/dm8/INSTALL.md` §五） |
 | venv 建议路径 | `/home/kylin/venvs/phm` |
 | 业务运行账号 | `kylin` |
 | 四包 | numpy / pandas / statsmodels / openpyxl（wheelhouse 离线装） |
