@@ -457,8 +457,8 @@ else
     ls "$WH_CUST"/"$p"-*.whl >/dev/null 2>&1 \
       || fail "$WH_CUST 缺 ${p} 顶层 wheel（按 INSTALL.md §7 制备补齐）"
   done
-  # 幂等门：四个精确 pin 全部就位才跳过（freeze 逐条全字匹配）
-  if [ "$(run_as_owner "$PYTHON_VENV/bin/pip" freeze 2>/dev/null | grep -cE '^(numpy==2\.5\.4|pandas==3\.1\.1|statsmodels==0\.15\.0|openpyxl==3\.1\.5)$')" -eq 4 ]; then
+  # 幂等门：11 个精确 pin 全部就位才跳过（freeze 逐条全字匹配）
+  if [ "$(run_as_owner "$PYTHON_VENV/bin/pip" freeze 2>/dev/null | grep -cE '^(numpy==2\.5\.4|pandas==3\.1\.1|statsmodels==0\.15\.0|openpyxl==3\.1\.5|fastapi==0\.162\.5|uvicorn==0\.54\.0|python-can==4\.6\.1|websockets==17\.4|pydantic==2\.14\.3|apscheduler==3\.11\.3|python-multipart==0\.0\.33)$')" -eq 11 ]; then
     info "四包精确 pin 已就位，跳过安装"
   else
     run_as_owner "$PYTHON_VENV/bin/pip" install --no-index \
