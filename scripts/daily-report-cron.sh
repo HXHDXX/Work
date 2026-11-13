@@ -17,8 +17,9 @@ D=$(date +%F)
 # 主路径：opencode run 非交互执行 skill（深度版 + 发邮件）
 # 模型固定 zai-coding-plan/glm-5.3（本地代理，避开 Kimi 5 小时配额；撞配额史见 08-27）
 # 超时 15 分钟兜底（agent 偶发卡住不阻塞 cron）
+# 🔴 prompt 字符串内禁用 ASCII 双引号/尖括号（会截断外层引号，"＜标题＞" 曾致整条命令被解析为重定向）
 timeout 900 opencode run --auto -m zai-coding-plan/glm-5.3 \
-  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /home/guangbin/Documents/Work/daily/日报-${D}.txt，并用 /home/guangbin/.dotfiles/bin/notify-owner "<标题>" <正文文件> 发送（唯一发信设施，勿手搓邮件头、勿直调 msmtp）。落盘发信后必须收尾：python3 scripts/daily-index.py 重建 INDEX，git add daily/ 并 commit（docs(daily): add ${D} daily report），git push origin master 与 git push ff master（禁 force）。" \
+  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /home/guangbin/Documents/Work/daily/日报-${D}.txt，并用 /home/guangbin/.dotfiles/bin/notify-owner 以「日报标题」与「正文文件路径」为参数发送（唯一发信设施，勿手搓邮件头、勿直调 msmtp）。落盘发信后必须收尾：python3 scripts/daily-index.py 重建 INDEX，git add daily/ 并 commit（docs(daily): add ${D} daily report），git push origin master 与 git push ff master（禁 force）。" \
   && { echo "[$(date '+%T')] 成功（深度版）"; exit 0; }
 
 RC=$?
@@ -59,6 +60,7 @@ fi
 rm -f "$TMP"
 
 # 日报落盘即提交推送（溯源 11-03/04 漏提交；ff-only 禁 force）
+python3 scripts/daily-index.py   # 兜底路径也要重建 INDEX（主路径已含，此处补漏）
 git add "daily/日报-${D}.txt" daily/INDEX.md 2>/dev/null
 if ! git diff --cached --quiet; then
   git commit -m "docs(daily): add ${D} daily report" \
