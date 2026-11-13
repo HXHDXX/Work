@@ -42,6 +42,9 @@ find /home/guangbin -maxdepth 2 -name ".git" 2>/dev/null | while read g; do
     --pretty=format:"%ad|${r}|%h|%s" --date=format:"%H:%M" 2>/dev/null
 done | sort >> "$TMP"
 
+# __wt 工作树与母仓同 hash 去重＋归母仓名（用户裁定 2026-11-14：去重不排除）
+awk -F'|' '{split($2,p,"__wt-"); $2=p[1]; if(!seen[$3]++) print $1"|"$2"|"$3"|"$4}' "$TMP" > "$TMP.d" && mv "$TMP.d" "$TMP"
+
 REPORT="/home/guangbin/Documents/Work/daily/日报-${D}.txt"
 SUBJ_TEXT="工作日报 ${D}（自动兜底版）"
 if [ -s "$REPORT" ]; then
