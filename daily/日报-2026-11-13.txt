@@ -1,16 +1,27 @@
 工作日报 2026-11-13（周五）
 ================================================
-【今日概览】共 101 次提交，涉及 9 仓：
-主线：.dotfiles(44)、issue-agent(26)、opencode-agora(12)、Work(11)、TitanNavi(3)、silicon-memory(2)、gpt-load(1)、coding-gates(1)、HXNmeaParser(1)
-- 今日工作：开发环境治理大日——install.sh Ubuntu 24.04 适配系列＋发信面全集中 dotfiles（notify-owner 唯一设施）；issue-agent×agora 外部交付链端到端落地；opencode-agora F100–F104 五特性；206 车机设备环境部署推进；车机地图渲染多任务并行（会话交付为主）。
-- 整体进度：环境治理/交付链/F 系列均已完成并提交；206 部署推进中（stage 8f 幂等闸扩至 11 pins）；22:00 日报 cron 主路径引号缺陷已定位并于本任务修复（ag-0d7abb）。
-- 风险阻塞：日报 cron prompt 内嵌 ASCII 双引号曾致主路径 rc=1 降级浅版（已修，待 22:00 实跑复验）；无其他阻塞。
-- 明日重点：观察修复后 cron 深度版出报；206 剩余阶段推进；issue-agent 外部交付链首日全量运行稳定性观察。
-- 说明：本版为深度刷新版（ag-0d7abb），覆盖同日 22:00 脚本降级浅版。
+【今日概览】共 170 次提交（跨工作树 hash 去重），涉及 12 仓：
+主线：HXNativeApp(60)、.dotfiles(44)、issue-agent(26)、opencode-agora(12)、Work(11)、HXMapWidgetNative(8)、TitanNavi(3)、silicon-memory(2)、HXNmeaParser(1)、lib-HXNmeaParser(1)、gpt-load(1)、coding-gates(1)
+- 今日工作：HXNativeApp 车机应用修复大批量落地（issue #162 浮层恢复、#128 亮度 ukui、#143 RNSS、#144 sqlite 搬迁、渲染门限 10fps 定标及 #179/#185 评审分支）；开发环境治理大日——install.sh Ubuntu 24.04 适配系列＋发信面全集中 dotfiles；issue-agent×agora 外部交付链端到端落地；opencode-agora F100–F104 五特性；206 车机设备环境部署推进；地图渲染专项 8 笔落 git。
+- 整体进度：HXNativeApp 主线修复已并合、179/185 评审分支修复完成待并；环境治理/交付链/F 系列均已完成并提交；206 部署推进中（stage 8f 幂等闸扩至 11 pins）；日报 cron 两缺陷（prompt 引号、双轨 symlink 漏扫）已定位修复。
+- 风险阻塞：无（日报 cron 双缺陷均已修，待次日 22:00 实跑复验）。
+- 明日重点：观察修复后 cron 深度版出报；206 剩余阶段推进；issue-agent 外部交付链全量运行稳定性观察；#179/#185 评审分支并线。
+- 说明：本版为最终版（ag-3dcc6d）：修复双轨扫描 symlink 漏扫（find -type d 不匹配 .git symlink/gitfile，HXNativeApp 全仓系漏报）后重生成，覆盖同日 22:00 脚本降级浅版与深度刷新版。
 
 ------------------------------------------------
 【工作详录】
-一、开发环境与发信面治理（.dotfiles 44＋gpt-load 1＋coding-gates 1 | 46 commits | 已完成）
+一、HXNativeApp 车机应用修复主线（HXNativeApp | 60 commits | 已完成（评审分支待并））
+- 目标：MSC-26-RW033 主线 issue 修复＋issue/179、185 评审分支当日交付。
+- 当日进展：
+  * MSC-26-RW033 主线（35 笔）：issue #162 浮层恢复——自检收起后浮层被 qApp 级 Show 否决吃掉，先拆门槛再恢复＋契约恒显集（5976c5fb），自检超时弹窗确定后自动进主界面（4085e433）；issue #128 亮度改经 ukui brightness-ac 受保护入口（守护覆盖根因，32eeca44）＋终闸三册修复（a4ef9716/d05fb360）；issue #144 sqlite 残档搬迁两层门控防库与 wal 拆裂（839057be/bd515263）＋锚定启动 cwd 恢复全局按钮点击样式（524c0434）；issue #143 RNSS 在用判定改 (sys,prn) 复合键解 GPS/BDS 撞号错标（e9c37ea3）＋柱状图柱位横轴标签锁定 1:1（b50b9218）＋星空图卫星国旗圆标与空心柱（44a1a264）；渲染门限默认 10fps 车机 CPU 实测定标（fac501ff）；航迹记录对齐参考实现——id 对位重建/实时落盘断电屏障/系统时频（ba712af8）。
+  * issue/179-fix 评审分支：卫星图页 6 项数据链修复——速度双重换算/磁偏角丢弃/DOP 互换/GSA in-use 清空/NaN 兜底（aa73e837）；inUseKeys SNR 双语义调和——显式 0（死星）不计、-1（GSA in-use 形态）计入（228052a8/685a0ec3/eb330152）；rnss-position-display 模块知识沉淀（8ff7f338）。
+  * issue/185-fix 评审分支：路径管理新建/查看/删除并行状态失同步六项修复（9a28c2ed）＋externalIndex 映射配方沉淀（f7500399）＋评审 R1 三修——删除后重排防错删（0695eb9a）、segments.id 非空判据防 ghost 线（cd094204）、过滤态还原数据行（13bc9f88）。
+  * 评审栈共享提交：#183 返回按钮收起悬浮面板＋setTabOrder 焦点链（0a390399/7d29fcec）、#184 导航列表优化航点表占满＋航迹复用（7551da87）、#181 导航信息面板字号与几何（a709b4e6）。
+- 当前结果：主线修复已并合；179/185 修复完成待并线。
+- 产出依据：HXNativeApp git log（MSC-26-RW033 35＋issue/179-fix、issue/185-fix 评审栈，跨工作树 hash 去重 60 笔；.git 为 symlink，双轨去 -type d 后入列）。
+- 遗留与下一步：#179/#185 评审分支并线；渲染门限实测数据回收。
+
+二、开发环境与发信面治理（.dotfiles 44＋gpt-load 1＋coding-gates 1 | 46 commits | 已完成）
 - 目标：install.sh 在全新 Ubuntu 24.04 可一键装齐；全系统发信面收归单一设施；凭据安全收口。
 - 当日进展：
   * install.sh 24.04 适配：tmux default-terminal 两轮翻案终定 tmux-256color（a886961→328a0cb，dpkg/apt history 真机考古实锤 tmux-direct 属可选包）；stage-one 系列加固（base/agent 拆分、幂等与校验、公共仓浅克隆与代理隔离、oh-my-zsh 直装与失败传播、login shell sudo 切换、git-lfs 增补）约 15 笔。
@@ -22,41 +33,42 @@
 - 产出依据：.dotfiles git log（d5a84ca…0bcb6c1）、gpt-load 0e6b8d7、coding-gates 4ff1592。
 - 遗留与下一步：今晚 cron 实跑复验发信链。
 
-二、issue-agent×agora 外部交付链（issue-agent | 26 commits | 已完成）
+三、issue-agent×agora 外部交付链（issue-agent | 26 commits | 已完成）
 - 目标：issue-agent 修复经 agora 以外部分支交付并回评 GitHub issue，全链路当日打通。
 - 当日进展：agora 台账字段与 fix-branch 准备→幂等派发轮次→外部交付已验证 commit→评论中继与报告管线加固（review round 1-3：agora_poll_interval 类型洞、execution_mode truthy 洞、异步报告等待）；rewrite-unsafe 终态语义（每 sha 一次板面求助）；sweep 欠账清账脱离 push_ok 门控（#119/#264 刷屏根因）。
 - 当前结果：external issue delivery 端到端启用（f872253）；会话侧当日 ~250 个 issue/review/终闸机器会话（HXNativeApp/TitanNavi 目录）为链路全量跑通证据。
-- 产出依据：issue-agent git log（9f59895…4fed439）；opencode 会话库 session_v2 当日 280 会话统计。
+- 产出依据：issue-agent git log（9f59895…4fed439）；opencode 会话库 session_v2 当日 292 会话统计。
 - 遗留与下一步：首日全量运行的稳定性观察。
 
-三、opencode-agora F100–F104（opencode-agora | 12 commits | 已完成）
+四、opencode-agora F100–F104（opencode-agora | 12 commits | 已完成）
 - 目标：补齐 agora 交付协议缺口。
 - 当日进展：F100 无 origin 本地权威交付与恢复；F101 external_branch 交付确认与 task_deliver 协议；F102 多实例交付 e2e 证明；F103 push ok 后探针不可得单列 push_unconfirmed 终局；F104 agora cancel root 通道＋知识入册；agorad 修复任务页生命周期刷新（gate _audit 挂钩）、集成段消费 done sha、全脏面根级未跟踪隐藏目录自动入名册同轮自愈；F95 幂等命中先于 req_id 发放查重。
 - 当前结果：五特性＋三修复全部落地。
 - 产出依据：opencode-agora git log（e51bbc2…4cec8e6）。
 - 遗留与下一步：无。
 
-四、206 车机设备环境部署（Work | 11 commits | 进行中）
+五、206 车机设备环境部署（Work | 11 commits | 进行中）
 - 目标：206 设备（Ubuntu 24.04/Kylin）开发与部署环境成档化。
-- 当日进展：Python 3.12 默认化（/usr/local/bin 符号链接）；PyCharm/QtCreator 补装与 libGL 缺库修法成档；部署脚本收编 python3 默认/libGL dev/venv 四包/PHM 账户四强制阶段；Web 栈七件扩充，stage 8f 幂等闸扩至 11 pins 并改大小写不敏感 freeze 闸；docs/reference cpp 环境适配 24.04（Node 24/GCC 9/Compose V1+V2）；agora 交付Note落 knowledge log。
+- 当日进展：Python 3.12 默认化（/usr/local/bin 符号链接）；PyCharm/QtCreator 补装与 libGL 缺库修法成档；部署脚本收编 python3 默认/libGL dev/venv 四包/PHM 账户四强制阶段；Web 栈七件扩充，stage 8f 幂等闸扩至 11 pins 并改大小写不敏感 freeze 闸；docs/reference cpp 环境适配 24.04（Node 24/GCC 9/Compose V1+V2）；agora 交付Note落 knowledge log；22:00 cron 日报落盘。
 - 当前结果：部署脚本阶段化完成，文档五篇落档。
-- 产出依据：Work git log（a526f19…e3ad9c6）；Work__wt-ag-74f783/17234b/8d501a/8442da/f555cb 会话。
+- 产出依据：Work git log（a526f19…b7f39f5）；Work__wt-ag-74f783/17234b/8d501a/8442da/f555cb 会话。
 - 遗留与下一步：206 剩余阶段推进。
 
-五、车机导航与地图渲染（TitanNavi 3＋HXNmeaParser 1＋会话交付 | 4 commits＋多会话 | 进行中）
+六、车机导航与地图渲染（TitanNavi 3＋HXNmeaParser 1＋lib-HXNmeaParser 1＋HXMapWidgetNative 8 | 13 commits | 进行中）
 - 目标：导航 issue 流水线消化＋地图渲染体验专项。
-- 当日进展：TitanNavi master 存量 tws 行尾机械清理（跳过在飞 306/311 lane）；issue#221 黑方块渲染根因（docx 写法通用化）与需求对齐 log-only 两篇；HXNmeaParser CCEPQ 报文校验和差异分析成档；地图渲染线经 agora 会话交付（未计入当日 git）：RenderTileSource 缓存所有权洞修复＋arm64 库构建（ag-0a43fa）、渲染批处理闸消切换双显帧（ag-6e0f68）、app 默认渲染门限 10fps（ag-fd483b）、零位移 press/tap 不发射 gestureStarted（ag-cef1ec）、icon-opacity 过渡归零消白闪（ag-758b25）、浏览态恢复补 pitch 缓动（ag-fd4f1d）、图标本体白闪帧三假设取证（ag-9e02ee）、OSM 四样式纹理层删除并重打包 NATIONAL/北京（ag-24e4f3/c40d5f/3e5da0）。
-- 当前结果：issue#157/162/178-185/306/309/311/319/323/332 等经流水线处理；渲染专项八任务交付。
-- 产出依据：TitanNavi/HXNmeaParser git log；HXMapWidgetNative/OSMDataCompiler/maplibre-native 各 __wt-ag-* 会话。
+- 当日进展：TitanNavi master 存量 tws 行尾机械清理（跳过在飞 306/311 lane，b6b0ec5d）；issue#221 黑方块渲染根因（docx 写法通用化）与需求对齐 log-only 两篇（13de003e/17b6ab19；TitanNavi 与 lib-plugin-HXGISServer 同 git 库，hash 去重计 3 笔）；HXNmeaParser CCEPQ 报文校验和差异分析成档（fb48f9d）；lib-HXNmeaParser 发布 windows d3d1e2c 版（6451259）；HXMapWidgetNative 渲染专项 8 笔落 git——切换双显帧消除 requestRepaint 批处理闸拉幕布＋双写命令包批（047bcaa/ag-6e0f68）、零位移 press/tap 不发射 gestureStarted 位移阈值门控两轮（848c70e/49d27c0/ag-cef1ec）、浏览回中 pitch/zoom 纳入 resume chase 缓动＋测试加固（dfde07f/5c687f3/ag-fd4f1d）、icon-opacity 过渡归零消切换白闪（e3eb36f/ag-758b25）、评审证据两篇（073aec7/bc0df17）。
+- 当前结果：issue#157/162/178-185/306/309/311/319/323/332 等经流水线处理；渲染专项核心修复已从会话态落 git。
+- 产出依据：TitanNavi/HXNmeaParser/HXMapWidgetNative git log；OSM 四样式重打包（ag-24e4f3/c40d5f/3e5da0）仍为会话态未落 git。
 - 遗留与下一步：白闪根因终裁与渲染门限实测数据回收。
 
 ------------------------------------------------
 【会话调研工作（未提交）】
 - 日报 cron 主路径失败排查——定位 prompt 内嵌 ASCII 双引号截断外层引号致命令被解析为重定向（产出：本任务 ag-0d7abb，修复 commit bd80db0）。
+- 日报双轨扫描 symlink 漏扫排查——.git 为 symlink（repo 工具）/gitfile（git worktree）不匹配 find -type d，HXNativeApp 全仓系当日漏报（产出：ag-3dcc6d，修复 commit 8a546ff，本日报即最终版重生成）。
 - GitHub 公共仓模型 key 泄漏风险——确认 Kimi key 曾随仓暴露并移除快照（产出：d4c87f3＋gpt-load 0e6b8d7）。
 - Kylin host Python 版本考据——确认默认 3.12 切换路径（产出：48c2686）。
-- install.sh Ubuntu 24.04 兼容性会诊——驱动当日 install 系列约 15 笔（产出：见详录一）。
+- install.sh Ubuntu 24.04 兼容性会诊——驱动当日 install 系列约 15 笔（产出：见详录二）。
 - CCEPQ 报文校验和差异分析——嵌套注释告警根因成档（产出：HXNmeaParser fb48f9d）。
 - 运维裁定类：TitanNavi issue-agent 并发数、Agora 是否走 code mode、worktree 保留策略×2、全局 AGENTS.md 精简、opencode.json 变更审查、kimi 模型恢复、Documents ff 源检查推送、未提交修改归因（产出：对应小修 commit 或即时裁定）。
 ================================================
-数据来源：各仓 git log（2026-11-13，双轨遍历 9 仓 101 commits）、commit body、opencode 会话库 session_v2（当日 280 会话，剔除机器碎会话后归并）
+数据来源：各仓 git log（2026-11-13，修复后双轨遍历 12 仓 170 commits，__wt-* 工作树归母仓名聚类、同 hash 去重）、commit body、opencode 会话库 session_v2（当日 292 会话，剔除机器碎会话后归并）
