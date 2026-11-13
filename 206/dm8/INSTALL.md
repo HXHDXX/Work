@@ -273,11 +273,16 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 
 > **Python3.12+SSL 支撑（2026-09-16 起）**：脚本阶段 8c 自动检测 `/usr/local/bin/python3.12` 的 `import ssl`，失败时：离线安装 `debs/` 里 10 个编译依赖包（libssl-dev/libffi-dev/sqlite 等，已装自动跳过）→ 用包内 `Python-3.12.14.tgz` 重编安装（3.12 系列 ABI 兼容，venv/site-packages 不受影响）→ 验证 `_ssl`。`PY_FIX_SSL=skip` 可禁用。设备已有源码树时也可手工增量 `make`（见《dmPython连接配置方案.md》背景）。
 
-> **客户需求对齐（2026-09-16）**：Python 以客户基准 **3.12.2** 编译，命令逐字对齐客户文档（`./configure --enable-optimizations --prefix=/usr/local` + `make -j$(nproc)` + `sudo make altinstall`；PGO 构建约 30~60 分钟）。基础工具 build-essential/gcc/g++/make/curl 设备已有，wget 已入 debs/。**PyCharm 与 CAN 调试助手经确认不安装**。sqlite3 CLI 已入 debs/（universe 池，3.31.1；目标设备本就已安装）。
+> **客户需求对齐（2026-09-16）**：Python 以客户基准 **3.12.2** 编译，命令逐字对齐客户文档（`./configure --enable-optimizations --prefix=/usr/local` + `make -j$(nproc)` + `sudo make altinstall`；PGO 构建约 30~60 分钟）。基础工具 build-essential/gcc/g++/make/curl 设备已有，wget 已入 debs/。**CAN 调试助手经确认不安装；PyCharm 已于 2026-11-13 补装（见下条）**。sqlite3 CLI 已入 debs/（universe 池，3.31.1；目标设备本就已安装）。
 
 > **Python 3.12 设为默认（2026-11-13，设备 kylin@192.168.1.20，sudo 密码 `qwer1234`）**：altinstall 装法不会产生 `python3` 命令，靠 `/usr/local/bin`（PATH 优先于 `/usr/bin`）补两条符号链接即可：
 > `sudo ln -sf /usr/local/bin/python3.12 /usr/local/bin/python3 && sudo ln -sf /usr/local/bin/pip3.12 /usr/local/bin/pip3`
 > 交互 shell 默认 `python3`/`pip3` → 3.12.2；系统 `/usr/bin/python3`（3.8.10）与 `python`（2.7.18）**刻意不动**，防破坏麒麟系统工具。venv（`/home/kylin/venvs/phm`）与 systemd 服务用绝对路径，不受影响。
+
+> **PyCharm + QtCreator + GL 开发链补装（2026-11-13，设备 kylin@192.168.1.20）**：
+> - **PyCharm 2025.3**（build 253.28294.336，统一版免费层=社区版功能，aarch64）：联网机下载 `pycharm-2025.3-aarch64.tar.gz`（1.2G，sha256 已随部署包归档于 206/dm8/）→ scp 摆渡 → `sudo tar -xzf -C /opt` → `sudo ln -sfn /opt/pycharm-2025.3 /opt/pycharm` + `sudo ln -sf /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm` + 写 `/usr/share/applications/pycharm.desktop`（`Exec=/opt/pycharm/bin/pycharm.sh %f`、`Icon=/opt/pycharm/bin/pycharm.svg`、`StartupWMClass=jetbrains-pycharm`）。自带 aarch64 JBR；要求 glibc≥2.28（设备 2.31 ✓）。验收：`file /opt/pycharm/jbr/bin/java` 为 aarch64 ELF。
+> - **QtCreator 4.11.0-3kylin6k0.6** 设备已有（麒麟源 apt 装的 /usr/bin/qtcreator），无需另装；Qt Kit 指向 /opt/Qt5.14.2 即可。
+> - **缺库 `cannot find -lGL`**（QtCreator 新建 GUI 工程必撞）：设备只有 GL 运行时（libGL.so.1），缺开发链接件 `libGL.so`（属 `libgl-dev` 包）。正解包 `libgl-dev_1.3.2-1~kylin0.20.04.2_arm64.deb` 已入 `debs/`（麒麟源直链 `http://archive.kylinos.cn/kylin/KYLIN-ALL/pool/main/libg/libglvnd/`，目录列表 403 但文件直链可取，版本须与在位 libglvnd 运行时精确一致）。⚠️ libgl-dev 名义依赖拖 `libglx-dev→libx11-dev` 约 9 包链——离线最小修法：`dpkg-deb -x` 解包后整树拷入 `/usr`（得 `libGL.so` 链接＋GL 头 gl.h/glext.h/KHR＋pkgconfig），绕开 X11 链且不碰 dpkg 账本；将来需 EGL/GLES dev（Qt Quick ES2）再扩链。验收：`echo 'int main(){return 0;}' | g++ -x c++ - -lGL` 链接通过。
 
 ## 六、真机 E2E 验证记录（2026-09-16）
 
