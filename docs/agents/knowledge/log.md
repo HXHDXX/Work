@@ -100,3 +100,11 @@
 ## [2026-11-13] ingest | 206 车机环境
 - 206/dm8/INSTALL.md 落三笔（48c2686 python3.12 默认化 / 6043695 PyCharm+QtCreator+GL dev 补装＋旧裁定修正）：离线摆渡三要点——麒麟源目录列表 403 但文件直链可取、deb 版本须与在位运行时精确一致、libgl-dev 名义依赖拖 libx11-dev 九包链时可用 dpkg-deb -x 整树落位绕开（不碰 dpkg 账本）；agorad 交付权威=origin 远端（本仓=LAN git 服务器 192.168.1.100），merged 通知 local=pending 为检出守卫设计内软状态非故障（详见经验 20261113-162000-a7f3）
 - Types: Deployment Record / Decision
+
+## [2026-11-14] ingest | daily-report
+- bash 双引号字符串内占位符禁 ASCII 引号/尖括号——notify-owner "<标题>" 截断外层串被解析为重定向致 cron 主路径 rc=1（bd80db0 修复）
+- cron 无 SSH_AUTH_SOCK 推远端必 128——脚本头部 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh 走登录 keyring（ae75a95，env -i 实证）
+- repo 工具仓 .git 是 symlink，find -name .git -type d 永远漏扫（HXNativeApp 整仓漏报根因）——去 -type d＋排 */Work__wt-*＋hash 去重＋__wt 归母仓名（8a546ff/187e25f）
+- git log --pretty=format: 无尾换行，直接接 while read 吞每仓最后一行提交（ag-3dcc6d worker 实证；经 sort 管道无此病）
+- 裁定 2026-11-14：兜底扫描母仓/__wt 重复按 hash 去重不全排除（保 review 工作树分支独有提交）；agora 合并门 done 态卡滞可自愈，先观察再重派
+- Types: Bug Experience, Decision
