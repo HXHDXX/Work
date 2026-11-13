@@ -215,6 +215,7 @@ db.open();                              // 建/插/查中文往返验证
 |---|---|
 | DM8 安装目录 | `/dm8`（dmdba:dinstall） |
 | 实例 | 库 DAMENG / 实例 DMSERVER / 端口 **5236**；数据目录 `/dm8/data/DAMENG/DAMENG`（2026-09-16 dminit 重建形态） |
+| 数据目录形态 | 新部署一律单层 `/dm8/data/DAMENG`（随装初始化标准形态）；`.20` 设备为双层历史形态（dminit 重建）——应用经 TCP `127.0.0.1:5236` 访问，不受路径差异影响 |
 | 服务 | `DmServiceDMSERVER`、`DmAPService`（systemd，开机自启） |
 | 管理账号 | SYSDBA / `PHMadmin1`；SYSAUDITOR / `Dameng@Audit2026`（脚本可改） |
 | License | `/dm8/bin/dm.key`，**2027-06-25 到期** |
@@ -284,6 +285,8 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 > - **QtCreator 4.11.0-3kylin6k0.6** 设备已有（麒麟源 apt 装的 /usr/bin/qtcreator），无需另装；Qt Kit 指向 /opt/Qt5.14.2 即可。
 > - **缺库 `cannot find -lGL`**（QtCreator 新建 GUI 工程必撞）：设备只有 GL 运行时（libGL.so.1），缺开发链接件 `libGL.so`（属 `libgl-dev` 包）。正解包 `libgl-dev_1.3.2-1~kylin0.20.04.2_arm64.deb` 已入 `debs/`（麒麟源直链 `http://archive.kylinos.cn/kylin/KYLIN-ALL/pool/main/libg/libglvnd/`，目录列表 403 但文件直链可取，版本须与在位 libglvnd 运行时精确一致）。⚠️ libgl-dev 名义依赖拖 `libglx-dev→libx11-dev` 约 9 包链——离线最小修法：`dpkg-deb -x` 解包后整树拷入 `/usr`（得 `libGL.so` 链接＋GL 头 gl.h/glext.h/KHR＋pkgconfig），绕开 X11 链且不碰 dpkg 账本；将来需 EGL/GLES dev（Qt Quick ES2）再扩链。验收：`echo 'int main(){return 0;}' | g++ -x c++ - -lGL` 链接通过。
 
+> **8d–8g 已脚本化（2026-11-13）**：`install_dm8_qt.sh` 新增四阶段，均幂等（条件已满足即跳过）——8d python3/pip3 默认指向 3.12（`/usr/local/bin` 符号链接，系统 `/usr/bin/python3` 不动）；8e libGL 开发链落位（`debs/libgl-dev_*.deb` 经 `dpkg-deb -x` 整树拷入，不走 `dpkg -i`）；8f venv 四包安装（numpy/pandas/statsmodels/openpyxl 精确 pin，验收 import＋`pip check`）；8g PHM 业务面（建 PHMAPP 账号授 PUBLIC/RESOURCE、写 `/home/kylin/.config/phm/dm.ini`、落位 `phm-app.service` 不 enable）。PHMAPP 密码经环境变量 `PHMAPP_PWD` 覆盖，缺省 `PHMapp2026`（8~48 位含大小写数字）。
+
 ## 六、真机 E2E 验证记录（2026-09-16）
 
 部署包已在目标设备（kylin@192.168.1.222）全脚本实跑通过，逐阶段结果：DM8 幂等跳过→disql/LICENSE→DPI 注册→QDM→**Qt↔DM 中文冒烟通过**→dmPython 干净环境连接通过→Python _ssl 验证→清理，全绿。原始日志见 `验证记录/`。重启后复查：达梦双服务 active+5236 监听+disql OPEN+python _ssl 正常，均开机自启级稳定。修复记录：PY_FIX_SSL 变量缺省值 bug（set -u 下崩溃）已修。
@@ -295,9 +298,9 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 
 ### 7.1 现状边界（先读）
 
-- `install_dm8_qt.sh` 当前**只自动安装 dmPython**（`wheels/dmpython-*.whl`），**不会安装这四个依赖**。
-- 对应 wheelhouse **尚未随部署包提供**（`wheels/` 目录现仅含 dmpython 一个 wheel）。
-- 因此本节四包需按下述流程人工准备与安装；后续 wheelhouse 随包提供后再议脚本自动化。
+- `install_dm8_qt.sh` 阶段 8f 已**自动化安装这四个依赖**（精确 pin：numpy==2.5.4 / pandas==3.1.1 / statsmodels==0.15.0 / openpyxl==3.1.5，与 dmPython 阶段同门：需 `PYTHON_VENV`）。
+- 15 个 wheel（4 顶层＋11 传递依赖）已随部署包提供：`wheels/wheelhouse-cust/`（2026-11-13 按 .20 设备 `pip freeze` 精确 pin 制备）。
+- 本节 7.2/7.3 流程保留作 wheelhouse 人工补制备参考；7.4 的验收已内置进脚本阶段 8f。
 
 ### 7.2 联网机准备 wheelhouse
 
