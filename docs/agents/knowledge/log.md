@@ -96,3 +96,7 @@
 ## [2026-10-22] ingest | daily-report
 - 双轨命令分支盲区（第三条 skill 待修实证）：git log 不带 --all 只扫各仓 HEAD，worktree/PR 分支提交整段漏扫——实证 2026-10-22：TitanNavi worktree 分支当日 50 commits（本人侧 37）与 HXNativeApp 18（本人 5）双轨全漏，靠 `--all`＋作者过滤（guangbin＋review bot）补回；不补则当日主线 TitanNavi 计零、日报严重失真（10-21 报 32 疑同源低估）。个人计数须按作者分流（同事 wangfx/TiTan/qinchuan 另计不入本人 N）。session→session_v2 表漂移当日再实证（skill 模板仍 stale）。对策：双轨命令统一加 --all、个人计数加 --author 过滤、计数用 `--oneline|wc -l`（`--pretty=format` 无尾换行少 1）；与符号链接（10-20）、表名漂移（10-21）合并为 SKILL.md 三项待修清单（上报待确认）
 - Types: Bug Experience
+
+## [2026-11-13] ingest | 206 车机环境
+- 206/dm8/INSTALL.md 落三笔（48c2686 python3.12 默认化 / 6043695 PyCharm+QtCreator+GL dev 补装＋旧裁定修正）：离线摆渡三要点——麒麟源目录列表 403 但文件直链可取、deb 版本须与在位运行时精确一致、libgl-dev 名义依赖拖 libx11-dev 九包链时可用 dpkg-deb -x 整树落位绕开（不碰 dpkg 账本）；agorad 交付权威=origin 远端（本仓=LAN git 服务器 192.168.1.100），merged 通知 local=pending 为检出守卫设计内软状态非故障（详见经验 20261113-162000-a7f3）
+- Types: Deployment Record / Decision
