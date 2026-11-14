@@ -1,0 +1,70 @@
+工作日报 2026-11-14（周六）
+================================================
+【今日概览】共 94 次提交，涉及 7 仓：
+主线：HXNativeApp(36)、TitanNavi(24)、.dotfiles(16)、issue-agent(14)、Work(2)、lib-maplibre-native(1)、opencode-agora(1)
+- 今日工作：车机双仓十余 issue 修复推进——HXNativeApp 侧 #185 路径管理并行失同步六项修复、#162 自检页进场自动化与卫星在场判定、#184 航点经纬度 5 位小数、#182/#181/#178 卫导/导航面板/短报文图标修复、#204 亮度能力探测、渲染门提频 15fps；TitanNavi 侧 #332 转弯档位三轮改口径、#334/#339 i18n 与惯导页按钮修复经 wangfx PR 合入，Android release 签名与 ASan 构建变体落地。issue-agent↔agora 对接战役收尾治理（健康摘要、车道自主性、变基轮护栏）；dotfiles cron 强化与经验库夜间治理。
+- 整体进度：#334（PR#337）/#339（PR#341）已合入主干；#332 分支携全量测试对齐 master 用户实改待合；其余修复分支均已交付待外部确认；agora 对接战役 T6/6 部署隔离与真实 e2e 完成，台账归档。
+- 风险阻塞：#157/#182 修复"完成未交付"——trunk MSC-26-RW033 上 bug 现场仍在（182 双重载未删、157 config.ini 分发逻辑缺失），且 182 最终提交基于被重写基线不可 FF；达梦V8 版本显示、数据交互模块全量审计等 handoff 待外部 task_deliver。
+- 明日重点：推动 #157/#182 修复落库交付与待交付 handoff 处置；#332/#185 等分支合入主干；ASan APK 上设备实测。
+------------------------------------------------
+【工作详录】
+一、车机 HXNativeApp 多 issue 修复线（HXNativeApp 工作树簇 | 36 commits | 进行中）
+- 目标：MSC-26-RW033 基线上并行推进七个 issue 修复与性能/部署增强（36 commits 含 #185 变基同内容副本 6 枚，逻辑变更 30 项）
+- 当日进展（按 issue 聚类）：
+  · #185 路径管理新建/查看/删除并行状态失同步六项修复（37baf083：externalIndex 删后重排防错删、新建会话判据改 segments.id 非空防 ghost 线、过滤态还原数据行防选错注记点落盘等），配套 routepath 并行失同步族根因与映射配方入库（2ecf5c0a），ocr 复审 R4 收敛四条（06d5e4a4 等 22:47-23:48）
+  · #162 自检页两轮：三进场路径定时自动化——全就绪 5s/超时弹窗 10s 自动进主界面（c599684f，TestBridge offscreen 全链路验证）；卫星运行期在场判定＋读数即时同步（5b1034af，无串口的隐藏模块按编译期关闭同语义豁免、分母=运行期监测数、删 2%/100ms 爬升，ctest 100%）；新建自检页知识模块（e80bcf44）
+  · #184 航点列表经纬度 5 位小数显示＋列宽 ResizeToContents 权衡（7c2c18d0，不动全局坐标格式；GUI 探针 6/6、机制取证 coord5_repro），决策入库（728f11b9），ocr R1 清理孤儿连接（11168f69），交付轮 log（a8268e2b）
+  · #182 卫导模式切换只弹对话框、删 page_setup 跳转页（a6133e6c，根因 connectSlotsByName 把 (bool)/(void) 双重载都连 clicked），rnss-flag-legend 知识补全（59ea1b2a），两轮变基 log（f84d9248/f32d73ac）
+  · #181 NavInfoPanel 经纬度 ° 单位与面板宽度按实测格式串修正 r2（7a8bc55c），overlay-manager 知识勘误 r1 数字（55e96510），qt5-tostring-format-audit 经验回写应用（728ba7aa）
+  · #178 RDSS 短报文图标闪烁不止——已读停止漏"通信页内查看收件箱"路径（fa30dfb9，RdssWidget 新增 inboxViewed 信号补第二路径），statusbar 知识补已读双路径与 currentChanged no-op 坑（81150dc2）
+  · #204 亮度启动能力探测——无背光接口时滑条置灰示因（c8c2d074，/sys/class/backlight 探测纯函数 5 用例）
+  · 性能与部署：渲染门默认 10fps→15fps（2a36fcfa）；启动自钉慢核——异构 cpufreq 检测＋HX_APP_CPU_AFFINITY 覆写（f2c584a9，与地图子进程钉快核互补）；arm64 部署包补 TTS 中文模型 matcha-icefall-zh-en（7a3438e2）
+  · 知识条目措辞校准（f25cbb08）；#178/#185 变基轮 log-only 记录（b57563cb）
+- 当前结果：七 issue 修复全部成 commit 并入交付分支；#162/#184/#185 经评审环收敛（ocr＋三分册终闸零 blocker/high 残留）
+- 产出依据：上述 commit hash；.review-loop 记录；issue-agent 知识文件（routepath/statusbar/overlay-manager/rnss-flag-legend/自检页五模块）
+- 遗留与下一步：#157/#182 交付路径受阻（见风险阻塞）；各分支待外部 task_deliver 后合入主干
+二、TitanNavi 导航修复与 Android 构建线（TitanNavi 簇 | 24 commits | 进行中）
+- 目标：转弯播报档位口径迭代、i18n/UI 修复合入主干、Android 出包能力建设
+- 当日进展：
+  · #332 转弯播报档位三轮迭代：四档新口径 350/280/210/70判→280/210/140/7播（cf1fb1e3）→扩五档 350/280/210/140/70判→280/210/140/70/21播（cdbbcda1）→末档播报 21→20 对齐 master 用户实改 4b86ba6e（31d07bd4，用户已亲改五档表且 master 测试未同步，本分支携全量测试/注释/断言同步，合并即恢复绿）；NavigationController.h 注释、setArrivalThreshold 注释、用例12/40 期望全库同步（c962cf94/1f1443fe/a72429b7/02c43fcd）；五档口径与窗外前提重算坑入库（35912a5e/b4e6c3b4/f6f072ed/aa1cdc7d）
+  · #334 i18n：转弯/围栏播报英法词条补齐＋围栏默认名按当前语言渲染（a911190f，localizedFenceName 纯头 inline 接线四展示面）；评审修复默认名渲染不写库＋切语言即时刷新（9de9dbc6）；i18n 源串漂移坑沉淀（1c5f2f68）；wangfx PR#337 合入（6c3003de）
+  · #339 惯导维护页四按钮 en/fr 重叠与驻车寻北两行显示（7ae911cf，根因实证为 app QSS 钉 320 min/max-width 而非死代码内联样式，fr 样式 320→210 三语回归测试）；QSS 行级布局预算与离屏挤压 harness 保真沉淀（87afbe9c）；wangfx PR#341 合入（dda97f97）
+  · Android 构建：release 签名接入 androiddeployqt --sign（e9bce825，字节级读 keystore 防 ISO-8859-1 毁全角，v1/v2/v3 验签通过）；car-release.jks 与 keystore.properties 入库防丢失（e9a4f40d）；ASan 构建变体（2a1a628c，ASAN=1 插桩＋wrap.sh 出包注入重签）
+  · 杂项：新增行 CRLF 清理过验证门（2fd1b20e）、test_ttszhdigits 死包含清理（0e7925b3）
+- 当前结果：#334/#339 已入主干；#332 分支口径与 master 对齐就绪；Android 具备签名 release 包与 ASan 探测包出包能力
+- 产出依据：上述 commit hash；android-build-release-signed.apk 验签记录；ctest 26/29（三红为分支固有、与本改无关）
+- 遗留与下一步：#332 分支待合入；ASan APK 待设备实测
+三、issue-agent↔agora 对接战役治理（issue-agent + opencode-agora | 15 commits | 已完成）
+- 目标：对接战役（六单实施/双仓试点）收尾——运维可观测、车道自主性、变基轮安全
+- 当日进展：每日健康摘要脚本（c643cb8，注入探针）＋本地消费仓滞后检查与 blocked 桶可见性（a4feed8）＋失败边界三轮修复（71e9681/945e398/7b771d9）；issue 面板评论指令处置 blocked 任务（dd73c4f）；车道自主性三缺口（d981659 建单前 board 实时校验/unknown-task 邮件归属提示/requeue 载荷补全）；disposal 门控 board 实时重读＋端口缓存失效重发现（f3025c4）；变基轮安全三连——non_ff 先护栏再 force-with-lease（cc8b0a1）、失败分类恢复有界（532b514）、force 落地改精确 sha refspec 根除假 ack（cace6dc）；issue/N-fix single-writer yield（a2153c2）；战役台账归档与傍晚补记（65f4e64/715b663）；opencode-agora F105 external 交付假冲突自愈＋终局冲突文件清单（998908d）
+- 当前结果：T6/6 部署隔离与真实 e2e 完成；健康摘要 08:30 邮件槽上线；变基轮落地路径闭环
+- 产出依据：上述 commit hash；.review-loop/20261114-* 记录；sdd 台账
+- 遗留与下一步：无（战役收官，转入运维观察）
+四、dotfiles cron 强化与经验库夜间治理（.dotfiles | 16 commits | 已完成）
+- 目标：cron 链路健壮性与经验库日常运转
+- 当日进展：issue-agent-health 每日 08:30 邮件槽（6f8363a）；terminal-gate rc=98 改 session SKIP 旗（df5af39/50a1f0e）＋digest 去重/缺脚本跳过/NOTIFY_BIN 缝隙（5aa1352）；--run-task 缺参/未知任务即拒＋selftest 加固（cac6c28/2040c25 rg() 先 shift 弃测试名）；practice 槽成功后自动 push origin master（8430eb6）；夜间治理——ingest 10 条积压经验（150138c）、夜裁判波报告与评分路由（5dd3e88/14a6b90/1742141/c45baa2/8dad345）、practice 轮两发 PASSED_VERIFIED（156a24d/7f5bc9b）
+- 当前结果：cron 各槽位防御性验证齐备，practice 轮协议模板经实战验证
+- 产出依据：上述 commit hash；practice round 记录 20261114-*
+- 遗留与下一步：无
+五、Work 知识仓维护（Work | 2 commits | 已完成）
+- 目标：日报修复链经验沉淀与扫描兜底加固
+- 当日进展：2026-11-13/14 日报修复链五条经验入库（85cdaa9）；兜底扫描 __wt 工作树按 hash 去重归母仓名（187e25f）
+- 当前结果：日报 skill 双轨扫描漏洞闭环
+- 产出依据：commit hash；docs/agents/knowledge/log.md
+- 遗留与下一步：无
+六、lib-maplibre-native 产物仓换代（lib-maplibre-native | 1 commit | 已完成）
+- 目标：地图渲染 SIGSEGV 修复版产物全平台换代
+- 当日进展：RenderTiles ownership pin（maplibre fork f0de1be7）修复 getRenderTilesSortedByYPosition SIGSEGV，产物仓更新（1546e8c）；配套全平台构建（arm64-egl + x86_64-egl）经 ag-499de1 会话交接
+- 当前结果：修复版产物就绪待消费仓升级
+- 产出依据：commit 1546e8c；构建交接会话 ses_e27521b52
+- 遗留与下一步：消费仓（HXMapWidgetNative 等）按需换代
+------------------------------------------------
+【会话调研工作（未提交）】
+- #157/#182 交付状态核查——两修复"修完未交付"：trunk MSC-26-RW033 bug 现场仍在（182 satellitenavisystemwidget.cpp:195/223 双重载未删、157 config.ini 分发逻辑 grep 不到）；远端 issue/157-fix、issue/182-fix 已重置到 033 tip（2a36fcfa）铺好 FF 路，但修复提交一个未推；182 最终提交 9707ee16 基于被重写基线不可 FF（会话：ses_e2662cfeb）
+- ag-7abc8a 状态监测数据库版本显示改达梦V8具体版本——handoff 就绪（@7c444d8，base f32d73a），等外部 task_deliver（会话：ses_e260e0833）
+- ag-c76fd5 TitanNavi 数据交互模块全量审计——done 已受理（sha 662a6462）、verify 门绿、评审环 3/3 轮收敛零 blocker/high 残留，handoff 待交付（会话：ses_e266e3c0）
+- TitanNavi UI 与重点功能地图——产出 UI 表面清单（5 顶层页＋page_main 三内部 stacked widget 全梳理），作手动 UI 测试用例设计底稿（会话：ses_e262198b）
+- zsh 是否适合 agent 做 shell——结论：zsh 交互特性 agent 用不上，词分割/数组下标/PIPESTATUS/glob 无匹配等语法坑高频踩；建议 opencode 配置 shell 字段改 bash（会话：ses_e27b861a）
+- 地图拖动后蓝标消失与归中修复链——终验清单就绪（点击保持跟随/白闪消失/拖动旋转回归四项），待设备终验收官（会话：ses_e504db23）
+================================================
+数据来源：Documents 双轨 git log（2026-11-14 00:00–24:00，hash 去重＋__wt 归母仓聚类）、commit body、opencode 会话库（133 会话甄别，剔除终闸/评审子会话）
