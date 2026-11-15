@@ -1,0 +1,45 @@
+工作日报 2026-11-15（周日）
+================================================
+【今日概览】共 23 次提交，涉及 5 仓：
+主线：issue-agent(9)、.dotfiles(9)、opencode-agora(3)、TitanNavi(1)、silicon-memory(1)
+- 今日工作：agora 派发链路批量治理——问答分流/僵态阶梯/重派上下文（ag-da7410）、worktree 清扫双闸、健康邮行动分级、F107 verify 门 base-red 探针落地；新编译服务器环境迁移（/opt 30.86GB＋OSMDataCompiler 10 个 Docker 镜像）；修复 TitanNavi 真机 setZoom 递归栈溢出。
+- 整体进度：agora 治理批次已提交且全量测试绿（issue-agent pytest 743 passed、opencode-agora 1182 项全绿）；/opt 拷贝与镜像引入已验证 0 差异；C++ 环境补装脚本待人工 sudo 执行（进行中）。
+- 风险阻塞：新机 SSH 私钥仅内存态加载、未持久化到 login keyring，重启后 agent 失联需手动处理；node:22-alpine 镜像两台机器均缺。
+- 明日重点：人工执行 C++ 环境补装脚本并验证；OSMDataCompiler 在新机试跑（先 pull node:22-alpine）。
+------------------------------------------------
+【工作详录】
+一、agora 派发链路治理与验证加固（issue-agent＋opencode-agora | 12 commits | 已完成）
+- 目标：根治派发链「问答型任务结构性僵死」「worker 不交卷」「review 残留 worktree 泄漏」「健康邮不可读」四类缺陷，并给 verify 门加判别力探针。
+- 当日进展：
+  · Router 三分流（ag-da7410）：action=answer 纯解答不建单、out_of_band 零提交 review-only、代码修复维持 external_branch；答案接力契约（答复正文追加续作指令）；僵态升级阶梯（nudge×2→自动重派恰一次→blocked 释放名额，档位持久 sidecar）；重派时注入前手 handoff 上下文防从头推导。
+  · worktree 清扫（agora 模式）：以「账本终态所有权＋静默双闸」解锁 startup sweep，修 review-332 判例（26h/2.1G 泄漏）；评审环补 stale 登记 lstat 防护与账本不可读留痕两 blocker。
+  · 健康邮重设计（ag-0f95bb）：首行执行摘要定调＋三级行动标签（无需处理/知悉即可/需要处理），rc 仅真故障非零；配套僵滞三查＋守门自动重启（方案 2）与账本异形键排序容错。
+  · F107 verify 门 base-red 探针（opencode-agora）：任务起点 base 跑 verify，红＝放行、绿且无豁免＝硬拒弹回；豁免＝task_create 显式旗标＋quick 自动；探针机械败分类路由派发方。dispatch-gate 同步六件套扩七件套＋行为级验收＋独立终审。
+- 当前结果：全部合入；issue-agent 全量 pytest 743 passed（基线 720 零回归），opencode-agora 全套 1182 项全绿（另修 2 项测试密闭缺陷）。
+- 产出依据：issue-agent 35b28d2/856bfdc/f7a0eb3/327ce1b/da19596/e90d061/5f52d62 等 9 提交；opencode-agora 4d8a1b6/16af4b4/b686e9d；docs/f107-base-red-verify.md。
+- 遗留与下一步：F106/F107 台账已闭环；dispatch-gate 独立终审暂为候选纪律、服务端未强制。
+二、编译服务器环境迁移与配置（会话执行 | 未提交 | 进行中）
+- 目标：按 docs/reference/C++开发环境配置.md 将新机（Ubuntu 24.04.5）配置为 C/C++ 编译服务，并从 192.168.1.107 迁移资源。
+- 当日进展：环境摸底给出差距清单（缺 valgrind/lcov/fd/btop/gcc-9/Qt 开发库/docker-compose V1 等，sudo 需密码→生成脚本待人工执行）；rsync 拷贝 /opt 30.86GB/41.8 万文件（远端 sudo 经 SUDO_ASKPASS 绕开 stdin 坑）；OSMDataCompiler 所需 12 镜像差集引入 10 个（docker save|ssh|load 流式）。
+- 当前结果：/opt dry-run 复查 0 差异、日志 0 错误；10 镜像全部 Loaded 并复核清零；两端临时凭据文件已清理。
+- 产出依据：/tmp/opencode/rsync-opt.log；会话 ses_e20d7c63effe/ses_e20a236ffffe。
+- 遗留与下一步：补装脚本待人工 sudo bash 执行；node:22-alpine 两边都缺（构建时 pull）；私钥未持久化 login keyring（重启后首次 ssh 在 GCR 弹窗输口令勾自动解锁，或 seahorse 导入）。
+三、TitanNavi 真机崩溃修复（TitanNavi | 1 commit | 已完成）
+- 目标：修复 HD_DH35 真机模拟导航跟相机＋功能切换下的主线程栈溢出 SIGSEGV（tombstone_32~35）。
+- 当日进展：定位 mapChanged 处理器→MapContainer::setZoom→SDK setZoom 同步再发 mapChanged 成环；setZoom 顶部加 m_inSetZoom 重入闸，同步重入一律丢弃，异步用户缩放不受影响；单语句单出口无泄漏路径。
+- 当前结果：修复已提交；既有 m_minZoomClampGuard 保留作纵深防御。
+- 产出依据：TitanNavi 56b6ad65（lib-plugin-HXGISServer 同 hash 联动仓，去重计 1）。
+- 遗留与下一步：待真机回归验证。
+四、工具链运维：cron 修复与 nightly 报表（.dotfiles＋silicon-memory | 10 commits | 已完成）
+- 目标：修每日健康邮从未发出的 cron 缺陷；保持 nightly 经验流水。
+- 当日进展：发现 crontab 触发集仅 {0,15} 而 issue-agent-health 槽位 08:30 永不可达——迁 08:15 并加「槽位分钟 ⊆ 触发集」防回归锚（selftest 20→22）；终闸 B 册锚解析剥 # 注释防误红；silicon-memory spawn 报错模板补 r.signal（SIGILL 死亡可诊断，ag-468cbf）。
+- 当前结果：全部提交；nightly agent-experience 六件（cold proposals/reflect/ingest/practice/groom/judge）照常产出。
+- 产出依据：.dotfiles 51cf0d4/8f4c016 等 9 提交；silicon-memory 9689762。
+- 遗留与下一步：无。
+------------------------------------------------
+【会话调研工作（未提交）】
+- tmux 退出条件——结论：日常断连/关窗口杀不死（exit-empty off＋Linger），真丢失仅重启与显式 kill-server；/tmp socket 30d aging 够不着（atime 持续刷新），不建议迁 TMUX_TMPDIR（自造一次等效丢失，cure 比病贵）（产出位置：会话 ses_e20b4e197ffe）
+- 编译服务虚拟内存评估——结论：32Gi RAM＋8Gi swap＋启发式 overcommit＋ulimit -v 无限是正确姿势（链接器 VSZ 大 RSS 低），90 天 0 OOM、PSI 0.00，无需改动（产出位置：同上会话）
+- C++ 环境差距摸底——结论：文档 vs 本机差距清单落表，内网资源（code-compiler/cross-library 等）本机无文件跳过（产出位置：会话 ses_e20a236ffffe）
+================================================
+数据来源：issue-agent/TitanNavi/opencode-agora/silicon-memory/.dotfiles git log（2026-11-15）、commit body、opencode 会话（session_v2 直查）
