@@ -4,10 +4,10 @@ d4238577bf090665012b2abd197c8e92a3c483cdd09848d0617fa02b412efa6e  debs/libbz2-de
 3548909d0a6223cbe7e33f554c666ca296de0becd53cd8205392e94429559207  debs/liblzma-dev_5.2.4-1kylin2.1_arm64.deb
 ea3ffb9eb92a2e97b9c0d589b901fbed139d3605788231919ee341324f7efa4e  debs/libncurses-dev_6.2-0kylin2.1_arm64.deb
 509413eaee4750650ebd2dac7de98049f0ba46421d0ccffdf57ed1d0e372ebbd  debs/libreadline-dev_8.0-4_arm64.deb
-187a24b4b22689c9bee0baea41c190394cb7a3fa80ddb142b65ac6f1fdf475c5  debs/libsqlite3-dev_3.31.1-4kylin0.6k0.4_arm64.deb
-f62590765a5324e02d7a88bc0c5bc95e127c72228f8ac8420161b62694f8da0b  debs/libssl-dev_1.1.1f-1kylin2.23k0.6_arm64.deb
-e9e5264a71d97ef60f6240e764fd5e5e060a3390a3e7d5a3714571b9f033da8d  debs/sqlite3_3.31.1-4kylin0.6k0.4_arm64.deb
-ffebe50128476e6da5e022a0e915bbf56f5c331c240a9577d2cc075c5f6278b1  debs/tk-dev_8.6.9+1_arm64.deb
+fa4dc62ca0edc4548f5fc1346f604e0d5e63dfe5e571486312da3c5ba3e77bda  debs/libsqlite3-dev_3.31.1-4kylin0.6k0.1gf0.2_arm64.deb
+e28dd9dfba0ab6e954b3f212f532bb649b2af2553a56d992ecebd93f2532ebd3  debs/libssl-dev_1.1.1w-0+deb11u1gf1.5_arm64.deb
+0238be02b6147b7fbe1a1e915e4c32fd3260db14227fe358421ffc84afdce2e3  debs/sqlite3_3.31.1-4kylin0.6k0.1gf0.2_arm64.deb
+ffebe50128476e6da5e022a0e915bbf56f5c331c240a9577d2cc075c5f6278b1  debs-optional-tk-dev/tk-dev_8.6.9+1_arm64.deb
 9590e434c865b64e86beb94d93387a0a0cfdc8f7b22d42f2df6af99c4c375356  debs/uuid-dev_2.34-0.1kylin19k0.15_arm64.deb
 821a0e8218eef2352601e97909b3f98f01f1b5cc0ac8d97cb998811b101e3640  debs/wget_1.20.3-1kylin2.1k2_arm64.deb
 4c5995247897124bb766a76429a3c48cd5cd12ef68209aef62d33ab3e1340d68  debs/zlib1g-dev_1.2.11.dfsg-2kylin1.5k0.2_arm64.deb
