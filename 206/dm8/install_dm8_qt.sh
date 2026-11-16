@@ -308,6 +308,7 @@ printf 'TEMPLATE=app\nQT+=sql\nSOURCES+=main.cpp\n' > smoke.pro
 if [ ! -x ./smoke ]; then rm -rf "$SMOKE"; fail "冒烟程序编译失败（Qt 环境异常）"; fi
 OUT=$(./smoke 2>&1)
 rm -rf "$SMOKE"
+cd /  # 坑13: 冒烟目录已删，进程残留已删 cwd，8b/8f 的 pip(os.getcwd) 报 OSError Errno 2
 if echo "$OUT" | grep -q "QT_DM_SMOKE_OK"; then
   info "Qt↔DM8 全链路验证通过（含中文存取）"; echo "$OUT" | grep "ROW:"
 else

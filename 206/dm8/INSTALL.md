@@ -269,6 +269,7 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 | 10 | `pkill -9 -f <关键词>` 匹配到自身 ssh 命令行而自杀 | 用 `unins[a]taller` 式正则或按 PID |
 | 11 | 旧服务包装脚本 `/dm8/bin/DmService*` 残留挡新注册 | 注册前先删；报“服务脚本文件已存在”即此因 |
 | 12 | 独立 dminit 在 PATH 下追加库名子目录 | dm.ini 双层路径兼容（脚本已内置 find_dm_ini） |
+| 13 | 冒烟后进程残留已删 cwd，8b/8f 的 pip 报 OSError Errno 2（8b「wheel 不匹配」为误诊文案） | 冒烟清理后 `cd /` 回位（脚本已修，2026-11-16） |
 
 > **dmPython 集成（2026-09-16 起）**：`sudo env PYTHON_VENV=/path/to/venv bash install_dm8_qt.sh ...` 自动执行：离线装 `wheels/dmpython-*.whl`（已可导入则跳过）→ 拷 crypto 库修 -70089 → **干净环境连接验证**。未设 PYTHON_VENV 则提示跳过。详见《dmPython连接配置方案.md》。
 
@@ -296,7 +297,7 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 > **GFB 换血补遗（2026-11-16 二次）**：dm8/debs 三个失配包已替换为源内 GFB 原版——libssl-dev 1.1.1w-0+deb11u1gf1.5、libsqlite3-dev/sqlite3 3.31.1-4kylin0.6k0.1gf0.2（与 .30 在位运行时精确一致），tk-dev 已从 kit 删除（源内无可装变体，tkinter 非必需；将来需要 tkinter 时从麒麟源直链取 tk-dev 8.6.9+1 并同装 tcl/tk dev 链）。上一条「摆渡时移出＋头文件 dpkg-deb -x 落位」程序就此作废——kit 在 GFB 设备可直接 dpkg -i，零手工适配；SHA256SUMS.txt 已同步。注意：旧基线（非 gf）设备勿用这三个新包。
 
 > **重灌复部署实录＋kit 定稿（2026-11-16 晚，.30 重装同版 GFB 系统后全流程复跑）**：零手工适配流程验证成立——qt-env 26＋dm8 3 个 GFB 换血包直接 dpkg 全绿。唯 6 个 dev 包二次失配（libexpat1-dev 需 0.8build1、libxcb-shm0/randr0/xinerama0/xkb/sync-dev 需 gf0.1），已按设备运行时锚定换入 kit（qt-env debs 累计 32 个 GFB 版）。教训：**pin 审计必须锚目标设备 dpkg-query 实况，源索引仅参考**——源内 runtime 版本集与设备在位版本存在 build1/gf 双轨偏差。
-> - **脚本确定性坑（两台设备复现）**：阶段 8b/8f 的 `sudo -n -u <owner> pip install` 在脚本上下文必失败（8b 报「wheel 版本/架构不匹配」属误诊、8f 报 OSError Errno 2），同命令交互手工执行即成功。标准处置＝手工 `pip install --no-index` 装 dmpython wheel / 11 件套后重跑脚本过幂等闸（8b 走「已可导入」路径、8f 走 freeze 全字匹配跳过）。
+> - **脚本确定性坑（两台设备复现）**：阶段 8b/8f 的 `sudo -n -u <owner> pip install` 在脚本上下文必失败（8b 报「wheel 版本/架构不匹配」属误诊、8f 报 OSError Errno 2），同命令交互手工执行即成功。标准处置＝手工 `pip install --no-index` 装 dmpython wheel / 11 件套后重跑脚本过幂等闸（8b 走「已可导入」路径、8f 走 freeze 全字匹配跳过）。**根因已修**：冒烟目录 rm 后进程残留已删 cwd，pip 的 os.getcwd() ENOENT——脚本已在冒烟清理后加 `cd /`（2026-11-16，A/B 复现实证：已删 cwd 必现 Errno 2、cd / 后同命令即成功）。
 > - 重装系统后时钟必回 2000-01-01（CMOS 电池空电），装前校时＋`hwclock --systohc` 为固定动作。
 > - IDE 排除形态复验通过（qtcreator/qtcreator-data/qbs-common/libqbscore 四包与 PyCharm 双 absent）。
 
