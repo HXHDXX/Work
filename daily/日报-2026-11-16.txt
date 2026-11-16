@@ -1,0 +1,57 @@
+工作日报 2026-11-16（周一）
+================================================
+【今日概览】共 125 次提交，涉及 7 仓：
+主线：HXNativeApp(66)、.dotfiles(23)、TitanNavi(11)、Work(9)、issue-agent(9)、opencode-agora(4)、coding-gates(3)
+- 今日工作：HXNativeApp 侧经 issue-agent 批量派发修复 13 个 issue（A/B/C 册终闸评审＋变基交付），另有 4 个新 issue（#203/#242/#247/#248）晚间派发在途；TitanNavi 完成 #360 语言配置双参数与 #356 数据交互残留修复；.30 重灌设备 206 环境 GFB 套件定稿；agora/goal-gate 治理批次落地（watchdog、本地权威交付、goal-gate 三查门）。
+- 整体进度：HXNativeApp #202/#216/#222/#237 已见 merge 入 MSC-26-RW033，#157/#225/#231 等终闸通过后处于变基交付收尾（会话 19:25–22:01）；Work 206 GFB kit 定稿且清单哈希闭环；工具链治理提交完成（issue-agent×9＋opencode-agora×4＋coding-gates×3）。
+- 风险阻塞：TitanNavi #264（菜单按钮统一高度）合并被回滚（f7cdc68b）待重做；#352 渲染卡顿、#353 iOS 可行性评估两派发单终态 cancelled 未交付，待重派或关闭。
+- 明日重点：跟进在途变基交付（#157/#225/#231 等）与晚间新派 4 issue；.30 设备 206 环境实测验证；TitanNavi #352/#353 处置决策。
+------------------------------------------------
+【工作详录】
+一、HXNativeApp issue 批量修复与终闸交付（HXNativeApp＋worktree | 66 commits | 已完成/交付在途）
+- 目标：经 issue-agent 派发链批量消化 MSC-26-RW033 缺陷清单，每单走实现→知识沉淀→A/B/C 册（需求符合性/崩溃风险/安全）终闸→变基交付全流程。
+- 当日进展（按 issue 聚类）：
+  · #157 全局配置随包分发：f42b7be0 落地 <appDir>/data/config/config.ini＋全部读写统一 QSettingsManager，随后 12 轮评审环修复（safeSaveSetting 父目录 fsync 上报、一键销毁残档清扫统一 removeFileIfExists、迁移哨兵/fail-closed/rename 持久化硬化），两轮变基日志 59cb2b2a/1b4aa52d。
+  · #225 快速导航目标点临时化：到达即保存、退出即弃，四轮递进（de97312b→9e2ffb6a 门改临时点 id→47da7965 接真实到达通道→fe641346 终审三修 emit-only 防双发）＋03bc76b4 RouteplanedComplete 弃置补 navActive 门防误杀活会话快照；四环根因链经验已沉淀 .dotfiles 2d9fe63。
+  · #202 数据库版本真实取数：99e811e7 升级达梦 V8 具体版本→6a545f62 四来源链（真实查询/实例日志/明确兜底）。
+  · #216 地图空闲回中：f8b7c0bb 总开关＋交互模式抑制；终闸修复 087263c0（fu 过滤器补捕 ToParent 变体、析构先摘过滤器防 UAF、抑制判定单测）。
+  · #231 路径管理检索：b792b2d1 改即时过滤＋c32bfd73 过滤态与保存/重载一致性。
+  · #218 策略框取消统一退出导航（5e73183f/3c8514e5 四流精确化）、#222 查看返回对称取消显示（a961c9b6）、#237 路径进度仅导航期显示（b6e0aafa）、#215 昼间白蒙层透明对齐（64e15f10）、#221 RNSS 星空图 VDOP 落位＋圆标×1.5（c2785bd0/bc0227d0/996d4fc1 含回归锚）、#184 航点经纬度 5 位小数（07c54857＋log-only 42f6900c）、#162 自检三进场定时自动化（448a6a98）、#204 亮度能力探测置灰（1b7c247c）。
+  · 基线治理：清 qc1113 合并引入 tidy 债（01836a55/38d1d22c 34 处/3c068b2c/defb3681）。
+  · 他人合入：wangfx merge #202/#216/#222/#237 入 MSC-26-RW033、qinchuan1 qc1113。
+- 当前结果：13 个 issue 修复提交齐备并过终闸；#202/#216/#222/#237 已 merge 入 MSC-26-RW033，其余在变基交付收尾。
+- 产出依据：HXNativeApp 母仓＋__wt-ag-* 工作树 git log（2026-11-16，hash 去重计 66；#225 gate 工作树 5 个同主题变基变体不重复计）；每 issue 配套 docs(issue-agent) 知识页提交。
+- 遗留与下一步：#157/#225/#231 等变基交付会话至 22:01 仍在收尾；晚间新派 #203/#242/#247/#248 在途。
+二、TitanNavi 国际化与数据交互（TitanNavi | 11 commits | 已完成）
+- 目标：#360 LanguageConfig 可配置化与 #356 数据交互跨次残留根治。
+- 当日进展：#360 两参数落地——0a3db593 LANG_DEFAULT_LANGUAGES 逐位编码默认显示语言列表、8bd67449 LANG_INITIAL_LANGUAGE 冷启动默认语言（配套双 locale 测试法知识页 ba123060/b9c559e5），607033c8 默认英语；#356 修复路径接收解析按 line 复位累积结构断跨条目残留（373cd09b），根因与传输层锁定结论入知识库（fd274f68）；f7cdc68b 回滚 #264 菜单统一高度合并。
+- 当前结果：#360/#356 修复与知识页均已提交，wangfx 侧 merge #356/#360 入 master。
+- 产出依据：TitanNavi git log（lib-plugin-HXGISServer 同 hash 联动仓去重计 11）。
+- 遗留与下一步：#264 待重新实现；#352 渲染卡顿、#353 iOS 可行性评估两单 cancelled 待处置。
+三、.30 设备 206 环境重灌与 GFB 套件定稿（Work | 9 commits | 已完成）
+- 目标：重灌后的 .30 设备部署 206 环境，dm8/Qt 离线套件换血 GFB 基线并闭环清单哈希。
+- 当日进展：dm8 debs 换 GFB 版本（6d01798/d1f9056 含 .30 无 IDE 部署实录）、kit 摘除 tk-dev（53cc819）、重灌复部署记录与 GFB kit 定稿收口（a0649b7）；修复 install_dm8_qt.sh 冒烟清理后未还原 cwd 致 8b/8f 阶段 pip 崩（656e6f9）并刷新清单哈希（e71fc70）；另沉淀奇安信浏览器 Swagger UI 白屏修复记录（873247e）、daily-report 推送纪律对齐门本地权威（394e947）。
+- 当前结果：GFB kit 定稿、双文件哈希同步闭环，.30 部署实录归档。
+- 产出依据：Work git log；docs/206 相关条目与 install_dm8_qt.sh。
+- 遗留与下一步：.30 设备实测验证。
+四、派发治理：goal-gate 三查门与交付可靠性（issue-agent＋opencode-agora＋coding-gates | 16 commits | 已完成）
+- 目标：派发链前置资格把关（goal-gate）与交付终局可靠性（watchdog/本地权威）。
+- 当日进展：goal-gate 三件落地——protocol/router 前插 goal-gate 步骤（75faf86/c221e91）＋report probe 豁免其退出回复（c6010da）、coding-gates 第三门资格评审与只读侦察约束（e7d4b85/2c71c92/56299a2）；orchestrator 按形态选验收策略适配 F107 base-red 探针（92d63b3）、max_parallel 4→16（689ac96）、over-cap 降级不炸三路径（b97d1b2）、close 回收在飞任务＋relay 终态预检（642c5e9）、agora-monitor 空转 done 释放先写后撤（ee9792c→865224d，done+pending 可自愈）；opencode-agora P0 per-task watchdog＋孤儿进程组 kill（40a56e3）、external 交付废自动变基调和改 diverged＋人工门（7db692a）、managed 交付一律本地权威删 F98 远端优先（9348a4e）、remote fetch 预算 5s→15s（2cce591）。
+- 当前结果：全部合入；当日大批量 issue 派发（13＋4 单）在新并发上限下跑通。
+- 产出依据：issue-agent/opencode-agora/coding-gates git log；ag-9c4cbb/ag-92fc36/ag-57495c 等判例 trailer。
+- 遗留与下一步：agora-monitor 空转 done 盲区观察（当前依赖自愈）。
+五、工具链运维与经验库修复（.dotfiles | 23 commits | 已完成）
+- 目标：修 notify-owner 标题缺陷与 agent-experience 经验库分叉；保持经验流水。
+- 当日进展：notify 标题改经 SUBJECT env（d234709，tmux show-option 转义 $ 致 $SUBJECT 字面显示）；agent-experience 合并 home 侧 store 分叉（cdb517b）＋~/.agent-experiences symlink 纳管（b854f02）＋INDEX 同步修复与教训归档（fd18a8c/a44de9f）；tmux OSC52 剪贴板 passthrough（99e4383）与 SSH_AUTH_SOCK fallback 指 gcr-ssh-agent（75895ed）；issue#225 四环根因链经验沉淀（2d9fe63）；nightly groom/judge 报表照常（d8f1768/c4cd6f8）＋多笔 memory capture。
+- 当前结果：全部提交；会话完成邮件标题缺陷已修复（当晚生效验证）。
+- 产出依据：.dotfiles git log 23 提交。
+- 遗留与下一步：无。
+------------------------------------------------
+【会话调研工作（未提交）】
+- TitanNavi #353 iOS 移植可行性评估——结论：派发单 ag-651602 终态 cancelled，评估报告未交付、结论未落库，需重派或人工裁定（产出位置：agora 看板）
+- TitanNavi #352 地图拖动渲染卡顿定位优化——结论：派发单 ag-9a1087 终态 cancelled，未交付（产出位置：agora 看板）
+- Kylin/内网一次性运维——完成多项操作：V10 ARM64 ISO 写 U 盘引导盘、192.168.1.107 装 USB WiFi 驱动、备份 192.168.1.20 dm 数据库、cpus 服务致开关机慢排查、Kylin 装 Firefox、参考 107 装 wechat、同步 dev-mono/kiln、SSH hosts OS 版本比对（产出位置：Work 目录 build 会话群）
+- TitanNavi master 与 TUAE 分支 Android release 构建——当日执行（产出位置：会话 ses_e1c40d894 19:09）
+- opencode 使用答疑与环境验证——鼠标选中复制、关闭会话/标签跳转快捷键、serena 启动自动开网页关闭、semantic-memory 热记忆验证；会话完成邮件 $SUBJECT 缺陷已修复入库 d234709（产出位置：Work 目录 build 会话群）
+================================================
+数据来源：Work/TitanNavi/HXNativeApp/issue-agent/opencode-agora/.dotfiles/coding-gates git log（2026-11-16）、commit body、opencode 会话（session_v2 直查）、agora 看板
