@@ -293,7 +293,7 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 > - **装前必校时**：.30 出厂时钟停 2000-01-01（RTC 同错，疑 CMOS 电池空电），license 校验必失败；`sudo date -s` 后 `hwclock --systohc`，重启复查。
 > - **无 IDE 形态**：kit 目录不放 `debs/`（脚本 stage 1 自动跳过）→ deb 另行过滤 qtcreator/qtcreator-data/qbs-common/libqbscore 四包后 `dpkg -i`；PyCharm 不摆渡即不装。.30 验收全绿：双服务 active+5236、disql、Qt↔DM 中文冒烟、dmPython 干净环境连接（PHMAPP 业务账号真实连库）、11 件套 import+pip check、python3→3.12.2、dpkg audit 0。
 
-> **GFB 换血补遗（2026-11-16 二次）**：dm8/debs 三个失配包已替换为源内 GFB 原版——libssl-dev 1.1.1w-0+deb11u1gf1.5、libsqlite3-dev/sqlite3 3.31.1-4kylin0.6k0.1gf0.2（与 .30 在位运行时精确一致），tk-dev 移至 `debs-optional-tk-dev/`（源内无可装变体，tkinter 非必需）。上一条「摆渡时移出＋头文件 dpkg-deb -x 落位」程序就此作废——kit 在 GFB 设备可直接 dpkg -i，零手工适配；SHA256SUMS.txt 已同步。注意：旧基线（非 gf）设备勿用这三个新包。
+> **GFB 换血补遗（2026-11-16 二次）**：dm8/debs 三个失配包已替换为源内 GFB 原版——libssl-dev 1.1.1w-0+deb11u1gf1.5、libsqlite3-dev/sqlite3 3.31.1-4kylin0.6k0.1gf0.2（与 .30 在位运行时精确一致），tk-dev 已从 kit 删除（源内无可装变体，tkinter 非必需；将来需要 tkinter 时从麒麟源直链取 tk-dev 8.6.9+1 并同装 tcl/tk dev 链）。上一条「摆渡时移出＋头文件 dpkg-deb -x 落位」程序就此作废——kit 在 GFB 设备可直接 dpkg -i，零手工适配；SHA256SUMS.txt 已同步。注意：旧基线（非 gf）设备勿用这三个新包。
 
 > **Web 七件扩充（2026-11-13，.20 设备已装验讫）**：stage 8f pin 扩至 11 件——fastapi==0.162.5 / uvicorn[standard]==0.54.0 / python-can==4.6.1 / websockets==17.4 / pydantic==2.14.3 / apscheduler==3.11.3 / python-multipart==0.0.33；wheelhouse-cust/ 现 42 wheel（四包闭包 15＋Web 闭包 27，均 aarch64 cp312 精确 pin 制备）。⚠️ Web 链约束 wrapt<2：安装时 wrapt 2.5.2→1.17.3 降级，statsmodels/numpy/pandas/openpyxl 复验 import 绿＋pip check 无告警。设备验收：七件 import OK（fastapi 0.162.5 / uvicorn 0.54.0 / pydantic 2.14.3）。
 
