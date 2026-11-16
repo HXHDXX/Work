@@ -270,6 +270,7 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 | 11 | 旧服务包装脚本 `/dm8/bin/DmService*` 残留挡新注册 | 注册前先删；报“服务脚本文件已存在”即此因 |
 | 12 | 独立 dminit 在 PATH 下追加库名子目录 | dm.ini 双层路径兼容（脚本已内置 find_dm_ini） |
 | 13 | 冒烟后进程残留已删 cwd，8b/8f 的 pip 报 OSError Errno 2（8b「wheel 不匹配」为误诊文案） | 冒烟清理后 `cd /` 回位（脚本已修，2026-11-16） |
+| 14 | 介质清单登记 git 已跟踪文件→每次提交即过期（追刷两次） | 清单只登记未跟踪介质；入库文件由 git 背书（2026-11-16 起摘除两行） |
 
 > **dmPython 集成（2026-09-16 起）**：`sudo env PYTHON_VENV=/path/to/venv bash install_dm8_qt.sh ...` 自动执行：离线装 `wheels/dmpython-*.whl`（已可导入则跳过）→ 拷 crypto 库修 -70089 → **干净环境连接验证**。未设 PYTHON_VENV 则提示跳过。详见《dmPython连接配置方案.md》。
 
