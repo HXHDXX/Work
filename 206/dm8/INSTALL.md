@@ -287,6 +287,12 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 
 > **8d–8g 已脚本化（2026-11-13）**：`install_dm8_qt.sh` 新增四阶段，均幂等（条件已满足即跳过）——8d python3/pip3 默认指向 3.12（`/usr/local/bin` 符号链接，系统 `/usr/bin/python3` 不动）；8e libGL 开发链落位（`debs/libgl-dev_*.deb` 经 `dpkg-deb -x` 整树拷入，不走 `dpkg -i`）；8f venv 四包安装（numpy/pandas/statsmodels/openpyxl 精确 pin，验收 import＋`pip check`）；8g PHM 业务面（建 PHMAPP 账号授 PUBLIC/RESOURCE、写 `/home/kylin/.config/phm/dm.ini`、落位 `phm-app.service` 不 enable）。PHMAPP 密码经环境变量 `PHMAPP_PWD` 覆盖，缺省 `PHMapp2026`（8~48 位含大小写数字）。
 
+> **GFB 基线换血（2026-11-16，.30 设备 kylin@192.168.1.30 全形态部署实录，无 IDE）**：206 车机运行时已统一 GFB 定制基线（V10-GFB-020 源，运行库带 gf0/gf03/gf1.5 后缀），qt-env 包 debs/ 原 26 个 dev 包严格 `=` 依赖失配；且 xargs 分批 dpkg 任一失败会把同批**级联**卡成半配置（.30 实测级联误伤 20+ 含设备预装系统 dev 链，修复=按 dpkg.log upgrade 行取原版回装）。已固化：
+> - debs/ 换血 26 包为 GFB 原版（含 qtcreator/qtcreator-data→4.11.0-3kylin**6k0.4gf1.0**；libicu-dev/icu-devtools 用 suite 的 k1 非 gf 版，锚定 .30 在位 libicu66），取自 archive.kylinos.cn V10-GFB-020 直链；换后全套严格 pin 审计 0 失配（唯一残留 libqt5serialport5 5.12.12 自身漂移，无 pin 无害，**勿**换 suite 的非 gf 构建）。
+> - dm8/debs 侧 libssl-dev（需 1.1.1f/设备 1.1.1w-gf1.5）、libsqlite3-dev+sqlite3（k0.4/gf0.2）、tk-dev（无 tcl/tk dev 链）在 GFB 设备 dpkg -i 必炸：摆渡时移出，ssl/sqlite 头文件 `dpkg-deb -x` 整树落位（Python _ssl 实测链设备 1.1.1w 正常，tkinter 不可用、11 件套不受影响）；uuid-dev/libffi-dev/zlib1g-dev 已装则脚本幂等跳过。
+> - **装前必校时**：.30 出厂时钟停 2000-01-01（RTC 同错，疑 CMOS 电池空电），license 校验必失败；`sudo date -s` 后 `hwclock --systohc`，重启复查。
+> - **无 IDE 形态**：kit 目录不放 `debs/`（脚本 stage 1 自动跳过）→ deb 另行过滤 qtcreator/qtcreator-data/qbs-common/libqbscore 四包后 `dpkg -i`；PyCharm 不摆渡即不装。.30 验收全绿：双服务 active+5236、disql、Qt↔DM 中文冒烟、dmPython 干净环境连接（PHMAPP 业务账号真实连库）、11 件套 import+pip check、python3→3.12.2、dpkg audit 0。
+
 > **Web 七件扩充（2026-11-13，.20 设备已装验讫）**：stage 8f pin 扩至 11 件——fastapi==0.162.5 / uvicorn[standard]==0.54.0 / python-can==4.6.1 / websockets==17.4 / pydantic==2.14.3 / apscheduler==3.11.3 / python-multipart==0.0.33；wheelhouse-cust/ 现 42 wheel（四包闭包 15＋Web 闭包 27，均 aarch64 cp312 精确 pin 制备）。⚠️ Web 链约束 wrapt<2：安装时 wrapt 2.5.2→1.17.3 降级，statsmodels/numpy/pandas/openpyxl 复验 import 绿＋pip check 无告警。设备验收：七件 import OK（fastapi 0.162.5 / uvicorn 0.54.0 / pydantic 2.14.3）。
 
 ## 六、真机 E2E 验证记录（2026-09-16）
