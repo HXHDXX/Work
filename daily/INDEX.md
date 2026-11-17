@@ -1,6 +1,6 @@
 # 日报索引
 
-> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 186 篇，2026-04-03 ~ 2026-11-16。
+> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 187 篇，2026-04-03 ~ 2026-11-17。
 
 ## 主题索引（按工作线关联各日）
 
@@ -249,3 +249,4 @@
 - [2026-11-14](日报-2026-11-14.txt)：车机 HXNativeApp 多 issue 修复线；TitanNavi 导航修复与 Android 构建线；issue-agent↔agora 对接战役治理；dotfiles cron 强化与经验库夜间治理；Work 知识仓维护；lib-maplibre-native 产物仓换代
 - [2026-11-15](日报-2026-11-15.txt)：agora 派发链路治理与验证加固；编译服务器环境迁移与配置；TitanNavi 真机崩溃修复；工具链运维：cron 修复与 nightly 报表
 - [2026-11-16](日报-2026-11-16.txt)：HXNativeApp issue 批量修复与终闸交付；TitanNavi 国际化与数据交互；.30 设备 206 环境重灌与 GFB 套件定稿；派发治理：goal-gate 三查门与交付可靠性；工具链运维与经验库修复
+- [2026-11-17](日报-2026-11-17.txt)：（旧格式无工作线标题，见原文）

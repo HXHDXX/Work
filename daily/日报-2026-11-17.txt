@@ -1,0 +1,54 @@
+工作日报 2026-11-17（自动兜底版）
+================================================
+
+【说明】agent 路径失败，此为脚本兜底档案版（按仓分组列提交）。
+
+### HXNativeApp（13）
+  08:46 d20bd945 Merge branch 'issue/242-fix' into MSC-26-RW033
+  09:20 60c4b180 Merge branch 'issue/248-fix' into testw
+  09:28 9c15d73c solve tablevoiew conorer
+  09:30 71631ff9 solve tablevoiew conorer
+  09:37 95224a9b Merge branch 'issue/231-fix' into testw
+  09:40 6ff8e3e1 Merge branch 'issue/241-fix' into testw
+  09:42 e1b33f93 Merge branch 'issue/239-fix' into testw
+  09:43 aef1b628 Merge branch 'issue/217-fix' into testw
+  09:45 4b4a1a27 Merge branch 'issue/142-fix' into testw
+  10:04 de3b79df update knowledge
+  10:07 a4b9c94e Merge branch 'testw' into MSC-26-RW033
+  11:26 e733f0e4 add traj quick navigation
+  21:06 1ac7fffc fix(style): QTableView 表头字号双主题调大——QHeaderView 16px→24px（typography.display，issue#242）
+
+### .dotfiles（9）
+  00:15 d94cd1c fix(repo): untrack runtime harness lock; record mcp-shell git-injection pitfall21:01
+  00:20 655c528 fix(repo): review round 1 — README inline anchor fallback for untracked harness lock
+  02:09 6e6fc62 fix(agent-experience): mechanical fixes per lint (35 findings)
+  02:10 4d91198 chore(agent-experience): archive duplicate 20261110-145520-7ffe (double-capture of 20261110-151211-0db9)
+  02:15 4967e0a chore(agent-experience): unify synonymous tags (7 groups, 16 files)
+  02:17 a0deb52 feat(agent-experience): nightly groom report 2026-11-17
+  02:18 1b544f4 memory(capture): 20261117-021845-8e1b
+  02:19 7f5b739 chore(agent-experience): confirm observational capture 20261117-021845-8e1b (D3)
+  02:26 cf9b06a feat(agent-experience): nightly judge report 2026-11-17
+
+### silicon-memory（5）
+  00:25 2fe4055 fix(telemetry): 校准 recall p95 告警阈值——WARN 800→1200、ERROR 1200→3000：ERROR 线低于 rerank 预算 1500ms，重排用满预算 fail-open 的设计极限路径必然误报（2026-11-16 三天 90 ERROR/23 WARN 告警疲劳）；注释记实测分层与校准理由；test_throttle_no_spam 输入同步分层（1500 warning 档/3500 error 档）；TDD 先红后绿；ag-7dd6ac09:53
+  00:31 eb852a9 fix(telemetry): web 徽章阈值同步校准——红'hot' 1200→3000、黄'warn' 800→1200，注释锚定与 server.py WARN/ERROR_P95_MS 两侧同步（终闸 B 册 finding，dispatcher 裁决 a 授权）；不做模板注入重构（超范围）；ag-7dd6ac
+  00:35 6c51692 test(telemetry): 契约测试 test_p95_thresholds_clear_rerank_budget——ERROR 线≥2×rerank 缺省预算 1500（防 1200<1500 告警疲劳事故复发）、WARN≥1000 覆盖健康重排尾段；base 红/分支绿判别面（F107 reopen，dispatcher 指令）；ag-7dd6ac
+  15:38 3420aad feat(distill): MEMORY_DISTILL_MODEL auto 三态——按整卡总显存自动选型 1.7B/4B
+  15:38 5c02310 fix(install): 4b 先探 venv 现状消误报＋venv/轮子离线 wheelhouse 兜底＋模型交互下载接线
+
+### issue-agent（5）
+  00:22 b30b7c5 fix(orchestrator): 重派前刷新基线引用——fetch_base＋ensure_fix_branch（ag-92fc36 三轮判例，读前必刷）21:01
+  00:39 8c1a36f test(orch): close-webhook 侧效应断言加固——等待谓词覆盖 done 落盘后的锁外 cancel/push 窗口
+  20:42 4c92df7 refactor(router+orch): 每次新会话＋断路器（P1-5）与状态单源判定（P1-6）
+  20:46 7b21f90 test(e2e): non_ff 场景改 F110 diverged 终局＋worker 锚双件化（F111）
+  20:46 93ecb38 docs(protocol): 行为类任务断言清单契约（P1-7）
+
+### opencode-agora（4）
+  00:51 669416f feat(gate+task): P1a 语义——F107 base 探针 red-on-127＋reverify 动词（ag-d68faf）15:52
+  01:12 e1e473f feat(observability): P1b stalled 分型＋门阶段审计＋origin 出版投影＋BOOT git 提示（ag-454fbe）
+  17:19 0949685 refactor(delivery): F109 零网络交付栈——baseline/contains 恒本地＋远端原语整体移除
+  19:28 2a11ec1 feat(delivery): F110 交付终局三修——non_ff 预判/未出版对账/handoff 超龄升级
+
+### HXMapWidgetNative（1）
+  11:01 017107a fix hxmaplocation: fixed headingup11:51
+
