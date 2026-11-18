@@ -37,11 +37,11 @@ id dmdba >/dev/null 2>&1 || useradd -g dinstall -m -s /bin/bash dmdba
 grep -q dmdba /etc/security/limits.conf || printf \
 "dmdba soft nofile 65536\ndmdba hard nofile 65536\ndmdba soft nproc 65536\ndmdba hard nproc 65536\n" \
 >> /etc/security/limits.conf
-mkdir -p /dm8 && chown dmdba:dinstall /dm8
+mkdir -p /opt/dm8 && chown dmdba:dinstall /opt/dm8
 ```
 
-> ⚠️ **坑 1：`/dm8` 必须为空目录**。安装器检测目录非空即拒绝安装，且**静默失败仍返回 RC=0**，
-> 日志仅一行"安装目录(/dm8)下不为空"。不要预创建 `/dm8/data` 等任何子目录。
+> ⚠️ **坑 1：安装目录必须为空目录**（新装默认 `/opt/dm8`）。安装器检测目录非空即拒绝安装，且**静默失败仍返回 RC=0**，
+> 日志仅一行"安装目录(<实际路径>)下不为空"。不要预创建 `data` 等任何子目录。
 
 ### 1.3 提取安装器（安装器/介质不能放 dmdba 无权读取的目录）
 
@@ -66,11 +66,11 @@ dmdba 非 root 只能填 `N`（服务事后用官方 root 脚本注册）：
 <TIME_ZONE>+08:00</TIME_ZONE>
 <KEY>/home/dmdba/dmE301208192.key</KEY>
 <INSTALL_TYPE>0</INSTALL_TYPE>            <!-- 0=全部组件 -->
-<INSTALL_PATH>/dm8</INSTALL_PATH>
+<INSTALL_PATH>/opt/dm8</INSTALL_PATH>
 <INIT_DB>Y</INIT_DB>                       <!-- 随装初始化实例 -->
 <CREATE_DB_SERVICE>N</CREATE_DB_SERVICE>   <!-- 非 root 必须 N -->
 <DB_PARAMS>
-<PATH>/dm8/data</PATH>
+<PATH>/opt/dm8/data</PATH>
 <DB_NAME>DAMENG</DB_NAME>
 <INSTANCE_NAME>DMSERVER</INSTANCE_NAME>
 <PORT_NUM>5236</PORT_NUM>
@@ -96,15 +96,15 @@ su - dmdba -c "cd /home/dmdba && ./DMInstall.bin -q /home/dmdba/auto_install.xml
 ```
 
 > ⚠️ **坑 3：不要信 INSTALL_RC=0**（各类失败同样返回 0）。
-> 真正成功判据：`/dm8/bin/dmserver` 与 `/dm8/data/DAMENG/dm.ini` 同时存在，
+> 真正成功判据：`/opt/dm8/bin/dmserver` 与 `/opt/dm8/data/DAMENG/dm.ini` 同时存在，
 > dmdba 日志尾部出现 `[INFO] 安装达梦数据库完成。` 和 `[INFO] 初始化数据库完成。`
 
 ### 1.6 root 收尾 + 服务注册 + 启动
 
 ```bash
-/dm8/script/root/root_installer.sh                        # 注册 DmAPService
-/dm8/script/root/dm_service_installer.sh -t dmserver \
-      -dm_ini /dm8/data/DAMENG/dm.ini -p DMSERVER          # 注册实例服务
+/opt/dm8/script/root/root_installer.sh                    # 注册 DmAPService
+/opt/dm8/script/root/dm_service_installer.sh -t dmserver \
+      -dm_ini /opt/dm8/data/DAMENG/dm.ini -p DMSERVER      # 注册实例服务
 systemctl enable --now DmServiceDMSERVER DmAPService
 ss -ltn | grep 5236                                        # 监听验证
 ```
@@ -113,7 +113,7 @@ ss -ltn | grep 5236                                        # 监听验证
 
 ```bash
 # 密码含 @ 时必须整体加引号，否则连接串解析错乱
-/dm8/bin/disql 'SYSDBA/"PHMadmin1"@localhost:5236'
+/opt/dm8/bin/disql 'SYSDBA/"PHMadmin1"@localhost:5236'
 SQL> SELECT INSTANCE_NAME FROM V$INSTANCE;   -- DMSERVER
 SQL> SELECT EXPIRED_DATE FROM V$LICENSE;     -- 2027-06-25（key 生效）
 ```
@@ -160,8 +160,8 @@ sudo systemctl enable --now DmServiceDMSERVER
 
 ### 2.2 依赖
 
-- DPI 头文件：`/dm8/include/DPI*.h`（随 DM8 安装已有）
-- DPI 库：`/dm8/drivers/dpi/libdmdpi.so`
+- DPI 头文件：`/opt/dm8/include/DPI*.h`（随 DM8 安装已有）
+- DPI 库：`/opt/dm8/drivers/dpi/libdmdpi.so`
 - Qt 5.14.2 SDK：`/opt/Qt5.14.2`
 - qtbase 源码树：`/home/kylin/qt5/qtbase`（`include(../qsqldriverbase.pri)` 依赖）
 
@@ -178,8 +178,8 @@ cd /home/kylin/qt5/qtbase/src/plugins/sqldrivers/dm
 sed -i '/dm7_20210303/d' dm.pro && rm -f dm.pro.user
 
 mkdir build && cd build
-/opt/Qt5.14.2/bin/qmake "INCLUDEPATH+=/dm8/include" \
-      "LIBPATH+=/dm8/drivers/dpi" "DEFINES+=DM64" ../dm.pro
+/opt/Qt5.14.2/bin/qmake "INCLUDEPATH+=/opt/dm8/include" \
+      "LIBPATH+=/opt/dm8/drivers/dpi" "DEFINES+=DM64" ../dm.pro
 make -j$(nproc)
 ```
 
@@ -192,7 +192,7 @@ make -j$(nproc)
 cp <产物路径>/libqsqldm.so /opt/Qt5.14.2/plugins/sqldrivers/
 
 # ⚠️ 坑 6：libdmdpi.so 不在系统库路径，Qt 程序加载插件会失败。系统级注册：
-printf "/dm8/drivers/dpi\n/dm8/drivers/odbc/dependencies\n" > /etc/ld.so.conf.d/dm8.conf
+printf "/opt/dm8/drivers/dpi\n/opt/dm8/drivers/odbc/dependencies\n" > /etc/ld.so.conf.d/dm8.conf
 ldconfig
 ldd /opt/Qt5.14.2/plugins/sqldrivers/libqsqldm.so   # libdmdpi.so 可解析、无 not found
 ```
@@ -239,11 +239,14 @@ sudo bash install_dm8_qt.sh /path/to/dm8目录
 sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
      DM_CHARSET=1 DM_CASE_SENSITIVE=N \
      bash install_dm8_qt.sh /path/to/dm8目录
+
+# 大盘数据目录用法（安装目录默认 /opt/dm8，数据目录另置大盘）：
+DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 sudo -E bash install_dm8_qt.sh
 ```
 
 脚本特性：
 
-- **幂等可重跑**：DM8 已装（`/dm8/bin/dmserver` 存在）跳过安装只做服务/连通检查；
+- **幂等可重跑**：DM8 已装（`$DM_HOME/bin/dmserver` 存在，存量 `/dm8` 自动沿用）跳过安装只做服务/连通检查；
   QDM 插件已存在跳过编译。失败修复后直接重跑。
 - 全自动：SHA256 校验 → loop 挂载提取安装器 → 用户/限额/空目录 → 静默安装（正确 XML 含
   CREATE_DB_SERVICE=N）→ root 脚本注册服务 → 启动 → disql 验证（含 License 到期日）
@@ -257,7 +260,7 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 
 | # | 坑 | 规避 |
 |---|---|---|
-| 1 | 安装目录非空 → 静默失败且 RC=0 | `/dm8` 全空，成功判据看产物文件 |
+| 1 | 安装目录非空 → 静默失败且 RC=0 | 安装目录全空，成功判据看产物文件 |
 | 2 | dmdba 读不了其他用户家目录介质 | 三件套拷 `/home/dmdba/` 执行 |
 | 3 | 2026 构建要求 `CREATE_DB_SERVICE` 节点 | 非 root 固定 N，服务后注册 |
 | 4 | dm.pro 硬编码 Windows 路径 | `sed '/dm7_20210303/d'` 删三行 |
