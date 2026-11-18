@@ -11,7 +11,8 @@
 #   PHMAPP_PWD        PHM 业务账号密码   默认 PHMapp2026       （须8~48位,含大写+小写+数字）
 #   DM_CHARSET        0=GB18030 1=UTF-8  默认 0   （建库后不可改！）
 #   DM_CASE_SENSITIVE Y/N                默认 Y   （建库后不可改！）
-#   DM_HOME           DM安装目录         默认 /dm8
+#   DM_HOME           DM安装目录         默认 /opt/dm8（存量 /dm8 设备自动沿用）
+#   LEGACY_DM_HOME    存量安装探测路径   默认 /dm8
 #   PORT_NUM          实例端口           默认 5236
 #   QT_HOME           Qt SDK 目录        默认 /opt/Qt5.14.2
 #   QT_SRC            qt5 模块源码树     默认 /home/kylin/qt5
@@ -29,8 +30,8 @@ SYSAUDITOR_PWD="${SYSAUDITOR_PWD:-Dameng@Audit2026}"
 PHMAPP_PWD="${PHMAPP_PWD:-PHMapp2026}"
 DM_CHARSET="${DM_CHARSET:-0}"
 DM_CASE_SENSITIVE="${DM_CASE_SENSITIVE:-Y}"
-DM_HOME="${DM_HOME:-/dm8}"
-DATA_PATH="${DATA_PATH:-$DM_HOME/data}"
+DM_HOME_WAS_SET="${DM_HOME+x}"
+DM_HOME="${DM_HOME:-/opt/dm8}"
 DB_NAME="${DB_NAME:-DAMENG}"
 INSTANCE_NAME="${INSTANCE_NAME:-DMSERVER}"
 PORT_NUM="${PORT_NUM:-5236}"
@@ -83,6 +84,16 @@ find_dm_ini() {
   done
   return 1
 }
+# --- dm-home adopt begin ---
+# 存量设备沿用旧 /dm8 布局：仅用户未显式指定 DM_HOME 时探测；显式指定走全新安装语义（空目录校验兜底）
+LEGACY_DM_HOME="${LEGACY_DM_HOME:-/dm8}"
+if [ -z "${DM_HOME_WAS_SET:-}" ] && [ -x "$LEGACY_DM_HOME/bin/dmserver" ] \
+  && { [ -f "$LEGACY_DM_HOME/data/${DB_NAME:-DAMENG}/dm.ini" ] || [ -f "$LEGACY_DM_HOME/data/${DB_NAME:-DAMENG}/${DB_NAME:-DAMENG}/dm.ini" ]; }; then
+  DM_HOME="$LEGACY_DM_HOME"
+  info "检测到存量 $LEGACY_DM_HOME 安装，沿用旧路径"
+fi
+# --- dm-home adopt end ---
+DATA_PATH="${DATA_PATH:-$DM_HOME/data}"
 DM_INSTALLED=0; QDM_INSTALLED=0
 [ -x "$DM_HOME/bin/dmserver" ] && find_dm_ini && DM_INSTALLED=1
 [ -f "$QT_HOME/plugins/sqldrivers/libqsqldm.so" ] && QDM_INSTALLED=1
@@ -542,5 +553,5 @@ echo "PythonSSL: _ssl=$(/usr/local/bin/python3.12 -c 'import ssl;print(ssl.OPENS
 echo "Py默认  : python3 → $(readlink /usr/local/bin/python3 2>/dev/null || echo '未默认化')"
 echo "GL链    : $([ -e /usr/lib/aarch64-linux-gnu/libGL.so ] && echo 'libGL.so 开发链已落位' || echo '未落位')"
 echo "PHM    : PHMAPP 账号就绪；dm.ini $([ -f /home/kylin/.config/phm/dm.ini ] && echo '已写' || echo '未写')；phm-app.service 落位未启用"
-echo "License: 到期 ${EXPIRE:-见 /dm8/bin/dm.key}"
+echo "License: 到期 ${EXPIRE:-见 $DM_HOME/bin/dm.key}"
 echo "注意   : CHARSET($DM_CHARSET)/CASE_SENSITIVE($DM_CASE_SENSITIVE) 建库后不可改；空库期可重建"
