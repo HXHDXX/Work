@@ -308,6 +308,8 @@ sudo env DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 bash install_dm8_qt.sh
 > - IDE 排除形态复验通过（qtcreator/qtcreator-data/qbs-common/libqbscore 四包与 PyCharm 双 absent）。
 > - **IDE 临时补装（2026-11-18，.30 按用户要求恢复 IDE 形态；按需操作，镜像默认不装 IDE）**：qt-env debs 四包（qtcreator/qtcreator-data 4.11.0-3kylin6k0.4gf1.0＋qbs-common/libqbscore 1.13.1-2build1）单次 `dpkg -i` 全绿零依赖缺口；PyCharm 2025.3 按 §五补装程序摆渡落位（sha256 复核一致），libGL.so 开发链接件设备本就在位无需补。验收：dpkg --audit 0、JBR aarch64 ELF。
 
+> **ftg340 GPU 硬件渲染接线（2026-11-18，.30 定稿并经重启验证）**：206 车机（飞腾D3000M/麒麟V10）ftg340 厂商用户态（EGL/GL/GAL 栈）装在私有目录 /usr/lib/aarch64-linux-gnu/d3000m/ 且默认不在链接器搜索路径 → 所有 EGL 应用（含 hx-native-app xcb_egl）静默走 Mesa 软渲染。修法已入 stage 8h（幂等）：写 /etc/ld.so.conf.d/00-ftg340-d3000m.conf（内容＝厂商目录一行）+ ldconfig；00- 前缀保证排序在 aarch64-linux-gnu.conf 之前，撞名 libEGL/libGL/libgbm/libGLESv2 时厂商栈胜出。安全性：厂商栈 NEEDED 的是字面 libdrm.so.2.4.0（仅存于私有目录），与系统 libdrm.so.2 零撞名；内核驱动（galcore，/dev/ftg340）设备树自动加载，三层开机自恢复，无需启动脚本。回滚＝删 conf＋ldconfig。
+
 > **Web 七件扩充（2026-11-13，.20 设备已装验讫）**：stage 8f pin 扩至 11 件——fastapi==0.162.5 / uvicorn[standard]==0.54.0 / python-can==4.6.1 / websockets==17.4 / pydantic==2.14.3 / apscheduler==3.11.3 / python-multipart==0.0.33；wheelhouse-cust/ 现 42 wheel（四包闭包 15＋Web 闭包 27，均 aarch64 cp312 精确 pin 制备）。⚠️ Web 链约束 wrapt<2：安装时 wrapt 2.5.2→1.17.3 降级，statsmodels/numpy/pandas/openpyxl 复验 import 绿＋pip check 无告警。设备验收：七件 import OK（fastapi 0.162.5 / uvicorn 0.54.0 / pydantic 2.14.3）。
 
 ## 六、真机 E2E 验证记录（2026-09-16）
