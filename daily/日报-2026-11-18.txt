@@ -1,0 +1,57 @@
+工作日报 2026-11-18（周三）
+================================================
+【今日概览】共 120 次提交，涉及 18 仓：
+主线：silicon-memory(30)、HXNativeApp(29，工作树按 hash 去重归母仓)、.dotfiles(19)、Work(14)、issue-agent(7)、opencode-agora(6)、HXNmeaParser(4)、其余 11 仓各 1
+- 今日工作：issue-agent 派发集群修复 HXNativeApp 五个 issue（#262/#265/#267/#268/#278）全部落库，GPU 渲染卡顿经 perf 三层直证定案为 ftg340 驱动全局锁自旋；silicon-memory 完成注入质量门与凭据/回执滤噪系列收敛，append-only 知识 union merge driver 落 13 仓；206 dm8 kit 完成 ftg340 GPU 渲染接线（stage 8h）与 DM_HOME/PYTHON_VENV 加固；agora 平台落 F110–F115 六项改进。
+- 整体进度：上述工作线均已提交落库；HXNativeApp #264/#276/#282 三个 issue 会话在飞（22:01 仍活跃）。
+- 风险阻塞：无。
+- 明日重点：收口在飞 issue（#264/#276/#282）；按驱动锁定案推进「减显存分配频率」代码方案。
+------------------------------------------------
+【工作详录】
+一、HXNativeApp issue 修复集群（HXNativeApp 及派发工作树 | 29 commits | 5 个已落库、3 个在飞）
+- 目标：以 issue-agent 派发模式批量修复导航/围栏/RDSS 交互缺陷
+- 当日进展：#262 快速导航 goal_ 目标点改会话制（退出不保存不显示）；#265 RDSS 异常报警页消费 ztiReceived（缓存+1s 定时刷五列表）并清偿 check 门分支存量 clang-tidy 警告 10 处；#267 航迹记录接入模拟导航坐标；#268 快速导航返回对称清除路径/航迹地图残留；#278 定位并禁用构造期围栏文件加载与地图推送残余链。#272 电子围栏显示路径查证已解答（done 未关）。团队侧并行合入 #271/#274/#275/#281 及路线宽度、测距等改动。每项修复均伴随 issue-agent knowledge 沉淀提交
+- 当前结果：五个 issue 修复+知识沉淀共 13 次提交落库；#264 编组信息落库、#276 密码设置写 config.ini、#282 导航列表交互三任务仍在飞
+- 产出依据：HXNativeApp git log（266f1f47/e4e892c8/c7759af6/5f56b340/5ad22a02/0778839c 等）；工作树 ag-dad323/ag-d8a574/ag-593036 按 hash 去重
+- 遗留与下一步：#264/#276/#282 收口；#272 关闭状态核对
+二、HXNativeApp GPU 渲染卡顿定案与优化（maplibre-native + 会话调研 | 1 commit + 会话 | 已完成）
+- 目标：定位导航中渲染线程 CPU 空转根因并落地可用的优化
+- 当日进展：perf 周期采样+kallsyms 三层直证：Vivante galcore 驱动（ftg340.ko）将显存分配与命令提交串行在内核全局互斥锁下，自旋簇占 17–27%，181/181 自旋样本全链归属 gcoHAL_Call←ioctl 提交路径；闭源二进制模块用户态无法拆锁，只能减分配频率。maplibre-native 侧将 availableImages 改为跨 actor 消息的共享快照，受控 A/B 实测优化净贡献 -48%
+- 当前结果：根因定案（单样本完整栈铁证）；优化已合入 maplibre-native；观测方法学两坑（/proc/task/*/stack 抓不到运行态自旋线程、perf report 树 grep -B 会取到邻居分支致误判）沉淀记忆 20261118-192156-72cb
+- 产出依据：maplibre-native 2f5d5976e；.dotfiles 记忆提交 2050c7f；会话 ses_e12adaa49ffeO0yIprMdZGn8wj（含完整内核栈）
+- 遗留与下一步：按「减分配频率」方向设计代码级方案；麒麟 5.4 无 tracefs/lock contention，perf+kallsyms 即该平台观测上限
+三、206 dm8 适配 kit（Work | 14 commits 中 10 项 kit 相关 | 已完成）
+- 目标：补齐 206 整机 dm8 镜像的 GPU 渲染链与安装健壮性
+- 当日进展：新增 stage 8h——写 00-ftg340-d3000m.conf 并 ldconfig 使厂商 EGL/GL 栈压过 Mesa，含 libEGL.so.1 解析断言与 GPU 摘要行；评审轮修复 ldconfig 输出超 64KB 管道缓冲在 pipefail 下触发 SIGPIPE 141 的竞态；DM_HOME 默认 /opt/dm8（旧 /dm8 采纳）、PYTHON_VENV 预检 fail-fast、python 阶段前置 dmPython、IDE 重装标记为按需不入默认镜像
+- 当前结果：INSTALL.md 同步更新并刷新 checksum；kit 阶段全绿
+- 产出依据：Work git log（038e4ba/b16fc3a/0620961/b843a21/e04ca58/9ca3d1d 等）
+- 遗留与下一步：无（阶段内闭环）
+四、silicon-memory 注入质量与滤噪（silicon-memory 及 13 仓 | 30 commits + 跨仓 union merge | 已完成）
+- 目标：提升热记忆注入质量、收敛凭据/回执噪声，消除 append-only 知识文件合并冲突
+- 当日进展：recall 统一 rerank 相关性门（MEMORY_RECALL_MIN_RERANK=0.5，gate_degraded 即停注入）；插件注入块改元数据优先+缩进正文；TUI 隐藏外层标签与固定表头防毒化元数据泄漏；凭据 token 无冒号形态、4 类回执变形等系列滤噪（ag-513473/ag-c954f6/ag-a03c7b/ag-e638a2/ag-92b4fa）；decision 冲突聚类阈值独立为 conflict_min_sim 0.90；软链 store 自动提交修复；union merge driver 写入 13 个仓的 .gitattributes（append-only 知识文件免冲突），配套 lint 自动修复入版控
+- 当前结果：全部经终闸 A/B/C 册评审后合入；冲突阈值与凭据滤噪收敛经 ingest 入 knowledge
+- 产出依据：silicon-memory git log（93254cf/08cc3cb/1ca5c52/237d5bd 等）；Work 5351e9a/1ccf8d6；各仓 union merge chore 提交
+- 遗留与下一步：无
+五、agora 派发平台（issue-agent + opencode-agora | 13 commits | 已完成）
+- 目标：F110–F115 平台迭代与门审体系
+- 当日进展：F114 门审 review_cmd 双仓接线（config 透传每个任务，评审执行权收归服务）；F115 看板会话分组层（派发会话出头、真实 sid 尾 8）；F110 补丁等价对账免误报+unpublished 告警改 ancestry 判定+退避台账按事件重建；F112 门按仓分池；F113 版本指纹自检；slot-freed 名额释放即补位 parked 派发；verify 提案执行回路+建单基线领先防护；分支 ref 单写者锁+待澄清超龄清单；agora-review-audit 双层门审（机械指纹+LLM 元评审）
+- 当前结果：全部提交落库
+- 产出依据：issue-agent、opencode-agora git log（5e979fd/88be9f0/63ca769/bcefb71/f44c26a/2f9f279 等）
+- 遗留与下一步：无
+六、GBQ 组管理业务设计（HXNmeaParser | 3 commits | 已完成）
+- 目标：证据基线的组管理（GBQ/ICR）业务设计
+- 当日进展：引入设计稿真源+冲突清单知识页；产出 evidence-based v2 设计并补齐七张 Mermaid 时序图
+- 当前结果：v2 设计稿落库
+- 产出依据：HXNmeaParser git log（a819976/d542095/02cfb9e）
+- 遗留与下一步：无
+七、agentctl 与经验记忆维护（.dotfiles | 19 commits | 已完成）
+- 目标：agentctl mount status 修复与当日经验沉淀
+- 当日进展：mount status 三连修——逐名校验 opencode 技能部署、空管理集守卫+external 计数、自测动态 victim 加固；批量沉淀当日经验 12+ 条（含 issue#264/#271/#278 与 GPU 观测方法学），1 条 supersede；清理 agentctl memory 活性旧口径；opencode cli.json 快照同步（alt+n/p 切页、鼠标、terminal.copy）
+- 当前结果：mount status 全绿、自测通过；经验全部入档
+- 产出依据：.dotfiles git log（bdeb20a/16ec239/e8d2ef7/ffd0292 等）
+- 遗留与下一步：无
+------------------------------------------------
+【会话调研工作（未提交）】
+- issue-agent 并发构建上限调研——build.sh/docker 无正面并发闸，实际靠任务名额 max_parallel=3 间接压制＋oomd 事后兜底＋agent 发构建前自觉查 docker ps 排队；真闸需在 build.sh 加锁（产出位置：Work 会话 ses_e11f39014ffer7E1KqSnPbqo6q）
+================================================
+数据来源：18 仓 git log（2026-11-18 窗口）、commit body、opencode 会话库直查（session_v2，当日活跃 200 会话，剔除 subagent 碎件）
