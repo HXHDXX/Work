@@ -40,7 +40,7 @@
 **Id:** agent-guidelines/agora-delivery-failure-taxonomy
 **Source:** session（ag-676beb/ag-4b3a73/ag-d89480/ag-ed8482/ag-26e8ee/ag-18503c 等，2026-11-18）
 - **local_target_dirty**：目标 checkout 有未跟踪物即拒——产物移同级 __artifacts-aside-*（TitanNavi dist/ 243M APK），纯缓存直删（__pycache__；diag*.log 经用户裁定删）。
-- **local_target_busy（repo-tool 形态）**：repo-tool 检出仓（.git symlink→.repo/projects/<name>.git）的 worktree list 把 gitdir 裸目录报成持支 worktree，门在 gitdir 里跑 git merge 必报 "must be run in a work tree"——解＝真检出目录手动 ff 到交付 commit＋清 gitdir 内残留 agora-delivery.lock＋重派，门幂等认 HEAD==sha → synced 直接收口（HXNativeApp/TTSPlayer/HXMapWidgetNative/HXPRShell 四仓实证）；agorad _holding_worktree 待修。
+- **local_target_busy（repo-tool 形态）**：repo-tool 检出仓（.git symlink→.repo/projects/<name>.git）的 worktree list 把 gitdir 裸目录报成持支 worktree，门在 gitdir 里跑 git merge 必报 "must be run in a work tree"——解＝真检出目录手动 ff 到交付 commit＋清 gitdir 内残留 agora-delivery.lock＋重派，门幂等认 HEAD==sha → synced 直接收口（HXNativeApp/TTSPlayer/HXMapWidgetNative/HXPRShell 四仓实证）；agorad _holding_worktree 已修（63ca769，2026-11-18 merged＋install.sh 部署＋daemon 重启生效；unpublished 探测同批改 cherry-pick patch 等价比对）。
 - **origin 非 ff 分叉**：交付期间远端合 PR（issue-agent 流活跃时高发）——fetch→rebase 单提交→push（TitanNavi/HXNativeApp/OSMDataCompiler 三例；rebase 改 sha 属正常，留痕记映射关系）。
 - **静默滞留 todo**：agora dispatch 建链失败不报错，看门狗超时 rc=1 且任务 todo——重挂即解。
 - **派发侧流程病**：goal 模板的「无既有文件」假设必须逐仓预检（本次 10 仓预检漏查 .gitattributes 存在性，两仓有 LFS）；verify 登记后 dispatcher 可 task_update 重登记（worker 冲突申报→裁定→改验收是合法路径）；F106 留痕必须等 push 确认后再写（本日两次勘误）。
