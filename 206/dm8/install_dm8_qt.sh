@@ -544,12 +544,19 @@ stage 8h "ftg340 GPU 硬件渲染接线（厂商 EGL/GL 栈系统注册）"
 # 206 车机（飞腾D3000M）ftg340 厂商用户态装在私有目录且默认不在链接器路径 → EGL 静默软渲染；
 # 00- 前缀保证排序在 aarch64-linux-gnu.conf 之前，撞名 libEGL/libGL 时厂商栈胜出（2026-11-18 实测定稿，三层开机自恢复）
 VENDOR_GL_DIR=/usr/lib/aarch64-linux-gnu/d3000m
+GPU_ST="软渲染（stage 8h）"
 if [ -d "$VENDOR_GL_DIR" ]; then
   printf '%s\n' "$VENDOR_GL_DIR" > /etc/ld.so.conf.d/00-ftg340-d3000m.conf
   ldconfig || fail "ldconfig 失败"
-  ldconfig -p | grep -m1 'libEGL.so.1 (libc6,AArch64)' | grep -q d3000m \
-    || fail "厂商 libEGL.so.1 未胜出（应排系统 Mesa 前，检查 00- 前缀排序）"
-  info "GPU 硬件渲染已接线：libEGL.so.1 → $VENDOR_GL_DIR"
+  # 变量中转：ldconfig -p 输出超管道缓冲（.30 实测 ~133KB）且厂商条目排最前，管道直连 grep -m1 早退触发 SIGPIPE(141)×pipefail 误 fail
+  LDCACHE=$(ldconfig -p) || fail "ldconfig -p 失败"
+  EGL1=$(grep -m1 'libEGL.so.1 (libc6,AArch64)' <<<"$LDCACHE") || true
+  if grep -q d3000m <<<"$EGL1"; then
+    GPU_ST="ftg340 硬件渲染已接线"
+    info "GPU 硬件渲染已接线：libEGL.so.1 → $VENDOR_GL_DIR"
+  else
+    fail "厂商 libEGL.so.1 未胜出（应排系统 Mesa 前，检查 00- 前缀排序）"
+  fi
 else
   warn "缺 $VENDOR_GL_DIR（ftg340 包未装？），保持软渲染"
 fi
@@ -570,7 +577,7 @@ echo "Python : ${PYTHON_VENV:-未配置（PYTHON_VENV=<venv路径> 可启用 dmP
 echo "PythonSSL: _ssl=$(/usr/local/bin/python3.12 -c 'import ssl;print(ssl.OPENSSL_VERSION)' 2>/dev/null || echo '异常(PY_FIX_SSL=auto 时应已修复)')"
 echo "Py默认  : python3 → $(readlink /usr/local/bin/python3 2>/dev/null || echo '未默认化')"
 echo "GL链    : $([ -e /usr/lib/aarch64-linux-gnu/libGL.so ] && echo 'libGL.so 开发链已落位' || echo '未落位')"
-echo "GPU    : $(ldconfig -p | grep -m1 'libEGL.so.1 (libc6,AArch64)' | grep -q d3000m && echo 'ftg340 硬件渲染已接线' || echo '软渲染（stage 8h）')"
+echo "GPU    : $GPU_ST"
 echo "PHM    : PHMAPP 账号就绪；dm.ini $([ -f /home/kylin/.config/phm/dm.ini ] && echo '已写' || echo '未写')；phm-app.service 落位未启用"
 echo "License: 到期 ${EXPIRE:-见 $DM_HOME/bin/dm.key}"
 echo "注意   : CHARSET($DM_CHARSET)/CASE_SENSITIVE($DM_CASE_SENSITIVE) 建库后不可改；空库期可重建"
