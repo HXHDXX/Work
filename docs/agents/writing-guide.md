@@ -8,6 +8,7 @@
 
 - 技术文档：中英混合，中文为主，代码/命令/术语用英文
 - commit message：英文，Conventional Commits 格式
+- 清单/校验类变更经核实为零差异时，commit message 用 "verified unchanged" 而非 "refresh"（refresh 误导读者以为动了文件；实例：b843a21）
 - 知识库模块页：中文描述，英文代码
 
 ### 格式

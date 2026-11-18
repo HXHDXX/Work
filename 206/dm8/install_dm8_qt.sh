@@ -114,6 +114,7 @@ check_pwd() {
 }
 check_pwd "$SYSDBA_PWD" "SYSDBA_PWD"
 check_pwd "$SYSAUDITOR_PWD" "SYSAUDITOR_PWD"
+[ -n "$PYTHON_VENV" ] && [ ! -d "$PYTHON_VENV" ] && fail "PYTHON_VENV 显式传入但目录不存在：$PYTHON_VENV（路径拼写错误；目录在而 bin/python 悬空属合法中间态，8b 装 python3.12 后由 8c 复核）"
 case "$DM_CHARSET" in 0|1) ;; *) fail "DM_CHARSET 只能 0(GB18030) 或 1(UTF-8)" ;; esac
 case "$DM_CASE_SENSITIVE" in Y|y|N|n) ;; *) fail "DM_CASE_SENSITIVE 只能 Y/N" ;; esac
 info "预检通过 (DM已装=$DM_INSTALLED, QDM已装=$QDM_INSTALLED)"
