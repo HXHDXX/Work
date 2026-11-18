@@ -301,7 +301,7 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
 > - **脚本确定性坑（两台设备复现）**：阶段 8b/8f 的 `sudo -n -u <owner> pip install` 在脚本上下文必失败（8b 报「wheel 版本/架构不匹配」属误诊、8f 报 OSError Errno 2），同命令交互手工执行即成功。标准处置＝手工 `pip install --no-index` 装 dmpython wheel / 11 件套后重跑脚本过幂等闸（8b 走「已可导入」路径、8f 走 freeze 全字匹配跳过）。**根因已修**：冒烟目录 rm 后进程残留已删 cwd，pip 的 os.getcwd() ENOENT——脚本已在冒烟清理后加 `cd /`（2026-11-16，A/B 复现实证：已删 cwd 必现 Errno 2、cd / 后同命令即成功）。
 > - 重装系统后时钟必回 2000-01-01（CMOS 电池空电），装前校时＋`hwclock --systohc` 为固定动作。
 > - IDE 排除形态复验通过（qtcreator/qtcreator-data/qbs-common/libqbscore 四包与 PyCharm 双 absent）。
-> - **IDE 补装（2026-11-18，.30 按要求恢复 IDE 形态）**：qt-env debs 四包（qtcreator/qtcreator-data 4.11.0-3kylin6k0.4gf1.0＋qbs-common/libqbscore 1.13.1-2build1）单次 `dpkg -i` 全绿零依赖缺口；PyCharm 2025.3 按 §五补装程序摆渡落位（sha256 复核一致），libGL.so 开发链接件设备本就在位无需补。验收：dpkg --audit 0、JBR aarch64 ELF。
+> - **IDE 临时补装（2026-11-18，.30 按用户要求恢复 IDE 形态；按需操作，镜像默认不装 IDE）**：qt-env debs 四包（qtcreator/qtcreator-data 4.11.0-3kylin6k0.4gf1.0＋qbs-common/libqbscore 1.13.1-2build1）单次 `dpkg -i` 全绿零依赖缺口；PyCharm 2025.3 按 §五补装程序摆渡落位（sha256 复核一致），libGL.so 开发链接件设备本就在位无需补。验收：dpkg --audit 0、JBR aarch64 ELF。
 
 > **Web 七件扩充（2026-11-13，.20 设备已装验讫）**：stage 8f pin 扩至 11 件——fastapi==0.162.5 / uvicorn[standard]==0.54.0 / python-can==4.6.1 / websockets==17.4 / pydantic==2.14.3 / apscheduler==3.11.3 / python-multipart==0.0.33；wheelhouse-cust/ 现 42 wheel（四包闭包 15＋Web 闭包 27，均 aarch64 cp312 精确 pin 制备）。⚠️ Web 链约束 wrapt<2：安装时 wrapt 2.5.2→1.17.3 降级，statsmodels/numpy/pandas/openpyxl 复验 import 绿＋pip check 无告警。设备验收：七件 import OK（fastapi 0.162.5 / uvicorn 0.54.0 / pydantic 2.14.3）。
 
