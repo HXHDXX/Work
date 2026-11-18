@@ -85,6 +85,7 @@ find_dm_ini() {
   return 1
 }
 # --- dm-home adopt begin ---
+# 布局候选须与 find_dm_ini 保持一致
 # 存量设备沿用旧 /dm8 布局：仅用户未显式指定 DM_HOME 时探测；显式指定走全新安装语义（空目录校验兜底）
 LEGACY_DM_HOME="${LEGACY_DM_HOME:-/dm8}"
 if [ -z "${DM_HOME_WAS_SET:-}" ] && [ -x "$LEGACY_DM_HOME/bin/dmserver" ] \
@@ -319,7 +320,7 @@ printf 'TEMPLATE=app\nQT+=sql\nSOURCES+=main.cpp\n' > smoke.pro
 if [ ! -x ./smoke ]; then rm -rf "$SMOKE"; fail "冒烟程序编译失败（Qt 环境异常）"; fi
 OUT=$(./smoke 2>&1)
 rm -rf "$SMOKE"
-cd /  # 坑13: 冒烟目录已删，进程残留已删 cwd，8b/8f 的 pip(os.getcwd) 报 OSError Errno 2
+cd /  # 坑13: 冒烟目录已删，进程残留已删 cwd，8c/8f 的 pip(os.getcwd) 报 OSError Errno 2
 if echo "$OUT" | grep -q "QT_DM_SMOKE_OK"; then
   info "Qt↔DM8 全链路验证通过（含中文存取）"; echo "$OUT" | grep "ROW:"
 else
@@ -327,46 +328,7 @@ else
 fi
 
 # =============================================================================
-stage 8b "dmPython 安装与 -70089 修复（可选：PYTHON_VENV=<venv路径>）"
-# =============================================================================
-if [ -z "$PYTHON_VENV" ]; then
-  warn "未设置 PYTHON_VENV，跳过 dmPython 阶段（启用: sudo env PYTHON_VENV=/path/to/venv bash $0 ...）"
-elif [ ! -x "$PYTHON_VENV/bin/python" ]; then
-  warn "PYTHON_VENV 下无 bin/python（非有效 venv），跳过"
-else
-  VOWNER=$(stat -c %U "$PYTHON_VENV" 2>/dev/null || echo root)
-  run_as_owner() { if [ "$VOWNER" = "root" ]; then "$@"; else sudo -n -u "$VOWNER" "$@"; fi; }
-  if "$PYTHON_VENV/bin/python" -c "import dmPython" >/dev/null 2>&1; then
-    info "dmPython 已可导入，仅补 crypto 库"
-  else
-    WHEEL=$(ls "$DM_DIR"/wheels/dmpython-*.whl 2>/dev/null | head -1)
-    if [ -n "$WHEEL" ]; then
-      run_as_owner "$PYTHON_VENV/bin/pip" install --no-index "$WHEEL" \
-        || fail "dmPython wheel 安装失败（wheel 与 venv 的 python 版本/架构不匹配）"
-      info "已离线安装 $(basename "$WHEEL")"
-    else
-      run_as_owner "$PYTHON_VENV/bin/pip" install dmpython \
-        || fail "dmPython 在线安装失败（离线设备请把 dmpython-*.whl 放入 $DM_DIR/wheels/）"
-    fi
-  fi
-  DMPY_LIBS=$(find "$PYTHON_VENV/lib" -type d -name dmpython.libs 2>/dev/null | head -1)
-  [ -n "$DMPY_LIBS" ] || fail "未找到 dmpython.libs 目录（wheel 结构异常）"
-  run_as_owner cp "$DM_HOME/drivers/odbc/dependencies/libcrypto.so" \
-                    "$DM_HOME/drivers/odbc/dependencies/libssl.so" "$DMPY_LIBS/"
-  # 关键验证：干净环境（无任何 LD_LIBRARY_PATH）连接 —— 即 systemd/gunicorn 部署形态
-  if env -i PATH=/usr/bin:/bin "$PYTHON_VENV/bin/python" -c "
-import dmPython
-c = dmPython.connect(user='SYSDBA', password='$SYSDBA_PWD', server='127.0.0.1', port=$PORT_NUM)
-print('PY_DM_OK')
-c.close()" 2>/dev/null | grep -q "PY_DM_OK"; then
-    info "dmPython 干净环境连接验证通过（-70089 已根治）"
-  else
-    fail "dmPython 干净环境连接失败（检查 crypto 库是否已拷入 $DMPY_LIBS）"
-  fi
-fi
-
-# =============================================================================
-stage 8c "Python3.12 + SSL 支撑（debs 离线安装 + _ssl 修复构建）"
+stage 8b "Python3.12 + SSL 支撑（debs 离线安装 + _ssl 修复构建）"
 # =============================================================================
 PY312=/usr/local/bin/python3.12
 if [ "$PY_FIX_SSL" = "skip" ]; then
@@ -414,10 +376,49 @@ else
 fi
 
 # =============================================================================
+stage 8c "dmPython 安装与 -70089 修复（可选：PYTHON_VENV=<venv路径>）"
+# =============================================================================
+if [ -z "$PYTHON_VENV" ]; then
+  warn "未设置 PYTHON_VENV，跳过 dmPython 阶段（启用: sudo env PYTHON_VENV=/path/to/venv bash $0 ...）"
+elif [ ! -x "$PYTHON_VENV/bin/python" ]; then
+  fail "PYTHON_VENV 显式传入但 venv 无效（bin/python 不可执行）：$PYTHON_VENV"
+else
+  VOWNER=$(stat -c %U "$PYTHON_VENV" 2>/dev/null || echo root)
+  run_as_owner() { if [ "$VOWNER" = "root" ]; then "$@"; else sudo -n -u "$VOWNER" "$@"; fi; }
+  if "$PYTHON_VENV/bin/python" -c "import dmPython" >/dev/null 2>&1; then
+    info "dmPython 已可导入，仅补 crypto 库"
+  else
+    WHEEL=$(ls "$DM_DIR"/wheels/dmpython-*.whl 2>/dev/null | head -1)
+    if [ -n "$WHEEL" ]; then
+      run_as_owner "$PYTHON_VENV/bin/pip" install --no-index "$WHEEL" \
+        || fail "dmPython wheel 安装失败（wheel 与 venv 的 python 版本/架构不匹配）"
+      info "已离线安装 $(basename "$WHEEL")"
+    else
+      run_as_owner "$PYTHON_VENV/bin/pip" install dmpython \
+        || fail "dmPython 在线安装失败（离线设备请把 dmpython-*.whl 放入 $DM_DIR/wheels/）"
+    fi
+  fi
+  DMPY_LIBS=$(find "$PYTHON_VENV/lib" -type d -name dmpython.libs 2>/dev/null | head -1)
+  [ -n "$DMPY_LIBS" ] || fail "未找到 dmpython.libs 目录（wheel 结构异常）"
+  run_as_owner cp "$DM_HOME/drivers/odbc/dependencies/libcrypto.so" \
+                    "$DM_HOME/drivers/odbc/dependencies/libssl.so" "$DMPY_LIBS/"
+  # 关键验证：干净环境（无任何 LD_LIBRARY_PATH）连接 —— 即 systemd/gunicorn 部署形态
+  if env -i PATH=/usr/bin:/bin "$PYTHON_VENV/bin/python" -c "
+import dmPython
+c = dmPython.connect(user='SYSDBA', password='$SYSDBA_PWD', server='127.0.0.1', port=$PORT_NUM)
+print('PY_DM_OK')
+c.close()" 2>/dev/null | grep -q "PY_DM_OK"; then
+    info "dmPython 干净环境连接验证通过（-70089 已根治）"
+  else
+    fail "dmPython 干净环境连接失败（检查 crypto 库是否已拷入 $DMPY_LIBS）"
+  fi
+fi
+
+# =============================================================================
 stage 8d "python3/pip3 默认化（指向 3.12）"
 # =============================================================================
 if [ ! -x "$PY312" ]; then
-  fail "缺 $PY312（stage 8c 应已保证；PY_FIX_SSL=skip 时需先装好 Python3.12 再跑本阶段）"
+  fail "缺 $PY312（stage 8b 应已保证；PY_FIX_SSL=skip 时需先装好 Python3.12 再跑本阶段）"
 elif [ ! -x /usr/local/bin/pip3.12 ]; then
   fail "缺 /usr/local/bin/pip3.12（python3.12 构建须含 ensurepip，否则 pip3 会成悬空链接）"
 elif [ "$(readlink /usr/local/bin/python3 2>/dev/null)" = "$PY312" ] \
@@ -459,9 +460,9 @@ WH_CUST="$DM_DIR/wheels/wheelhouse-cust"
 if [ -z "$PYTHON_VENV" ]; then
   warn "未设置 PYTHON_VENV，跳过依赖链阶段"
 elif [ ! -x "$PYTHON_VENV/bin/python" ]; then
-  warn "PYTHON_VENV 下无 bin/python（非有效 venv），跳过依赖链阶段"
+  fail "PYTHON_VENV 显式传入但 venv 无效（bin/python 不可执行）：$PYTHON_VENV"
 else
-  # 与 8b 同款降权：kylin 属主 venv 内安装/验证以属主执行，防 root 落属主文件卡死后续 kylin pip/import
+  # 与 8c 同款降权：kylin 属主 venv 内安装/验证以属主执行，防 root 落属主文件卡死后续 kylin pip/import
   VOWNER=$(stat -c %U "$PYTHON_VENV" 2>/dev/null || echo root)
   run_as_owner() { if [ "$VOWNER" = "root" ]; then "$@"; else sudo -n -u "$VOWNER" "$@"; fi; }
   PIN11="numpy==2.5.4 pandas==3.1.1 statsmodels==0.15.0 openpyxl==3.1.5 fastapi==0.162.5 uvicorn[standard]==0.54.0 python-can==4.6.1 websockets==17.4 pydantic==2.14.3 apscheduler==3.11.3 python-multipart==0.0.33"

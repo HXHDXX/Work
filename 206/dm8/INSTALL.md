@@ -120,6 +120,8 @@ SQL> SELECT EXPIRED_DATE FROM V$LICENSE;     -- 2027-06-25（key 生效）
 
 ### 1.8 替换式重建实例（2026-09-16 实录，当前设备即此形态）
 
+（本节 /dm8 为存量设备实录路径；新装设备替换为实际 DM_HOME，如 /opt/dm8）
+
 旧实例无业务数据时，用独立 `dminit` 原地替换（端口仍 5236，参数 GB18030/敏感/8K，密码换为 `PHMadmin1`）：
 
 ```bash
@@ -241,7 +243,7 @@ sudo env SYSDBA_PWD='NewPass123' SYSAUDITOR_PWD='Audit123x' \
      bash install_dm8_qt.sh /path/to/dm8目录
 
 # 大盘数据目录用法（安装目录默认 /opt/dm8，数据目录另置大盘）：
-DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 sudo -E bash install_dm8_qt.sh
+sudo env DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 bash install_dm8_qt.sh
 ```
 
 脚本特性：
@@ -272,12 +274,12 @@ DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 sudo -E bash install_dm8_qt.sh
 | 10 | `pkill -9 -f <关键词>` 匹配到自身 ssh 命令行而自杀 | 用 `unins[a]taller` 式正则或按 PID |
 | 11 | 旧服务包装脚本 `/dm8/bin/DmService*` 残留挡新注册 | 注册前先删；报“服务脚本文件已存在”即此因 |
 | 12 | 独立 dminit 在 PATH 下追加库名子目录 | dm.ini 双层路径兼容（脚本已内置 find_dm_ini） |
-| 13 | 冒烟后进程残留已删 cwd，8b/8f 的 pip 报 OSError Errno 2（8b「wheel 不匹配」为误诊文案） | 冒烟清理后 `cd /` 回位（脚本已修，2026-11-16） |
+| 13 | 冒烟后进程残留已删 cwd，8c/8f 的 pip 报 OSError Errno 2（8c「wheel 不匹配」为误诊文案） | 冒烟清理后 `cd /` 回位（脚本已修，2026-11-16） |
 | 14 | 介质清单登记 git 已跟踪文件→每次提交即过期（追刷两次） | 清单只登记未跟踪介质；入库文件由 git 背书（2026-11-16 起摘除两行） |
 
 > **dmPython 集成（2026-09-16 起）**：`sudo env PYTHON_VENV=/path/to/venv bash install_dm8_qt.sh ...` 自动执行：离线装 `wheels/dmpython-*.whl`（已可导入则跳过）→ 拷 crypto 库修 -70089 → **干净环境连接验证**。未设 PYTHON_VENV 则提示跳过。详见《dmPython连接配置方案.md》。
 
-> **Python3.12+SSL 支撑（2026-09-16 起）**：脚本阶段 8c 自动检测 `/usr/local/bin/python3.12` 的 `import ssl`，失败时：离线安装 `debs/` 里 10 个编译依赖包（libssl-dev/libffi-dev/sqlite 等，已装自动跳过）→ 用包内 `Python-3.12.14.tgz` 重编安装（3.12 系列 ABI 兼容，venv/site-packages 不受影响）→ 验证 `_ssl`。`PY_FIX_SSL=skip` 可禁用。设备已有源码树时也可手工增量 `make`（见《dmPython连接配置方案.md》背景）。
+> **Python3.12+SSL 支撑（2026-09-16 起）**：脚本阶段 8b 自动检测 `/usr/local/bin/python3.12` 的 `import ssl`，失败时：离线安装 `debs/` 里 10 个编译依赖包（libssl-dev/libffi-dev/sqlite 等，已装自动跳过）→ 用包内 `Python-3.12.14.tgz` 重编安装（3.12 系列 ABI 兼容，venv/site-packages 不受影响）→ 验证 `_ssl`。`PY_FIX_SSL=skip` 可禁用。设备已有源码树时也可手工增量 `make`（见《dmPython连接配置方案.md》背景）。
 
 > **客户需求对齐（2026-09-16）**：Python 以客户基准 **3.12.2** 编译，命令逐字对齐客户文档（`./configure --enable-optimizations --prefix=/usr/local` + `make -j$(nproc)` + `sudo make altinstall`；PGO 构建约 30~60 分钟）。基础工具 build-essential/gcc/g++/make/curl 设备已有，wget 已入 debs/。**CAN 调试助手经确认不安装；PyCharm 已于 2026-11-13 补装（见下条）**。sqlite3 CLI 已入 debs/（universe 池，3.31.1；目标设备本就已安装）。
 
@@ -301,7 +303,7 @@ DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 sudo -E bash install_dm8_qt.sh
 > **GFB 换血补遗（2026-11-16 二次）**：dm8/debs 三个失配包已替换为源内 GFB 原版——libssl-dev 1.1.1w-0+deb11u1gf1.5、libsqlite3-dev/sqlite3 3.31.1-4kylin0.6k0.1gf0.2（与 .30 在位运行时精确一致），tk-dev 已从 kit 删除（源内无可装变体，tkinter 非必需；将来需要 tkinter 时从麒麟源直链取 tk-dev 8.6.9+1 并同装 tcl/tk dev 链）。上一条「摆渡时移出＋头文件 dpkg-deb -x 落位」程序就此作废——kit 在 GFB 设备可直接 dpkg -i，零手工适配；SHA256SUMS.txt 已同步。注意：旧基线（非 gf）设备勿用这三个新包。
 
 > **重灌复部署实录＋kit 定稿（2026-11-16 晚，.30 重装同版 GFB 系统后全流程复跑）**：零手工适配流程验证成立——qt-env 26＋dm8 3 个 GFB 换血包直接 dpkg 全绿。唯 6 个 dev 包二次失配（libexpat1-dev 需 0.8build1、libxcb-shm0/randr0/xinerama0/xkb/sync-dev 需 gf0.1），已按设备运行时锚定换入 kit（qt-env debs 累计 32 个 GFB 版）。教训：**pin 审计必须锚目标设备 dpkg-query 实况，源索引仅参考**——源内 runtime 版本集与设备在位版本存在 build1/gf 双轨偏差。
-> - **脚本确定性坑（两台设备复现）**：阶段 8b/8f 的 `sudo -n -u <owner> pip install` 在脚本上下文必失败（8b 报「wheel 版本/架构不匹配」属误诊、8f 报 OSError Errno 2），同命令交互手工执行即成功。标准处置＝手工 `pip install --no-index` 装 dmpython wheel / 11 件套后重跑脚本过幂等闸（8b 走「已可导入」路径、8f 走 freeze 全字匹配跳过）。**根因已修**：冒烟目录 rm 后进程残留已删 cwd，pip 的 os.getcwd() ENOENT——脚本已在冒烟清理后加 `cd /`（2026-11-16，A/B 复现实证：已删 cwd 必现 Errno 2、cd / 后同命令即成功）。
+> - **脚本确定性坑（两台设备复现）**：阶段 8c/8f 的 `sudo -n -u <owner> pip install` 在脚本上下文必失败（8c 报「wheel 版本/架构不匹配」属误诊、8f 报 OSError Errno 2），同命令交互手工执行即成功。标准处置＝手工 `pip install --no-index` 装 dmpython wheel / 11 件套后重跑脚本过幂等闸（8c 走「已可导入」路径、8f 走 freeze 全字匹配跳过）。**根因已修**：冒烟目录 rm 后进程残留已删 cwd，pip 的 os.getcwd() ENOENT——脚本已在冒烟清理后加 `cd /`（2026-11-16，A/B 复现实证：已删 cwd 必现 Errno 2、cd / 后同命令即成功）。
 > - 重装系统后时钟必回 2000-01-01（CMOS 电池空电），装前校时＋`hwclock --systohc` 为固定动作。
 > - IDE 排除形态复验通过（qtcreator/qtcreator-data/qbs-common/libqbscore 四包与 PyCharm 双 absent）。
 > - **IDE 临时补装（2026-11-18，.30 按用户要求恢复 IDE 形态；按需操作，镜像默认不装 IDE）**：qt-env debs 四包（qtcreator/qtcreator-data 4.11.0-3kylin6k0.4gf1.0＋qbs-common/libqbscore 1.13.1-2build1）单次 `dpkg -i` 全绿零依赖缺口；PyCharm 2025.3 按 §五补装程序摆渡落位（sha256 复核一致），libGL.so 开发链接件设备本就在位无需补。验收：dpkg --audit 0、JBR aarch64 ELF。
