@@ -16,6 +16,14 @@ echo "===== $(date '+%F %T') 日报定时任务启动 ====="
 cd /home/guangbin/Documents/Work || { echo "ERR: 无法 cd /home/guangbin/Documents/Work"; exit 1; }
 D=$(date +%F)
 
+# 补推前次遗留未推提交（2026-11-17 实证：兜底版 push 静默失败致 origin 缺日报，
+# agora unpublished 告警追刷；本步骤自愈，失败仅记日志不阻塞当日流程）
+if [ -n "$(git log origin/master..master --oneline 2>/dev/null)" ]; then
+  echo "[$(date '+%T')] 检测到本地领先 origin，补推"
+  git push origin master && git push ff master \
+    || echo "[$(date '+%T')] 补推失败（下次 cron 重试）"
+fi
+
 # 主路径：opencode run 非交互执行 skill（深度版 + 发邮件）
 # 模型固定 zai-coding-plan/glm-5.3（本地代理，避开 Kimi 5 小时配额；撞配额史见 08-27）
 # 超时 15 分钟兜底（agent 偶发卡住不阻塞 cron）
@@ -69,8 +77,8 @@ python3 scripts/daily-index.py   # 兜底路径也要重建 INDEX（主路径已
 git add "daily/日报-${D}.txt" daily/INDEX.md 2>/dev/null
 if ! git diff --cached --quiet; then
   git commit -m "docs(daily): add ${D} daily report" \
-    && git push origin master 2>/dev/null \
-    && git push ff master 2>/dev/null \
+    && git push origin master \
+    && git push ff master \
     || echo "[$(date '+%T')] 提交/推送失败（日报已落盘，可事后补提交）"
 fi
 
