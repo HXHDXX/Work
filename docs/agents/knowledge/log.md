@@ -108,3 +108,7 @@
 - git log --pretty=format: 无尾换行，直接接 while read 吞每仓最后一行提交（ag-3dcc6d worker 实证；经 sort 管道无此病）
 - 裁定 2026-11-14：兜底扫描母仓/__wt 重复按 hash 去重不全排除（保 review 工作树分支独有提交）；agora 合并门 done 态卡滞可自愈，先观察再重派
 - Types: Bug Experience, Decision
+
+## [2026-11-18] ingest | infra
+- 知识系统 append-only 文件（log.md/feedback.md）全仓启用 git union merge driver（.gitattributes 两行 merge=union）：并行 agent 各自追加时 PR/rebase 合并零冲突、两侧保留；13 仓部署完成，既有 LFS 规则仓用追加模板（OSMDataCompiler 5 行/TTSPlayer 8 行）；详见 modules/infra.md 新条目
+- Types: Decision, Module Info

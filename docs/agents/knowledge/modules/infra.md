@@ -111,3 +111,12 @@
 - 是否需要 `.github/` CI/CD 配置？
 - 项目实际业务代码结构尚未确定
 - 远端设备调试工具（Phase 20）的架构方案？
+
+## [2026-11-18] union merge driver for append-only knowledge files
+**Id:** infra/gitattributes-union-append-only
+**Source:** session（agora ag-9b4cf9…ag-6ef8a7 共 13 单，2026-11-18）
+- **Chosen:** 纯追加知识文件（docs/agents/knowledge/log.md、feedback.md）在根 .gitattributes 标 merge=union——并行 agent 各自 ingest 后合并不再报尾部冲突，两侧条目全保留（本地 git 双分支同尾追加复现实证）。
+- **Alternatives:** ①单写者约定（worker 只 capture 进 silicon-memory，dispatcher 串行聚合）——管不到 issue-agent/Gitea PR 多写者流；②按任务分片 log＋生成式索引——改动大、收益相同。
+- **Reason:** 追加必然共享同一尾部上下文，冲突是机制性必然而非概率问题；union 是 git 内置 driver 且随受控文件走，Gitea 服务端 merge/rebase/squash 全路径生效，零服务端配置。
+- **Tradeoff:** union 盲拼接不报警——违反 append-only 约定改历史区会静默拼坏（合并后 grep "^## \[" log.md | tail 一眼自检）；modules/ 页与 index 是编辑型文件不适用 union，冲突仍人工；规则须先落默认支才对后续 PR 生效。
+- **部署边界:** 既有 .gitattributes（LFS 规则）仓必须追加模板勿整文件覆盖——OSMDataCompiler 1491 个 LFS 文件险被「恰好两行」字面验收删规则，靠 worker 冲突申报拦下；repo-tool 检出仓交付门故障另见 agent-guidelines/agora-delivery-failure-taxonomy。
