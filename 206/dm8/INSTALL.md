@@ -374,3 +374,17 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 ```
 
 四包版本正常打印且 `pip check` 无告警，即安装完成。
+
+## 坑位补录：2503-update1 镜像基线漂移（2026-11-19 .30 重灌实录）
+
+| 坑 | 症状 | 修法（已固化进脚本） |
+|---|---|---|
+| KySec 默认 enabled | kit 脚本 RC=126「KYSEC: 权限不够」 | 预检自动 setstatus disable（运行时） |
+| 新镜像不带 g++ | 冒烟/QDM 编译失败；kylin g++-9 不注册 alternatives | 预检 fail-fast；仅有 g++-9 时自动补软链 |
+| /data 只读位 555 | 静默安装报「PATH节点文件路径没有写权限」 | 阶段2 预建 $DATA_PATH 并 chown dmdba |
+| 基线漂移 gf0.2→gf0.4 | kit dev 包严格依赖失配，dpkg -i 留 iU 半配置 | pkgs_ensure：apt 优先（隧道）+ kit 兜底 + iU 残留即 fail |
+| venv 未预建 | 8c 预检 fail | 8c 以 python3.12 代建 venv |
+
+**apt 判例两则（2026-11-19）**：① `apt --fix-broken install` 必须不带包名——带名会让 iU 包诱导 apt 降级运行库（错误解）；② fix-broken 可能把失配包直接**移除**（当天移了 libgl-dev 全家）——修复后必须对账目标包集合并补装。
+
+**apt 隧道**：现场借道能上网的工作本机：`ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`，设备侧 `sudo bash apt-tunnel.sh on`。
