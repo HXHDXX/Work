@@ -46,7 +46,7 @@ sudo env FORCE_UNTAR=1 bash install_qt_env.sh /path/to/qt-env-deploy
 - 需要桌面环境（UKUI/X11）才能运行 QtCreator；纯命令行只有 qmake 编译能力
 - QDM 驱动依赖达梦：先部署 DM8（`install_dm8_qt.sh`），或恢复本包后装 DM8 再跑一次本脚本做联动
 - fcitx 输入法插件要求系统跑 **fcitx4**（麒麟默认）；若目标机为 ibus，输入法走 ibus 内置插件
-- 防休眠/防锁屏固化：部署末段自动禁用休眠/锁屏/自动关屏（判例 2026-11-19：桌面镜像默认休眠，无人值守设备周期性假死掉线）；手动锁屏快捷键仍可用
+- 防休眠/防锁屏固化：部署末段以 dconf 系统策略库锁死屏保/锁屏/关屏/睡眠 14 键（判例 2026-11-19：ukui-screensaver-backend 会被 ukui-session 拉活并回写 gsettings，普通 gsettings/dbus-launch 写入 25 分钟内被覆盖复现锁屏）＋ systemd mask 睡眠四 target＋logind 合盖/空闲 ignore；策略级锁死后手动锁屏亦失效——无人值守车机形态预期
 
 ## 4. 常用后续操作
 
