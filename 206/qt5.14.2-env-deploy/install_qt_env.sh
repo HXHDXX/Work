@@ -115,6 +115,36 @@ else
   warn "未检测到达梦（/opt/dm8 或 /dm8）。QDM 驱动需先部署 DM8（见 dm8 部署包 install_dm8_qt.sh）"
 fi
 
+# =============================================================================
+stage 5 "防休眠/防锁屏（无人值守车机）"
+# =============================================================================
+# 判例 2026-11-19：桌面镜像默认自动休眠，无人值守设备周期性"掉线"（进程冻结非死亡、
+# uptime 连续、journal 见 resumed from sleep）。三层全禁，重启不复发。
+systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target >/dev/null 2>&1   && info "systemd 睡眠四 target 已 mask（含手动 suspend）"   || warn "sleep target mask 失败，请人工核查 systemctl status sleep.target"
+grep -q "^HandleLidSwitch=ignore" /etc/systemd/logind.conf || printf \
+"HandleLidSwitch=ignore\nHandleLidSwitchExternalPower=ignore\nHandleLidSwitchDocked=ignore\nIdleAction=ignore\n" \
+>> /etc/systemd/logind.conf
+info "logind 合盖/空闲已置 ignore（下次登录起效）"
+if id kylin >/dev/null 2>&1; then
+  UKUI_FAIL=0
+  for kv in "org.ukui.screensaver idle-activation-enabled false" \
+            "org.ukui.screensaver lock-enabled false" \
+            "org.ukui.screensaver idle-lock-enabled false" \
+            "org.ukui.power-manager sleep-computer-ac 0" \
+            "org.ukui.power-manager sleep-computer-battery 0" \
+            "org.ukui.power-manager sleep-computer-ups 0" \
+            "org.ukui.power-manager sleep-display-ac 0" \
+            "org.ukui.power-manager sleep-display-battery 0" \
+            "org.ukui.power-manager sleep-display-ups 0"; do
+    set -- $kv
+    sudo -u kylin dbus-launch gsettings set "$1" "$2" "$3" 2>/dev/null || UKUI_FAIL=1
+  done
+  [ "$UKUI_FAIL" -eq 0 ] && info "UKUI 屏保/锁屏/睡眠/关屏九键已全禁（dbus-launch 免桌面会话）" \
+    || warn "部分 UKUI gsettings 设置失败，请以 kylin 登录后人工复核（dconf-editor org.ukui.*）"
+else
+  warn "无 kylin 用户，跳过 UKUI 会话层（systemd/logind 两层已生效）"
+fi
+
 echo
 printf "${C_G}================= Qt 环境部署完成 =================${C_0}\n"
 echo "qmake    : $QT_HOME/bin/qmake（新终端生效 PATH，或 source /etc/profile）"
@@ -122,3 +152,4 @@ echo "QtCreator: qtcreator（应用菜单/终端），Kit 已预注册 Qt 5.14.2
 echo "源码树   : /home/kylin/qt5（增量补模块用，参照 README-QT-ENV.md）"
 echo "中文输入 : 5.14.2 程序自动走 fcitx（已含插件）"
 echo "达梦     : addDatabase(\"QDM\") + QT += sql（需 DM8 已部署）"
+echo "防休眠   : 睡眠/锁屏/关屏三层全禁（判例 2026-11-19 桌面镜像默认休眠致无人值守掉线）"

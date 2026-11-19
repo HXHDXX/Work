@@ -46,6 +46,7 @@ sudo env FORCE_UNTAR=1 bash install_qt_env.sh /path/to/qt-env-deploy
 - 需要桌面环境（UKUI/X11）才能运行 QtCreator；纯命令行只有 qmake 编译能力
 - QDM 驱动依赖达梦：先部署 DM8（`install_dm8_qt.sh`），或恢复本包后装 DM8 再跑一次本脚本做联动
 - fcitx 输入法插件要求系统跑 **fcitx4**（麒麟默认）；若目标机为 ibus，输入法走 ibus 内置插件
+- 防休眠/防锁屏固化：部署末段自动禁用休眠/锁屏/自动关屏（判例 2026-11-19：桌面镜像默认休眠，无人值守设备周期性假死掉线）；手动锁屏快捷键仍可用
 
 ## 4. 常用后续操作
 
