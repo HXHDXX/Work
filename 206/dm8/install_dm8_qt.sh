@@ -127,9 +127,15 @@ if ! command -v g++ >/dev/null 2>&1; then
   fi
 fi
 # --- KySec 预检（判例 2026-11-19：2503-update1 默认 enabled，拦截 kit 脚本执行，RC=126）---
+# 完全关闭=两层，缺一不可（.30 实测）：setstatus disable 只关内核运行态，default 级别下
+# 安全中心守护会把内核态重新拉起；security-switch --set custom 切级别总闸（custom 空模块
+# =框架整体不启用，重启保持）。custom 命令打印"参数错误"但级别已生效，故以终态验证为准。
 if command -v getstatus >/dev/null 2>&1 && getstatus 2>/dev/null | grep -q "^KySec status: enabled"; then
-  setstatus disable >/dev/null 2>&1 && info "KySec 已运行时关闭（重启失效；如需持久关闭另行配置）" \
-    || warn "KySec 关闭失败——遇 KYSEC 权限错误请手动 sudo setstatus disable 后重跑"
+  setstatus disable >/dev/null 2>&1
+  security-switch --set custom >/dev/null 2>&1
+  getstatus 2>/dev/null | grep -q "^KySec status: disabled" \
+    && info "KySec 已完全关闭（setstatus + 级别 custom，重启保持，.30 双重启实测）" \
+    || warn "KySec 仍 enabled——手动执行 sudo setstatus disable && sudo security-switch --set custom 后重跑"
 fi
 info "预检通过 (DM已装=$DM_INSTALLED, QDM已装=$QDM_INSTALLED)"
 
