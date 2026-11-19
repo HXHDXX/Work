@@ -1,0 +1,50 @@
+工作日报 2026-11-19（周四）
+================================================
+【今日概览】共 105 次提交，涉及 11 仓：
+主线：.dotfiles(44，其中 35 条为经验捕获/夜间治理自动提交)、HXNativeApp(31，派发工作树按 hash 去重归母仓)、TitanNavi(10，本人 7)、Work(4)、issue-agent(4)、opencode-agora(3)、silicon-memory(3)、HXRdssSendingQueue(2)、HXMapWidgetNative(2)、lib-HXRdssSendingQueue(1)、lib-maplibre-native(1)
+- 今日工作：HXNativeApp 双线并进——导航列表 issue#282/#288 交互整改落库、启动器加固与 install.sh 单一入口设备安装器过三轮评审环，另有 TBQ 通播接口、RouteService maneuversFromTrip 解析接口、dev-screen 虚拟屏助手；TitanNavi issue#374 ttys5/ttys8 GGA 格式化与 1Hz 节拍发送完成整改+注释轮；SDK 层三仓修复（hxmaplocation 插值互搏、RDSS 频点 wire 定案、maplibre SIGSEGV）；206 车机 kit 四项固化；agent 基础设施落跨进程资源闸、union merge 自动提交、GUI 虚拟屏验证链与 cron 幂等管理。
+- 整体进度：上述工作线均已提交落库（TitanNavi #374 在派发工作树待合入主干）；issue#375 白块二轮已过终闸未见落库、issue#378 重影已出两类方案待裁定。
+- 风险阻塞：无。
+- 明日重点：issue#374 合入 TitanNavi 主干；issue#375 二轮落库与 #378 方案裁定；安装器/启动器上 206 实机验证。
+------------------------------------------------
+【工作详录】
+一、HXNativeApp 导航与集成主线（HXNativeApp 及派发工作树 | 31 commits | 已完成）
+- 目标：MSC-26-RW033 迭代——导航列表交互整改、启动/安装链路加固、RDSS 与地图 SDK 接口补齐
+- 当日进展：导航列表：#282 无选中提示/删除二次确认/航点勾选批量删除+评审环 r1 根治 Enter 激活链重名回归；#288 路径查看反馈/返回静默/航点勾选列单框/表头全选框完整显示，含 tidy 门 findChild→auto* 与门卫白修。启动/安装：加固启动器+北斗导航桌面安装器+build.sh 接线（ag-624d46 两轮评审）；HXNMEA_ALLOW_DANGEROUS 透传+缺省补 1（ag-403ba2）；install.sh 单一入口安装器（落位/地图迁移/权限/图标，ag-a898c9 三轮评审环：参数校验/原子迁移/stage 晋级/回归合并语义防数据丢失）；sudo 安装属主修正 hxdata+部署树 chown 归 SUDO_USER（ag-759569）。RDSS：TBQ 通播发送接口 sendTbq（ag-c2e452）；#275 授权 terminalStatus 误读修复+#260/#275 基线行为变更测试滞后对齐（ag-94923b，ag-be1c4a 裁定 B）。地图 SDK：RouteService 新增 maneuversFromTrip maneuver 解析接口（ag-50ef74，路书/地图拐点）+改动域 tidy 债 2 处清零+解析与收敛域验收坑位知识沉淀（ag-252ba3）。辅助：dev-screen 虚拟屏显示助手（ag-87bb0a）。协同：变基合并 origin/MSC-26-RW033-1118-3 两提交（ag-45034e）；团队侧 wangfx 合入 #278/#282/#283 修复与 qinchuan1 素材提交
+- 当前结果：各项均过终闸 A/B/C 三册评审并落库
+- 产出依据：HXNativeApp git log 2026-11-19（e5b86aaa/55a18820/9bc92f50/ed7e52f6/64fb56cc/2165985a 等 31 提交，含 ag-* 任务号）
+- 遗留与下一步：安装器/启动器待 206 实机验证
+二、TitanNavi issue#374 串口 GGA 链整改（TitanNavi 派发工作树 | 7 commits | 已完成待合入）
+- 目标：ttys5/ttys8 GGA 转发格式整改与 1Hz 发送控制
+- 当日进展：GGA 格式化与 1Hz 节拍发送（ag-4cacc6）；issue 评论首轮检查项处理；ocr 评审轮 1 修复——缓存新鲜度门与门禁 fail-closed；ins-serial-ports 串口数据链知识页沉淀；新增行 CRLF→LF 过交付 diff --check 门；ttys5/ttys8 通信链中文注释补全并清理不可达死代码（ag-3848e9）；注释轮 Trivial log-only 沉淀
+- 当前结果：功能整改+评审+注释全过，落 ag-a9a836 工作树；团队侧并行合入 ttw save settings
+- 产出依据：TitanNavi 工作树 git log（d455c92e/7bf28d42/051ebf5f/f5cff0fc/c18af1d6 等）
+- 遗留与下一步：合入 TitanNavi 主干
+三、SDK 层跨仓修复（HXMapWidgetNative/HXRdssSendingQueue/lib-maplibre-native/lib-HXRdssSendingQueue | 6 commits | 已完成）
+- 目标：定位轴互搏、频点编号与渲染崩溃三个 SDK 层缺陷
+- 当日进展：hxmaplocation setLocation 就绪态不再同步发原始 fix 坐标——与插值轴互搏致导航 target line 起点规律性前跳回跳（ag-27a551），配套 browseResumeSmoothOff 排空移至武装窗口前（评审环 B 册 finding）；RDSS 发送队列频点编号 wire 定案 1=Lf0——位表与注释 off-by-one 修正（ag-8bd18c）+rdss_sending.md §1/§2 频点补 wire 编号收尾，TBQ sendTbq 定案与 TCQ freq 修正两条目入知识（ag-6a2c7f）；发布 lib-HXRdssSendingQueue windows 38d3ed2；maplibre fork RenderTiles ownership pin 修复 getRenderTilesSortedByYPosition SIGSEGV（对应上游 f0de1be7）
+- 当前结果：全部修复落库并过评审
+- 产出依据：各仓 git log（a58b585/657c634/6060584/3b4ebf9 等）
+- 遗留与下一步：频点间隔门控遗留入 rdss_sending.md Open Question
+四、206 车机环境 kit 固化（Work | 4 commits | 已完成）
+- 目标：206 无人值守车机环境开箱即用
+- 当日进展：apt 隧道优先装包+2503 新镜像五坑固化（ag-93a993）；禁 suspend 与自动锁屏（ag-3652e5）→dconf 策略锁防回写加固（ag-4137bd）→KySec 经 security-switch custom level 持久关闭（ag-ad04b7）
+- 当前结果：四项均过终闸 A/B/C 评审落库
+- 产出依据：Work git log（282f6c3/36a6aae/85b65a8/dd3bd52）
+- 遗留与下一步：无
+五、Agent 基础设施与治理（.dotfiles/issue-agent/opencode-agora/silicon-memory | 54 commits | 已完成）
+- 目标：派发平台资源管控、记忆系统可靠性、GUI 验证自动化
+- 当日进展：opencode-agora：F116 跨进程 gate 资源闸（repo 锁+可配置全局并行数）；patch_equivalent_on_origin 只对账交付自身补丁防误报；AGORA_HOME 默认改 ~/.opencode-agora-plaza。silicon-memory：append 后 union merge 规则自动提交（ag-435bde）+降级路径加固；数据目录改 ~/.silicon-memory-hotmem；maintain 指向隐藏数据根。issue-agent：GUI 验证改走 Xvfb 虚拟屏+EGL 软件渲染前缀+vision 子代理图像验证协议；装机补 Xvfb/xdotool/mesa。.dotfiles：vision 图像读取子代理及外部目录读权限；cron-role 幂等 crontab 行管理（abort on crontab 读取失败防静默清表）；CRON_DISPATCH_ROLE 多机过滤；agent-experience 夜间治理（同义标签统一 5 组/lint 修复 10 项/周报 20261113-1118/夜裁判波）+当日 26 条经验捕获
+- 当前结果：全部落库；opencode.db 会话表已迁 session_v2（日报查询同步适配）
+- 产出依据：各仓 git log（e957677/4a752c1/515a1f8/e7612a2/282cb8a 等）
+- 遗留与下一步：无
+------------------------------------------------
+【会话调研工作（未提交）】
+- TitanNavi issue#375 NavInfoPanel 白块——根因定位（六浮层梳理）+二轮实底化去透明合成已过终闸，未见落库提交待合入（产出：ag-f882a1/ag-622eb2 会话与工作树）
+- TitanNavi issue#378 QML 界面重影——根因+复现法+两类方案已产出，待方案裁定（产出：ag-004d7a/ag-fe226c 会话）
+- TitanNavi issue#371 通信解析审查结论详细解释（产出：ag-25ff1c/ag-2ecb77 会话）
+- HXNativeApp 内存与显存需求分析、NMEA 服务 ICI 封装/ZTI 回调评估、引导服务全部拐点获取（衔接 maneuversFromTrip）（产出：对应 build 会话）
+- Kylin 环境：V10 ARM64 启动 U 盘制作、206 装前 OS 兼容检测、NPU 检查、206 环境配置（产出：Work 目录 build 会话）
+- 终端工具杂项：GNOME terminal 拖选复制/首启慢、tmux-jump 作用、.gitattributes 来源（产出：Work 目录 build 会话）
+================================================
+数据来源：上述 11 仓 git log（2026-11-19）、commit body、opencode 会话库（session_v2 直查，166 会话）
