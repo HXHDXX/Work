@@ -42,6 +42,8 @@ for a in "$@"; do
   esac
 done
 want() { [ -z "$STAGE_SEL" ] || [ "$STAGE_SEL" = "$1" ]; }
+# 全局 root 守卫（原 P0 内检查只护无参首跑；单阶段调用同样写系统路径/落戳）
+[ "$(id -u)" -eq 0 ] || fail "请用 root（sudo）运行本脚本"
 
 kern_pkgs_ok() {
   local p
@@ -74,7 +76,6 @@ as_sess()    { runuser -u "$SESS_USER" -- env XDG_RUNTIME_DIR="$SESS_XRD" "$@"; 
 boot_epoch() { echo $(( $(date +%s) - $(cut -d. -f1 /proc/uptime) )); }
 if want P0; then
 stage 0 "预检（KySec / 时钟 / g++）"
-[ "$(id -u)" -eq 0 ] || fail "请用 root（sudo）运行本脚本"
 # KySec enabled 时拦的就是脚本执行本身（RC=126 判例 2026-11-19）——总装入口不自救，必须先内联关掉
 if command -v getstatus >/dev/null 2>&1 && getstatus 2>/dev/null | grep -q "^KySec status: enabled"; then
   fail "KySec enabled（将拦截脚本执行）。请先在 ssh 会话里内联执行下面这条（勿放进任何脚本）:
@@ -103,11 +104,12 @@ if want P1; then
 stage 1 "五层电源防护（高性能不休眠，2026-11-20 .20 实录）"
 # 层1 拆 kylin-process-manager（kpm）：idle 节能曾掐断系统盘 SATA 链路致全系统 IO 冻死（事故链见 INSTALL.md）
 # 判例：真身 /usr/bin/kylin-process-manager-daemon，重启后经 systemd 单元复活——正解 disable+mask（chmod 路径目标猜错无效且误导，已废）
+# pgrep 按 comm 匹配且 comm 截断 15 字节：28 字节全名 -x 恒不中（procps 实测告警），须锚 ^kylin-process-m 前缀
 systemctl disable --now kylin-process-manager-daemon.service >/dev/null 2>&1
 systemctl mask kylin-process-manager-daemon.service >/dev/null 2>&1
 KPM_AUTO=/etc/xdg/autostart/kylin-process-manager.desktop
 [ -f "$KPM_AUTO" ] && mv "$KPM_AUTO" "$KPM_AUTO.disabled"
-if ! systemctl is-active --quiet kylin-process-manager-daemon.service && ! pgrep -x kylin-process-manager-daemon >/dev/null; then
+if ! systemctl is-active --quiet kylin-process-manager-daemon.service && ! pgrep '^kylin-process-m' >/dev/null; then
   info "层1 kpm 已拆（systemd disable+mask、进程空、autostart 辅禁）"
 else
   fail "层1 kpm 未净：unit 非 inactive 或进程仍在"
@@ -215,13 +217,16 @@ EOF
   file /opt/pycharm/jbr/bin/java 2>/dev/null | grep -q aarch64 \
     && info "PyCharm 已落位（JBR aarch64 验讫）" || warn "PyCharm 已落位（JBR 架构待复核: file /opt/pycharm/jbr/bin/java）"
 fi
-# 安装完成落戳（P6 重启门依据，内容=纪元秒）：戳记早于当前 boot 起点=已重启过，不重写不拦（幂等）
+# 安装完成落戳（P6 重启门依据）：内容=纪元秒+boot_id 两行。boot_id 换代=真实重启铁证——
+# 纯纪元比较会被「CMOS 空电错时钟（判例：出厂停 2000-01-01）+ date -s 校时」假通过，反向（重启后时钟回退）则假拦
 STAMP=/var/lib/provision-206.stamp
-if [ ! -f "$STAMP" ] || [ "$(cat "$STAMP" 2>/dev/null)" -ge "$(boot_epoch)" ]; then
-  date +%s >"$STAMP"
+CUR_BID=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null)
+STAMP_BID=$(sed -n '2p' "$STAMP" 2>/dev/null)
+if [ ! -f "$STAMP" ] || [ -z "$STAMP_BID" ] || [ "$STAMP_BID" = "$CUR_BID" ]; then
+  { date +%s; echo "$CUR_BID"; } >"$STAMP" || fail "戳记写入失败: $STAMP（root 权限/磁盘？）"
   if [ "$REBOOT" -eq 1 ]; then
     info "安装完成（戳记已落）——--reboot → 立即重启；重启后无参重跑或 $0 P6 即总验"
-    sync; systemctl reboot; exit 0
+    sync; systemctl reboot || fail "reboot 发起失败"; exit 0
   fi
   info "安装完成，须最终重启后跑 P6 总验（重启后 sudo bash $0 P6，或无参重跑）"
   exit 0
@@ -231,12 +236,14 @@ if want P6; then
 stage 6 "重启后总验（重启门 → 全量断言，全绿才 PROVISION-ALL-GREEN）"
 # 重启门（deterministic，2026-11-20 用户裁定：重启前不算验完——当日判例：改完即验全绿，
 # 重启后 kpm 经 systemd 单元复活、governor/SATA 因 sysfs 晚绑定假绿、会话守护内存旧配置致屏保仍触发）
+# 判定=boot_id 换代（同 boot 换不了 id）；纪元仅作人读信息（错时钟机不可作硬判据）
 STAMP=/var/lib/provision-206.stamp
 [ -f "$STAMP" ] || fail "未找到 $STAMP——先无参跑完 P0~P5 落戳"
-STAMP_T=$(cat "$STAMP")
-BOOT_T=$(boot_epoch)
-[ "$BOOT_T" -gt "$STAMP_T" ] || fail "安装后未重启（boot 纪元 $BOOT_T ≤ 戳记 $STAMP_T）——先 reboot 再跑 P6"
-info "重启门通过（当前 boot 晚于安装戳记）"
+STAMP_T=$(sed -n '1p' "$STAMP"); STAMP_BID=$(sed -n '2p' "$STAMP")
+CUR_BID=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null)
+[ -n "$STAMP_BID" ] && [ -n "$CUR_BID" ] || fail "$STAMP 内容损坏（须两行：纪元+boot_id）——删除后重跑 P5 落戳"
+[ "$CUR_BID" != "$STAMP_BID" ] || fail "安装后未重启（boot_id 仍为落戳时 boot；boot 纪元 $(boot_epoch)，戳记 $STAMP_T）——先 reboot 再跑 P6"
+info "重启门通过（boot_id 已换代；boot 纪元 $(boot_epoch)，戳记 $STAMP_T）"
 # 全量断言：逐项 [OK]/[FAIL]，全绿才打终态行；任一 FAIL 即 fail（已过重启门，属真实缺口）
 P6_FAILS=0
 chk() { local d="$1"; shift; if "$@" >/dev/null 2>&1; then info "$d"; else printf "${C_R}[FAIL]${C_0} %s\n" "$d"; P6_FAILS=$((P6_FAILS+1)); fi; }
@@ -245,28 +252,29 @@ DM_HOME=/opt/dm8; [ -x "$DM_HOME/bin/disql" ] || DM_HOME=/dm8
 DSN="SYSDBA/\"${SYSDBA_PWD:-PHMadmin1}\"@localhost:5236"
 QDM_SO=/opt/Qt5.14.2/plugins/sqldrivers/libqsqldm.so
 p6_sql()      { printf '%s\nexit\n' "$1" | "$DM_HOME/bin/disql" "$DSN" 2>&1; }
-p6_5236()     { ss -ltn 2>/dev/null | grep -q ':5236 '; }
-p6_instance() { p6_sql 'SELECT INSTANCE_NAME FROM V$INSTANCE;' | grep -q DMSERVER; }
-p6_license()  { p6_sql 'SELECT EXPIRED_DATE FROM V$LICENSE;' | grep -qE '[0-9]{4}-[0-9]{2}-[0-9]{2}'; }
-p6_key()      { [ "$(md5sum "$DM_HOME/bin/dm.key" 2>/dev/null | cut -d' ' -f1)" = "$(md5sum "$SCRIPT_DIR/dm5D01220176.key" 2>/dev/null | cut -d' ' -f1)" ]; }
-p6_qdm_ldd()  { ! ldd "$QDM_SO" 2>/dev/null | grep -q 'not found'; }
-p6_phmapp()   { p6_sql "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | grep -q PHMAPP; }
-p6_qmake()    { /opt/Qt5.14.2/bin/qmake -v 2>/dev/null | grep -q '5\.14\.2'; }
+p6_5236()     { ss -ltn 2>/dev/null | grep ':5236 '; }
+p6_instance() { p6_sql 'SELECT INSTANCE_NAME FROM V$INSTANCE;' | grep DMSERVER; }
+p6_license()  { p6_sql 'SELECT EXPIRED_DATE FROM V$LICENSE;' | grep -E '[0-9]{4}-[0-9]{2}-[0-9]{2}'; }
+p6_key()      { [ -f "$DM_HOME/bin/dm.key" ] && [ -f "$SCRIPT_DIR/dm5D01220176.key" ] \
+  && [ "$(md5sum "$DM_HOME/bin/dm.key" 2>/dev/null | cut -d' ' -f1)" = "$(md5sum "$SCRIPT_DIR/dm5D01220176.key" 2>/dev/null | cut -d' ' -f1)" ]; }
+p6_qdm_ldd()  { ! ldd "$QDM_SO" 2>/dev/null | grep 'not found'; }
+p6_phmapp()   { p6_sql "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | grep PHMAPP; }
+p6_qmake()    { /opt/Qt5.14.2/bin/qmake -v 2>/dev/null | grep '5\.14\.2'; }
 p6_kpm_unit() { ! systemctl is-active --quiet kylin-process-manager-daemon.service; }
-p6_kpm_proc() { ! pgrep -x kylin-process-manager-daemon; }
+p6_kpm_proc() { ! pgrep '^kylin-process-m'; }
 p6_gov()      { local f; for f in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do grep -qx performance "$f" || return 1; done; }
 p6_sata()     { local f; for f in /sys/class/scsi_host/host*/link_power_management_policy; do grep -qx max_performance "$f" || return 1; done; }
 p6_masked()   { local t; for t in sleep suspend hibernate hybrid-sleep; do [ "$(systemctl is-enabled "$t.target" 2>/dev/null)" = "masked" ] || return 1; done; }
 p6_dconf()    {  # 会话内生效值（会话守护内存配置才是真状态，非仅 dconf 库文件值）
   ukui_sess_env || return 1
-  as_sess gsettings get org.ukui.screensaver idle-activation-enabled 2>/dev/null | grep -qx false || return 1
-  as_sess gsettings get org.ukui.screensaver idle-delay 2>/dev/null | grep -qx -e 0 -e 'uint32 0' || return 1
-  as_sess gsettings get org.ukui.power-manager sleep-display-ac 2>/dev/null | grep -qx -e 0 -e 'uint32 0'
+  as_sess gsettings get org.ukui.screensaver idle-activation-enabled 2>/dev/null | grep -x false || return 1
+  as_sess gsettings get org.ukui.screensaver idle-delay 2>/dev/null | grep -x -e 0 -e 'uint32 0' || return 1
+  as_sess gsettings get org.ukui.power-manager sleep-display-ac 2>/dev/null | grep -x -e 0 -e 'uint32 0'
 }
 p6_vol()      { local o; ukui_sess_env || return 1; o=$(as_sess amixer -D pulse sget Master 2>/dev/null) || return 1
-  printf '%s' "$o" | grep -q '\[100%\]' && printf '%s' "$o" | grep -q '\[on\]'; }
+  printf '%s' "$o" | grep '\[100%\]' && printf '%s' "$o" | grep '\[on\]'; }
 p6_audit()    { [ -z "$(dpkg --audit 2>&1)" ]; }
-p6_py()       { readlink /usr/local/bin/python3 2>/dev/null | grep -q 'python3\.12$'; }
+p6_py()       { readlink /usr/local/bin/python3 2>/dev/null | grep 'python3\.12$'; }
 
 chk 'DM8 DmServiceDMSERVER active'   systemctl is-active --quiet DmServiceDMSERVER
 chk 'DM8 DmAPService active'         systemctl is-active --quiet DmAPService
@@ -289,8 +297,8 @@ chk '电源 kpm 进程空'                p6_kpm_proc
 chk '电源 CPU 逐核 performance'      p6_gov
 chk '电源 SATA 逐口 max_performance' p6_sata
 chk '电源 睡眠四 target masked'      p6_masked
-chk '电源 dconf 会话值生效'          p6_dconf
-chk '音量 Master [100%][on]'         p6_vol
+chk '电源 dconf 会话值生效（须桌面会话在位）' p6_dconf
+chk '音量 Master [100%][on]（须桌面会话在位）' p6_vol
 chk '系统 dpkg --audit 无输出'       p6_audit
 chk '系统 python3→3.12'              p6_py
 if [ "$P6_FAILS" -eq 0 ]; then

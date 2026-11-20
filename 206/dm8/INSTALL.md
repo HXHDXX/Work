@@ -48,7 +48,7 @@ mkdir -p /opt/dm8 && chown dmdba:dinstall /opt/dm8
 ```bash
 mount -o loop dm8_*.iso /mnt && cp /mnt/DMInstall.bin /home/dmdba/ && umount /mnt
 chmod +x /home/dmdba/DMInstall.bin
-cp dmE301208192.key /home/dmdba/
+cp dm5D01220176.key /home/dmdba/
 ```
 
 > ⚠️ **坑 2**：dmdba 无法进入其他用户家目录（700 权限）读介质。
@@ -64,7 +64,7 @@ dmdba 非 root 只能填 `N`（服务事后用官方 root 脚本注册）：
 <DATABASE>
 <LANGUAGE>ZH</LANGUAGE>
 <TIME_ZONE>+08:00</TIME_ZONE>
-<KEY>/home/dmdba/dmE301208192.key</KEY>
+<KEY>/home/dmdba/dm5D01220176.key</KEY>
 <INSTALL_TYPE>0</INSTALL_TYPE>            <!-- 0=全部组件 -->
 <INSTALL_PATH>/opt/dm8</INSTALL_PATH>
 <INIT_DB>Y</INIT_DB>                       <!-- 随装初始化实例 -->
