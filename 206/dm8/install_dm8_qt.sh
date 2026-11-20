@@ -27,6 +27,8 @@ set -uo pipefail
 # ---------- 可调参数 ----------
 SYSDBA_PWD="${SYSDBA_PWD:-PHMadmin1}"
 SYSAUDITOR_PWD="${SYSAUDITOR_PWD:-Dameng@Audit2026}"
+# 判例 2026-11-20：dm8_20260312 构建的静默安装器要求 auto_install.xml 含非空 SYSSSO_PWD 节点，缺失报"配置文件SYSSSO_PWD节点字符串不能为空"（20260324 构建无此要求；.30 设备实测）
+SYSSSO_PWD="${SYSSSO_PWD:-Dameng@Sso2026}"
 PHMAPP_PWD="${PHMAPP_PWD:-PHMapp2026}"
 DM_CHARSET="${DM_CHARSET:-0}"
 DM_CASE_SENSITIVE="${DM_CASE_SENSITIVE:-Y}"
@@ -114,6 +116,8 @@ check_pwd() {
 }
 check_pwd "$SYSDBA_PWD" "SYSDBA_PWD"
 check_pwd "$SYSAUDITOR_PWD" "SYSAUDITOR_PWD"
+# SYSSSO_PWD 同一密码策略校验（判例 2026-11-20：20260312 构建要求该节点，见默认值块注释）
+check_pwd "$SYSSSO_PWD" "SYSSSO_PWD"
 [ -n "$PYTHON_VENV" ] && [ ! -d "$PYTHON_VENV" ] && warn "PYTHON_VENV 目录不存在：$PYTHON_VENV（8c 将以 python3.12 代建；请核对路径拼写）"
 case "$DM_CHARSET" in 0|1) ;; *) fail "DM_CHARSET 只能 0(GB18030) 或 1(UTF-8)" ;; esac
 case "$DM_CASE_SENSITIVE" in Y|y|N|n) ;; *) fail "DM_CASE_SENSITIVE 只能 Y/N" ;; esac
@@ -253,6 +257,8 @@ cat > "$DMDBA_HOME/auto_install.xml" <<EOF
 <CHARSET>$DM_CHARSET</CHARSET>
 <SYSDBA_PWD>$SYSDBA_PWD</SYSDBA_PWD>
 <SYSAUDITOR_PWD>$SYSAUDITOR_PWD</SYSAUDITOR_PWD>
+<!-- 判例 2026-11-20：20260312 构建要求非空 SYSSSO_PWD 节点，缺失报"配置文件SYSSSO_PWD节点字符串不能为空"；20260324 构建无此要求 -->
+<SYSSSO_PWD>$SYSSSO_PWD</SYSSSO_PWD>
 </DB_PARAMS>
 </DATABASE>
 EOF
@@ -640,6 +646,53 @@ stage 9 "清理"
 # =============================================================================
 rm -f "$DMDBA_HOME/DMInstall.bin" "$DMDBA_HOME/auto_install.xml" "$DMDBA_HOME/dm.key.src" 2>/dev/null
 info "安装器临时文件已清理"
+
+# =============================================================================
+stage 10 "完成形态终验"
+# =============================================================================
+# 全流程终态只读复核：任一硬项不满足即 fail（fail-fast），全部通过才打印完成 banner
+systemctl is-active --quiet "DmService$INSTANCE_NAME" || fail "终验失败：DmService$INSTANCE_NAME 非 active"
+systemctl is-active --quiet DmAPService || fail "终验失败：DmAPService 非 active"
+info "服务终态：DmService$INSTANCE_NAME 与 DmAPService 均 active"
+ss -ltn 2>/dev/null | grep -q ":$PORT_NUM " || fail "终验失败：端口 $PORT_NUM 未监听"
+VRFY_INSTANCE=$(printf '%s\nexit\n' 'SELECT INSTANCE_NAME FROM V$INSTANCE;' | "$DM_DISQL" "$DSN" 2>&1)
+echo "$VRFY_INSTANCE" | grep -q "$INSTANCE_NAME" || fail "终验失败：V\$INSTANCE 未返回 $INSTANCE_NAME: $(echo "$VRFY_INSTANCE" | tail -2 | tr '\n' ' ')"
+info "实例/端口终态：$INSTANCE_NAME @ :$PORT_NUM"
+# 判例 2026-11-20：不同 key 文件可有相同到期日（dm5D01220176.key 与 dmE301208192.key 同为 2027-06-25）——到期日不能证明 key 已更换，必须 md5 比对
+[ -f "$DM_HOME/bin/dm.key" ] || fail "终验失败：缺 $DM_HOME/bin/dm.key"
+[ "$(md5sum "$DM_HOME/bin/dm.key" | awk '{print $1}')" = "$(md5sum "$KEY" | awk '{print $1}')" ] \
+  || fail "终验失败：dm.key 与介质 $KEY 的 md5 不一致（在位 key 非本次介质 key）"
+info "dm.key 终态：与介质 md5 一致"
+VRFY_EXP=$(printf '%s\nexit\n' 'SELECT EXPIRED_DATE FROM V$LICENSE;' | "$DM_DISQL" "$DSN" 2>&1 | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1)
+[ -n "$VRFY_EXP" ] || fail "终验失败：V\$LICENSE 的 EXPIRED_DATE 为空"
+info "License 终态：到期 $VRFY_EXP"
+[ -f "$QT_HOME/plugins/sqldrivers/libqsqldm.so" ] || fail "终验失败：缺 $QT_HOME/plugins/sqldrivers/libqsqldm.so"
+if ldd "$QT_HOME/plugins/sqldrivers/libqsqldm.so" 2>/dev/null | grep -q "not found"; then
+  fail "终验失败：libqsqldm.so 存在未解析依赖"
+fi
+info "QDM 驱动终态：在位且依赖全解析"
+# PHMAPP 属 206 完成形态必备（stage 8g 无条件规范阶段；2026-11-20 用户确认）
+printf '%s\nexit\n' "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | "$DM_DISQL" "$DSN" 2>&1 | grep -q "PHMAPP" \
+  || fail "终验失败：数据库用户 PHMAPP 不存在"
+[ -f /home/kylin/.config/phm/dm.ini ] || fail "终验失败：缺 /home/kylin/.config/phm/dm.ini"
+[ -f /etc/systemd/system/phm-app.service ] || fail "终验失败：缺 /etc/systemd/system/phm-app.service"
+info "PHM 业务面终态：PHMAPP + dm.ini + phm-app.service 均就位"
+# 判例 2026-11-19：dpkg 半配置 iU 残留
+DPKG_AUDIT=$(dpkg --audit 2>/dev/null)
+[ -z "$DPKG_AUDIT" ] || fail "终验失败：dpkg --audit 有残留（半配置包）: $(echo "$DPKG_AUDIT" | head -5 | tr '\n' ' ')"
+info "dpkg --audit 干净"
+if [ -n "$PYTHON_VENV" ]; then
+  # 复用 8c 干净环境手法，以属主身份真连一次
+  runuser -u "$(stat -c %U "$PYTHON_VENV" 2>/dev/null || echo root)" -- \
+    env -i PATH=/usr/bin:/bin "$PYTHON_VENV/bin/python" -c "
+import dmPython
+c = dmPython.connect(user='SYSDBA', password='$SYSDBA_PWD', server='127.0.0.1', port=$PORT_NUM)
+print('PY_DM_VRFY_OK')
+c.close()" 2>/dev/null | grep -q "PY_DM_VRFY_OK" \
+    || fail "终验失败：dmPython 属主真连失败（venv=$PYTHON_VENV）"
+  info "dmPython 终态：属主干净环境真连通过"
+fi
+info "完成形态终验全部通过"
 
 echo
 printf "${C_G}================= 部署完成 =================${C_0}\n"

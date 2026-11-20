@@ -179,6 +179,33 @@ if [ -f /etc/xdg/autostart/ukui-screensaver.desktop ]; then
   info "屏保后端自启已禁（ukui-session 仍会拉活，但策略锁下无害）"
 fi
 
+# =============================================================================
+stage 6 "完成形态终验"
+# =============================================================================
+# 全流程终态只读复核：任一硬项不满足即 fail（fail-fast），全部通过才打印完成 banner
+[ "$("$QT_HOME/bin/qmake" -v 2>/dev/null | tail -1 | grep -oE 'version [0-9.]+')" = "version 5.14.2" ] \
+  || fail "终验失败：qmake -v 未报 5.14.2（$QT_HOME 异常？）"
+info "qmake 终态：Qt 5.14.2"
+# 判例 2026-11-19：dpkg 半配置 iU 残留
+DPKG_AUDIT=$(dpkg --audit 2>/dev/null)
+[ -z "$DPKG_AUDIT" ] || fail "终验失败：dpkg --audit 有残留（半配置包）: $(echo "$DPKG_AUDIT" | head -5 | tr '\n' ' ')"
+info "dpkg --audit 干净"
+# stage 5 产物终态复核：与其真实落位动作（dconf 策略/锁、logind、systemd mask）一一对应
+[ -f /etc/dconf/profile/user ] || fail "终验失败：缺 /etc/dconf/profile/user"
+[ -f /etc/dconf/db/local.d/00-screensaver ] || fail "终验失败：缺 dconf 策略 /etc/dconf/db/local.d/00-screensaver"
+[ -f /etc/dconf/db/local.d/locks/00-screensaver ] || fail "终验失败：缺 dconf 锁 /etc/dconf/db/local.d/locks/00-screensaver"
+grep -q "idle-activation-enabled=false" /etc/dconf/db/local.d/00-screensaver || fail "终验失败：dconf 策略缺键 idle-activation-enabled"
+grep -q "/org/ukui/screensaver/lock-enabled" /etc/dconf/db/local.d/locks/00-screensaver || fail "终验失败：dconf 锁缺 /org/ukui/screensaver/lock-enabled"
+grep -q "^HandleLidSwitch=ignore" /etc/systemd/logind.conf || fail "终验失败：logind 合盖未置 ignore"
+for t in sleep.target suspend.target hibernate.target hybrid-sleep.target; do
+  [ "$(systemctl is-enabled "$t" 2>/dev/null)" = "masked" ] || fail "终验失败：$t 未 mask（stage 5 mask 未生效）"
+done
+info "防休眠/防锁屏终态：dconf 策略+锁、logind ignore、睡眠四 target mask 均在位"
+# 软项（合法形态，warn 不 fail）
+command -v qtcreator >/dev/null 2>&1 || warn "软项：qtcreator 未装（无 IDE 形态合法）"
+[ -f "$QT_HOME/plugins/sqldrivers/libqsqldm.so" ] || warn "软项：libqsqldm.so 不存在（DM8 未部署形态合法）"
+info "完成形态终验全部通过"
+
 echo
 printf "${C_G}================= Qt 环境部署完成 =================${C_0}\n"
 echo "qmake    : $QT_HOME/bin/qmake（新终端生效 PATH，或 source /etc/profile）"

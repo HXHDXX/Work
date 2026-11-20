@@ -39,7 +39,9 @@ sudo env FORCE_UNTAR=1 bash install_qt_env.sh /path/to/qt-env-deploy
 
 脚本幂等（Qt 已在则跳解包、deb 已装可重跑）；阶段：预检 → deb 安装 → 解包恢复 →
 组件验证（qmake/QtC/两插件/PATH/Kit注册）→ 达梦联动检查（有 /dm8 则自动配 DPI 寻址，
-无则提示先跑达梦部署包）。
+无则提示先跑达梦部署包）→ 防休眠/防锁屏 → stage 6 完成形态终验（qmake 5.14.2 / dpkg --audit /
+防休眠落位 dconf 锁+systemd mask 逐项只读复核，硬项任一不满足即报错退出；qtcreator 未装、
+libqsqldm.so 缺失为软项仅 warn，2026-11-20 起）。
 
 ## 3. 前提与边界
 

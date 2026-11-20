@@ -152,6 +152,8 @@ sudo systemctl enable --now DmServiceDMSERVER
 重建后数据目录为 **`/dm8/data/DAMENG/DAMENG`**（dminit 自动追加库名子目录，与随装初始化的
 `/dm8/data/DAMENG` 单层布局不同，运维/脚本需兼容两种路径，`install_dm8_qt.sh` 已内置 `find_dm_ini` 兼容）。
 
+> **重装策略（2026-11-20 用户决策）**：重装一律交付全新空库，不恢复业务数据；dexp/dimp 恢复流程废止。
+
 ## 二、Qt 5.14.2 QDM 驱动编译部署（实录步骤）
 
 ### 2.1 思路
@@ -255,6 +257,9 @@ sudo env DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 bash install_dm8_qt.sh
   → ldconfig → QDM 编译安装 → **Qt 端到端冒烟**（真实建表/插中文/查询/删表）→ 清理。
 - 无 `unzip` 自动回退 `python3 -m zipfile`。
 - 每阶段 `[阶段N] [OK]/[FAIL]` 输出，失败即停并给定位提示。
+- **完成形态终验**（stage 10）：banner 前对全流程终态只读复核——双服务 active、端口监听、disql 实例、
+  dm.key 与介质 md5 比对、License 到期、QDM 驱动 ldd、PHMAPP+dm.ini+phm-app.service、dpkg --audit、
+  dmPython 属主真连（设 PYTHON_VENV 时）；任一硬项不满足即 fail。
 - 本文所有坑（空目录、CREATE_DB_SERVICE、Windows 残留行、坏 DESTDIR、ldconfig、disql 引号）
   已全部内置规避。
 
@@ -276,6 +281,7 @@ sudo env DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 bash install_dm8_qt.sh
 | 12 | 独立 dminit 在 PATH 下追加库名子目录 | dm.ini 双层路径兼容（脚本已内置 find_dm_ini） |
 | 13 | 冒烟后进程残留已删 cwd，8c/8f 的 pip 报 OSError Errno 2（8c「wheel 不匹配」为误诊文案） | 冒烟清理后 `cd /` 回位（脚本已修，2026-11-16） |
 | 14 | 介质清单登记 git 已跟踪文件→每次提交即过期（追刷两次） | 清单只登记未跟踪介质；入库文件由 git 背书（2026-11-16 起摘除两行） |
+| 15 | 20260312 构建要求 auto_install.xml 含非空 `SYSSSO_PWD` 节点，缺失报"配置文件SYSSSO_PWD节点字符串不能为空"（判例 2026-11-20，.30 实测；20260324 构建无此要求。两构建可经版本横幅区分：20260312=8.4，20260324=8.1.1） | 脚本已内置默认值 `SYSSSO_PWD=Dameng@Sso2026`（环境变量可覆盖），模板已带该节点 |
 
 > **dmPython 集成（2026-09-16 起）**：`sudo env PYTHON_VENV=/path/to/venv bash install_dm8_qt.sh ...` 自动执行：离线装 `wheels/dmpython-*.whl`（已可导入则跳过）→ 拷 crypto 库修 -70089 → **干净环境连接验证**。未设 PYTHON_VENV 则提示跳过。详见《dmPython连接配置方案.md》。
 
@@ -384,6 +390,8 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 | /data 只读位 555 | 静默安装报「PATH节点文件路径没有写权限」 | 阶段2 预建 $DATA_PATH 并 chown dmdba |
 | 基线漂移 gf0.2→gf0.4 | kit dev 包严格依赖失配，dpkg -i 留 iU 半配置 | pkgs_ensure：apt 优先（隧道）+ kit 兜底 + iU 残留即 fail |
 | venv 未预建 | 8c 预检 fail | 8c 以 python3.12 代建 venv |
+
+> **.30 设备 vddaemon 电源管理策略会定时重启**（2026-11-20）：长任务（安装/导入/镜像）前先 `systemctl stop vddaemon vddaemon.timer`。
 
 **apt 判例两则（2026-11-19）**：① `apt --fix-broken install` 必须不带包名——带名会让 iU 包诱导 apt 降级运行库（错误解）；② fix-broken 可能把失配包直接**移除**（当天移了 libgl-dev 全家）——修复后必须对账目标包集合并补装。
 
