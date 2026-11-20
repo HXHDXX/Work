@@ -29,7 +29,7 @@
 
 ```bash
 # 新机若 KySec enabled（2503-update1 镜像默认）——先 ssh 内联关闭，否则 kit 脚本本身被拦（RC=126）：
-sudo setstatus disable && sudo security-switch --set custom   # 以 getstatus 终态 disabled 为准
+sudo setstatus disable && sudo security-switch --set custom --list ""   # 以 getstatus 终态 disabled 为准（重启保持）
 # 整个 qt-env-deploy 目录拷到设备后：
 sudo bash install_qt_env.sh /path/to/qt-env-deploy
 

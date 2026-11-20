@@ -42,11 +42,11 @@ info "备份包目录: $KIT_DIR"
 dpkg -s qtcreator >/dev/null 2>&1 && QTC_OK=1 || QTC_OK=0
 # --- KySec（判例 2026-11-19：2503-update1 镜像默认 enabled，拦截 kit 脚本执行 RC=126）---
 # 完全关闭=两层，缺一不可（.30 实测）：setstatus disable 只关内核运行态，default 级别下
-# 安全中心守护会把内核态重新拉起；security-switch --set custom 切级别总闸（custom 空模块
-# =框架整体不启用，重启保持）。custom 命令打印"参数错误"但级别已生效，故以终态验证为准。
+# 安全中心守护会把内核态重新拉起；security-switch --set custom --list "" 切级别总闸（空模块
+# =框架整体不启用，重启保持）。裸 --set custom 报"参数错误"且不生效、重启即复活（2026-11-20 .30 重启实测）。
 if command -v getstatus >/dev/null 2>&1 && getstatus 2>/dev/null | grep -q "^KySec status: enabled"; then
   setstatus disable >/dev/null 2>&1
-  security-switch --set custom >/dev/null 2>&1
+  security-switch --set custom --list "" >/dev/null 2>&1
   getstatus 2>/dev/null | grep -q "^KySec status: disabled" \
     && info "KySec 已完全关闭（setstatus + 级别 custom，重启保持，.30 双重启实测）" \
     || warn "KySec 仍 enabled——手动执行 sudo setstatus disable && sudo security-switch --set custom 后重跑"

@@ -379,7 +379,7 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 
 | 坑 | 症状 | 修法（已固化进脚本） |
 |---|---|---|
-| KySec 默认 enabled | kit 脚本 RC=126「KYSEC: 权限不够」 | 完全关闭两层：setstatus disable（内核运行态）＋ security-switch --set custom（级别总闸，custom 空模块重启保持；命令打印"参数错误"但已生效，以 getstatus 终态为准。2026-11-19 .30 双重启实测）时序：KySec 拦的就是 kit 脚本执行本身，脚本 stage0 自关闭跑不到——须先 ssh 内联系统命令（sudo setstatus disable && sudo security-switch --set custom）关闭，再跑任何 kit 脚本（含 apt-tunnel.sh；2026-11-19 .30 重灌实录）。 |
+| KySec 默认 enabled | kit 脚本 RC=126「KYSEC: 权限不够」 | 完全关闭两层：setstatus disable（内核运行态）＋ security-switch --set custom（正确调用须带空模块列表：security-switch --set custom --list ""；裸 --set custom 报参数错误且不生效、重启即复活——2026-11-20 .30 重启实测 custom+空列表持久 disabled）时序：KySec 拦的就是 kit 脚本执行本身，脚本 stage0 自关闭跑不到——须先 ssh 内联系统命令（sudo setstatus disable && sudo security-switch --set custom --list ""）关闭，再跑任何 kit 脚本（含 apt-tunnel.sh；2026-11-19 .30 重灌实录）。 |
 | 新镜像不带 g++ | 冒烟/QDM 编译失败；kylin g++-9 不注册 alternatives | 预检 fail-fast；仅有 g++-9 时自动补软链 |
 | /data 只读位 555 | 静默安装报「PATH节点文件路径没有写权限」 | 阶段2 预建 $DATA_PATH 并 chown dmdba |
 | 基线漂移 gf0.2→gf0.4 | kit dev 包严格依赖失配，dpkg -i 留 iU 半配置 | pkgs_ensure：apt 优先（隧道）+ kit 兜底 + iU 残留即 fail |
