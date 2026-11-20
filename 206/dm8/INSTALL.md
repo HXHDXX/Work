@@ -287,6 +287,8 @@ sudo env DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 bash install_dm8_qt.sh
 
 > **Python3.12+SSL 支撑（2026-09-16 起）**：脚本阶段 8b 自动检测 `/usr/local/bin/python3.12` 的 `import ssl`，失败时：离线安装 `debs/` 里 10 个编译依赖包（libssl-dev/libffi-dev/sqlite 等，已装自动跳过）→ 用包内 `Python-3.12.14.tgz` 重编安装（3.12 系列 ABI 兼容，venv/site-packages 不受影响）→ 验证 `_ssl`。`PY_FIX_SSL=skip` 可禁用。设备已有源码树时也可手工增量 `make`（见《dmPython连接配置方案.md》背景）。
 
+> **8b kit 兜底硬化（2026-11-20）**：8b kit 兜底已逐包化＋防降级闸（判例 2026-11-20 .20 基线失配三连），跨基线部署以 apt 隧道为正道。
+
 > **客户需求对齐（2026-09-16）**：Python 以客户基准 **3.12.2** 编译，命令逐字对齐客户文档（`./configure --enable-optimizations --prefix=/usr/local` + `make -j$(nproc)` + `sudo make altinstall`；PGO 构建约 30~60 分钟）。基础工具 build-essential/gcc/g++/make/curl 设备已有，wget 已入 debs/。**CAN 调试助手经确认不安装；PyCharm 已于 2026-11-13 补装（见下条）**。sqlite3 CLI 已入 debs/（universe 池，3.31.1；目标设备本就已安装）。
 
 > **Python 3.12 设为默认（2026-11-13，设备 kylin@192.168.1.20，sudo 密码 `qwer1234`）**：altinstall 装法不会产生 `python3` 命令，靠 `/usr/local/bin`（PATH 优先于 `/usr/bin`）补两条符号链接即可：

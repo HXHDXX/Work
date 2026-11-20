@@ -144,13 +144,15 @@ fi
 info "预检通过 (DM已装=$DM_INSTALLED, QDM已装=$QDM_INSTALLED)"
 
 # -----------------------------------------------------------------------------
-# pkgs_ensure <pkg...> —— 依赖包安装：apt 优先（基线自适应），kit debs 兜底
+# pkgs_ensure <pkg...> —— 依赖包安装：apt 优先（基线自适应）；apt 未全成返回 1，
+# kit 兜底由调用方（stage 8b）逐包处理——判例 2026-11-20（.20 2503-bugfix 非 GFB
+# 基线）：整批通配灌 kit debs 把 gf-pin 的 libssl-dev gf1.5 等硬灌成 iU 半配置。
 # 判例 2026-11-19（.30 重灌）：镜像换血 2503-update1 后，kit 锚定 gf0.2 的 dev 包
 # 与系统 gf0.4 运行库严格失配，dpkg -i 强装留下 45 个 iU 半配置包。规则：
 #   a) apt 可用（99tunnel 代理在或源直连）→ 无包名 --fix-broken 复位后按名安装
 #      （带包名调 apt 会让 iU 包诱导降级运行库——错误解）；
 #   b) fix-broken 可能把目标包移除（当天移了 libgl-dev 全家）→ 修复后必须对账；
-#   c) kit debs 兜底安装后查 iU，残留即 fail，杜绝静默半配置。
+#   c) apt 未全成 → return 1；逐包兜底＋防降级闸＋dpkg --audit 终态门在 stage 8b。
 # -----------------------------------------------------------------------------
 all_installed() {
   local p
@@ -169,23 +171,7 @@ pkgs_ensure() {
     warn "apt 未全成（/tmp/apt_install.log），对账后走 kit 兜底"
     all_installed "$@" && { info "apt 安装完成（部分由 fix-broken 补齐）"; return 0; }
   fi
-  local todo="" d pn
-  DPKG_STATUS=$(dpkg -l 2>/dev/null) || true
-  for d in "$DM_DIR"/debs/*.deb; do
-    [ -f "$d" ] || continue
-    pn=$(dpkg-deb -f "$d" Package 2>/dev/null) || continue
-    dpkg-query -W -f'${Status}' "$pn" 2>/dev/null | grep -q "install ok installed" && continue  # 已装不重装（防 kit 旧版降级在位新版）
-    todo="$todo $d"
-  done
-  [ -n "$todo" ] || fail "缺包且 apt/kit 均未提供: $*"
-  dpkg -i $todo >/tmp/dpkg_install.log 2>&1 \
-    || { dpkg --configure -a >>/tmp/dpkg_install.log 2>&1 || true; fail "dpkg 安装失败（/tmp/dpkg_install.log）"; }
-  DPKG_STATUS=$(dpkg -l 2>/dev/null) || true  # 复拍：此门须照安装后状态，前拍是预装态
-  if grep -q '^iU' <<<"$DPKG_STATUS"; then
-    awk '/^iU/{printf "  %s %s\n",$2,$3}' <<<"$DPKG_STATUS"
-    fail "安装后残留 iU 半配置包（基线失配特征）——开 apt 隧道（bash apt-tunnel.sh on）重跑本脚本走 apt 路径"
-  fi
-  info "已离线安装 kit debs: $(echo $todo | xargs -n1 basename | tr '\n' ' ')"
+  return 1  # kit 兜底交调用方逐包处理（判例 2026-11-20 整批灌 iU 半配置，禁通配）
 }
 
 # =============================================================================
@@ -418,14 +404,36 @@ if [ "$PY_FIX_SSL" = "skip" ]; then
 elif [ -x "$PY312" ] && "$PY312" -c "import ssl" >/dev/null 2>&1; then
   info "python3.12 的 _ssl 正常，跳过"
 else
-  # 1) 安装开发包：apt 优先（自动匹配当前系统基线），kit debs 兜底（判例 2026-11-19 基线漂移）
+  # 1) 安装开发包：apt 优先（自动匹配当前系统基线）；apt 未全成的包走 kit 逐包兜底
+  #    判例 2026-11-20（.20 2503-bugfix 非 GFB 基线）：旧「整批通配 kit debs」灌装把
+  #    gf-pin 的 libssl-dev gf1.5/libsqlite3-dev gf0.2/sqlite3 gf0.2 硬灌成 iU 半配置。
   DEV_PKGS=""
   for d in "$DM_DIR"/debs/*.deb; do
     [ -f "$d" ] || continue
     pn=$(dpkg-deb -f "$d" Package 2>/dev/null) || continue
     DEV_PKGS="$DEV_PKGS $pn"
   done
-  [ -n "$DEV_PKGS" ] && pkgs_ensure $DEV_PKGS
+  if [ -n "$DEV_PKGS" ] && ! pkgs_ensure $DEV_PKGS; then
+    # kit 逐包兜底：仅装 apt 失败的包（单包 dpkg，禁整批通配）；单包失败不级联，末尾统一处理
+    : >/tmp/dpkg_install.log
+    KIT_FAILED=""
+    for pn in $DEV_PKGS; do
+      dpkg-query -W -f'${Status}' "$pn" 2>/dev/null | grep -q "install ok installed" && continue
+      deb=$(ls "$DM_DIR"/debs/"$pn"_*.deb 2>/dev/null | head -1)
+      [ -n "$deb" ] || { KIT_FAILED="$KIT_FAILED $pn(缺kit deb)"; continue; }
+      kitv=$(dpkg-deb -f "$deb" Version 2>/dev/null)
+      installedv=$(dpkg-query -W -f'${Version}' "$pn" 2>/dev/null)
+      # 防降级闸：在位版本更新则不灌 kit 旧版（判例：wget k2<在位 k2.1、icu-devtools k1<在位 k1.7）
+      if [ -n "$installedv" ] && dpkg --compare-versions "$installedv" gt "$kitv"; then
+        warn "防降级闸：$pn 在位 $installedv > kit $kitv，跳过 kit 兜底"
+        continue
+      fi
+      dpkg -i "$deb" >>/tmp/dpkg_install.log 2>&1 || KIT_FAILED="$KIT_FAILED $pn"
+    done
+    [ -z "$KIT_FAILED" ] || fail "kit 逐包兜底失败:$KIT_FAILED（/tmp/dpkg_install.log）"
+    AUDIT=$(dpkg --audit 2>/dev/null)
+    [ -z "$AUDIT" ] || { printf '%s\n' "$AUDIT"; fail "兜底后 dpkg --audit 有残留半配置包——开 apt 隧道（bash apt-tunnel.sh on）重跑走 apt 路径"; }
+  fi
   [ -f /usr/include/openssl/ssl.h ] || fail "缺 /usr/include/openssl/ssl.h（libssl-dev 异常），无法构建 _ssl"
   # 2) 找源码包并构建（3.12 系列 ABI 兼容，补丁版本覆盖安全；venv/site-packages 不受影响）
   PYTGZ=$(ls "$DM_DIR"/Python-3.12*.tgz 2>/dev/null | head -1)
