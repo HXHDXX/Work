@@ -5,13 +5,13 @@
 # 用法（root）:
 #   sudo bash provision_206.sh             # 无参：从 P0 自动推进到断点（FAIL 或待重启）
 #   sudo bash provision_206.sh P3          # 只跑指定阶段（P0~P6，亦接受 0~6）
-#   sudo bash provision_206.sh --reboot    # P2 装完内核后直接重启（缺省停在提示等人工确认）
+#   sudo bash provision_206.sh --reboot    # P2 装完内核/P5 完成落戳后直接重启（缺省停在提示等人工确认）
 #
-# 断点续跑: 全阶段幂等（已满足即 [OK] 跳过、fail 即停），修复/重启后无参重跑自动越过关卡；P2 换内核/GPU 后须重启一次。
+# 断点续跑: 全阶段幂等（已满足即 [OK] 跳过、fail 即停），修复/重启后无参重跑自动越过关卡；P2 换内核/GPU 后须重启一次；P5 落戳后须最终重启才过 P6 重启门。
 # 判例来源: 2026-11-20 .20 全新镜像（2503-bugfix 基线）实装实录；KySec/时钟/g++/apt 隧道＝2026-11-19 .30 重灌判例；
 #   ftg340 泛配误装 1.3.0 判例 → 本脚本严格按名取件、并校验内存中已加载版本。
 # 透传: SYSDBA_PWD/PHMAPP_PWD 等环境变量原样传给两 kit（缺省同 kit 头注）；PYTHON_VENV 缺省 /home/kylin/venvs/phm。
-# 阶段: P0 预检(KySec/时钟/g++) → P1 五层电源防护 → P2 内核/GPU 定型栈 → P3 五条验证 → P4 双 kit 部署 → P5 PyCharm → P6 总验
+# 阶段: P0 预检(KySec/时钟/g++) → P1 五层电源防护+音量定型 → P2 内核/GPU 定型栈 → P3 五条验证 → P4 双 kit 部署 → P5 PyCharm+落戳 → P6 重启后全量总验
 # =============================================================================
 set -uo pipefail
 
@@ -62,6 +62,16 @@ verify_kernel_gpu() {
   ip link 2>/dev/null | grep -q ' can0:' && ip link 2>/dev/null | grep -q ' can1:' || { echo "ip link 缺 can0/can1"; return 1; }
   kern_pkgs_ok || { echo "五内核包有缺"; return 1; }
 }
+# 桌面会话上下文（音量/dconf 须以会话用户经其会话总线操作，root 无 pulse/会话）——从 ukui-session 推导
+ukui_sess_env() {
+  SESS_PID=$(pgrep -ox ukui-session 2>/dev/null) || return 1
+  SESS_USER=$(ps -o user= -p "$SESS_PID" | tr -d ' ')
+  [ -n "$SESS_USER" ] || return 1
+  SESS_XRD=$(tr '\0' '\n' <"/proc/$SESS_PID/environ" 2>/dev/null | sed -n 's/^XDG_RUNTIME_DIR=//p')
+  [ -n "$SESS_XRD" ] || SESS_XRD="/run/user/$(id -u "$SESS_USER")"
+}
+as_sess()    { runuser -u "$SESS_USER" -- env XDG_RUNTIME_DIR="$SESS_XRD" "$@"; }
+boot_epoch() { echo $(( $(date +%s) - $(cut -d. -f1 /proc/uptime) )); }
 if want P0; then
 stage 0 "预检（KySec / 时钟 / g++）"
 [ "$(id -u)" -eq 0 ] || fail "请用 root（sudo）运行本脚本"
@@ -91,16 +101,17 @@ fi
 fi
 if want P1; then
 stage 1 "五层电源防护（高性能不休眠，2026-11-20 .20 实录）"
-# 层1 拆 kylin-process-manager：idle 节能曾掐断系统盘 SATA 链路致全系统 IO 冻死（事故链见 INSTALL.md）
-# 按 exe 精确匹配杀/验——pgrep -f 子串会误伤含同串的运维诊断会话（B 册判据）
-KPM_BINS=$(find /usr -name 'kylin-process-manager*' -type f 2>/dev/null)
-kpm_pids() { local p b; for p in $(pgrep -f 'kylin-proces[s]-manager' 2>/dev/null); do
-  for b in $KPM_BINS; do [ "$(readlink "/proc/$p/exe" 2>/dev/null)" = "$b" ] && { echo "$p"; break; }; done; done; }
-for b in $KPM_BINS; do chmod -x "$b"; done
-kill -9 $(kpm_pids) 2>/dev/null
+# 层1 拆 kylin-process-manager（kpm）：idle 节能曾掐断系统盘 SATA 链路致全系统 IO 冻死（事故链见 INSTALL.md）
+# 判例：真身 /usr/bin/kylin-process-manager-daemon，重启后经 systemd 单元复活——正解 disable+mask（chmod 路径目标猜错无效且误导，已废）
+systemctl disable --now kylin-process-manager-daemon.service >/dev/null 2>&1
+systemctl mask kylin-process-manager-daemon.service >/dev/null 2>&1
 KPM_AUTO=/etc/xdg/autostart/kylin-process-manager.desktop
 [ -f "$KPM_AUTO" ] && mv "$KPM_AUTO" "$KPM_AUTO.disabled"
-[ -z "$(kpm_pids)" ] && info "层1 kpm 已拆（进程清/自启禁/二进制去执行位）" || fail "kylin-process-manager 仍在运行"
+if ! systemctl is-active --quiet kylin-process-manager-daemon.service && ! pgrep -x kylin-process-manager-daemon >/dev/null; then
+  info "层1 kpm 已拆（systemd disable+mask、进程空、autostart 辅禁）"
+else
+  fail "层1 kpm 未净：unit 非 inactive 或进程仍在"
+fi
 # 层2 systemd 睡眠四 target mask（复核在位，幂等）
 systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target >/dev/null 2>&1 \
   && info "层2 睡眠四 target 已 mask" || fail "sleep target mask 失败"
@@ -119,6 +130,16 @@ if id kylin >/dev/null 2>&1; then
     || warn "gsettings 写入失败（无 dbus 会话？P4 qt kit 的 dconf 策略锁会兜底）"
 else
   warn "缺 kylin 用户，层5 gsettings 跳过"
+fi
+# 音量定型（2026-11-20 用户裁定：最大音量纳入校验脚本）
+# 判例：kylin 构建 pactl 的 set-sink-volume 子命令不可用（list 正常、set 报"未指定有效的命令"），amixer -D pulse 为验证可行路径（.20 实机）
+if ukui_sess_env; then
+  VOL_OUT=$(as_sess amixer -D pulse sset Master 100% unmute 2>/dev/null) \
+    && printf '%s' "$VOL_OUT" | grep -q '\[100%\]' && printf '%s' "$VOL_OUT" | grep -q '\[on\]' \
+    && info "音量定型 Master=100% unmute（${SESS_USER} 会话）" \
+    || fail "音量定型回读未含 [100%]/[on]（amixer -D pulse 异常）"
+else
+  warn "无 ukui 桌面会话，音量定型跳过（P6 重启后会话在位时终验）"
 fi
 fi
 if want P2; then
@@ -194,24 +215,87 @@ EOF
   file /opt/pycharm/jbr/bin/java 2>/dev/null | grep -q aarch64 \
     && info "PyCharm 已落位（JBR aarch64 验讫）" || warn "PyCharm 已落位（JBR 架构待复核: file /opt/pycharm/jbr/bin/java）"
 fi
+# 安装完成落戳（P6 重启门依据，内容=纪元秒）：戳记早于当前 boot 起点=已重启过，不重写不拦（幂等）
+STAMP=/var/lib/provision-206.stamp
+if [ ! -f "$STAMP" ] || [ "$(cat "$STAMP" 2>/dev/null)" -ge "$(boot_epoch)" ]; then
+  date +%s >"$STAMP"
+  if [ "$REBOOT" -eq 1 ]; then
+    info "安装完成（戳记已落）——--reboot → 立即重启；重启后无参重跑或 $0 P6 即总验"
+    sync; systemctl reboot; exit 0
+  fi
+  info "安装完成，须最终重启后跑 P6 总验（重启后 sudo bash $0 P6，或无参重跑）"
+  exit 0
+fi
 fi
 if want P6; then
-stage 6 "总验（内核/GPU 五条 + 双 kit 终态 + PHMAPP + PyCharm）"
-if MSG=$(verify_kernel_gpu); then info "P3 五条复核通过"; else fail "总验失败（内核/GPU）: $MSG"; fi
-systemctl is-active --quiet DmServiceDMSERVER && systemctl is-active --quiet DmAPService \
-  && info "DM8 双服务 active（DmServiceDMSERVER/DmAPService）" || fail "总验失败：DM8 双服务非 active"
-ss -ltn 2>/dev/null | grep -q ":5236 " && info "端口 5236 监听" || fail "总验失败：5236 未监听"
-[ "$(/opt/Qt5.14.2/bin/qmake -v 2>/dev/null | grep -oE '5\.14\.2' | head -1)" = "5.14.2" ] \
-  && info "qmake 5.14.2" || fail "总验失败：qmake 非 5.14.2"
-command -v qtcreator >/dev/null 2>&1 \
-  && info "qtcreator $(dpkg-query -W -f'${Version}' qtcreator 2>/dev/null)" \
-  || warn "软项：qtcreator 未装（无 IDE 形态合法）"
+stage 6 "重启后总验（重启门 → 全量断言，全绿才 PROVISION-ALL-GREEN）"
+# 重启门（deterministic，2026-11-20 用户裁定：重启前不算验完——当日判例：改完即验全绿，
+# 重启后 kpm 经 systemd 单元复活、governor/SATA 因 sysfs 晚绑定假绿、会话守护内存旧配置致屏保仍触发）
+STAMP=/var/lib/provision-206.stamp
+[ -f "$STAMP" ] || fail "未找到 $STAMP——先无参跑完 P0~P5 落戳"
+STAMP_T=$(cat "$STAMP")
+BOOT_T=$(boot_epoch)
+[ "$BOOT_T" -gt "$STAMP_T" ] || fail "安装后未重启（boot 纪元 $BOOT_T ≤ 戳记 $STAMP_T）——先 reboot 再跑 P6"
+info "重启门通过（当前 boot 晚于安装戳记）"
+# 全量断言：逐项 [OK]/[FAIL]，全绿才打终态行；任一 FAIL 即 fail（已过重启门，属真实缺口）
+P6_FAILS=0
+chk() { local d="$1"; shift; if "$@" >/dev/null 2>&1; then info "$d"; else printf "${C_R}[FAIL]${C_0} %s\n" "$d"; P6_FAILS=$((P6_FAILS+1)); fi; }
 DM_HOME=/opt/dm8; [ -x "$DM_HOME/bin/disql" ] || DM_HOME=/dm8
-[ -x "$DM_HOME/bin/disql" ] || fail "总验失败：未找到 $DM_HOME/bin/disql（非标安装路径？）"
+[ -x "$DM_HOME/bin/disql" ] || fail "总验失败：未找到 disql（/opt/dm8 与 /dm8 均无，非标路径？）"
 DSN="SYSDBA/\"${SYSDBA_PWD:-PHMadmin1}\"@localhost:5236"
-printf '%s\nexit\n' "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" \
-  | "$DM_HOME/bin/disql" "$DSN" 2>&1 | grep -q PHMAPP \
-  && info "PHMAPP 账号在位" || fail "总验失败：PHMAPP 不存在（disql 无法确认）"
-[ -x /opt/pycharm/bin/pycharm.sh ] && info "PyCharm 在位" || warn "软项：PyCharm 未装（无 IDE 形态合法）"
-printf "\n${C_G}================= 206 整机总装完成 =================${C_0}\n"
+QDM_SO=/opt/Qt5.14.2/plugins/sqldrivers/libqsqldm.so
+p6_sql()      { printf '%s\nexit\n' "$1" | "$DM_HOME/bin/disql" "$DSN" 2>&1; }
+p6_5236()     { ss -ltn 2>/dev/null | grep -q ':5236 '; }
+p6_instance() { p6_sql 'SELECT INSTANCE_NAME FROM V$INSTANCE;' | grep -q DMSERVER; }
+p6_license()  { p6_sql 'SELECT EXPIRED_DATE FROM V$LICENSE;' | grep -qE '[0-9]{4}-[0-9]{2}-[0-9]{2}'; }
+p6_key()      { [ "$(md5sum "$DM_HOME/bin/dm.key" 2>/dev/null | cut -d' ' -f1)" = "$(md5sum "$SCRIPT_DIR/dm5D01220176.key" 2>/dev/null | cut -d' ' -f1)" ]; }
+p6_qdm_ldd()  { ! ldd "$QDM_SO" 2>/dev/null | grep -q 'not found'; }
+p6_phmapp()   { p6_sql "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | grep -q PHMAPP; }
+p6_qmake()    { /opt/Qt5.14.2/bin/qmake -v 2>/dev/null | grep -q '5\.14\.2'; }
+p6_kpm_unit() { ! systemctl is-active --quiet kylin-process-manager-daemon.service; }
+p6_kpm_proc() { ! pgrep -x kylin-process-manager-daemon; }
+p6_gov()      { local f; for f in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do grep -qx performance "$f" || return 1; done; }
+p6_sata()     { local f; for f in /sys/class/scsi_host/host*/link_power_management_policy; do grep -qx max_performance "$f" || return 1; done; }
+p6_masked()   { local t; for t in sleep suspend hibernate hybrid-sleep; do [ "$(systemctl is-enabled "$t.target" 2>/dev/null)" = "masked" ] || return 1; done; }
+p6_dconf()    {  # 会话内生效值（会话守护内存配置才是真状态，非仅 dconf 库文件值）
+  ukui_sess_env || return 1
+  as_sess gsettings get org.ukui.screensaver idle-activation-enabled 2>/dev/null | grep -qx false || return 1
+  as_sess gsettings get org.ukui.screensaver idle-delay 2>/dev/null | grep -qx -e 0 -e 'uint32 0' || return 1
+  as_sess gsettings get org.ukui.power-manager sleep-display-ac 2>/dev/null | grep -qx -e 0 -e 'uint32 0'
+}
+p6_vol()      { local o; ukui_sess_env || return 1; o=$(as_sess amixer -D pulse sget Master 2>/dev/null) || return 1
+  printf '%s' "$o" | grep -q '\[100%\]' && printf '%s' "$o" | grep -q '\[on\]'; }
+p6_audit()    { [ -z "$(dpkg --audit 2>&1)" ]; }
+p6_py()       { readlink /usr/local/bin/python3 2>/dev/null | grep -q 'python3\.12$'; }
+
+chk 'DM8 DmServiceDMSERVER active'   systemctl is-active --quiet DmServiceDMSERVER
+chk 'DM8 DmAPService active'         systemctl is-active --quiet DmAPService
+chk 'DM8 端口 5236 监听'             p6_5236
+chk 'DM8 V$INSTANCE=DMSERVER'        p6_instance
+chk 'DM8 dm.key=kit dm5D01220176.key' p6_key
+chk 'DM8 License 到期非空'           p6_license
+chk 'QDM libqsqldm.so 在位'          test -f "$QDM_SO"
+chk 'QDM ldd 无 not found'           p6_qdm_ldd
+chk 'PHMAPP 账号在位'                p6_phmapp
+chk 'phm dm.ini 在位'                test -f /home/kylin/.config/phm/dm.ini
+chk 'phm-app.service 在位'           test -f /etc/systemd/system/phm-app.service
+chk 'qmake -v 含 Qt 5.14.2'          p6_qmake
+chk 'qtcreator 已装（dpkg -s）'      dpkg -s qtcreator
+chk '/opt/pycharm 在位'              test -e /opt/pycharm
+chk '/usr/local/bin/pycharm 软链'    test -L /usr/local/bin/pycharm
+chk '内核/GPU 五条'                  verify_kernel_gpu
+chk '电源 kpm 单元 inactive'         p6_kpm_unit
+chk '电源 kpm 进程空'                p6_kpm_proc
+chk '电源 CPU 逐核 performance'      p6_gov
+chk '电源 SATA 逐口 max_performance' p6_sata
+chk '电源 睡眠四 target masked'      p6_masked
+chk '电源 dconf 会话值生效'          p6_dconf
+chk '音量 Master [100%][on]'         p6_vol
+chk '系统 dpkg --audit 无输出'       p6_audit
+chk '系统 python3→3.12'              p6_py
+if [ "$P6_FAILS" -eq 0 ]; then
+  printf "\n${C_G}================= PROVISION-ALL-GREEN（206 整机总装完成·重启后全量总验通过） =================${C_0}\n"
+else
+  fail "总验 $P6_FAILS 项 FAIL（见上 [FAIL] 行）——逐项修复后重跑 P6"
+fi
 fi

@@ -7,9 +7,9 @@
 
 | 文件 | 用途 |
 |---|---|
-| `dm8_20260324_FTarm_kylin10_sp1_64.iso` | DM8 安装镜像（FTarm 专用，含 DMInstall.bin） |
-| `dm8_20260324_FTarm_kylin10_sp1_64.iso_SHA256.txt` | 镜像校验（GBK 编码，脚本会自动提取哈希比对） |
-| `dmE301208192.key` | License 授权文件（有效期至 **2027-06-25**） |
+| `dm8_20260312_FTarm_kylin10_sp1_64.iso` | DM8 安装镜像（FTarm 专用，含 DMInstall.bin） |
+| `dm8_20260312_FTarm_kylin10_sp1_64.iso_SHA256.txt` | 镜像校验（GBK 编码，脚本会自动提取哈希比对） |
+| `dm5D01220176.key` | License 授权文件（有效期至 **2027-06-25**，构建横幅 8.4） |
 | `qt_src-3194-20260710.zip` | 达梦官方 Qt QSqlDriver（QDM）源码 |
 | `install_dm8_qt.sh` | 一键部署脚本（见第四节） |
 
@@ -428,7 +428,7 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 
 | 层 | 配置 | 持久化 |
 |---|---|---|
-| 1. kylin-process-manager 拆除 | `kill -9` 守护＋`/etc/xdg/autostart/kylin-process-manager.desktop` → `.disabled`＋两二进制 `chmod -x` | autostart 禁用＋不可执行 |
+| 1. kylin-process-manager 拆除 | `systemctl disable --now kylin-process-manager-daemon.service`＋`systemctl mask` 同单元（真身 `/usr/bin/kylin-process-manager-daemon`；autostart → `.disabled` 保留为辅） | systemd disable+mask（重启不复活，2026-11-20 注记） |
 | 2. systemd 睡眠 | `systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target` | mask（11-19 已做，复核在位） |
 | 3. CPU 调频 | 8 核 `scaling_governor=performance` | `car-machine-perf.service`（kit 有副本，enable 自启） |
 | 4. SATA 链路电源 | `link_power_management_policy=max_performance`（**默认竟是 min_power——链路断开的帮凶**） | 同 service |
@@ -458,5 +458,7 @@ sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停
 - 断点/重启续跑：全阶段幂等（已满足即 [OK] 跳过），fail 即停；P2 换内核或 GPU 驱动后须重启一次，重启后无参重跑自动从 P3 续。
 - g++ 缺失时自动借 apt 隧道安装；隧道未开则提示两步——工作站侧 `ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`（保持会话），设备侧 `sudo bash apt-tunnel.sh on`，再重跑。
 - `PYTHON_VENV` 缺省 `/home/kylin/venvs/phm`；`SYSDBA_PWD`/`PHMAPP_PWD` 等环境变量原样透传（缺省同两 kit 头注）。
+- 音量定型已含：P1 末以会话用户 `amixer -D pulse sset Master 100% unmute` 定最大音量（kylin 构建 pactl 无 set-sink-volume 子命令），P6 复核 `[100%]` `[on]`。
+- P6 总验在最终重启后进行：P5 末落 `/var/lib/provision-206.stamp` 戳记，P6 以 `/proc/uptime` 换算 boot 纪元、须晚于戳记方放行（重启门）；全量断言全绿才打印 `PROVISION-ALL-GREEN`。
 
 > **渲染模式定案（2026-11-20 晚复验）**：**默认 ST**（探针自然通过，GBM 反向流）——kpm 拆除＋五层策略后，显式 ST 与默认 ST 两轮（含跨重启）复验零闪，**无需设置 HX_MAP_RENDER_BACKEND**。勘误：此前"ST×us1.1.10 同步闪"归因有误，真凶为 kylin-process-manager 设备节能动作对 DMA-BUF/fence 同步路径的干扰；us1.1.10 无闪缺陷（WC 当时的"不闪"只是绕开了被干扰的路径）。
