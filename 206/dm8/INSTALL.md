@@ -450,6 +450,6 @@ sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停
 ```
 
 - 阶段：P0 预检（KySec/时钟/g++）→ P1 五层电源防护 → P2 内核 172.166＋ftg340 1.1.10 → P3 五条验证 → P4 双 kit（`../qt5.14.2-env-deploy/install_qt_env.sh` ＋本目录 `install_dm8_qt.sh`）→ P5 PyCharm（tarball 未摆渡即跳过）→ P6 总验。
-- 断点/重启续跑：全阶段幂等（已满足即 [OK] 跳过），fail 即停；P2 装完须重启一次，重启后无参重跑自动从 P3 续。
+- 断点/重启续跑：全阶段幂等（已满足即 [OK] 跳过），fail 即停；P2 换内核或 GPU 驱动后须重启一次，重启后无参重跑自动从 P3 续。
 - g++ 缺失时自动借 apt 隧道安装；隧道未开则提示两步——工作站侧 `ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`（保持会话），设备侧 `sudo bash apt-tunnel.sh on`，再重跑。
 - `PYTHON_VENV` 缺省 `/home/kylin/venvs/phm`；`SYSDBA_PWD`/`PHMAPP_PWD` 等环境变量原样透传（缺省同两 kit 头注）。
