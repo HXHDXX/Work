@@ -43,6 +43,12 @@ sudo env FORCE_UNTAR=1 bash install_qt_env.sh /path/to/qt-env-deploy
 防休眠落位 dconf 锁+systemd mask 逐项只读复核，硬项任一不满足即报错退出；qtcreator 未装、
 libqsqldm.so 缺失为软项仅 warn，2026-11-20 起）。
 
+> **依赖安装为 apt 优先（2026-11-20 起）**：阶段 1 自动试探 apt——现场起 apt 隧道
+> （`206/dm8/apt-tunnel.sh on`）后即全自动按**本机基线**装匹配版本，无版本失配之虞；
+> 离线无隧道时回落 kit 内 deb 逐包兜底（单包失败不级联）。不同 gf/kylin 基线设备
+> **无需改 kit**——版本解析交给 apt，装完过 `dpkg --audit`＋qtcreator/gdb/cmake 存在性
+> 终态门（判例 2026-11-20 .20：整批强装旧基线包致 43 个 iU 半配置、fix-broken 循环移包）。
+
 ## 3. 前提与边界
 
 - **仅限 arm64**（aarch64）：预编译库与 deb 均为 arm64，x86 设备不可用

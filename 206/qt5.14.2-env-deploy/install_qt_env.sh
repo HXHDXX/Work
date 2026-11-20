@@ -53,28 +53,79 @@ if command -v getstatus >/dev/null 2>&1 && getstatus 2>/dev/null | grep -q "^KyS
 fi
 
 # =============================================================================
-stage 1 "离线安装 deb（QtCreator 4.11.0 / 编译依赖 / gdb / cmake）"
+stage 1 "安装 deb 依赖（apt 优先 / kit 兜底：QtCreator / 编译依赖 / gdb / cmake）"
 # =============================================================================
 if [ "$QTC_OK" -eq 1 ] && [ "$DEB_COUNT" -eq 0 ]; then
   info "qtcreator 已安装且无离线包，跳过"
 elif [ "$DEB_COUNT" -gt 0 ]; then
-  # 判例 2026-11-19（基线漂移）：dry-run 预检，强装会留 iU 半配置包且本阶段曾静默放行
-  if ! dpkg --dry-run -i "$KIT_DIR"/debs/*.deb >/tmp/qt_dryrun.log 2>&1; then
-    grep -Ei "dependency|依赖|conflict|architecture" /tmp/qt_dryrun.log | head -5
-    fail "kit debs 与当前系统基线疑似失配（/tmp/qt_dryrun.log）——开 apt 隧道（206/dm8/apt-tunnel.sh on）改走 apt，或按新基线换血 kit debs"
+  # 判例 2026-11-20（.20 新镜像 10.1-2503-bugfix 基线，非 GFB）：整批 dpkg -i kit 内 46 个
+  # GFB 严格 pin 的 dev 包 → 43 个 iU 半配置；无包名 apt-get --fix-broken 又把 X11/GL dev
+  # 家族移除，两轮循环。裁定：安装必须脚本化、确定化、apt 优先（版本交 apt 按本机基线
+  # 解析），kit debs 仅兜底——同 dm8 install_dm8_qt.sh pkgs_ensure 原则（判例 2026-11-19）。
+  # 包名清单逐包 dpkg-deb -f 从 deb 控制域提取，不按文件名猜（同包名多 deb/改名防呆）
+  PKGS=""
+  for d in "$KIT_DIR"/debs/*.deb; do
+    pn=$(dpkg-deb -f "$d" Package 2>/dev/null) || fail "无法读取包名: $d（kit deb 损坏？）"
+    PKGS="$PKGS $pn"
+  done
+  # 移除对账基线：apt/dpkg 解依赖可移除已装包（判例 2026-11-20：fix-broken 移了 X11/GL dev
+  # 全家且静默）——先拍全量已装清单，终态门对账，被移且未复原即 fail
+  BASE_INSTALLED=$(dpkg-query -W -f'${binary:Package}\t${Status}\n' 2>/dev/null | awk -F'\t' '$2=="install ok installed"{print $1}' | sort -u) || true
+  # apt 可达判定取舍：真跑一次 apt-get update 试探（Retries=1＋timeout 防 hang），不选只查
+  # sources 含 127.0.0.1:3142/3143——纸面配置≠隧道真通，试探才反映实际可达性且兼容源直连；
+  # 99tunnel 在位则视为隧道已起不重试探（与 dm8 pkgs_ensure 同）
+  if [ -f /etc/apt/apt.conf.d/99tunnel ] || timeout 20 apt-get update -o Acquire::Retries=1 >/tmp/qt_apt_update.log 2>&1; then
+    # 预存 iU 半配置会让带包名 apt-get install 直接 abort（Unmet dependencies）——先无包名
+    # --fix-broken 复位（同 pkgs_ensure 判例 2026-11-19；fix-broken 可能移包，后续 kit 兜底＋终态门对账）
+    DPKG_STATUS=$(dpkg -l 2>/dev/null) || true
+    grep -q '^iU' <<<"$DPKG_STATUS" && apt-get -y --fix-broken install >/tmp/qt_fixbroken.log 2>&1 || true
+    # 名字预筛：缺名在解析阶段即 fatal 且 --ignore-missing 兜不住（-m 只管归档 404；B 册实测
+    # rc=100 零安装，全批被挤回 kit dpkg -i＝旧事故路径）——逐名探 apt 缓存，缺名直接归 kit 兜底，
+    # apt 只装可解析子集
+    APT_PKGS=""
+    for pn in $PKGS; do
+      apt-cache show -- "$pn" >/dev/null 2>&1 && APT_PKGS="$APT_PKGS $pn"
+    done
+    if [ -n "$APT_PKGS" ] && apt-get install -y --no-install-recommends $APT_PKGS >/tmp/qt_apt_install.log 2>&1; then
+      info "已 apt 安装（可解析 $(echo $APT_PKGS | wc -w)/$(echo $PKGS | wc -w) 包，版本按本机基线解析）"
+    else
+      warn "apt 未全成（/tmp/qt_apt_install.log），逐包对账走 kit 兜底"
+    fi
+  else
+    warn "apt 不可达（/tmp/qt_apt_update.log），离线走 kit debs 兜底"
   fi
-  echo "dpkg 安装 $DEB_COUNT 个 deb ..."
-  if ! dpkg -i "$KIT_DIR"/debs/*.deb >/tmp/qt_debs.log 2>&1; then
-    warn "dpkg 返回非0，检查 /tmp/qt_debs.log（已装新版属正常，致命错误才需处理）"
-    grep -E "^dpkg:.*(错误|error)" /tmp/qt_debs.log | head -5
-  fi
-  dpkg -s qtcreator >/dev/null 2>&1 || fail "qtcreator 安装失败，见 /tmp/qt_debs.log"
+  # kit 兜底：只补未装上的包（防 kit 旧版降级 apt 装的当前基线版）；单包失败仅 warn 不级联整批
+  : >/tmp/qt_dpkg_kit.log
+  for d in "$KIT_DIR"/debs/*.deb; do
+    pn=$(dpkg-deb -f "$d" Package 2>/dev/null) || continue
+    dpkg-query -W -f'${Status}' "$pn" 2>/dev/null | grep -q "install ok installed" && continue
+    dpkg -i "$d" >>/tmp/qt_dpkg_kit.log 2>&1 || warn "kit 兜底失败: $pn（/tmp/qt_dpkg_kit.log，疑似基线失配）"
+  done
+  # 逐包安装丢单次调用内的依赖排序（A 先于其依赖 B 解包→配置失败）——configure -a 补课医治
+  # 顺序性半配置；真失配的包 configure 仍失败，由下述 iU 门拦下
+  dpkg --configure -a >>/tmp/qt_dpkg_kit.log 2>&1 || true
+  # 终态门——半配置残留即 fail，杜绝静默放行（2026-11-20 两轮循环的根源）
   # dpkg -l 输出超管道缓冲时 grep -q 早退触发 SIGPIPE(141)×pipefail 误判（同 dm8 脚本判例）——先落变量再查
   DPKG_STATUS=$(dpkg -l 2>/dev/null) || true
   if grep -q '^iU' <<<"$DPKG_STATUS"; then
     warn "残留 iU 半配置包（基线失配特征）：$(awk '/^iU/{print $2}' <<<"$DPKG_STATUS" | tr '\n' ' ')"
     fail "修复姿势（判例 2026-11-19）：先 bash 206/dm8/apt-tunnel.sh on，再无包名 apt-get -y --fix-broken install，最后对账补装（fix-broken 可能把目标包移除，必须复查）"
   fi
+  DPKG_AUDIT=$(dpkg --audit 2>/dev/null)
+  [ -z "$DPKG_AUDIT" ] || fail "dpkg --audit 残留（半配置包）: $(echo "$DPKG_AUDIT" | head -5 | tr '\n' ' ')"
+  # 终态对账全清单：干净失败（deb 损坏跳过/架构不符/pre-depends 拒装）不留 iU，三件断言拦不住
+  # 移除门：基线内已装包终态不复存在＝被 fix-broken/apt 解依赖移除且未复原（判例 2026-11-20）
+  NOW_INSTALLED=$(dpkg-query -W -f'${binary:Package}\t${Status}\n' 2>/dev/null | awk -F'\t' '$2=="install ok installed"{print $1}' | sort -u) || true
+  REMOVED=$(comm -23 <(printf '%s' "$BASE_INSTALLED") <(printf '%s' "$NOW_INSTALLED") | tr '\n' ' ')
+  [ -z "$REMOVED" ] || fail "本阶段移除了已装包（fix-broken/apt 解依赖，判例 2026-11-20 X11/GL dev 被移）:$REMOVED——查 /tmp/qt_fixbroken.log Remove 行并按需对账补装"
+  MISSING=""
+  for pn in $PKGS; do
+    dpkg-query -W -f'${Status}' "$pn" 2>/dev/null | grep -q "install ok installed" || MISSING="$MISSING $pn"
+  done
+  [ -z "$MISSING" ] || fail "终态缺包（apt 与 kit 均未装上）:$MISSING——查 /tmp/qt_apt_install.log /tmp/qt_dpkg_kit.log"
+  for p in qtcreator gdb cmake; do
+    dpkg -s "$p" >/dev/null 2>&1 || fail "终态缺 $p——apt 与 kit 均未装上（先查 /tmp/qt_dpkg_kit.log）"
+  done
   info "deb 安装完成（qtcreator $(dpkg-query -W -f '${Version}' qtcreator 2>/dev/null)）"
 fi
 
