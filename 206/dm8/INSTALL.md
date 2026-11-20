@@ -388,3 +388,42 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 **apt 判例两则（2026-11-19）**：① `apt --fix-broken install` 必须不带包名——带名会让 iU 包诱导 apt 降级运行库（错误解）；② fix-broken 可能把失配包直接**移除**（当天移了 libgl-dev 全家）——修复后必须对账目标包集合并补装。
 
 **apt 隧道**：现场借道能上网的工作本机：`ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`，设备侧 `sudo bash apt-tunnel.sh on`。
+
+## GPU 驱动栈定型记录（2026-11-20 .30 全谱实测）
+
+**定型配置（172×us1.1.10-kylin43）**，重复安装按此表：
+
+| 件 | 版本 | 指纹（srcversion） | 来源 |
+|---|---|---|---|
+| 内核 | linux-image-5.4.18-172-generic 5.4.18-172.166 | — | deb 已入 kit `debs/`（三件套 sha256 见文件）；重下直链 `http://archive.kylinos.cn/kylin/KYLIN-ALL/pool/main/l/linux/`（172.166 未入 apt 索引，仅直链可装） |
+| GPU ko | ftg340 **1.1.7**（随内核包） | B41991B541BA938DD36A5E2 | linux-modules-extra-5.4.18-172-generic 5.4.18-172.166 |
+| GPU us | ftg340 **1.1.10-kylin43** | — | deb 已入 kit `debs/`（sha256 97a683de…46285b6）；重下 URL：`http://archive.kylinos.cn/kylin/KYLIN-ALL/pool/main/f/ftg340/ftg340_1.1.10-kylin43_arm64.deb` |
+| CAN | mcp251x（随内核包） | D7B56D5E57E118F9CE0A592 | 同内核包（159 以下内核的 mcp251x 是旧源，CAN 不可用——"169 以上才能访问 CAN"） |
+
+**安装与验证**：`sudo dpkg -i ftg340_1.1.10-kylin43_arm64.deb` → 重启 → 验证：`uname -r`＝172、`dpkg -l ftg340`＝1.1.10-kylin43、`modinfo ftg340|grep -E version\|srcversion`＝1.1.7/B41991…、`glmark2-es2` GL_VERSION＝V1.1.10、`ip link` 有 can0/can1。
+
+**回滚路径**：①回 us1.1.5：设备 `/home/kylin/us-backup-115/ftg340-files-1.1.5-kylin33.tgz`（6.6GB 全量文件包，源里已无此版）——⚠️×ko1.1.7＝致命楔死组合，仅取证用；②升 us1.3.0：apt 直接有（但重放压力下有 GPU hang，劣于 1.1.10）。
+
+**配套规律（当日 5 格实测）**：ko×us 必须同代——155 栈（ko1.1.2×us1.1.5）与 87 栈（ko1.1.5×us1.1.7-kylin38）全正常；ko1.1.7×us1.1.5＝GPU hang 多发＋假恢复楔死（整机硬死）；×us1.3.0＝hang 仍在但恢复真实；×us1.1.10＝零 hang＋恢复真实＋**地图图层同步闪烁**（待飞腾答复，工单诉求 1.1.7-kylin38/39 或闪烁修复版）。飞腾 PhyFusion 手册自证："麒麟V10 2503（内核5.4+）配套 FTG340 驱动 1.1.10+"。
+
+**证据包**：`~/Documents/gpu-hang-20261120.tar.gz`（厂商报告）＋`gpu-hang-replay-kit.tar.gz`（复现套件）＋`gpu-hang-internal-appendix.md`（内部存档）；ftg340 全版本谱系见包内 changelog（1.1.7-kylin34/37/38/39 公开池已 404，仅工单可得）。
+
+> **补遗（2026-11-20 晚）**：172 内核三件套（image 17.8M／modules 12.6M／modules-extra 46.4M）已入 kit `debs/` 并镜像至设备 `/home/kylin/kitsave/`（连同 ftg340 1.3.0）；`ftg340_1.1.10` 件在设备 `/home/kylin/`。新机复装顺序：dpkg 三件套内核 → dpkg ftg340 1.1.10 → 重启 → 五条验证。⚠️172.166 不在 apt 索引内（apt-cache madison 查无），只能直链/kit 安装。
+
+> **补遗二（2026-11-20）**：原始升级包 `~/Downloads/5.4.18-172.166_arm64.tar.gz`（实为未压缩 tar）五件 deb 已全部入 kit：三件套 sha256 与池直链件**逐字节一致**（链路验证闭环），headers 两件（all 11.7M＋generic 1.3M）一并补入——若日后需在 172 上编任何核外模块（DKMS 类），headers 必备。新机复装按需五件或最小三件＋us。
+
+## 车机电源策略定型（2026-11-20，高性能不休眠，五层）
+
+**背景事故链**：两次"卡死"（15:54/16:38）验尸同签名——journal 尾部 `kylin-process-manager: subCondition : idle_low_Load enter → suspendEffectEffects` → `kernel: ata1: SATA link down`（ata1＝系统盘 sda！）——模拟导航无人键鼠输入被判 idle，kpm 节能把**系统盘 SATA 链路**掐断，全系统 IO 冻死。与 GPU/驱动无关（两 boot 内核零 GPU hang）。
+
+| 层 | 配置 | 持久化 |
+|---|---|---|
+| 1. kylin-process-manager 拆除 | `kill -9` 守护＋`/etc/xdg/autostart/kylin-process-manager.desktop` → `.disabled`＋两二进制 `chmod -x` | autostart 禁用＋不可执行 |
+| 2. systemd 睡眠 | `systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target` | mask（11-19 已做，复核在位） |
+| 3. CPU 调频 | 8 核 `scaling_governor=performance` | `car-machine-perf.service`（kit 有副本，enable 自启） |
+| 4. SATA 链路电源 | `link_power_management_policy=max_performance`（**默认竟是 min_power——链路断开的帮凶**） | 同 service |
+| 5. UKUI 会话 | `sleep-display-ac=0`、屏保 idle 关；11-19 的 dconf 策略锁层（ag-4137bd）防回写 | gsettings＋dconf 锁 |
+
+**service 安装**：`sudo cp car-machine-perf.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now car-machine-perf.service`
+
+**验证**：`systemctl is-enabled car-machine-perf`（enabled）｜`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`（performance）｜`cat /sys/class/scsi_host/host*/link_power_management_policy`（max_performance）｜`systemctl list-unit-files | grep -E 'sleep|suspend' `（masked）｜`pgrep -f kylin-process-manager`（空）｜`gsettings get org.ukui.screensaver idle-activation-enabled`（false）｜`gsettings get org.ukui.power-manager sleep-display-ac`（0）。
