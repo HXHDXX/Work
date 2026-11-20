@@ -438,6 +438,9 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 
 **验证**：`systemctl is-enabled car-machine-perf`（enabled）｜`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`（performance）｜`cat /sys/class/scsi_host/host*/link_power_management_policy`（max_performance）｜`systemctl list-unit-files | grep -E 'sleep|suspend' `（masked）｜`pgrep -f kylin-process-manager`（空）｜`gsettings get org.ukui.screensaver idle-activation-enabled`（false）｜`gsettings get org.ukui.power-manager sleep-display-ac`（0）。
 
+**判例注记（2026-11-20 .20 实机）**：kpm 拆除正解＝`systemctl disable --now kylin-process-manager-daemon.service`＋`systemctl mask`——真身 `/usr/bin/kylin-process-manager-daemon`；杀进程/禁桌面 autostart/`chmod -x` 均无效（kpm 由该 systemd 单元复活）。
+**perf 单元硬化**：等 sysfs 就绪（30×2s 轮询）＋写后回读断言——oneshot 在 `After=multi-user.target` 即写 cpufreq/SATA sysfs 会【假绿】（sysfs 晚绑定，bash 无 set -e 静默吞写失败，重启后回落 schedutil/min_power）。
+
 ## 八、整机一键总装（provision_206.sh）
 
 > 2026-11-20 新增：把 KySec/时钟/g++ 预检、五层电源防护、内核/GPU 定型栈、双 kit 部署、PyCharm 串成分阶段幂等的总装入口。各阶段判例出处见本文对应各节。

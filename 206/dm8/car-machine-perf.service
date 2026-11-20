@@ -4,7 +4,9 @@ After=multi-user.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c "for c in /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor; do echo performance > $c; done; for h in /sys/class/scsi_host/host*/link_power_management_policy; do echo max_performance > $h; done"
+# 判例 2026-11-20 .20：cpufreq/scsi sysfs 晚绑定，multi-user 即写会静默落空（服务假绿）
+# .20 实机验证版基础上强化逐项回读（评审 B-F1：多核/多口晚到静默跳过）
+ExecStart=/bin/bash -c 'for i in $(seq 1 30); do [ -e /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ] && [ -e /sys/class/scsi_host/host0/link_power_management_policy ] && break; sleep 2; done; for c in /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor; do echo performance > $c || exit 1; done; for h in /sys/class/scsi_host/host*/link_power_management_policy; do echo max_performance > $h || exit 1; done; for c in /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor; do grep -qx performance $c || exit 1; done; for h in /sys/class/scsi_host/host*/link_power_management_policy; do grep -qx max_performance $h || exit 1; done; grep -qx performance /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor || exit 1; grep -qx max_performance /sys/class/scsi_host/host0/link_power_management_policy || exit 1'
 RemainAfterExit=yes
 
 [Install]
