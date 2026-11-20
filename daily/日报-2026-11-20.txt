@@ -1,0 +1,61 @@
+工作日报 2026-11-20（周五）
+================================================
+【今日概览】共 95 次提交，涉及 7 仓：
+主线：opencode-agora(31)、HXNativeApp(23)、Work(17)、.dotfiles(16)、HXRdssSendingQueue(4)、HXMapWidgetNative(3)、issue-agent(1)
+- 今日工作：三线并行——①HXAppPlatform TBQ/TCQ 对等重构走完 W1~W4 终态（设计基线→队列契约→SDK 改名→删迁移兼容），并行清 issue#284/294/295；②Work 仓 206 整机部署硬化：新增 provision_206.sh 分级总装入口、完成形态终验、dm8 逐包兜底＋防降级闸；③opencode-agora v3 连续交付 F122~F135（契约目录→domain→SQLite 存储→message/task 应用服务）。另根治地图 puck 图标抖动、修 notify-owner 正文乱码。
+- 整体进度：TBQ/TCQ W1~W4 已完成（W5a 进行中）；206 脚本面硬化完成、待实机 P6 总验；agora v3 存储与服务层完成并过评审环；issue#284/#295 修复完成。
+- 风险阻塞：issue#294/#295 分支仍在 ag 工作树、未并 HXNativeApp 主干（MSC-26-RW033，git 实查确认）；30 设备 206 环境达梦数据库版本口径未定（会话调研未闭环）。
+- 明日重点：206 整机 provision 实机验证（重启后 P6 全量总验）；TBQ/TCQ W5a 共享仓改名收尾；#294/#295 并主确认；agora v3 后续分册。
+------------------------------------------------
+【工作详录】
+一、HXAppPlatform 应用主线：TBQ/TCQ 对等重构＋issue 修复（HXNativeApp | 23 commits | HXRdssSendingQueue | 4 commits | W1~W4 已完成）
+- 目标：TBQ 与 TCQ 编解码/队列契约对等（频点域、预算函数、命名一致性），同步清 issue 单。
+- 当日进展：
+  · TBQ/TCQ 对等（跨 HXRdssSendingQueue＋HXNativeApp，ag-f9e4b9/971b24/90ae94/51c7b7/47ebb3）：W1 设计文档＋串口 wire 测试设施＋基线裁决＋KEEP 回归（e5a5a60f）；W2 队列契约重构——频点域按命令、统一调度、GBQ 条件契约、TBQ port 透传、typed publish（6869ba1）＋评审轮 2/3（ad7b718/dfc1279）；W3a SDK 机械改名 TcqCodec→RdssCodec、charBudget 家族→tcqBudget 零行为变更（bf062832）；W3b tbqBudget 预算函数＋freq int 化＋CHANGE wire 转绿（52439a97）＋评审轮 1~3（54b79aee/2a2fab4d/d3abdf36）；W4 终态删迁移期兼容 extra_params.freq/GBQ member_count＋TBQ 缺省收紧（61bd84b）。
+  · issue#284 导航起航缩放未按 setZoom 生效＋结束恢复原比例（48bb30f2）＋三层根因与 TestBridge 四坑知识沉淀（5d913cd5）。
+  · issue#294 RDSS 收发件箱邮件持久化到 BD3_connDB.db 并重启回显（de13bf63）＋zmq e2e 修正（ddf9b9fa）＋评审 R1 删库失败保留 UI 行防复活分叉（ce670298）＋知识沉淀（912dcffb）。
+  · issue#295 hx_natie_app.db 落点迁 data/ 子目录（92a0d968）＋迁移失败快速失败＋开库点绝对锚定（90c0dcee）＋落点契约沉淀（8b54e805）＋双库并存显式告警（1927f229）。
+  · TTS matcha 模型部署对齐 <sdk>/models 运行时契约（57ccd68f）；tidy 门失败分型——warning 与 clang-tidy 非零退出分行分计数（2ea94f5b）。
+  · 含队友提交 2 条：qinchuan1 add RDss 1120 #293（fbf504da）、wangfx issue/288 合并（2ae06160）。
+- 当前结果：W1~W4 全部落库过评审；#284/#295 修复完成；#294 功能＋e2e 完成。
+- 产出依据：HXNativeApp 与 HXRdssSendingQueue git log（2026-11-20）。
+- 遗留与下一步：W5a 共享仓内容改名 rdss_codec（ag-ca7fc5，21:45 仍运行）；#294/#295 分支并主。
+二、Work 仓 206 整机部署硬化（Work | 17 commits | 脚本面已完成、待实机验证）
+- 目标：206 麒麟设备整机部署脚本可靠化：总装入口、完成形态终验、包兜底与防降级。
+- 当日进展：
+  · KySec 持久关闭正确形态＝security-switch custom 空模块表（1708b21）；KySec 预关时序＋dimp 单线程判例落档（50d21e8）；数据恢复政策废止后撤 restore runbook（e95b63e）。
+  · 206 GPU 驱动栈/电源策略/调试报告定稿（014c268）；闪屏归属纠正为 kylin-process-manager 而非 us 驱动（64f59d0）。
+  · stage 10 终态验证＋SYSSSO_PWD 支持（28b73e4/12bed89）；debs SHA256SUMS 撤 ftg340 1.3.0 行（1cca823）。
+  · provision_206.sh 分级整机总装入口（1c6023d）＋评审轮修复（9bc864d）；qt-env 阶段 1 apt 优先＋确定化 kit 兜底（076ae11）；dm8 stage 8b 逐包兜底＋防降级闸（3653bca/f98fe88）；car-machine-perf 单元硬化＋kpm/perf 判例（4ba09b5）；P1 kpm systemd 修复＋音量＋重启后 P6 门（7c0ed26/ac8c377：boot_id 门、pgrep comm 截断、assert 加固）。
+- 当前结果：脚本面全部硬化，各 ag 任务过三级评审环（A/B/C 册）。
+- 产出依据：Work 仓 git log（2026-11-20）；ag 任务评审记录。
+- 遗留与下一步：实机 P6 重启后全量总验未跑；30 设备达梦版本口径待定。
+三、opencode-agora v3 存储与应用服务层（opencode-agora | 31 commits | 已完成）
+- 目标：agora v3 由 gate/task/msg 基础设施向存储与服务层推进。
+- 当日进展：F122 gate 全量执行产物与机械失败分型（445d47f/b644963）→F123 verify 语法预检与集成基座注入（a61fe2d/d4b3c90/0379e1d）→F124 task_wait 受控等待登记（929c61f/e4c33a7/025bcff）→F125 诊断通知引用优先级与产物可观测（ec7e6b1）→F126 项目级 verify 预算画像 verify-profiles.json（a22c76c/fd70f59/5318539）→F127 board TUI 明细页状态僵死修复（7e24af6）→F128 v2 契约表征基线 characterization golden（8a18bac/dc8e103/72801aa）→F129 故障注入与差分设施 FaultInjector/TempHome（c899415/99e42ad）→F130 Contract Catalog ToolSpec 目录/校验器（15d60c0）→F131 domain 层实体/状态机/DeliveryPolicy（1393352/8427b59/1fe5b6a）→F132 设施修复（bc68dca）→F133 SQLite 存储 core 14 表 schema/UoW 守卫（fcec3c9/e13ea93/0ce5155）→F134 message/outbox 应用服务 receipt 生命周期/血统补拉/at-least-once（84931c4/0c78c50）→F135 task 应用服务 create 三形态/verify 双路/状态机/cancel 族（52a35be/955fbae/16eb379）。
+- 当前结果：F122~F135 全部落库；F135 过四源评审（OCR＋A/B/C 三分册 20 修）锚绿。
+- 产出依据：opencode-agora git log（445d47f..16eb379）。
+- 遗留与下一步：v3 后续分册（F136+）。
+四、地图组件导航图标抖动根治（HXMapWidgetNative | 3 commits | 已完成）
+- 目标：根治导航中当前位置 fixed 跟随图标抖动。
+- 当日进展：定位为 puck 同步位问题，自定义图层根治（3ebc214）；评审环轮 1 加固——puck 终值可靠补发、纹理 uv 翻转、reload 悬垂指针、GL 状态完整恢复（538c998）；评审证据落盘轮 1 收敛 8/8 处置（4636ff7）。
+- 当前结果：修复落库过评审（ag-022888）。
+- 产出依据：HXMapWidgetNative git log。
+- 遗留与下一步：无。
+五、工具链与知识沉淀（.dotfiles | 16 commits | issue-agent | 1 commit | 已完成）
+- 目标：发信设施可靠性、双机 issue-agent 协作协议、经验库治理。
+- 当日进展：notify-owner 正文改 base64——iCloud 管线把 8bit UTF-8 正文重写为 Latin-1 致 iPhone 乱码，正文与主题同走 7-bit 通道（c1d68ee）；issue-agent 双机认领协议 v2——纯轮询去 webhook、粘住式认领、无自动抢占（0c594c4）＋知识页沉淀（ce4772c）；agent-experience 夜间 groom/judge 报告与 lint 机械修（c2b992e/49d80b0/294524d）；当日经验 capture 11 条。
+- 当前结果：全部落库。
+- 产出依据：.dotfiles 与 issue-agent git log。
+- 遗留与下一步：无。
+------------------------------------------------
+【会话调研工作（未提交）】
+- agora v3 设计预研——runtime 设计评审、契约清单盘点、设计复核三会话（10:47~12:01，Work 目录），结论支撑 F122~F135 开工顺序（产出：opencode 会话）。
+- 30 设备 206 环境——内核与 gf 版本对比、达梦数据库版本口径调研（14:42/19:27/20:14），待与 206 部署要求对齐。
+- ST 导入 INVALID modifier 断流问题定性（19:20，HXNativeApp）——定性完成，未见提交。
+- issue#297 1920x1080 全界面适配底部裁切（ag-8658cd）——评审与截图验证完成，当日未见主仓提交。
+- issue#298 路径导航偏航处理与自选规划方式方案（ag-6f186f）——勘察解答完成。
+- issue#299 图层管理树 FENCE 子节点开关、自检与航迹记录 #define 迁移 config.ini（ag-46f92c/ag-de2b28）——评审完成，未见提交。
+- TitanNavi issue#374 校验和语义澄清、issue#381 ttyS8 双帧头与 2 秒首帧延迟归属——勘察结论已出（会话）。
+================================================
+数据来源：Documents 双轨 git log（2026-11-20）、commit body、opencode 会话 DB
