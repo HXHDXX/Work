@@ -411,28 +411,45 @@ else
   for d in "$DM_DIR"/debs/*.deb; do
     [ -f "$d" ] || continue
     pn=$(dpkg-deb -f "$d" Package 2>/dev/null) || continue
+    # 包名白名单（Debian 字符集）：介质元数据不可信，拦 '-o'/'../*' 类 token 流入 apt/dpkg 参数位
+    [[ "$pn" =~ ^[a-z0-9][a-z0-9+.-]+$ ]] || { warn "跳过异常包名 deb: $(basename "$d")"; continue; }
     DEV_PKGS="$DEV_PKGS $pn"
   done
   if [ -n "$DEV_PKGS" ] && ! pkgs_ensure $DEV_PKGS; then
     # kit 逐包兜底：仅装 apt 失败的包（单包 dpkg，禁整批通配）；单包失败不级联，末尾统一处理
     : >/tmp/dpkg_install.log
     KIT_FAILED=""
+    KIT_RETRY=()
     for pn in $DEV_PKGS; do
       dpkg-query -W -f'${Status}' "$pn" 2>/dev/null | grep -q "install ok installed" && continue
-      deb=$(ls "$DM_DIR"/debs/"$pn"_*.deb 2>/dev/null | head -1)
+      deb=$(ls "$DM_DIR"/debs/"$pn"_*.deb 2>/dev/null | sort -V | tail -1)  # 多版本并存取最新
       [ -n "$deb" ] || { KIT_FAILED="$KIT_FAILED $pn(缺kit deb)"; continue; }
       kitv=$(dpkg-deb -f "$deb" Version 2>/dev/null)
+      [ -n "$kitv" ] || { KIT_FAILED="$KIT_FAILED $pn(kit版本不可读)"; continue; }
       installedv=$(dpkg-query -W -f'${Version}' "$pn" 2>/dev/null)
       # 防降级闸：在位版本更新则不灌 kit 旧版（判例：wget k2<在位 k2.1、icu-devtools k1<在位 k1.7）
       if [ -n "$installedv" ] && dpkg --compare-versions "$installedv" gt "$kitv"; then
         warn "防降级闸：$pn 在位 $installedv > kit $kitv，跳过 kit 兜底"
         continue
       fi
-      dpkg -i "$deb" >>/tmp/dpkg_install.log 2>&1 || KIT_FAILED="$KIT_FAILED $pn"
+      dpkg -i "$deb" >>/tmp/dpkg_install.log 2>&1 || KIT_RETRY+=("$deb")
     done
-    [ -z "$KIT_FAILED" ] || fail "kit 逐包兜底失败:$KIT_FAILED（/tmp/dpkg_install.log）"
+    if [ "${#KIT_RETRY[@]}" -gt 0 ]; then
+      # 首轮失配多为 kit 内依赖后置（DEV_PKGS 按文件名字典序，如 qtcreator 先于 qtcreator-data）：
+      # 残包集中单次 dpkg -i——同一调用先全部解包再按依赖序配置（仅残包集合，非整批通配）
+      dpkg -i "${KIT_RETRY[@]}" >>/tmp/dpkg_install.log 2>&1 \
+        || { dpkg --configure -a >>/tmp/dpkg_install.log 2>&1 || true; }
+      for deb in "${KIT_RETRY[@]}"; do
+        pn=$(dpkg-deb -f "$deb" Package 2>/dev/null)
+        dpkg-query -W -f'${Status}' "$pn" 2>/dev/null | grep -q "install ok installed" || KIT_FAILED="$KIT_FAILED $pn"
+      done
+    fi
+    # 终态门：audit 残留与失败清单末尾统一裁决（残留清单先打屏）
     AUDIT=$(dpkg --audit 2>/dev/null)
-    [ -z "$AUDIT" ] || { printf '%s\n' "$AUDIT"; fail "兜底后 dpkg --audit 有残留半配置包——开 apt 隧道（bash apt-tunnel.sh on）重跑走 apt 路径"; }
+    if [ -n "$KIT_FAILED" ] || [ -n "$AUDIT" ]; then
+      [ -z "$AUDIT" ] || printf '%s\n' "$AUDIT"
+      fail "kit 逐包兜底终态未收敛（失败包:${KIT_FAILED:-无}）——开 apt 隧道（bash apt-tunnel.sh on）重跑走 apt 路径（/tmp/dpkg_install.log）"
+    fi
   fi
   [ -f /usr/include/openssl/ssl.h ] || fail "缺 /usr/include/openssl/ssl.h（libssl-dev 异常），无法构建 _ssl"
   # 2) 找源码包并构建（3.12 系列 ABI 兼容，补丁版本覆盖安全；venv/site-packages 不受影响）
