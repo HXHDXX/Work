@@ -453,3 +453,5 @@ sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停
 - 断点/重启续跑：全阶段幂等（已满足即 [OK] 跳过），fail 即停；P2 换内核或 GPU 驱动后须重启一次，重启后无参重跑自动从 P3 续。
 - g++ 缺失时自动借 apt 隧道安装；隧道未开则提示两步——工作站侧 `ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`（保持会话），设备侧 `sudo bash apt-tunnel.sh on`，再重跑。
 - `PYTHON_VENV` 缺省 `/home/kylin/venvs/phm`；`SYSDBA_PWD`/`PHMAPP_PWD` 等环境变量原样透传（缺省同两 kit 头注）。
+
+> **渲染模式定案（2026-11-20 晚复验）**：**默认 ST**（探针自然通过，GBM 反向流）——kpm 拆除＋五层策略后，显式 ST 与默认 ST 两轮（含跨重启）复验零闪，**无需设置 HX_MAP_RENDER_BACKEND**。勘误：此前"ST×us1.1.10 同步闪"归因有误，真凶为 kylin-process-manager 设备节能动作对 DMA-BUF/fence 同步路径的干扰；us1.1.10 无闪缺陷（WC 当时的"不闪"只是绕开了被干扰的路径）。
