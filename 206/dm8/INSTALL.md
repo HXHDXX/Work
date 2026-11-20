@@ -435,3 +435,21 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 **service 安装**：`sudo cp car-machine-perf.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now car-machine-perf.service`
 
 **验证**：`systemctl is-enabled car-machine-perf`（enabled）｜`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`（performance）｜`cat /sys/class/scsi_host/host*/link_power_management_policy`（max_performance）｜`systemctl list-unit-files | grep -E 'sleep|suspend' `（masked）｜`pgrep -f kylin-process-manager`（空）｜`gsettings get org.ukui.screensaver idle-activation-enabled`（false）｜`gsettings get org.ukui.power-manager sleep-display-ac`（0）。
+
+## 八、整机一键总装（provision_206.sh）
+
+> 2026-11-20 新增：把 KySec/时钟/g++ 预检、五层电源防护、内核/GPU 定型栈、双 kit 部署、PyCharm 串成分阶段幂等的总装入口。各阶段判例出处见本文对应各节。
+
+```bash
+# 前置（KySec enabled 时它拦的就是脚本执行，必须先在 ssh 会话内联执行，勿放进脚本）:
+sudo setstatus disable && sudo security-switch --set custom --list ""
+# 设备上（root）:
+sudo bash provision_206.sh             # 无参=从 P0 自动推进到断点（FAIL 或待重启）
+sudo bash provision_206.sh P5          # 只跑指定阶段（P0~P6）
+sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停在提示）
+```
+
+- 阶段：P0 预检（KySec/时钟/g++）→ P1 五层电源防护 → P2 内核 172.166＋ftg340 1.1.10 → P3 五条验证 → P4 双 kit（`../qt5.14.2-env-deploy/install_qt_env.sh` ＋本目录 `install_dm8_qt.sh`）→ P5 PyCharm（tarball 未摆渡即跳过）→ P6 总验。
+- 断点/重启续跑：全阶段幂等（已满足即 [OK] 跳过），fail 即停；P2 装完须重启一次，重启后无参重跑自动从 P3 续。
+- g++ 缺失时自动借 apt 隧道安装；隧道未开则提示两步——工作站侧 `ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`（保持会话），设备侧 `sudo bash apt-tunnel.sh on`，再重跑。
+- `PYTHON_VENV` 缺省 `/home/kylin/venvs/phm`；`SYSDBA_PWD`/`PHMAPP_PWD` 等环境变量原样透传（缺省同两 kit 头注）。
