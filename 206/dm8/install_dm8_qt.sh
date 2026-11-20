@@ -652,16 +652,18 @@ stage 10 "完成形态终验"
 # =============================================================================
 # 全流程终态只读复核：任一硬项不满足即 fail（fail-fast），全部通过才打印完成 banner
 systemctl is-active --quiet "DmService$INSTANCE_NAME" || fail "终验失败：DmService$INSTANCE_NAME 非 active"
-systemctl is-active --quiet DmAPService || fail "终验失败：DmAPService 非 active"
+# ensure-before-verify：DmAPService 由 root_installer.sh 注册，stage 1~9 未保证在运行（对齐 stage 4 对 DmService 的先启后验手法）
+systemctl enable --now DmAPService >/dev/null 2>&1 || true
+systemctl is-active --quiet DmAPService || fail "终验失败：DmAPService 非 active（存量机缺该 unit 时先跑 $DM_HOME/script/root/root_installer.sh 再重跑）"
 info "服务终态：DmService$INSTANCE_NAME 与 DmAPService 均 active"
 ss -ltn 2>/dev/null | grep -q ":$PORT_NUM " || fail "终验失败：端口 $PORT_NUM 未监听"
 VRFY_INSTANCE=$(printf '%s\nexit\n' 'SELECT INSTANCE_NAME FROM V$INSTANCE;' | "$DM_DISQL" "$DSN" 2>&1)
-echo "$VRFY_INSTANCE" | grep -q "$INSTANCE_NAME" || fail "终验失败：V\$INSTANCE 未返回 $INSTANCE_NAME: $(echo "$VRFY_INSTANCE" | tail -2 | tr '\n' ' ')"
+echo "$VRFY_INSTANCE" | grep -qF -- "$INSTANCE_NAME" || fail "终验失败：V\$INSTANCE 未返回 $INSTANCE_NAME: $(echo "$VRFY_INSTANCE" | tail -2 | tr '\n' ' ')"
 info "实例/端口终态：$INSTANCE_NAME @ :$PORT_NUM"
 # 判例 2026-11-20：不同 key 文件可有相同到期日（dm5D01220176.key 与 dmE301208192.key 同为 2027-06-25）——到期日不能证明 key 已更换，必须 md5 比对
 [ -f "$DM_HOME/bin/dm.key" ] || fail "终验失败：缺 $DM_HOME/bin/dm.key"
 [ "$(md5sum "$DM_HOME/bin/dm.key" | awk '{print $1}')" = "$(md5sum "$KEY" | awk '{print $1}')" ] \
-  || fail "终验失败：dm.key 与介质 $KEY 的 md5 不一致（在位 key 非本次介质 key）"
+  || fail "终验失败：dm.key 与介质 $KEY 的 md5 不一致（在位 key 非本次介质 key；换 key 手工路径: cp \"$KEY\" \"$DM_HOME/bin/dm.key\" 后 systemctl restart \"DmService$INSTANCE_NAME\" 再重跑）"
 info "dm.key 终态：与介质 md5 一致"
 VRFY_EXP=$(printf '%s\nexit\n' 'SELECT EXPIRED_DATE FROM V$LICENSE;' | "$DM_DISQL" "$DSN" 2>&1 | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1)
 [ -n "$VRFY_EXP" ] || fail "终验失败：V\$LICENSE 的 EXPIRED_DATE 为空"
@@ -672,8 +674,8 @@ if ldd "$QT_HOME/plugins/sqldrivers/libqsqldm.so" 2>/dev/null | grep -q "not fou
 fi
 info "QDM 驱动终态：在位且依赖全解析"
 # PHMAPP 属 206 完成形态必备（stage 8g 无条件规范阶段；2026-11-20 用户确认）
-printf '%s\nexit\n' "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | "$DM_DISQL" "$DSN" 2>&1 | grep -q "PHMAPP" \
-  || fail "终验失败：数据库用户 PHMAPP 不存在"
+VRFY_PHM=$(printf '%s\nexit\n' "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | "$DM_DISQL" "$DSN" 2>&1)
+echo "$VRFY_PHM" | grep -qF "PHMAPP" || fail "终验失败：数据库用户 PHMAPP 不存在: $(echo "$VRFY_PHM" | tail -2 | tr '\n' ' ')"
 [ -f /home/kylin/.config/phm/dm.ini ] || fail "终验失败：缺 /home/kylin/.config/phm/dm.ini"
 [ -f /etc/systemd/system/phm-app.service ] || fail "终验失败：缺 /etc/systemd/system/phm-app.service"
 info "PHM 业务面终态：PHMAPP + dm.ini + phm-app.service 均就位"
@@ -682,11 +684,11 @@ DPKG_AUDIT=$(dpkg --audit 2>/dev/null)
 [ -z "$DPKG_AUDIT" ] || fail "终验失败：dpkg --audit 有残留（半配置包）: $(echo "$DPKG_AUDIT" | head -5 | tr '\n' ' ')"
 info "dpkg --audit 干净"
 if [ -n "$PYTHON_VENV" ]; then
-  # 复用 8c 干净环境手法，以属主身份真连一次
+  # 复用 8c 干净环境手法，以属主身份真连一次；密码经环境变量传递（免疫单引号密码，不落 /proc cmdline）
   runuser -u "$(stat -c %U "$PYTHON_VENV" 2>/dev/null || echo root)" -- \
-    env -i PATH=/usr/bin:/bin "$PYTHON_VENV/bin/python" -c "
-import dmPython
-c = dmPython.connect(user='SYSDBA', password='$SYSDBA_PWD', server='127.0.0.1', port=$PORT_NUM)
+    env -i PATH=/usr/bin:/bin DM_VRFY_PWD="$SYSDBA_PWD" "$PYTHON_VENV/bin/python" -c "
+import os, dmPython
+c = dmPython.connect(user='SYSDBA', password=os.environ['DM_VRFY_PWD'], server='127.0.0.1', port=$PORT_NUM)
 print('PY_DM_VRFY_OK')
 c.close()" 2>/dev/null | grep -q "PY_DM_VRFY_OK" \
     || fail "终验失败：dmPython 属主真连失败（venv=$PYTHON_VENV）"
