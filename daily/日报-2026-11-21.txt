@@ -1,0 +1,67 @@
+工作日报 2026-11-21（周六）
+================================================
+【今日概览】共 79 次提交，涉及 12 仓：
+主线：opencode-agora(48)、.dotfiles(14)、HXAppPlatform 集群(9)、issue-agent(4)、Work(3)、coding-gates(1)
+- 今日工作：①opencode-agora v3 GitStore 迁移一日贯通 F137~F157——schema 事务化/legacy 迁移器/CLI/服务器组装/e2e 差分器打底，Git 记账垂直切片（CAS/幂等/重放校验）→Phase 2 服务族平移（timer/credential/TaskService/GateDelivery）→Phase 3 cutover 离线操作，每册过评审环；②HXAppPlatform TBQ/TCQ 对等收官：W5b/W5c submodule 迁移 rdss_codec＋W6 插件发布，根治 maplibre availableImages SIGSEGV，渲染门限提至 25fps；③Work 206 装机固化三条（音量双层断言/任务栏 hidepanel/缩放 150%）；issue-agent 监控与评论授权执行落地。
+- 整体进度：GitStore F137~F157 全部落库过评审环；TBQ/TCQ「人必须做的」事项全部清零、剩实机验证清单；206 三条固化已并 master 双远端；issue-agent T1~T4 全落地双远端同步。
+- 风险阻塞：维护窗动作未执行（issue-agent 两实例重装＋agorad install.sh 重跑，看板空窗稍纵即逝）；30 设备仓 origin 推送待拍板（ahead=6 含他人在途 F147）；无声音故障定性物理层（功放/接线），软件侧无解。
+- 明日重点：执行维护窗（重装 issue-agent 实例＋agorad install.sh＋自检）；GitStore 后续分册；TBQ/TCQ 实机验证清单（待板卡上架）；ST 断流设备恢复后复验。
+------------------------------------------------
+【工作详录】
+一、opencode-agora v3 GitStore 存储迁移（opencode-agora | 48 commits | F137~F157 已落库、维护窗待执行）
+- 目标：v3 存储从 SQLite 迁到 Git 后端（GitStore），全程与 v2/v3 等价可差分，配 agorad 治理加固。
+- 当日进展：
+  · 基座与迁移（F137~F140）：schema v4/status_records/迁移 IMMEDIATE 事务化/porcelain 单源（a6af32f/7bac4c4）；health/auth 平移＋评审环四源 14 修（8eea537/b3d7d3d/2da0640/a859a4c）；legacy 迁移器快照/字段映射/quarantine/结构化报告（2a1cbe9）；切换/导出/备份 CLI——export 派生重建/backup 热备清扫/switch 完整性门互换/rollback 隔离（54c1d9a/466f3f1）。
+  · 适配与组装（F141~F143）：v2 适配层五向翻译（d45898f/b4b4206）；v3 服务器组装/传输/MCP 壳（3085d50）；v2/v3 stub 等价 e2e 差分器＋分类面重构＋第六族裁定落地（c41cf03~8bc7a13 六笔）。
+  · 服务与计时（F144~F145）：等价对齐修复（a8af454）；timer 服务契约/两级扫描/触发事务/竞态（1ff4bc3/febd0f7/e2f490a）。
+  · GitStore 核心（F147/F149）：Phase 0/1 git 记账垂直切片——bare journal/UoW overlay/CAS/幂等/重放校验/谓词白名单（3c9884a/d6957fc/1d5afba）；backend differential harness——SQLite-v3 vs GitStore 严格差分＋两轮加固（048c6cb/5ed1728/dc64bfe）。
+  · Phase 2 服务族平移（F150~F156）：timer 仓库版本化对象（bc96158）；credential 生命周期外部密钥/tombstone/AuthService（d465e61/c3b1d7d）；TaskService 生命周期/重派密钥（1abd23d/55b7ed0）；artifacts/events＋GateVerify（21b5ee0）；GateDelivery 三模式＋交付差分（91e843b）；V3Stack backend 选择＋Git 生命周期（4bcfabe/e0d1aef）；legacy 迁移至 Git target＋artifact 证据围栏/symlink 加固/../穿越拒绝（d862eb8/b8c8531/ca450fd）。
+  · Phase 3 cutover（F157）：git backend offline operations＋manifest 形状闸（e93c598/ad768f6）。
+  · agorad 治理：env 删除 _reclaim_env 审计漏斗（9f76c98→主仓 d3d86a8）；worktree 落位闸＋错位存量巡检 CLI（75896fd→aef0336）；wtscan -z bytes 口径＋评审环锚修正（b9d2546→ade1c27）；v3 侧审计漏斗恢复/CLI 换行转义/reqs 台账 patch-equivalent（91a2838/c147b1f/4c45602）。
+- 当前结果：F137~F157 全部落库，每册过评审环（多轮修）；agorad 增量同步主仓 ade1c27；看板在飞/失败/阻塞全空，维护窗条件已满足。
+- 产出依据：opencode-agora git log（a6af32f..ad768f6，feat-gitstore/ag-2c0b3b 工作树）；主仓 d3d86a8..ade1c27。
+- 遗留与下一步：维护窗内 issue-agent 重装 hxnativeapp＋titannavi 两实例（main@e025cfb）＋agorad 跑 ./install.sh（main@ade1c27）并重启自检；origin 推送待拍板。
+二、HXAppPlatform TBQ/TCQ 对等收官与地图渲染修复（HXAppPlatform 7 仓 | 9 commits | 已完成、剩实机验证）
+- 目标：tcq_codec→rdss_codec submodule 迁移收官，队列/解析插件多平台发布，根治渲染崩溃与卡顿。
+- 当日进展：
+  · W5b 队列仓 submodule 迁移 libs/rdss_codec 死链修复（1322307）；W5c 解析仓同步迁移（d56b9a3）。
+  · W6 队列插件 linux 发布 source 1322307（0c031d7）；TBQ 修复（2cc439d/c9c131b——c9c131b 多平台 18 文件：linux/oh/windows 一次出齐）。
+  · maplibre availableImages 快照 eager 发布＋原子交接，修 getRenderTilesSortedByYPosition 3x SIGSEGV（0885ca13d）；lib 仓同步（61289aa）。
+  · HXNativeApp 渲染门限默认 15fps→25fps（RENDER_INTERVAL_MS 66→40，47413835）；移除打包清单无引用 huayan 死重模型（ab1eb362）。
+- 当前结果：本项目「人必须做的」事项全部清零——九任务 W1~W6 全 merged＋已推、双插件预构建发布、终验二轮绿、worktree 清理完。
+- 产出依据：七仓 git log（2026-11-21）；charBudget/发布盘点会话（ses_e098d8a5）。
+- 遗留与下一步：实机验证清单（Lf1-3 超限边界/Lf4-5 通播可行性/TBQ port 实机/area_flag 语义/队列默认路径/TCQ freq 档位）待板卡上架。
+三、Work 206 装机固化（Work | 3 commits | 已完成、已推双远端）
+- 目标：Kylin 双机任务栏遮挡与音量假绿根治，固化进 206 provision。
+- 当日进展：
+  · 双因定位：hidepanel 开关差异（遮挡直接原因）＋scaling 125%/150% 差异（窗口不满屏）；.20 已对齐 .30，实测全屏无遮挡（窗口 1920x1107、面板缩 3px）。
+  · 音量双层 set/assert（pulse x hw）——单层断言假绿（hw Master 实为 61%）修复，P6 分层 [OK] 断言（p6_vol/p6_vol_hw）＋QT_ENV_KIT 路径参数化（5f3c69f）。
+  · UKUI 任务栏 hidepanel（abf7d55）＋显示缩放 150%（77255fb）固化 provision_206.sh P1 层5＋P6 验证＋INSTALL.md。
+- 当前结果：三条合入 master 并推 origin＋ff；决策记忆、wiki reported.md、INSTALL.md 判例注记落档。
+- 产出依据：Work git log（5f3c69f/abf7d55/77255fb）；Kylin 双机诊断会话（ses_e034acc9）。
+- 遗留与下一步：应用侧缺陷未根治——窗口高度随字体 DPI 推算而非锚定屏幕几何、MAXIMIZED 而非真 FULLSCREEN，换屏仍会不满屏，建议反馈应用团队。
+四、issue-agent 监控与授权执行（issue-agent | 4 commits | 已完成、待维护窗重装）
+- 目标：堵 #294 类丢监控，建死等检测与评论授权执行链。
+- 当日进展：T1 盘点补登记（2f2ae6f）；T3 台账活跃任务每轮重登＋死等检测＋issue 升级卡（2f2ae6f/55c9890）＋竞态/泄漏/注入加固（87c095f）；T4 面板批准 task_update 裁定以 root 凭据执行——零 LLM/白名单/单用途（e025cfb）。
+- 当前结果：T1~T4 全落地，origin 两仓同步完成。
+- 产出依据：issue-agent git log（2f2ae6f..e025cfb）。
+- 遗留与下一步：维护窗内从 main@e025cfb 重装两实例并重启。
+五、经验记忆治理与技能演化（.dotfiles | 14 commits | coding-gates | 1 commit | 已完成）
+- 目标：经验库夜间治理自动化与写后自查规则固化。
+- 当日进展：夜间 groom/judge 报告（afed427/08ffb73/ddfbe30）；经验 capture 9 条（e003f48~3788ee1）；post-write code-recall 自查规则——「空结果先判健康：故障空显式上报，禁静默按空即过放行（2026-11-21 形状假设乌龙实证）」定稿 coding-gates recall-check（b72c577/bdd507e）；req-gate 增加 zero-shared critique step（5792f9d）。
+- 当前结果：规则双仓落地（coding-gates 定稿＋dotfiles 指针），verify 断言 D1 机械验证段落存在。
+- 产出依据：.dotfiles/coding-gates git log；ag-b43219/ag-06bddf 两单。
+- 遗留与下一步：无。
+------------------------------------------------
+【会话调研工作（未提交）】
+- Serena 开发作用评估——结论：保持自主调用形态，全局经验工作流照旧（产出位置：Work 会话 ses_e020ca741ffe）
+- Agora 终审流程可移植性——结论：可移植的是契约（输入 diff＋断言清单、输出带 severity 的 findings）非 agent；若立项，形态为判据真源一份（review-loop.md）＋各 harness 薄绑定，且须先有具体事故再立（产出位置：Work 会话 ses_e02188ee1ffe）
+- 结对编程实时建议 agent 必要性——结论：并入 recall-check「空结果先判健康」边界，转派 ag-b43219/ag-06bddf 已落地为提交（产出位置：coding-gates recall-check.md）
+- 30 设备内核与 gf 版本对比——迟到部署回执：52e0dcee 上机/ST 挂载/应用重启 ✓；待决：origin 推送（ahead=6 含在途 F147）与 install.sh 重跑时机（产出位置：Work 会话 ses_e09529ffaffe）
+- 30 设备 206 环境达梦数据库版本更换——完成：备份收口，坑位入记忆（vsftpd 纯文件名列表/并行度上限/无 lftp 的 curl 镜像姿势）（产出位置：Work 会话 ses_e0819912cf）
+- frp 客户端连接中断排查——看门狗上线：frpc-watchdog.sh＋systemd user timer 周期 5min（健康态不误杀/手动停不拉起/谓词两极验证 ✓）；假死诱因未知（日志已轮转），属自愈兜底而非根除（产出位置：~/.frp/frpc-watchdog.sh、~/.config/systemd/user/frpc-watchdog.*）
+- hx-native-app 无声音排查——分界测试三路全无声（HDMI/耳机/裸 ALSA speaker-test），根因物理层（喇叭/功放接线或供电，功放使能 GPIO 是否需驱动拉高待原理图确认）；现场已恢复原状（产出位置：Work 会话 ses_e03acea05ff）
+- arm64 打包残留 ttsplayer-1.0.0——部署树目录已清、后续构建不再生成；设备端 /opt/hx-native-app 需手动删一次（产出位置：HXNativeApp 会话 ses_e03abba1ef）
+- ST 导入 INVALID modifier 断流——定性排查中设备 .20 SSH 失联（疑似关机/断网），已部署包与验证日志在盘，待恢复联网复验（产出位置：HXNativeApp 会话 ses_e075c3c75f）
+================================================
+数据来源：Documents/Work、HXAppPlatform 七仓、opencode-agora、issue-agent、.dotfiles、coding-gates git log（2026-11-21，双轨去重）；opencode session_v2 会话库直查（69 会话剔除 subagent 碎会话）
