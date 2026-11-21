@@ -432,11 +432,11 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 | 2. systemd 睡眠 | `systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target` | mask（11-19 已做，复核在位） |
 | 3. CPU 调频 | 8 核 `scaling_governor=performance` | `car-machine-perf.service`（kit 有副本，enable 自启） |
 | 4. SATA 链路电源 | `link_power_management_policy=max_performance`（**默认竟是 min_power——链路断开的帮凶**） | 同 service |
-| 5. UKUI 会话 | `sleep-display-ac=0`、屏保 idle 关；11-19 的 dconf 策略锁层（ag-4137bd）防回写 | gsettings＋dconf 锁 |
+| 5. UKUI 会话 | `sleep-display-ac=0`、屏保 idle 关；11-19 的 dconf 策略锁层（ag-4137bd）防回写、任务栏 hidepanel=true（判例 2026-11-21，面板自持设置无回写风险，不入 dconf 锁） | gsettings＋dconf 锁 |
 
 **service 安装**：`sudo cp car-machine-perf.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now car-machine-perf.service`
 
-**验证**：`systemctl is-enabled car-machine-perf`（enabled）｜`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`（performance）｜`cat /sys/class/scsi_host/host*/link_power_management_policy`（max_performance）｜`systemctl list-unit-files | grep -E 'sleep|suspend' `（masked）｜`pgrep -f kylin-process-manager`（空）｜`gsettings get org.ukui.screensaver idle-activation-enabled`（false）｜`gsettings get org.ukui.power-manager sleep-display-ac`（0）。
+**验证**：`systemctl is-enabled car-machine-perf`（enabled）｜`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`（performance）｜`cat /sys/class/scsi_host/host*/link_power_management_policy`（max_performance）｜`systemctl list-unit-files | grep -E 'sleep|suspend' `（masked）｜`pgrep -f kylin-process-manager`（空）｜`gsettings get org.ukui.screensaver idle-activation-enabled`（false）｜`gsettings get org.ukui.power-manager sleep-display-ac`（0）｜`gsettings get org.ukui.panel.settings hidepanel`（true）。
 
 **判例注记（2026-11-20 .20 实机）**：kpm 拆除正解＝`systemctl disable --now kylin-process-manager-daemon.service`＋`systemctl mask`——真身 `/usr/bin/kylin-process-manager-daemon`；杀进程/禁桌面 autostart/`chmod -x` 均无效（kpm 由该 systemd 单元复活）。
 **perf 单元硬化**：等 sysfs 就绪（30×2s 轮询）＋写后回读断言——oneshot 在 `After=multi-user.target` 即写 cpufreq/SATA sysfs 会【假绿】（sysfs 晚绑定，bash 无 set -e 静默吞写失败，重启后回落 schedutil/min_power）。

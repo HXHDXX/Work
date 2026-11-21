@@ -130,6 +130,11 @@ if id kylin >/dev/null 2>&1; then
     && runuser -u kylin -- dbus-launch gsettings set org.ukui.screensaver idle-activation-enabled false 2>/dev/null \
     && info "层5 UKUI sleep-display-ac=0 / idle-activation-enabled=false（kylin）" \
     || warn "gsettings 写入失败（无 dbus 会话？P4 qt kit 的 dconf 策略锁会兜底）"
+  # 任务栏隐藏（车机全屏形态）：面板常驻置顶会遮挡应用底部（判例 2026-11-21 .20/.30 对照，hidepanel=true 缩 3px 藏底边）
+  # 面板自持设置无守护回写，不入 dconf 策略锁；下次登录/面板重启生效
+  runuser -u kylin -- dbus-launch gsettings set org.ukui.panel.settings hidepanel true 2>/dev/null \
+    && info "层5 UKUI 任务栏 hidepanel=true（kylin）" \
+    || warn "hidepanel 写入失败"
 else
   warn "缺 kylin 用户，层5 gsettings 跳过"
 fi
@@ -276,6 +281,8 @@ p6_dconf()    {  # 会话内生效值（会话守护内存配置才是真状态�
   as_sess gsettings get org.ukui.screensaver idle-delay 2>/dev/null | grep -x -e 0 -e 'uint32 0' || return 1
   as_sess gsettings get org.ukui.power-manager sleep-display-ac 2>/dev/null | grep -x -e 0 -e 'uint32 0'
 }
+p6_panel()    { ukui_sess_env || return 1
+  as_sess gsettings get org.ukui.panel.settings hidepanel 2>/dev/null | grep -x true; }
 p6_vol()      { local o; ukui_sess_env || return 1; o=$(as_sess amixer -D pulse sget Master 2>/dev/null) || return 1
   printf '%s' "$o" | grep '\[100%\]' && printf '%s' "$o" | grep '\[on\]'; }
 p6_vol_hw()   { local o; o=$(amixer -c 0 sget Master 2>/dev/null) || return 1
@@ -305,6 +312,7 @@ chk '电源 CPU 逐核 performance'      p6_gov
 chk '电源 SATA 逐口 max_performance' p6_sata
 chk '电源 睡眠四 target masked'      p6_masked
 chk '电源 dconf 会话值生效（须桌面会话在位）' p6_dconf
+chk 'UKUI 任务栏隐藏 hidepanel=true（须桌面会话在位）' p6_panel
 chk '音量 pulse Master [100%][on]（须桌面会话在位）' p6_vol
 chk '音量 hw Master [100%][on]'                   p6_vol_hw
 chk '系统 dpkg --audit 无输出'       p6_audit
