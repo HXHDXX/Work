@@ -135,6 +135,10 @@ if id kylin >/dev/null 2>&1; then
   runuser -u kylin -- dbus-launch gsettings set org.ukui.panel.settings hidepanel true 2>/dev/null \
     && info "层5 UKUI 任务栏 hidepanel=true（kylin）" \
     || warn "hidepanel 写入失败"
+  # 显示缩放 150%（判例 2026-11-21）：应用窗口高度随字体 DPI 推算，100%/125% 均不满屏，144dpi 才盖满（96×1.5）
+  runuser -u kylin -- dbus-launch gsettings set org.ukui.SettingsDaemon.plugins.xsettings scaling-factor 1.5 2>/dev/null \
+    && info "层5 UKUI 显示缩放 scaling-factor=1.5（kylin）" \
+    || warn "scaling-factor 写入失败"
 else
   warn "缺 kylin 用户，层5 gsettings 跳过"
 fi
@@ -283,6 +287,8 @@ p6_dconf()    {  # 会话内生效值（会话守护内存配置才是真状态�
 }
 p6_panel()    { ukui_sess_env || return 1
   as_sess gsettings get org.ukui.panel.settings hidepanel 2>/dev/null | grep -x true; }
+p6_scale()    { ukui_sess_env || return 1
+  as_sess gsettings get org.ukui.SettingsDaemon.plugins.xsettings scaling-factor 2>/dev/null | grep -x 1.5; }
 p6_vol()      { local o; ukui_sess_env || return 1; o=$(as_sess amixer -D pulse sget Master 2>/dev/null) || return 1
   printf '%s' "$o" | grep '\[100%\]' && printf '%s' "$o" | grep '\[on\]'; }
 p6_vol_hw()   { local o; o=$(amixer -c 0 sget Master 2>/dev/null) || return 1
@@ -313,6 +319,7 @@ chk '电源 SATA 逐口 max_performance' p6_sata
 chk '电源 睡眠四 target masked'      p6_masked
 chk '电源 dconf 会话值生效（须桌面会话在位）' p6_dconf
 chk 'UKUI 任务栏隐藏 hidepanel=true（须桌面会话在位）' p6_panel
+chk 'UKUI 显示缩放 scaling-factor=1.5（须桌面会话在位）' p6_scale
 chk '音量 pulse Master [100%][on]（须桌面会话在位）' p6_vol
 chk '音量 hw Master [100%][on]'                   p6_vol_hw
 chk '系统 dpkg --audit 无输出'       p6_audit
