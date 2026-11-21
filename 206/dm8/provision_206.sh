@@ -135,11 +135,15 @@ else
 fi
 # 音量定型（2026-11-20 用户裁定：最大音量纳入校验脚本）
 # 判例：kylin 构建 pactl 的 set-sink-volume 子命令不可用（list 正常、set 报"未指定有效的命令"），amixer -D pulse 为验证可行路径（.20 实机）
+# 判例：双层出声链（pulse×hw），单层断言即假绿（2026-11-21）
 if ukui_sess_env; then
-  VOL_OUT=$(as_sess amixer -D pulse sset Master 100% unmute 2>/dev/null) \
-    && printf '%s' "$VOL_OUT" | grep -q '\[100%\]' && printf '%s' "$VOL_OUT" | grep -q '\[on\]' \
-    && info "音量定型 Master=100% unmute（${SESS_USER} 会话）" \
-    || fail "音量定型回读未含 [100%]/[on]（amixer -D pulse 异常）"
+  as_sess amixer -D pulse sset Master 100% unmute >/dev/null 2>&1
+  amixer -c 0 sset Master 100% unmute >/dev/null 2>&1   # hw Master 为 Mono 量程 0-80，100% 由 amixer 换算
+  VOL_P=$(as_sess amixer -D pulse sget Master 2>/dev/null); VOL_H=$(amixer -c 0 sget Master 2>/dev/null)
+  printf '%s' "$VOL_P" | grep -q '\[100%\]' && printf '%s' "$VOL_P" | grep -q '\[on\]' \
+    && printf '%s' "$VOL_H" | grep -q '\[100%\]' && printf '%s' "$VOL_H" | grep -q '\[on\]' \
+    && info "音量定型 Master=100% unmute 双层（pulse×hw，${SESS_USER} 会话）" \
+    || fail "音量定型双层回读未含 [100%]/[on]（pulse: amixer -D pulse / hw: amixer -c 0）"
 else
   warn "无 ukui 桌面会话，音量定型跳过（P6 重启后会话在位时终验）"
 fi
@@ -184,8 +188,9 @@ fi
 fi
 if want P4; then
 stage 4 "双 kit 部署（qt5.14.2-env-deploy + dm8_qt）"
-QT_KIT="$SCRIPT_DIR/../qt5.14.2-env-deploy"
-[ -f "$QT_KIT/install_qt_env.sh" ] || fail "未找到 $QT_KIT/install_qt_env.sh（kit 结构不符）"
+# kit 路径可用 QT_ENV_KIT 覆盖（sudo 会清环境，须 sudo env 显式传）: sudo env QT_ENV_KIT=/home/kylin/kit-206/qt-env bash provision_206.sh
+QT_KIT="${QT_ENV_KIT:-$SCRIPT_DIR/../qt5.14.2-env-deploy}"
+[ -f "$QT_KIT/install_qt_env.sh" ] || fail "未找到 $QT_KIT/install_qt_env.sh——按仓库布局摆放目录（$SCRIPT_DIR/../qt5.14.2-env-deploy），或设 QT_ENV_KIT 指向 kit"
 [ -f "$SCRIPT_DIR/install_dm8_qt.sh" ] || fail "未找到 $SCRIPT_DIR/install_dm8_qt.sh（kit 结构不符）"
 export PYTHON_VENV="${PYTHON_VENV:-/home/kylin/venvs/phm}"
 bash "$QT_KIT/install_qt_env.sh" || fail "install_qt_env.sh 失败——单跑定位: sudo bash $QT_KIT/install_qt_env.sh"
@@ -273,6 +278,8 @@ p6_dconf()    {  # 会话内生效值（会话守护内存配置才是真状态�
 }
 p6_vol()      { local o; ukui_sess_env || return 1; o=$(as_sess amixer -D pulse sget Master 2>/dev/null) || return 1
   printf '%s' "$o" | grep '\[100%\]' && printf '%s' "$o" | grep '\[on\]'; }
+p6_vol_hw()   { local o; o=$(amixer -c 0 sget Master 2>/dev/null) || return 1
+  printf '%s' "$o" | grep '\[100%\]' && printf '%s' "$o" | grep '\[on\]'; }
 p6_audit()    { [ -z "$(dpkg --audit 2>&1)" ]; }
 p6_py()       { readlink /usr/local/bin/python3 2>/dev/null | grep 'python3\.12$'; }
 
@@ -298,7 +305,8 @@ chk '电源 CPU 逐核 performance'      p6_gov
 chk '电源 SATA 逐口 max_performance' p6_sata
 chk '电源 睡眠四 target masked'      p6_masked
 chk '电源 dconf 会话值生效（须桌面会话在位）' p6_dconf
-chk '音量 Master [100%][on]（须桌面会话在位）' p6_vol
+chk '音量 pulse Master [100%][on]（须桌面会话在位）' p6_vol
+chk '音量 hw Master [100%][on]'                   p6_vol_hw
 chk '系统 dpkg --audit 无输出'       p6_audit
 chk '系统 python3→3.12'              p6_py
 if [ "$P6_FAILS" -eq 0 ]; then
