@@ -1,117 +1,71 @@
-工作日报 2026-11-22（自动兜底版）
+工作日报 2026-11-22（周日）
 ================================================
-
-【说明】agent 路径失败，此为脚本兜底档案版（按仓分组列提交）。
-
-### HXNativeApp（41）
-  02:15 189d55c2 fix(app): EPI 地图标注标题改为收信方ID-时间（issue#302） (#307)
-  07:23 4d69d586 issue/299-fix (#320)
-  09:57 9aef5200 Merge branch 'issue/294-fix' into MSC-26-RW03321:32
-  10:00 cf670e21 Merge branch 'issue/295-fix' into MSC-26-RW033
-  10:03 aef00572 Merge branch 'issue/297-fix' into MSC-26-RW033
-  10:09 beaf4cac Merge branch 'issue/301-fix' into MSC-26-RW033
-  10:32 bf5845f7 Merge branch 'issue/299-fix' into MSC-26-RW033
-  11:10 8663b86d docs(issue-agent): issue#298 偏航自动重规划链三重守卫与自选方式设计沉淀
-  11:12 a53f8133 perf(app): 删除渲染门限默认注入，RENDER_INTERVAL_MS 回退地图兜底
-  11:12 512a894d issue/309-fix (#329)
-  11:13 59a15c04 issue/314-fix (#330)
-  11:15 95012a53 issue/315-fix (#331)
-  11:16 7ef6c605 docs(config): config.ini 逐项补注释——数据含义与修改效果
-  11:17 be09f1a8 docs(issue-agent): issue#299 config.ini 注释补全 log-only 记录
-  11:22 705a2865 fix(app): 路径策略选择对话框触摸友好加间距加大尺寸（issue#309）
-  11:25 448688fc fix(app): 中间 fu 面板统一加宽到 560（issue#309）
-  11:27 9cd69117 fix(app): 航点管理「标注」列钉 220px 防 Stretch 膨胀（issue#309）
-  11:28 15839095 docs(issue-agent): issue#298 终闸增补——识别位撤销扩至四路（navigationStoped 收口 kIdle 路）
-  11:28 2f127ca2 docs(config): 评审 r1 修正注释锚点与写侧/回写描述
-  11:28 602454f9 fix(issue#298): 终闸B册竞态收口——kIdle 异常退出路撤销在飞重规划＋死会话轮询守卫＋空坐标早退兜底
-  11:28 b6cb5637 test(gui): issue#309 尺寸断言（策略框/fu 面板/三列表/标注列宽）
-  11:40 922bf519 docs(issue-agent): nav-list-pages 沉淀 issue#309 尺寸契约与三坑位
-  11:45 0d41b668 docs(issue-agent): 清理 log.md 文件尾多余空行
-  11:56 24283c82 add RDSS 初始化显示报警界面
-  13:35 eca3b0ca fix(issue#298): 偏航自动重规划接续引导＋路径规划方式「自选」设置
-  13:40 d08db947 Merge branch 'issue/299-fix' into MSC-26-RW033
-  13:42 3536342b Merge branch 'issue/309-fix' into MSC-26-RW033
-  16:44 8e167351 feat(issue#316): 位置报告专用简笔卡车图标5枚并默认接入
-  16:46 4ec2f569 docs(issue-agent): issue#316 位置报告卡车图标接入知识沉淀
-  16:51 f77b92ed chore(issue#316): 停用注释块陈旧图标名同步 epi-red→posreport-truck
-  18:02 c9577500 fix(rnss): 卫导柱状图/星空图字号放大与右栏加宽（issue#317）
-  18:12 da3f86d3 docs(issue-agent): log-only 记 issue#317 样式轮——GSV 注入完整轮次坑与卫导两视图放大
-  18:25 d4a49327 fix(rnss): 右栏字体放大改 widget 级样式表——setFont 继承被 app 级 QSS 覆盖（issue#317）
-  18:26 2cf08a54 docs(issue-agent): 记 issue#317 评审环终态——app 级 QSS 覆盖 setFont 继承坑与 widget 级样式表口径
-  18:42 6dc4d743 docs(issue-agent): 清 log.md EOF 空行（验证门空白错误）
-  18:45 8c61ed48 Merge branch 'issue/317-fix' into MSC-26-RW033
-  20:55 d2db8a04 RDSS 报文通信 tab1 输入超限提示并阻止继续输入 (issue#321)
-  21:26 63fbd224 RDSS tab1 超限闸评审环 R2 修复 (issue#321)
-  21:30 0ca031b6 feat(ui): TBQ 频点选择器接线——combo4_2 解禁＋实发直读＋限长档查表
-  21:30 0f58a093 fix(app): 全球短报文应用层接通——TCQ 实发补传参＋预算失败显错＋ICP 保护＋频点映射修正
-  21:52 d6ec93da RDSS tab1 超限闸评审环 R3 修复 (issue#321)
-
-### .dotfiles（23）
-  02:03 3dd1804 fix(agent-experience): mechanical fixes per lint (1 finding)
-  02:06 97b7ce9 feat(agent-experience): reflect report 2026-11-22
-  02:06 e3a60ce feat(agent-experience): add cold proposals 2026-11-22
-  02:07 94ce992 feat(agent-experience): nightly groom report 2026-11-22
-  02:15 151e665 feat(agent-experience): nightly judge report 2026-11-22
-  10:31 3d26a6c memory(capture): 20261122-103126-9fea
-  11:11 4372698 memory(capture): 20261122-111156-4225
-  11:18 74b462c memory(capture): 20261122-111816-acd3
-  11:38 f8205cf memory(capture): 20261122-113858-200f
-  14:18 e145267 memory(capture): 20261122-141748-d813
-  14:36 a205286 memory(capture): 20261122-143620-bf37
-  14:47 cd662fe memory(capture): 20261122-144752-7749
-  15:22 27d1423 memory(capture): 20261122-152216-432f
-  15:46 eee2278 memory(capture): 20261122-154630-8fab
-  15:56 1be995e memory(capture): 20261122-155623-9457
-  16:39 18863ac memory(capture): 20261122-163933-4aa7
-  16:51 b3e6ee2 memory(capture): 20261122-165500-2c6e
-  16:52 0621638 memory(capture): 20261122-165232-d1f0
-  18:12 8abfea6 memory(capture): 20261122-181236-70a1
-  18:41 51f44e6 memory(capture): 20261122-184147-3425
-  19:43 5a4beda memory(capture): 20261122-194312-3d11
-  19:43 80b9ee8 skill-uses: agent-experience ag-251e29 收尾双录
-  20:04 c219a03 memory(capture): 20261122-200407-65e1
-
-### carkeyboard（12）
-  17:48 c1e5bd5 feat: offline Chinese touchscreen keyboard for Kylin V10 car unit10:24
-  18:34 942bd9a fix: harden dbus fail-fast, test diagnostics and fetch layout per review R1
-  20:16 78a026c feat: android-style candidate board, CN/EN toggle and backspace e2e
-  20:33 2fefff1 fix: retype a after backspace in e2e to reach nihao
-  20:44 6c6ac09 fix: use legacy controller interface name and link static keyboard addon into vkdriver
-  20:51 64792d1 fix: correct EN-mode click rows, harden commit assertions, ignore plugin state dir
-  20:55 c087495 fix: export FCITX5_LAB for build-tree keyboard config lookup
-  21:02 ae144fa fix: export resolved FCITX5_LAB value, not empty name
-  21:12 cd34720 fix: link static keyboard via spike-proven paths and assert ForwardKey for EN mode
-  21:27 82d9bfe fix: expanded candidate board replaces keyboard instead of overlapping
-  22:02 e620aec feat: day/night theme following ukui system style with manual toggle
-  22:14 74758e7 fix: use CJK glyphs for theme key label, emoji font missing on unit
-
-### opencode-agora（8）
-  10:50 a1a4839 fix(v3): F159 — cred.ts 两形读牌＋tasksvc 缺 project_dir 跳钉支/验支20:39
-  13:49 162ca7c docs(reqs): F159 台账补录
-  15:17 8abfb06 fix(v2): F160 僵死梯子补全——自检产出锚＋nudge 后零产出自动重派兜底
-  15:46 ba8eb6b fix(v2): F160 评审环 R1——梯子可爬升＋产出基线两修
-  16:01 54276d6 fix(v2): F160 评审环 R2——派发串行锁＋预检新鲜行＋半失败回填＋读故障方向
-  16:21 de9b2c6 fix(v2): F160 评审环 R3——读故障回填防闩死＋失败留痕＋记账回落
-  20:01 7d68037 fix(v2): F160 接管——唤醒判据收紧（last_seen 噪音不作产出）＋窗尽顺延＋断言补齐
-  20:43 aefe5c3 fix(v2): F160 链根全量复审 R4——真面爬梯记账穿透清零＋两低危收口
-
-### lib-HXRdssSendingQueue（7）
-  20:39 5921b42 chore(release): publish HXRdssSendingQueue android 227cdf1 (source 227cdf1)18:45
-  20:39 9709a19 chore(release): publish HXRdssSendingQueue oh 227cdf1 (source 227cdf1)
-  20:39 d5bdb64 chore(release): publish HXRdssSendingQueue linux 227cdf1 (source 227cdf1)
-  20:46 007139f chore(release): publish HXRdssSendingQueue windows 227cdf1 (source 227cdf1)
-  21:39 6f3a28e chore(release): publish HXRdssSendingQueue android 34469fd (source 34469fd)
-  21:39 8a3bcf6 chore(release): publish HXRdssSendingQueue linux 34469fd (source 34469fd)
-  21:39 a1dc270 chore(release): publish HXRdssSendingQueue oh 34469fd (source 34469fd)
-
-### lib-HXNmeaParser（3）
-  20:39 896c621 chore(release): publish HXNmeaParser linux 542c37e (source 542c37e)
-  20:39 ad4ed51 chore(release): publish HXNmeaParser oh 542c37e (source 542c37e)
-  20:39 c799a2d chore(release): publish HXNmeaParser android 542c37e (source 542c37e)20:04
-
-### Work（1）
-  08:28 f3003f3 feat(daily): nightly email sends action-only digest13:49
-
-### HXRdssSendingQueue（1）
-  20:14 227cdf1 feat(rdss): TCQ 频点域放开 0-4→0-6 + Lf4/Lf5(wire 5/6)→560bit 全球档夹紧 (ag-ecf0e0)
-
+【今日概览】共 125 次提交，涉及 10 仓：
+主线：HXNativeApp(59，含同事 16)、.dotfiles(24)、carkeyboard(12)、RDSS 集群 4 仓(15)、opencode-agora(8)、TitanNavi(5)、Work(2)
+- 今日工作：①HXNativeApp issue 流水线单日 13 项——#310 黑屏根治（地图子进程死亡自动重启）、#318 混编来报收侧容忍、#298 偏航重规划竞态收口、#309/#316/#317/#321 触屏尺寸/图标/字号/超限闸、#314 达梦兜底、#299 注释、#315 TTS 终闸、#322 在飞；②RDSS 全球短报文全栈贯通——底层频点域 0-6＋频度门成对最小＋应用层 TBQ/TCQ 接通＋四平台发布×3；③carkeyboard 新项目冷启动一日 9 轮派发至日夜主题；④opencode-agora F159/F160；⑤夜报 v2 待办版上线（今晚首跑）。
+- 整体进度：issue 完成项全过 A/B/C 三册终闸评审环并落库（#318 已进 origin/MSC-26-RW033）；agora 看板在飞 6、失败/阻塞 0；opencode-agora 本地与 origin/main 推平（昨日「origin 推送待拍板」已消）。
+- 风险阻塞：HXNativeApp 本地主树落后 origin（a53f8133 vs eeebd8b5，下次操作先 pull）；20 车机无声音定性物理层（功放/接线/供电），软件侧无解（承昨日）；维护窗动作无执行记录，但两 issue-agent 实例与 agorad 全天在线正常、监控链路无恙。
+- 明日重点：在飞六任务收尾合并（#322/#316/#321/carkeyboard b9/TBQ-TCQ/F160）；carkeyboard 建上游推 origin；HXNativeApp 与 TitanNavi 本地主树 pull 对齐；TBQ/TCQ 实机验证清单（等板卡上架）。
+------------------------------------------------
+【工作详录】
+一、HXNativeApp issue 流水线（HXNativeApp | 56 commits | 13 项处理、11 落库、1 issue 侧交付、1 在飞）
+- 目标：issue-agent 派发链单日批量清 issue，每任务过 A/B/C 三册终闸评审环后落库。
+- 当日进展：
+  · #310 航迹查看黑屏冻结：根因地图子进程意外死亡——自动重启兜底根治（d155a204）＋通信页无板卡显未连接与 GUI 取证套件（a1f98e24）＋根因定案与取证五坑沉淀（d8fab3c25/0d3e4a3b）
+  · #318 收件箱混编来报 missing A4 prefix：收侧 enc3 双形态容忍分派（15aac779）＋评审修复侧车消歧 wire 同形明文二次解码（659b1731），同事已并入 origin/MSC-26-RW033（eeebd8b5）
+  · #298 偏航自动重规划：终闸 B 册竞态收口——kIdle 异常退出路撤销在飞重规划＋死会话轮询守卫＋空坐标早退（602454f9）＋三重守卫设计沉淀（8663b86d/15839095）
+  · #309 触摸友好尺寸：路径策略对话框加间距加大＋fu 面板加宽 560＋标注列钉 220px 防 Stretch 膨胀（705a2865/448688fc/9cd69117）＋GUI 尺寸断言（b6cb5637）＋尺寸契约知识页（922bf519）
+  · #316 位置报告卡车图标：5 枚简笔图标默认接入＋停用注释块陈旧图标名同步（8e167351/f77b92ed/d9b8a5b0/4ec2f569）
+  · #317 卫导字号：柱状图/星空图字号放大＋右栏加宽（c9577500）；右栏字体改 widget 级样式表——app 级 QSS 覆盖 setFont 继承坑（d4a49327）＋评审环终态沉淀（2cf08a54）
+  · #321 报文通信 tab1 输入超限闸：三轮评审环（d2db8a04/63fbd224/d6ec93da）＋知识页 viewport 双挂/text() 平台相关/异步预算守卫（017433bf）
+  · #314 设备检测数据库版本 disql 定位失败兜底「达梦 V8」（5fc881b5a）；#299 config.ini 逐项补注释（7ef6c605/2f127ca2）；删除渲染门限默认注入回退地图兜底（a53f8133）
+  · #315 TTS 语音播报无声：终闸通过，未见独立提交
+- 当前结果：11 项落库（#318 已进 origin），#322 预置指令页五项交互在飞（vision 复核过）。
+- 产出依据：HXNativeApp git log --all（2026-11-22，fetch 后全 ref 去重 59 笔含同事 16）；agora 看板。
+- 遗留与下一步：#322 待合并；#315 交付去向待核；本地主树 pull 对齐 origin（eeebd8b5）。
+二、RDSS 全球短报文全栈贯通（HXRdssSendingQueue/HXNmeaParser＋双 lib＋HXNativeApp | 18 commits | 代码完成、待实机）
+- 目标：频点域放开后，底层库与车机应用层全线接通全球短报文。
+- 当日进展：
+  · 底层：TCQ 频点域 0-4→0-6＋Lf4/Lf5(wire 5/6)→560bit 全球档夹紧（227cdf1）；频度门改「成对最小」语义——门=min(上一条族间隔, 队首族间隔)（34469fd，先派「单一最小」版取消后重派）；HXNmeaParser 频点编号防误读注释 IBD 0/1-based（542c37e）
+  · 发布：三个源版本四平台发布 12 笔（android/linux/oh/windows）
+  · 应用层：TCQ 实发补传参＋预算失败显错＋ICP 保护＋频点映射修正（0f58a093）；TBQ 频点选择器接线 combo4_2 解禁＋实发直读＋限长档查表（0ca031b6）；评审轮1 TBQ 全球授权拦截＋限长随频点重算＋pindu 分组对齐（431429ff）
+- 当前结果：底层＋应用层全链路代码完成过评审，ag-96fb0a 在飞待合并。
+- 产出依据：四仓 git log（2026-11-22）；agora 看板。
+- 遗留与下一步：实机验证清单（Lf1-3 超限边界/Lf4-5 通播可行性/TBQ port 实机/area_flag 语义/队列默认路径/TCQ freq 档位）待板卡上架。
+三、carkeyboard 冷启动（carkeyboard | 12 commits | 核心可用、b9 在飞）
+- 目标：Kylin V10 车机离线中文触屏键盘（fcitx5 静态插件路线）。
+- 当日进展：起步骨架＋review R1 加固 dbus fail-fast/测试诊断/布局拉取（c1e5bd5/942bd9a）；安卓风候选板＋CN/EN 切换＋退格 e2e（78a026c）；b3-b8 派发链修静态键盘链接与 e2e——legacy controller 接口名、FCITX5_LAB 导出两修、spike 路径固化＋ForwardKey 断言、EN 点击行修正、候选板替换键盘不重叠（6c6ac09~82d9bfe 7 笔）；b9 日夜主题跟随 ukui 系统样式＋手动切换（32096dd）。
+- 当前结果：9 轮派发全过评审，候选/切换/e2e/主题核心功能可用。
+- 产出依据：carkeyboard git log；ag-8b06c5 会话与三册评审。
+- 遗留与下一步：main 12 提交未设上游跟踪、未推 origin；b9 在飞待合并。
+四、opencode-agora F159/F160（opencode-agora | 8 commits | 已完成、已推平）
+- 目标：v3 读牌修复与 v2 僵死梯子根治。
+- 当日进展：F159 cred.ts 两形读牌＋tasksvc 缺 project_dir 跳钉支/验支＋台账补录（a1a4839/162ca7c）；F160 僵死梯子补全——自检产出锚＋nudge 后零产出自动重派兜底（8abfb06）→评审环 R1-R3 梯子可爬升/派发串行锁/读故障回填防闩死（ba8eb6b/54276d6/de9b2c6）→接管 R4 唤醒判据收紧＋真面爬梯记账穿透清零（7d68037/aefe5c3）。
+- 当前结果：两册完成；母仓 main 与 origin/main 推平，昨日「origin 推送待拍板」阻塞已消。
+- 产出依据：opencode-agora 两工作树 git log；git status 推平实证。
+- 遗留与下一步：ag-d17587 收尾合并（在飞）。
+五、夜报 v2 待办版上线（Work | 2 commits | 已完成）
+- 目标：每晚邮件只发「要你做什么＋怎么做」，全文落盘 daily/。
+- 当日进展：待办版骨架（f3003f3）＋v2 三组分组渲染——要拍板/今天做/等条件（60c86de）。
+- 当前结果：今晚本邮件即首班正式运行。
+- 产出依据：Work git log；SKILL 规则 3。
+- 遗留与下一步：无。
+六、经验记忆治理（.dotfiles | 24 commits | 已完成）
+- 目标：经验库夜间治理自动化与当日经验沉淀。
+- 当日进展：夜间 groom/judge/reflect/cold proposals 四件（151e665/94ce992/97b7ce9/e3a60ce）＋lint 修复（3dd1804）；经验 capture 18 笔；skill-uses 双录 1 笔（80b9ee8）。
+- 当前结果：全部自动落库。
+- 产出依据：.dotfiles git log（2026-11-22）。
+- 遗留与下一步：无。
+七、TitanNavi issue#383/#384（TitanNavi | 5 commits | 已完成）
+- 目标：实体键误退出封堵与航迹记录图标改版。
+- 当日进展：#383 确认键防抖修复连按 OK/返回误触退出的关闭事件竞态（70014caa）＋知识沉淀与行尾清理（59b6890d/651437c8）；#384 航迹记录图标 REC 红字白描边＋记录中每秒闪烁（afde99f2）＋状态机与停录双路径同步坑沉淀（3bbe8fa6）。
+- 当前结果：两 issue 修复完成并推 origin（本地 master 落后 origin 25，下次先 pull）。
+- 产出依据：TitanNavi git log --all（2026-11-22）。
+- 遗留与下一步：本地 pull 对齐。
+------------------------------------------------
+【会话调研工作（未提交）】
+- 20 设备地图子进程崩溃排查与 maplibre 更新——结论：崩溃为地图子进程死亡，兜底重启方案当日已转正式修复落库（issue#310 d155a204）（产出位置：Work 会话 ses_dfef3e896ffe）
+- SSH 笔记本合盖不休眠修复＋局域网扫描 SSH 主机——结论：自 infra 问题当日解决，无需跟进（产出位置：Work 会话 ses_dfef84837ffe/ses_dff9bb90fff）
+- 问答支持：全球与区域 TCQ 发送区别、tcqbudget 发送长度无回调、zti 含义、fps、issues 295/294 进展（产出位置：Work/HXAppPlatform 会话）
+================================================
+数据来源：Documents/Work、HXAppPlatform 集群、carkeyboard、TitanNavi、opencode-agora、.dotfiles git log（2026-11-22，双轨＋--all 去重）；opencode session_v2 会话库直查（评审/视觉碎会话已剔除）；agora 看板
