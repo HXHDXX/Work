@@ -52,16 +52,28 @@ printf 'Subject: =?UTF-8?B?%s?=\n' "$SUBJ_B64"
 ```
 **绝对禁止**在 SKILL 或代码里硬编码 Base64 字符串字面量。
 
-### 3. 邮件通过 msmtp（已配 icloud 账户）
+### 3. 邮件 = 待办版，经 notify-owner 发送（唯一发信设施）
+2026-11-22 用户裁定：每晚邮件只发「需要我做什么＋怎么做」，不转发日报全文（全文在 daily/ 与 git 里，邮件是行动清单）。
 ```bash
-{
-  printf 'From: guangbin79@icloud.com\nTo: guangbin79@icloud.com\n'
-  printf 'Subject: =?UTF-8?B?%s?=\n' "$(printf '%s' "工作日报 $D" | base64 | tr -d '\n')"
-  printf 'MIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n\n'
-  cat "/home/guangbin/Documents/Work/daily/日报-$D.txt"
-} | msmtp guangbin79@icloud.com
+/home/guangbin/.dotfiles/bin/notify-owner "夜报 $D · 待办 N 项" "/tmp/opencode/夜报待办-$D.txt"
 ```
-退出码 0 = 成功。临时邮件文件写 `/tmp/opencode/` 用完即删。
+- 禁手搓邮件头、禁直调 msmtp（标题 Base64 与正文编码由 notify-owner 内部生成，规则 2 乱码坑由此根治）
+- 待办正文写 `/tmp/opencode/夜报待办-$D.txt`，发完即删；同日刷新重发主题尾加（刷新版）
+- 主题：`夜报 $D · 待办 N 项`（N=实际条数）；0 项写 `夜报 $D · 无待办`
+- 提取来源：【今日概览】的风险阻塞/明日重点＋各详录「遗留与下一步」＋会话调研中的待用户动作项；只收需要用户亲自做或拍板的，agent 自己能做完的不算
+- 两类条目模板（编号连续，「怎么做」必须落到具体步骤/命令/一句话）：
+```
+N. <一句话是什么>（<一行背景>）            ← 执行类：维护窗/复验/跑命令
+   怎么做：<具体步骤或命令>
+
+N. 拍板：<一句问题>                        ← 决策类：拍板/审批
+   背景：<为什么需要人定>
+   选项 A：<做法>——<一行后果>
+   选项 B：<做法>——<一行后果>
+   建议：<倾向及依据；无把握写「需你判断」>
+   怎么拍：明早任一会话说「夜报 $D 第 N 项：<选择>」，agent 回查 daily/日报-$D.txt 对应遗留项执行
+```
+- 无待办：正文一行「今日无需你做什么」（心跳，证明 cron 存活，必发）
 
 ### 4. 日报格式（概览＋详录两层）
 设计动机（2026-11-09 用户裁定）：AI 时代日报会被不同读者用 AI 再提取分析，
@@ -126,7 +138,7 @@ EOF
 4. 纯 bash 兜底版可用同一段 SQLite 查询（无需 agent 工具）——升为可选增强
 
 ### 6. 默认与可选参数
-- **默认**：当天日期，生成 txt + 发邮件
+- **默认**：当天日期，生成 txt + 发待办邮件（规则 3）
 - **指定日期**：`生成 X 月 X 日的日报`
 - **范围**：`生成 X 日至 X 日的日报`（逐日独立 txt，避免一份巨文件）
 - **不发邮件**：用户明说不发，或只说「整理日报」
@@ -160,7 +172,8 @@ git push origin master && git push ff master   # ff-only，禁 force
 | HXNativeApp 全漏（.git symlink 不匹配 -type d；review 工作树 gitfile 同漏） | find -type d 只匹配真目录，symlink/file 均不命中 | 双轨去 -type d＋Work__wt 排除＋hash 去重 |
 
 ## 验证清单（生成后自检）
-- [ ] 邮件标题解码回中文正确（`echo <b64> \| base64 -d` 含「工作日报」）
+- [ ] 邮件经 notify-owner 发出（非直调 msmtp）；主题为「夜报 D · 待办 N 项」或「夜报 D · 无待办」
+- [ ] 待办正文每项含「怎么做」；决策类含选项/后果/建议/回传话术；无日报全文倾倒
 - [ ] 本仓（Documents/Work）git log 已纳入（旧 /HXAppPlatform 轨已随迁移退役）
 - [ ] 提交计数与 git 实查一致
 - [ ] 星期中文正确显示
