@@ -1,6 +1,6 @@
 # 日报索引
 
-> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 191 篇，2026-04-03 ~ 2026-11-21。
+> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 192 篇，2026-04-03 ~ 2026-11-22。
 
 ## 主题索引（按工作线关联各日）
 
@@ -254,3 +254,4 @@
 - [2026-11-19](日报-2026-11-19.txt)：HXNativeApp 导航与集成主线；TitanNavi issue#374 串口 GGA 链整改；SDK 层跨仓修复；206 车机环境 kit 固化；Agent 基础设施与治理
 - [2026-11-20](日报-2026-11-20.txt)：HXAppPlatform 应用主线：TBQ/TCQ 对等重构＋issue 修复；Work 仓 206 整机部署硬化；opencode-agora v3 存储与应用服务层；地图组件导航图标抖动根治；工具链与知识沉淀
 - [2026-11-21](日报-2026-11-21.txt)：opencode-agora v3 GitStore 存储迁移；HXAppPlatform TBQ/TCQ 对等收官与地图渲染修复；Work 206 装机固化；issue-agent 监控与授权执行；经验记忆治理与技能演化
+- [2026-11-22](日报-2026-11-22.txt)：（旧格式无工作线标题，见原文）
