@@ -34,7 +34,7 @@ dmPython 经 DPI 走 TCP，运行库已在安装期注册进 `/etc/ld.so.conf.d/
 import dmPython
 
 conn = dmPython.connect(
-    user="PHMAPP",         # 独立业务账号，禁止业务直连 SYSDBA
+    user="SYSDBA",         # 实例默认用户（2026-11-23 起环境不再预置业务账号）
     password="********",   # 占位符：真实密码只放 dm.ini，勿写入代码
     server="127.0.0.1", port=5236)
 ```
@@ -45,7 +45,7 @@ conn = dmPython.connect(
 
 ```ini
 [dm]
-user = PHMAPP
+user = SYSDBA
 password = ********
 server = 127.0.0.1
 port = 5236
@@ -123,7 +123,7 @@ WantedBy=multi-user.target
 ```bash
 env -i /home/kylin/venvs/phm/bin/python - <<'PY'
 import dmPython
-conn = dmPython.connect(user="PHMAPP", password="********",
+conn = dmPython.connect(user="SYSDBA", password="********",
                         server="127.0.0.1", port=5236)
 conn.close()
 print("DB_OK")
@@ -150,6 +150,6 @@ PY
 | 边界 | 约定 |
 |---|---|
 | 账号分工 | `dmdba` 只管数据库本体；`kylin` 只做 TCP 客户端，不碰 `/dm8` 文件、不入 `dinstall` 组 |
-| 业务账号 | 业务程序连 `PHMAPP` 等独立账号，禁止用 SYSDBA |
+| 业务账号 | 环境不预置业务账号，默认直连 SYSDBA；需独立账号时 disql 自建（CREATE USER … IDENTIFIED BY "…" ＋ GRANT "PUBLIC","RESOURCE" TO …） |
 | 配置文件 | `/home/kylin/.config/phm/dm.ini` 权限 600，属主 kylin |
 | 密码管理 | 密码只存 dm.ini，不写入代码、不进 git 仓库 |

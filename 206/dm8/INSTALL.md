@@ -258,7 +258,7 @@ sudo env DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 bash install_dm8_qt.sh
 - 无 `unzip` 自动回退 `python3 -m zipfile`。
 - 每阶段 `[阶段N] [OK]/[FAIL]` 输出，失败即停并给定位提示。
 - **完成形态终验**（stage 10）：banner 前对全流程终态只读复核——双服务 active、端口监听、disql 实例、
-  dm.key 与介质 md5 比对、License 到期、QDM 驱动 ldd、PHMAPP+dm.ini+phm-app.service、dpkg --audit、
+  dm.key 与介质 md5 比对、License 到期、QDM 驱动 ldd、dpkg --audit、
   dmPython 属主真连（设 PYTHON_VENV 时）；任一硬项不满足即 fail。
 - 本文所有坑（空目录、CREATE_DB_SERVICE、Windows 残留行、坏 DESTDIR、ldconfig、disql 引号）
   已全部内置规避。
@@ -319,6 +319,8 @@ sudo env DM_HOME=/opt/dm8 DATA_PATH=/data/dm8 bash install_dm8_qt.sh
 > **ftg340 GPU 硬件渲染接线（2026-11-18，.30 定稿并经重启验证）**：206 车机（飞腾D3000M/麒麟V10）ftg340 厂商用户态（EGL/GL/GAL 栈）装在私有目录 /usr/lib/aarch64-linux-gnu/d3000m/ 且默认不在链接器搜索路径 → 所有 EGL 应用（含 hx-native-app xcb_egl）静默走 Mesa 软渲染。修法已入 stage 8h（幂等）：写 /etc/ld.so.conf.d/00-ftg340-d3000m.conf（内容＝厂商目录一行）+ ldconfig；00- 前缀保证排序在 aarch64-linux-gnu.conf 之前，撞名 libEGL/libGL/libgbm/libGLESv2 时厂商栈胜出。安全性：厂商栈 NEEDED 的是字面 libdrm.so.2.4.0（仅存于私有目录），与系统 libdrm.so.2 零撞名；内核驱动（galcore，/dev/ftg340）设备树自动加载，三层开机自恢复，无需启动脚本。回滚＝删 conf＋ldconfig。
 
 > **Web 七件扩充（2026-11-13，.20 设备已装验讫）**：stage 8f pin 扩至 11 件——fastapi==0.162.5 / uvicorn[standard]==0.54.0 / python-can==4.6.1 / websockets==17.4 / pydantic==2.14.3 / apscheduler==3.11.3 / python-multipart==0.0.33；wheelhouse-cust/ 现 42 wheel（四包闭包 15＋Web 闭包 27，均 aarch64 cp312 精确 pin 制备）。⚠️ Web 链约束 wrapt<2：安装时 wrapt 2.5.2→1.17.3 降级，statsmodels/numpy/pandas/openpyxl 复验 import 绿＋pip check 无告警。设备验收：七件 import OK（fastapi 0.162.5 / uvicorn 0.54.0 / pydantic 2.14.3）。
+
+> **8g PHM 业务面移除（2026-11-23）**：客户确认环境无需预置 PHMAPP 业务账号，默认用户（SYSDBA/SYSSSO/SYAUDITOR，建实例自动产生）即够——stage 8g 整段移除（建号、`/home/kylin/.config/phm/dm.ini`、`phm-app.service` 三件全撤），终验/汇总行/`provision_206.sh` 三项 chk 同步删；推翻 2026-11-20「PHMAPP 属完成形态必备」裁定。业务后期连库：直连 SYSDBA，或需要独立账号时 disql 自建（CREATE USER X IDENTIFIED BY "..."; GRANT "PUBLIC","RESOURCE" TO X;）。既有设备（.30）已建 PHMAPP 不回收。2026-11-13「8d–8g 已脚本化」与 2026-11-16 .30 验收两条实录为历史记录，原样保留。
 
 ## 六、真机 E2E 验证记录（2026-09-16）
 
@@ -457,7 +459,7 @@ sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停
 - 阶段：P0 预检（KySec/时钟/g++）→ P1 五层电源防护 → P2 内核 172.166＋ftg340 1.1.10 → P3 五条验证 → P4 双 kit（`../qt5.14.2-env-deploy/install_qt_env.sh` ＋本目录 `install_dm8_qt.sh`）→ P5 PyCharm（tarball 未摆渡即跳过）→ P6 总验。
 - 断点/重启续跑：全阶段幂等（已满足即 [OK] 跳过），fail 即停；P2 换内核或 GPU 驱动后须重启一次，重启后无参重跑自动从 P3 续。
 - g++ 缺失时自动借 apt 隧道安装；隧道未开则提示两步——工作站侧 `ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`（保持会话），设备侧 `sudo bash apt-tunnel.sh on`，再重跑。
-- `PYTHON_VENV` 缺省 `/home/kylin/venvs/phm`；`SYSDBA_PWD`/`PHMAPP_PWD` 等环境变量原样透传（缺省同两 kit 头注）。
+- `PYTHON_VENV` 缺省 `/home/kylin/venvs/phm`；`SYSDBA_PWD` 等环境变量原样透传（缺省同两 kit 头注）。
 - 音量定型已含：P1 末以会话用户 `amixer -D pulse sset Master 100% unmute` 定最大音量（kylin 构建 pactl 无 set-sink-volume 子命令），P6 复核 `[100%]` `[on]`。
 - P6 总验在最终重启后进行：P5 末落 `/var/lib/provision-206.stamp` 戳记，P6 以 `/proc/uptime` 换算 boot 纪元、须晚于戳记方放行（重启门）；全量断言全绿才打印 `PROVISION-ALL-GREEN`。
 

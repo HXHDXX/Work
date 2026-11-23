@@ -10,7 +10,7 @@
 # 断点续跑: 全阶段幂等（已满足即 [OK] 跳过、fail 即停），修复/重启后无参重跑自动越过关卡；P2 换内核/GPU 后须重启一次；P5 落戳后须最终重启才过 P6 重启门。
 # 判例来源: 2026-11-20 .20 全新镜像（2503-bugfix 基线）实装实录；KySec/时钟/g++/apt 隧道＝2026-11-19 .30 重灌判例；
 #   ftg340 泛配误装 1.3.0 判例 → 本脚本严格按名取件、并校验内存中已加载版本。
-# 透传: SYSDBA_PWD/PHMAPP_PWD 等环境变量原样传给两 kit（缺省同 kit 头注）；PYTHON_VENV 缺省 /home/kylin/venvs/phm。
+# 透传: SYSDBA_PWD 等环境变量原样传给两 kit（缺省同 kit 头注）；PYTHON_VENV 缺省 /home/kylin/venvs/phm。
 # 阶段: P0 预检(KySec/时钟/g++) → P1 五层电源防护+音量定型 → P2 内核/GPU 定型栈 → P3 五条验证 → P4 双 kit 部署 → P5 PyCharm+落戳 → P6 重启后全量总验
 # =============================================================================
 set -uo pipefail
@@ -272,7 +272,6 @@ p6_license()  { p6_sql 'SELECT EXPIRED_DATE FROM V$LICENSE;' | grep -E '[0-9]{4}
 p6_key()      { [ -f "$DM_HOME/bin/dm.key" ] && [ -f "$SCRIPT_DIR/dm5D01220176.key" ] \
   && [ "$(md5sum "$DM_HOME/bin/dm.key" 2>/dev/null | cut -d' ' -f1)" = "$(md5sum "$SCRIPT_DIR/dm5D01220176.key" 2>/dev/null | cut -d' ' -f1)" ]; }
 p6_qdm_ldd()  { ! ldd "$QDM_SO" 2>/dev/null | grep 'not found'; }
-p6_phmapp()   { p6_sql "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | grep PHMAPP; }
 p6_qmake()    { /opt/Qt5.14.2/bin/qmake -v 2>/dev/null | grep '5\.14\.2'; }
 p6_kpm_unit() { ! systemctl is-active --quiet kylin-process-manager-daemon.service; }
 p6_kpm_proc() { ! pgrep '^kylin-process-m'; }
@@ -304,9 +303,6 @@ chk 'DM8 dm.key=kit dm5D01220176.key' p6_key
 chk 'DM8 License 到期非空'           p6_license
 chk 'QDM libqsqldm.so 在位'          test -f "$QDM_SO"
 chk 'QDM ldd 无 not found'           p6_qdm_ldd
-chk 'PHMAPP 账号在位'                p6_phmapp
-chk 'phm dm.ini 在位'                test -f /home/kylin/.config/phm/dm.ini
-chk 'phm-app.service 在位'           test -f /etc/systemd/system/phm-app.service
 chk 'qmake -v 含 Qt 5.14.2'          p6_qmake
 chk 'qtcreator 已装（dpkg -s）'      dpkg -s qtcreator
 chk '/opt/pycharm 在位'              test -e /opt/pycharm

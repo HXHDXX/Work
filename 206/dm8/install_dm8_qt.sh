@@ -8,7 +8,6 @@
 # 可选环境变量（均有默认值）:
 #   SYSDBA_PWD        SYSDBA 密码        默认 PHMadmin1        （须8~48位,含大写+小写+数字）
 #   SYSAUDITOR_PWD    SYSAUDITOR 密码    默认 Dameng@Audit2026
-#   PHMAPP_PWD        PHM 业务账号密码   默认 PHMapp2026       （须8~48位,含大写+小写+数字）
 #   DM_CHARSET        0=GB18030 1=UTF-8  默认 0   （建库后不可改！）
 #   DM_CASE_SENSITIVE Y/N                默认 Y   （建库后不可改！）
 #   DM_HOME           DM安装目录         默认 /opt/dm8（存量 /dm8 设备自动沿用）
@@ -29,7 +28,6 @@ SYSDBA_PWD="${SYSDBA_PWD:-PHMadmin1}"
 SYSAUDITOR_PWD="${SYSAUDITOR_PWD:-Dameng@Audit2026}"
 # 判例 2026-11-20：dm8_20260312 构建的静默安装器要求 auto_install.xml 含非空 SYSSSO_PWD 节点，缺失报"配置文件SYSSSO_PWD节点字符串不能为空"（20260324 构建无此要求；.30 设备实测）
 SYSSSO_PWD="${SYSSSO_PWD:-Dameng@Sso2026}"
-PHMAPP_PWD="${PHMAPP_PWD:-PHMapp2026}"
 DM_CHARSET="${DM_CHARSET:-0}"
 DM_CASE_SENSITIVE="${DM_CASE_SENSITIVE:-Y}"
 DM_HOME_WAS_SET="${DM_HOME+x}"
@@ -592,58 +590,6 @@ else
 fi
 
 # =============================================================================
-stage 8g "PHM 业务面（PHMAPP 账号 + dm.ini + phm-app.service 落位）"
-# =============================================================================
-check_pwd "$PHMAPP_PWD" "PHMAPP_PWD"
-# 语句里用户名走 UPPER('phmapp')：回显行只含小写，结果行才是大写 PHMAPP，grep 不误判
-PHM_Q="SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');"
-PHM_OUT=$(printf '%s\nexit\n' "$PHM_Q" | "$DM_DISQL" "$DSN" 2>&1)
-if echo "$PHM_OUT" | grep -q "PHMAPP"; then
-  info "数据库用户 PHMAPP 已存在，跳过建号"
-else
-  printf '%s\n%s\nexit\n' \
-    "CREATE USER PHMAPP IDENTIFIED BY \"$PHMAPP_PWD\";" \
-    "GRANT \"PUBLIC\", \"RESOURCE\" TO PHMAPP;" | "$DM_DISQL" "$DSN" >/dev/null 2>&1
-  PHM_OUT=$(printf '%s\nexit\n' "$PHM_Q" | "$DM_DISQL" "$DSN" 2>&1)
-  echo "$PHM_OUT" | grep -q "PHMAPP" \
-    || fail "PHMAPP 建号失败（disql 手工执行排查）: $(echo "$PHM_OUT" | tail -2 | tr '\n' ' ')"
-  info "已创建 PHMAPP"
-fi
-# 角色核验/补授：建号与已存在两路共用的终态门，防 GRANT 静默失败（PUBLIC 为隐含角色，只核 RESOURCE）
-PHM_QR="SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = UPPER('phmapp');"
-PHM_ROLES=$(printf '%s\nexit\n' "$PHM_QR" | "$DM_DISQL" "$DSN" 2>&1)
-if ! echo "$PHM_ROLES" | grep -q "RESOURCE"; then
-  printf '%s\nexit\n' "GRANT \"PUBLIC\", \"RESOURCE\" TO PHMAPP;" | "$DM_DISQL" "$DSN" >/dev/null 2>&1
-  PHM_ROLES=$(printf '%s\nexit\n' "$PHM_QR" | "$DM_DISQL" "$DSN" 2>&1)
-  echo "$PHM_ROLES" | grep -q "RESOURCE" \
-    || fail "PHMAPP 角色授予验证失败（RESOURCE 未生效）: $(echo "$PHM_ROLES" | tail -2 | tr '\n' ' ')"
-  info "已补授 PHMAPP PUBLIC/RESOURCE"
-fi
-PHM_INI_DIR=/home/kylin/.config/phm
-PHM_INI="$PHM_INI_DIR/dm.ini"
-PHM_INI_TXT=$(printf '[dm]\nuser=PHMAPP\npassword=%s\nserver=127.0.0.1\nport=%s' "$PHMAPP_PWD" "$PORT_NUM")
-if [ -f "$PHM_INI" ] && [ "$(cat "$PHM_INI")" = "$PHM_INI_TXT" ] && [ "$(stat -c %a "$PHM_INI")" = "600" ]; then
-  info "$PHM_INI 已是目标形态，跳过"
-else
-  [ -d /home/kylin/.config ] || install -d -m 700 -o kylin -g kylin /home/kylin/.config
-  mkdir -p "$PHM_INI_DIR"
-  printf '%s\n' "$PHM_INI_TXT" > "$PHM_INI"
-  chown kylin:kylin "$PHM_INI_DIR" "$PHM_INI" || fail "chown kylin 失败（设备缺 kylin 用户？PHM 业务面依赖该用户）"
-  chmod 600 "$PHM_INI" || fail "chmod 600 失败: $PHM_INI"
-  info "已写 $PHM_INI（属主 kylin，权限 600，四键 user/password/server/port）"
-fi
-PHM_SVC=/etc/systemd/system/phm-app.service
-PHM_SVC_TXT=$(printf '[Unit]\nAfter=network.target DmService%s.service\n\n[Service]\nUser=kylin\nExecStart=/home/kylin/venvs/phm/bin/python /home/kylin/phm-app/main.py\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target' "$INSTANCE_NAME")
-if [ -f "$PHM_SVC" ] && [ "$(cat "$PHM_SVC")" = "$PHM_SVC_TXT" ]; then
-  info "phm-app.service 已是目标形态，跳过"
-else
-  printf '%s\n' "$PHM_SVC_TXT" > "$PHM_SVC"
-  systemctl daemon-reload || fail "daemon-reload 失败"
-  # 业务程序尚未部署，仅落位单元，刻意不 enable
-  info "已落位 $PHM_SVC（未启用；业务程序部署后 systemctl enable --now phm-app）"
-fi
-
-# =============================================================================
 stage 8h "ftg340 GPU 硬件渲染接线（厂商 EGL/GL 栈系统注册）"
 # =============================================================================
 # 206 车机（飞腾D3000M）ftg340 厂商用户态装在私有目录且默认不在链接器路径 → EGL 静默软渲染；
@@ -698,12 +644,6 @@ if ldd "$QT_HOME/plugins/sqldrivers/libqsqldm.so" 2>/dev/null | grep -q "not fou
   fail "终验失败：libqsqldm.so 存在未解析依赖"
 fi
 info "QDM 驱动终态：在位且依赖全解析"
-# PHMAPP 属 206 完成形态必备（stage 8g 无条件规范阶段；2026-11-20 用户确认）
-VRFY_PHM=$(printf '%s\nexit\n' "SELECT USERNAME FROM DBA_USERS WHERE USERNAME = UPPER('phmapp');" | "$DM_DISQL" "$DSN" 2>&1)
-echo "$VRFY_PHM" | grep -qF "PHMAPP" || fail "终验失败：数据库用户 PHMAPP 不存在: $(echo "$VRFY_PHM" | tail -2 | tr '\n' ' ')"
-[ -f /home/kylin/.config/phm/dm.ini ] || fail "终验失败：缺 /home/kylin/.config/phm/dm.ini"
-[ -f /etc/systemd/system/phm-app.service ] || fail "终验失败：缺 /etc/systemd/system/phm-app.service"
-info "PHM 业务面终态：PHMAPP + dm.ini + phm-app.service 均就位"
 # 判例 2026-11-19：dpkg 半配置 iU 残留
 DPKG_AUDIT=$(dpkg --audit 2>/dev/null)
 [ -z "$DPKG_AUDIT" ] || fail "终验失败：dpkg --audit 有残留（半配置包）: $(echo "$DPKG_AUDIT" | head -5 | tr '\n' ' ')"
@@ -732,6 +672,5 @@ echo "PythonSSL: _ssl=$(/usr/local/bin/python3.12 -c 'import ssl;print(ssl.OPENS
 echo "Py默认  : python3 → $(readlink /usr/local/bin/python3 2>/dev/null || echo '未默认化')"
 echo "GL链    : $([ -e /usr/lib/aarch64-linux-gnu/libGL.so ] && echo 'libGL.so 开发链已落位' || echo '未落位')"
 echo "GPU    : $GPU_ST"
-echo "PHM    : PHMAPP 账号就绪；dm.ini $([ -f /home/kylin/.config/phm/dm.ini ] && echo '已写' || echo '未写')；phm-app.service 落位未启用"
 echo "License: 到期 ${EXPIRE:-见 $DM_HOME/bin/dm.key}"
 echo "注意   : CHARSET($DM_CHARSET)/CASE_SENSITIVE($DM_CASE_SENSITIVE) 建库后不可改；空库期可重建"
