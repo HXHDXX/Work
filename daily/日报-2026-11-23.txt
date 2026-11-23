@@ -1,0 +1,140 @@
+工作日报 2026-11-23（自动兜底版）
+================================================
+
+【说明】agent 路径失败，此为脚本兜底档案版（按仓分组列提交）。
+
+### HXNativeApp（42）
+  02:06 220aa0cd issue/316-fix (#339)
+  02:17 b8babc65 issue/327-fix (#342)
+  02:18 71b33ff4 issue/328-fix (#343)
+  05:12 3c2021d2 docs(issue-agent): 记 issue#337 系统设置三件决策与坑位（[General] 裸键语义/TestBridge 同步派发约束/QSettings 延迟自动落盘绕闸/ASAN 部署形态）
+  05:12 d6ffd25d feat(issue#337): 系统设置三件——默认中文、麒麟关机、恢复出厂11:33
+  08:34 063af919 issue/351-fix (#354)
+  08:34 5a7241a7 issue/349-fix (#352)
+  08:34 7456665b issue/350-fix (#353)
+  08:52 76405376 add RDSS
+  09:44 f18aa8bb Merge branch 'MSC-26-RW033-1122' into MSC-26-RW033
+  10:09 1037d36d build(compose): checker/compiler 三服务加必填插值守卫——缺 COMPOSE_PROJECT_NAME 解析即报错
+  10:10 6b4a2a15 Merge branch 'issue/318-fix' into MSC-26-RW033
+  10:12 c22e2008 Merge branch 'issue/317-fix' into MSC-26-RW033
+  10:28 be3eb910 Merge branch 'issue/337-fix' into MSC-26-RW033
+  10:39 44b69bfb conflict solute
+  11:03 f1090cdb issue/351-fix (#358)
+  11:29 141197ac infra(check): check 入口 flock 同 env 串行 + AGENTS.md 构建纪律条目
+  11:46 a858c36f infra(check): 评审轮2——HX_CHECK_LOCK_WAIT 数值预检
+  11:47 37f41a4f fix(app): 清除默认支已提交冲突标记残留（PR#343/合并线后遗）
+  11:49 4e4732c0 issue/355-fix (#359)
+  11:50 68049226 test(check): 锁门 HX_CHECK_LOCK_WAIT 预检回归用例
+  11:55 e9a39ec9 infra(check): 评审轮3/F1——锁上提宿主侧，run+down 全程临界区
+  12:15 f3555b01 infra(check): 评审轮4——锁门加固：exec 失败显式拦/预检前置/flock 预检
+  12:25 96a79fd7 test(check): harness 密闭化与幂等——锁门用例三连修
+  12:36 222c3630 test(check): harness 前提探测与自愈——锁门用例收口
+  13:06 a8326ef3 fix(rdss): ShortMessageWidget 构造期接线次序空指针——033 启动即崩
+  13:08 cc55d970 test(check): 用例 I holder 加 -w 3 有界等待
+  14:12 642c820e fix(rdss): TCQ port regression fix + SDK EPQ/OFQ/GBQ port passthrough
+  15:43 e6ec931a add language
+  15:54 bb54b943 update text
+  16:42 457b8ca0 refactor(rdss): TbqBudget 迁 RdssService 对齐 tcqBudget 并删 mixedWireBits
+  16:55 25e3e77d update page measure page
+  17:09 1b20dfa5 measure page  hide page_fu
+  17:28 2ee7a81b fix(rdss): 异常报警页表头「授权模块状态指示」对齐口径为「授权模块状态」
+  18:51 fc99006e fix(rdss): GBQ 全系删 member_count——W4 队列插件携带即拒（计数由 member_ids 派生）
+  18:51 8ec66e23 fix(rdss): GBQ 全系删 member_count——W4 队列插件携带即拒（计数由 member_ids 派生）
+  22:25 28091cb0 fix(issue-agent): RDSS 预置指令页五项交互修复（行号列/编辑校验/取消/保存/标题）
+  22:25 b7625a49 docs(issue-agent): GUI 取证多 worktree 并发四坑沉淀（pkill 交叉火力/fixture 顺序/裸Esc/同名表格）
+  23:13 43cb93de fix(nav-lists): issue#323 航点新建追加序落位＋确定全 0 坐标静默丢弃＋对话框探针命名
+  23:13 9b40839e docs(issue-agent): nav-list-pages 补记 issue#323——航点行序契约/全 0 静默丢弃链/TestBridge 重名与键位坑
+  23:31 65306270 fix(nav-lists): issue#323 评审轮修复——显示序真源 mOrder 与过滤视图同序
+  23:41 f2be9bda fix(nav-lists): issue#323 评审轮 r2 修复——load 对称清 mOrder＋重加 id 不重复登记
+
+### .dotfiles（37）
+  00:44 87fe309 memory(capture): 20261123-004432-da4b
+  00:59 22e7c98 memory(capture): 20261123-005950-02a1
+  00:59 7fc994b memory(capture): 20261123-005950-dd0a
+  00:59 d0c8877 memory(capture): 20261123-005950-7e68
+  01:54 536848a memory(capture): 20261123-015445-90fd
+  02:05 a5b4d2f fix(agent-experience): mechanical fixes per lint (12 findings)
+  02:08 479528a chore(agent-experience): unify synonymous tags (hx-tidy-base→HX_TIDY_BASE, 3 files)
+  02:10 c963402 feat(agent-experience): weekly digest 20261119-1122
+  02:11 1de7c31 feat(agent-experience): add cold proposals 20261123
+  02:12 ff0eed5 feat(agent-experience): nightly groom report 2026-11-23
+  02:13 a79ee10 chore(agent-experience): skill-uses double-log for groom run 2026-11-23
+  02:22 9d43c93 feat(agent-experience): nightly judge report 2026-11-23
+  03:32 7c15a8b memory(capture): 20261123-033200-6e23
+  05:14 f854a25 experience: issue#337 系统设置三件四坑（QSettings 延迟落盘绕闩/TestBridge 同步派发禁嵌套 exec/[General] 裸键/QTime @Variant）
+  06:19 1ee87fe memory(capture): 20261123-062000-4e2b
+  06:34 f442a19 memory(capture): 20261123-064000-8f1c
+  07:11 a524c9f memory(capture): 20261123-071149-8066
+  07:14 e13f59e memory(capture): 20261123-072000-5a9d
+  10:31 65545d5 memory(capture): 20261123-103107-bc58
+  10:35 b7db60d memory(capture): 20261123-103512-d957
+  10:51 a438b27 memory(capture): 20261123-112400-3a6f
+  11:03 93afe44 memory(capture): 20261123-110358-3e9d
+  11:31 0caf23a memory(capture): 20261123-113130-e5d0
+  11:41 35565f4 memory(capture): 20261123-114100-033b
+  12:28 4953493 memory(capture): 20261123-122846-35a9
+  12:30 4977dd9 memory(capture): 20261123-123013-3fde
+  13:38 da4a65d memory(capture): 20261123-133814-2c5b
+  15:41 c2e4ca2 memory(capture): 20261123-154108-9795
+  15:43 81cbc61 memory(capture): 20261123-154356-73aa
+  15:44 0ab8f71 memory(capture): 20261123-154451-b04f
+  16:00 cc4d1e8 memory(capture): 20261123-161500-349a
+  17:24 3c01e02 memory(capture): 20261123-172448-bff6
+  18:13 401f45f memory(capture): 20261123-181332-ca32
+  18:23 76ec5c2 memory(capture): 20261123-182338-783f
+  18:24 a9b0374 memory(capture): 20261123-182441-3bf7
+  19:07 394a4a1 memory(capture): 20261123-190738-ecb6
+  20:39 bbe88de memory(capture): 20261123-203906-ccd5
+
+### lib-plugin-HXGISServer（13）
+  05:54 b5f6d78c Merge pull request 'issue/384-fix' (#385) from issue/384-fix into master
+  06:40 1601188a Merge pull request 'issue/384-fix' (#386) from issue/384-fix into master
+  11:29 cead6380 fix(res): recordon 右下角标改绿字白描边 REC 并恢复主图形13:46
+  11:54 55ed25d6 fix(res): REC 指示图标重制为白底圆大字形（issue#384 终案）
+  12:27 9f7701ba fix(res): recordon 重绘白圆内绿色 REC 大字并恢复原图圆柱背景
+  13:25 b365d95b fix(ui): 记录图标默认隐藏＋开始记录显示/停止记录隐藏（issue #384）
+  13:30 65b43e3d fix(ui): closeEvent 停录路径对称复位 isRecording 与按钮文案（issue #384）
+  13:36 642de3df docs(issue-agent): trajectory-manager 增补 issue#384 隐藏生命周期收尾与重派审计法
+  13:44 8bfc395d fix(ui): 清理新增行 CRLF 行尾（issue #384）
+  14:18 90b1e53a fix(res): recordon 改三圆柱体原版加底部半高绿 REC（issue #384 note11465）
+  14:20 84f0fc47 docs(issue-agent): trajectory-manager 增补 issue#384 记录图标终案与 blink 对图双侧审底坑
+  15:36 5c014821 fix(ui): 状态栏记录图标显隐两态间隔统一 20px（issue #384）
+  15:43 c1d8c87f docs(issue-agent): trajectory-manager 增补 issue#384 记录图标显隐间距配对
+
+### carkeyboard-KylinV10（9）
+  00:35 6c89edb feat: cardaemon production IM daemon selecting virtualkeyboard UI at boot20:34
+  00:42 723a15d fix: preload pinyin addon before setting default input method
+  00:47 fda70dd fix: activate input context on focus so fields default to pinyin
+  06:07 097655d docs: correct app-facing keyboard popup D-Bus API
+  06:17 4c6e6a7 fix: set pinyin on input context creation with kept-alive watcher
+  06:33 d175865 feat: focus-driven keyboard auto show/hide via self D-Bus
+  07:10 d258fb9 feat: offline install package replacing fcitx4 autostart
+  08:03 18108b2 feat: standalone uninstall.sh with desktop-session fcitx4 restart
+  08:06 109ac1d fix: tolerate missing git when versioning the package
+
+### opencode-agora（7）
+  01:07 473bf9a fix(v3): F161 agora CLI 两形读牌残差——JSON 形非串/空 token 值带因拒08:05
+  08:23 9f8213b feat(agorad): verify_infra 宽限兜底——dispatcher 失效自动重排恰一次、再败 blocked (ag-8c583e)21:21
+  10:20 489473d feat(agorad): worker BOOT 增「构建退净才许 done」纪律 (ag-345dcb)
+  10:34 2b7073c feat(board): L tail 持续跟随＋z/Z 会话块折叠 (F131)
+  11:36 4341b66 feat(board): 键位调整 l→tail、Enter 专明细 (F132)
+  11:44 39cfb58 feat(board): L 键退役，l 专 tail (F133)
+  15:39 ccbfb69 feat(cli/gate): 派发自愈重发＋门构建 cgroup scope 隔离 (ag-67650e)
+
+### lib-HXRdssSendingQueue（3）
+  13:46 1f63f69 chore(release): publish HXRdssSendingQueue oh 8a365d4 (source 8a365d4)
+  13:46 636ae61 chore(release): publish HXRdssSendingQueue linux 8a365d4 (source 8a365d4)
+  13:46 7cfafde chore(release): publish HXRdssSendingQueue android 8a365d4 (source 8a365d4)19:25
+
+### HXRdssSendingQueue（3）
+  11:33 8a365d4 feat(rdss): EPQ/OFQ/GBQ 派发补 port 定向透传 (ag-90183f)20:27
+  18:34 38a4a62 refactor(rdss): char_budget 路由更名 tcq_budget
+  19:10 6fe3c18 feat(rdss): 新增 tbq_budget 队列预算接口
+
+### issue-agent（2）
+  03:12 9c6e691 feat(agora): inbox consumer surface + issue-spec goal spill (ag-374a38)20:18
+  08:52 7d2764d feat(agora): verify-infra mail self-heal via delayed reverify (ag-52d0d3)
+
+### Work（1）
+  10:22 b028c44 refactor(206): drop PHMAPP business-account provisioning from dm8 kit01:55
+
