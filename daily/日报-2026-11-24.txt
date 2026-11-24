@@ -1,0 +1,76 @@
+工作日报 2026-11-24（周二）
+================================================
+【今日概览】共 174 次提交，涉及 9 仓：
+主线：opencode-agora(89)、HXNativeApp(28)、.dotfiles(22)、tmux-opencode-sessions(10)、lib-HXRdssSendingQueue(8)、HXNmeaParser(6)、HXRdssSendingQueue(5)、lib-HXNmeaParser(4)、Work(2)
+- 今日工作：binary-over-mixed 二进制车道跨 5 仓全链落地（parser 删自动解码、SDK 编解码工具、应用显式解码、队列二进制车道），双插件仓四平台发布；HXNativeApp 十余 issue 修复与真机按键实测；opencode-agora v3 GitStore 后端大迁移推进（F135-F171）；新插件仓 tmux-opencode-sessions 上线；206 设备 .30 全量部署三修与 CAN/PHM 开机自启。
+- 整体进度：binary-over-mixed 已完成（全链合入＋插件发布）；issue 群除 #372 外全部合入 033；v3 GitStore 迁移进行中（主体落地、评审环滚动收尾）；206 部署修复已完成并双远端推送。
+- 风险阻塞：①issue#372 修正版过验证门后卡 handoff，等派发方 task_deliver 确认（三提交未合入 033）；②v3-runtime 误报邮件已第 7 次，消音方案待拍板；③设备 SSH 主机密钥变化，部署链路中断待确认设备是否重刷；④HXNativeApp 84 条保留待定分支未清。
+- 明日重点：四项待决拍板（消音方案/SSH 密钥/357 变通测法/分支清理）＋ ag-c500bb 交付确认推进；GBQ 建组测试改带组员复验。
+------------------------------------------------
+【工作详录】
+一、binary-over-mixed 二进制车道（5 仓 32 commits | 已完成——全链合入并四平台发布）
+- 目标：北斗短报文混编串新增二进制车道（budget/TCI 扩展），parser/队列/SDK/应用四层契约对齐
+- 当日进展：
+  · HXNmeaParser(6)：TCI 字段契约与二进制扩展边界记录（632909c）；评审环终闸裁定修复——recvTextForEncoding 合入范围限定、hex 外壳澄清、enc3 非 A4 回退补记（a4e5c54）；配套分支范围限定＋hex 无条件输出（7dba5e9）；enc3 不再自动解码、comm_data 即原始混编串（692fdb5）；TCI 契约页对齐 v2——enc3 原始 wire 透传、解码上移应用（85919d9）；B 册 suggestion 修复（fb53379）
+  · HXRdssSendingQueue(5)：tcq/tbq budget 契约对齐（711fe87）；TCQ 超限 error 改稳定 id 契约串（56431d9）；ctest 注册改相对命令修宿主侧 Not Run（dad72b2）；tcq/tbq_budget 二进制车道（a549cc2）；append-only 知识文件 union merge driver（71822ec）
+  · HXNativeApp(9)：二进制混编编解码静态工具＋budget 二进制重载（393e80e9/3232c212）；enc3 收件显式解码（bcda3e40）；移除 TCI 接收分派助手直读文本视图（ee3edf33）；契约文档系列收口（6a8bb2e6/c02e9b30/c2e34c0d/621a4a6f/f7a87ce5）
+  · lib-HXNmeaParser(4)＋lib-HXRdssSendingQueue(8)：fb53379/a549cc2 双插件仓 linux/android/windows/oh 四平台发布
+- 当前结果：五层（parser→插件→队列→插件→SDK/应用）二进制车道贯通，契约文档全链收口，插件四平台发布在案
+- 产出依据：各仓 git log（2026-11-24 时窗）；worktree feat-budget-tci 设计构建者评审记录；插件发布 tag
+- 遗留与下一步：无未完成项；实测反馈通道已建立（见二、GBQ/TCQ 两项）
+
+二、HXNativeApp issue 群修复与实测（HXNativeApp 19 commits | 已完成——除 #372 外全部合入 MSC-26-RW033）
+- 目标：消化 wangfx 提交的 issue 队列与真机问题
+- 当日进展：
+  · issue#370 主界面菜单栏显隐切换钮并联动导航隐藏（9d01ca94＋终闸修复 0a222466＋GUI 取证四坑知识 b1ecca08）
+  · issue#367 全仓「途径点」→「途经点」错字统一（PR #369）；issue#366 磁盘空间统计改整机真实分区聚合（PR #368）
+  · issue#365 串口自检判据修正——无数据不判失败＋卫导时序核实（ag-20e1b2）；卫星接收机初始化失败根因诊断（ag-cec698）
+  · issue#364 hx-ADAS-app 模块功能与实体键测法解析（ag-8245e7/ag-8ff111/ag-4eabfe/ag-0bed9c 四轮）
+  · issue#357 ADAS F2/F3 热键真机实测（ag-04bc5d 方案A）：F1/F2/F3/F6 全部实测通过，应用层无 bug
+  · TCQ 超限错误按 id 本地化（ag-872894 交付姿势卡死→ag-2db1c2 替身整合落地 5c327936；单测宿主 ctest 可跑 01c95e9a；契约知识沉淀 22850684）
+  · GBQ 删除组先删库后读地址致撤组未入队修复（ag-da9806，9620f84d）
+  · ADAS 会话自启动＋串口失败静默（3c51f5d3）；F2 健康管理 appPath 指向 PHM（d892b16f）；方向键两态导航＋TestBridge 冒烟（6f0544f2）；幽灵回车防抖＋冒烟扩展（3a269be8）
+  · budget-tci sdd 分支合并入 033（94c60709）；wangfx 协作 7 笔（config.ini/menu btn/routepath 等）
+  · issue#372 文件夹模拟U盘：首版（ag-b8e793）新增独立界面被 wangfx 纠正；修正版（ag-c500bb）三提交（feat+docs+fix，tip f52bed3a）过验证门，断言 1-8 全 pass、构建退净
+- 当前结果：12+ issue 修复/实测合入；TCQ/GBQ 两项队列契约问题闭环
+- 产出依据：HXNativeApp git log；各 ag-* 任务页与终闸三分册评审记录
+- 遗留与下一步：①issue#372 修正版卡 handoff 等派发方 task_deliver 确认；②issue#357 F3 全屏/串口两项为变通工具所测，待裁定算数与否；③84 条保留待定分支（78 未合并 issue/N-fix＋6 里程碑线）待定夺
+
+三、opencode-agora v3 GitStore 后端迁移（89 commits | 进行中——F135-F171 主体落地，评审环滚动收尾）
+- 目标：agora v3 从 SQLite 切 Git 后端存储（GitStore），保持 v2/v3 行为等价
+- 当日进展：
+  · 应用服务层：task/message/outbox/health/auth/timer 六族（F134/F135/F138/F143/F144/F145 等）
+  · GitStore Phase 0-3：git 记账垂直切片（CAS/幂等/重放校验，F147）→ 仓库层移植（F149-F153）→ 凭据/任务服务（F151/F152）→ cutover＋部署入口（F155-F158）
+  · 质量设施：SQLite-v3 vs GitStore 差分器＋故障注入（F149/F162）；legacy 迁移器/切换/备份 CLI（F139/F140）；v2 适配层五向翻译（F141）
+  · 收尾修复族 F159-F171：两形读牌残差、board_tui 轮询自愈与 tail 取数重做、坏 ts 容错、链边授权恢复、F160 僵死梯子 R1-R4、终态邮件人话化（e4ba028）
+- 当前结果：v3 服务器 GitStore 后端可运行（explicit v3/git launch 入口），差分验证设施在案
+- 产出依据：opencode-agora git log；台账 F135-F171 补录系列
+- 遗留与下一步：v3-runtime 升级误报邮件第 7 次（内容早已发布于 origin/main）——消音方案（closed 任务 unpublished 升级 3 轮上限后自动退役留审计，healthsvc 约 50 行小改）待用户拍板
+
+四、tmux 状态栏 opencode 会话状态插件（tmux-opencode-sessions 10 commits＋.dotfiles 5 | 已完成）
+- 目标：tmux 窗口状态行/边栏实时显示各 pane 的 opencode 会话状态
+- 当日进展：新插件仓初始化（c602237）→ per-pane 会话状态发布 tmux global env（98fdf63）→ border labels 渲染（ec1a4cb）→ TPM 安装管理 cli.json 注册（699bfac）→ 清理竞态/安装配置加固（44b0262）→ 窗口状态行渲染＋测试（975d08e/6a8b444/d027e2f）；dotfiles 侧会话标签启用/窗口自动改名恢复/agent indicator 移除（8f0f46d/404a800/fce318b/7b4cfe4/4acd65e）
+- 当前结果：插件经 TPM 安装与 origin/main 一致，全量测试通过，三个相关工作区干净
+- 产出依据：两仓 git log；TPM 克隆一致性核对
+- 遗留与下一步：无
+
+五、206 设备部署与 CAN/PHM 自启（Work 2 commits | 已完成）
+- 目标：206 整机 .30 全量部署问题修复＋CAN/PHM 服务自启
+- 当日进展：.30 部署三修（4396592）——根因：install_dm8_qt.sh 8b 阶段扫全 debs/ 目录取包名，名单混入 ftg340/内核五件 deb，apt 语义「升到仓库最新版」偷换版本锁定的 GPU 驱动；修复限定 Python 编译依赖名单（provision_206.sh/install_dm8_qt.sh/INSTALL.md）。CAN/PHM 开机自启（f913ca5，ag-68d972）——新增 can-setup.service/phm.service＋INSTALL.md 自启节，验证门曾因文件尾多一空行拒过一次、重做后过
+- 当前结果：设备上 CAN 自启开、main.py 手动（记忆兜底）；文档记录双自启安装法（新机复装用）；origin/ff 双远端已推
+- 产出依据：Work git log；设备亲核（master tip、服务文件在案、INSTALL.md 命中）
+- 遗留与下一步：设备 SSH 主机密钥变化（scp 连断根因，只在重刷/镜像重建时发生）——待确认设备是否重刷后清密钥重连
+
+六、经验库夜间治理与杂项（.dotfiles 17 commits | 例行完成）
+- 当日进展：nightly groom/judge 报告（1ae4bf3/969695b）、cold proposals（4c0fdca）、同义标签统一 6 文件（d40abcc）、lint 机械修 15 findings（b9707f3）、memory capture 12 笔；TitanNavi issue#391 master 六时段功能修改清单报告交付（review-only 零合入，note message 14444）
+- 产出依据：.dotfiles git log；ag-24c76e 任务终态记录
+- 遗留与下一步：无
+------------------------------------------------
+【会话调研工作（未提交）】
+- frp 远程访问本地 web 服务——SSH -L 隧道三层语义拆解＋数据链路图；结论：-L 甲:乙:丙 中甲开在敲命令机器、乙丙是 sshd 视角地址，sshd 在本机故 127.0.0.1 即本地 web（产出位置：会话 ses_df459e665ffeSaekG6Clrbew6H）
+- Ornith-1.5 开源模型热议——结论：现有 opencode.json 已是两级模型路由形态（glm-5.3 主力＋flash 干标题/压缩/检索/子 agent），V2 无独立 small_model 字段、靠按 agent 路由实现（产出位置：会话 ses_df2a21366ffe3Ba3UCp6CQLmvD）
+- GBQ 正常发送但收不到 GBI——根因两层：①cat2 建组带零组员中心站不回 GBI（仓库实机成功案例全部带 member_ids）；②cat12 本是固件无应答通道。澄清：disposition 完成＋发送成功是 FKI 出站回执驱动，不代表收到 GBI。建议：建组带组员、优先 ICR type-1→ICG 通道、可选队列校验 cat2 需 ≥1 组员（产出位置：会话 ses_df4bc648fffegPA2tlyHzOi0kz）
+- SSH 构建安装包启动入口——PHM-UI 外部第三方启动法：bash -c 'cd /opt/phm-ui && exec ./qt_monitor_system'，桌面项 /usr/share/applications/phm-ui.desktop 已配（产出位置：会话 ses_df3d1200bffe6Rp6X2UxlAwksy）
+- 206 部署 GPU 驱动被偷换根因链——debs/ 目录混入定型栈 deb＋8b 扫全目录取包名，apt 升到仓库最新版换掉版本锁定的 ftg340（产出位置：会话 ses_df4d4c5e8ffeo5yIl74yWcQ4MS；修复已落 4396592）
+================================================
+数据来源：各仓 git log（2026-11-24 时窗）、commit body、opencode 会话 SQLite 直查（session_v2，当日活跃目录 190+ 会话）
