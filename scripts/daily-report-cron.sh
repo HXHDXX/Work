@@ -31,12 +31,12 @@ if [ -n "$(git log origin/master..master --oneline 2>/dev/null)" ]; then
     || echo "[$(date '+%T')] 补推失败（下次 cron 重试）"
 fi
 
-# 主路径：opencode run 非交互执行 skill（深度版 + 发待办邮件）
+# 主路径：opencode run 非交互执行 skill（深度版 + 发日报全文邮件）
 # 模型固定 zai-coding-plan/glm-5.3（本地代理，避开 Kimi 5 小时配额；撞配额史见 08-27）
 # 超时 15 分钟兜底（agent 偶发卡住不阻塞 cron）
 # 🔴 prompt 字符串内禁用 ASCII 双引号/尖括号（会截断外层引号，"＜标题＞" 曾致整条命令被解析为重定向）
 timeout 900 opencode run --auto -m zai-coding-plan/glm-5.3 \
-  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /home/guangbin/Documents/Work/daily/日报-${D}.txt。邮件只发待办版：从日报提取需要用户亲自做的事，写入 /tmp/opencode/夜报待办-${D}.txt（执行类给步骤或命令；决策类给选项、后果、建议与回传话术；无待办则一行「今日无需你做什么」），主题「夜报 ${D} · 待办 N 项」（N 为实际条数，0 项用「夜报 ${D} · 无待办」），用 /home/guangbin/.dotfiles/bin/notify-owner 以主题与该文件路径为参数发送（唯一发信设施，勿手搓邮件头、勿直调 msmtp），发完删临时文件。落盘发信后必须收尾：python3 scripts/daily-index.py 重建 INDEX，git add daily/ 并 commit（docs(daily): add ${D} daily report），git push origin master 与 git push ff master（禁 force）。" \
+  "执行 daily-report skill：生成 ${D} 的工作日报，落盘 /home/guangbin/Documents/Work/daily/日报-${D}.txt，并用 /home/guangbin/.dotfiles/bin/notify-owner 以「工作日报 ${D}」标题与「正文文件路径」为参数发送全文（唯一发信设施，勿手搓邮件头、勿直调 msmtp）。落盘发信后必须收尾：python3 scripts/daily-index.py 重建 INDEX，git add daily/ 并 commit（docs(daily): add ${D} daily report），git push origin master 与 git push ff master（禁 force）。" \
   && { echo "[$(date '+%T')] 成功（深度版）"; exit 0; }
 
 RC=$?
