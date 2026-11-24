@@ -1,0 +1,15 @@
+[Unit]
+Description=PHM backend main.py (FastAPI + CAN reader)
+Requires=can-setup.service
+After=can-setup.service network.target
+
+[Service]
+Type=simple
+User=kylin
+WorkingDirectory=/home/kylin/bushu/backend
+ExecStart=/home/kylin/venvs/phm/bin/python main.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

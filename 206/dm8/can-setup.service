@@ -1,0 +1,12 @@
+[Unit]
+Description=CAN can0/can1 bitrate 250kbps and up
+After=systemd-modules-load.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# 先 down 再设：接口已 up 时改 bitrate 会报 Device or resource busy
+ExecStart=/bin/sh -c 'for i in can0 can1; do ip link set $i down 2>/dev/null; ip link set $i type can bitrate 250000; ip link set $i up; done'
+
+[Install]
+WantedBy=multi-user.target

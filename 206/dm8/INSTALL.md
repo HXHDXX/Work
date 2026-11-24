@@ -474,3 +474,16 @@ sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停
 | P1/P6 缩放 1.5 每逢重启回 1.25 | 新会话 xsettings 守护按 EDID 重算回写默认 1.25；**dconf override＋锁对 gsettings 会话总线路径无效**（`dconf write` CLI 报 non-writable 仅假象，gsettings set/get 不受锁约束） | P1 自动部署登录自启 `/usr/local/bin/ukui-scale-15.sh`：延迟三连 `gsettings set … 1.5`（实证会话内 set 即本会话长效，守护仅登录时回写一次） |
 
 另两条运维判例（不改 kit）：① **ukui-session 会原地复活会话侧 `/usr/bin/kylin-process-manager`**（systemd mask 只挡 daemon 单元；kill 后约 3 秒归位）——处置＝`systemctl restart lightdm` 重建会话，autostart 置 `.disabled` 后新会话不再拉起（P1 判定门由此才可通过）；② 远程 heredoc 经 `echo pw | sudo -S bash -s` 会被密码行抢占 stdin 而**静默空跑**——批量脚本一律 scp 后 `sudo bash 文件` 执行。
+
+## CAN＋PHM 后端开机自启（2026-11-24，.30 定型）
+
+**两单元**（源件已入本目录 `can-setup.service`／`phm.service`，未挂进 provision 阶段，新机手动装）：
+
+| 单元 | 作用 | 要点 |
+|---|---|---|
+| `can-setup.service` | 开机把 can0/can1 设 `bitrate 250000` 并 up（mcp251x 双口） | oneshot＋RemainAfterExit；**先 down 再设**——接口已 up 时改 bitrate 报 `Device or resource busy`（.20 判例），故 restart 幂等 |
+| `phm.service` | `/home/kylin/venvs/phm/bin/python main.py`（cwd＝`/home/kylin/bushu/backend`，User=kylin） | `Requires=can-setup.service` 保证 CAN 先就绪；Restart=on-failure/5s |
+
+**安装**：`sudo cp can-setup.service phm.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now can-setup.service phm.service`
+
+**验证**：`systemctl is-active can-setup phm`（双 active）｜`ip -d link show can0`/`can1`（state UP＋bitrate 250000）｜`journalctl -u phm -n 20`（DM 库连接＋CAN 每秒写总线）。.30 实机验讫（2026-11-24 19:43）。
