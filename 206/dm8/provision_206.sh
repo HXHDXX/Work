@@ -73,6 +73,9 @@ ukui_sess_env() {
   [ -n "$SESS_XRD" ] || SESS_XRD="/run/user/$(id -u "$SESS_USER")"
 }
 as_sess()    { runuser -u "$SESS_USER" -- env XDG_RUNTIME_DIR="$SESS_XRD" "$@"; }
+# hw 层含 Master 控件的声卡卡号自适应：172 内核起飞腾 HDMI(PMDKHDMI) 占 card0 且仅有 DP 控件，
+# 模拟输出 Master 在 fthda card1（2026-11-24 .30 判例；.20「card0 即 HDA」旧假设不再成立）
+hw_vol_card() { local c; for c in /proc/asound/card[0-9]*; do c=${c##*card}; amixer -c "$c" sget Master >/dev/null 2>&1 && { echo "$c"; return 0; }; done; return 1; }
 boot_epoch() { echo $(( $(date +%s) - $(cut -d. -f1 /proc/uptime) )); }
 if want P0; then
 stage 0 "预检（KySec / 时钟 / g++）"
@@ -139,6 +142,20 @@ if id kylin >/dev/null 2>&1; then
   runuser -u kylin -- dbus-launch gsettings set org.ukui.SettingsDaemon.plugins.xsettings scaling-factor 1.5 2>/dev/null \
     && info "层5 UKUI 显示缩放 scaling-factor=1.5（kylin）" \
     || warn "scaling-factor 写入失败"
+  # 判例 2026-11-24 .30：新会话 xsettings 守护按 EDID 重算并回写默认 1.25；dconf override+锁对 gsettings
+  # 会话总线路径无效（dconf write CLI 被拦仅假象、gsettings set 不受锁约束）。实证有效＝会话内 gsettings set——
+  # 登录自启脚本延迟覆盖（守护算完后改回 1.5，本会话长效）
+  cat > /usr/local/bin/ukui-scale-15.sh <<'SCALE_SH'
+#!/bin/bash
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+for i in 1 2 3; do
+  sleep 5
+  gsettings set org.ukui.SettingsDaemon.plugins.xsettings scaling-factor 1.5 2>/dev/null
+done
+SCALE_SH
+  chmod +x /usr/local/bin/ukui-scale-15.sh
+  printf '[Desktop Entry]\nType=Application\nName=UKUI Display Scale 1.5 Fixup\nExec=/usr/local/bin/ukui-scale-15.sh\nTerminal=false\nNoDisplay=true\n' > /etc/xdg/autostart/ukui-scale-15.desktop
+  info "层5 scaling 登录自启覆盖已部署（ukui-scale-15）"
 else
   warn "缺 kylin 用户，层5 gsettings 跳过"
 fi
@@ -147,12 +164,12 @@ fi
 # 判例：双层出声链（pulse×hw），单层断言即假绿（2026-11-21）
 if ukui_sess_env; then
   as_sess amixer -D pulse sset Master 100% unmute >/dev/null 2>&1
-  amixer -c 0 sset Master 100% unmute >/dev/null 2>&1   # hw Master 为 Mono 量程 0-80，100% 由 amixer 换算
-  VOL_P=$(as_sess amixer -D pulse sget Master 2>/dev/null); VOL_H=$(amixer -c 0 sget Master 2>/dev/null)
+  HW_C=$(hw_vol_card) && amixer -c "$HW_C" sset Master 100% unmute >/dev/null 2>&1   # 100% 由 amixer 按卡量程换算
+  VOL_P=$(as_sess amixer -D pulse sget Master 2>/dev/null); VOL_H=$([ -n "${HW_C:-}" ] && amixer -c "$HW_C" sget Master 2>/dev/null)
   printf '%s' "$VOL_P" | grep -q '\[100%\]' && printf '%s' "$VOL_P" | grep -q '\[on\]' \
     && printf '%s' "$VOL_H" | grep -q '\[100%\]' && printf '%s' "$VOL_H" | grep -q '\[on\]' \
     && info "音量定型 Master=100% unmute 双层（pulse×hw，${SESS_USER} 会话）" \
-    || fail "音量定型双层回读未含 [100%]/[on]（pulse: amixer -D pulse / hw: amixer -c 0）"
+    || fail "音量定型双层回读未含 [100%]/[on]（pulse: amixer -D pulse / hw: $( [ -n "${HW_C:-}" ] && echo "card$HW_C" || echo '无含 Master 的声卡' )）"
 else
   warn "无 ukui 桌面会话，音量定型跳过（P6 重启后会话在位时终验）"
 fi
@@ -290,7 +307,7 @@ p6_scale()    { ukui_sess_env || return 1
   as_sess gsettings get org.ukui.SettingsDaemon.plugins.xsettings scaling-factor 2>/dev/null | grep -x 1.5; }
 p6_vol()      { local o; ukui_sess_env || return 1; o=$(as_sess amixer -D pulse sget Master 2>/dev/null) || return 1
   printf '%s' "$o" | grep '\[100%\]' && printf '%s' "$o" | grep '\[on\]'; }
-p6_vol_hw()   { local o; o=$(amixer -c 0 sget Master 2>/dev/null) || return 1
+p6_vol_hw()   { local o c; c=$(hw_vol_card) || return 1; o=$(amixer -c "$c" sget Master 2>/dev/null) || return 1
   printf '%s' "$o" | grep '\[100%\]' && printf '%s' "$o" | grep '\[on\]'; }
 p6_audit()    { [ -z "$(dpkg --audit 2>&1)" ]; }
 p6_py()       { readlink /usr/local/bin/python3 2>/dev/null | grep 'python3\.12$'; }

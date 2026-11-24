@@ -464,3 +464,13 @@ sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停
 - P6 总验在最终重启后进行：P5 末落 `/var/lib/provision-206.stamp` 戳记，P6 以 `/proc/uptime` 换算 boot 纪元、须晚于戳记方放行（重启门）；全量断言全绿才打印 `PROVISION-ALL-GREEN`。
 
 > **渲染模式定案（2026-11-20 晚复验）**：**默认 ST**（探针自然通过，GBM 反向流）——kpm 拆除＋五层策略后，显式 ST 与默认 ST 两轮（含跨重启）复验零闪，**无需设置 HX_MAP_RENDER_BACKEND**。勘误：此前"ST×us1.1.10 同步闪"归因有误，真凶为 kylin-process-manager 设备节能动作对 DMA-BUF/fence 同步路径的干扰；us1.1.10 无闪缺陷（WC 当时的"不闪"只是绕开了被干扰的路径）。
+
+## 坑位补录二：2026-11-24 .30 全新部署三判例（已固化进 kit）
+
+| 症状 | 根因 | 修法 |
+|---|---|---|
+| P1 音量定型 FAIL：card0 无 Master 控件 | 172 内核起飞腾 HDMI(PMDKHDMI) 声卡占 card0 且仅 DP 控件；模拟输出 Master 在 fthda(card1)——.20「card0 即 HDA」假设作废 | provision P1/P6 音量 hw 层改 `hw_vol_card()` 自适应（取首个含 Master 控件的卡） |
+| P6 五条 FAIL：ftg340 无声变 1.3.0-kylin46 | 8b 把 debs/ 全目录包名（含定型栈内核五件＋ftg340）裸传 `apt-get install`，apt 对已装包取 repo 最新候选 | install_dm8_qt.sh 8b 枚举排除 `linux-image-*/linux-modules-*/linux-headers-*/ftg340`（定型栈归 provision P2 按文件名 dpkg 精确装） |
+| P1/P6 缩放 1.5 每逢重启回 1.25 | 新会话 xsettings 守护按 EDID 重算回写默认 1.25；**dconf override＋锁对 gsettings 会话总线路径无效**（`dconf write` CLI 报 non-writable 仅假象，gsettings set/get 不受锁约束） | P1 自动部署登录自启 `/usr/local/bin/ukui-scale-15.sh`：延迟三连 `gsettings set … 1.5`（实证会话内 set 即本会话长效，守护仅登录时回写一次） |
+
+另两条运维判例（不改 kit）：① **ukui-session 会原地复活会话侧 `/usr/bin/kylin-process-manager`**（systemd mask 只挡 daemon 单元；kill 后约 3 秒归位）——处置＝`systemctl restart lightdm` 重建会话，autostart 置 `.disabled` 后新会话不再拉起（P1 判定门由此才可通过）；② 远程 heredoc 经 `echo pw | sudo -S bash -s` 会被密码行抢占 stdin 而**静默空跑**——批量脚本一律 scp 后 `sudo bash 文件` 执行。

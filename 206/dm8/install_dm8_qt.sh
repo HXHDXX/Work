@@ -411,6 +411,9 @@ else
     pn=$(dpkg-deb -f "$d" Package 2>/dev/null) || continue
     # 包名白名单（Debian 字符集）：介质元数据不可信，拦 '-o'/'../*' 类 token 流入 apt/dpkg 参数位
     [[ "$pn" =~ ^[a-z0-9][a-z0-9+.-]+$ ]] || { warn "跳过异常包名 deb: $(basename "$d")"; continue; }
+    # 定型栈包不归 8b：内核五件/headers/ftg340 由 provision P2 按文件名 dpkg 精确安装——
+    # apt 裸名对已装包取 repo 最新候选，曾把 ftg340 1.1.10 静默升到 1.3.0-kylin46（判例 2026-11-24 .30）
+    case "$pn" in linux-image-*|linux-modules-*|linux-headers-*|ftg340) continue;; esac
     DEV_PKGS="$DEV_PKGS $pn"
   done
   if [ -n "$DEV_PKGS" ] && ! pkgs_ensure $DEV_PKGS; then
