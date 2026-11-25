@@ -1,0 +1,81 @@
+工作日报 2026-11-25（周三）
+================================================
+【今日概览】共 52 次提交，涉及 10 仓：
+主线：HXNativeApp(19)、.dotfiles(13)、opencode-agora(5)、maplibre-native(4)、HXRdssSendingQueue(4)、HXMapWidgetNative(2)、tmux-opencode-sessions(2)、Work(1)、lib-maplibre-native(1)、lib-HXRdssSendingQueue(1)
+- 今日工作：30 号车机（飞腾 D3000M）地图渲染崩溃攻坚——maplibre 全序排序键根治＋TSan 数据竞争族＋预编译包 ASan 验证＋地图子进程崩溃自愈全链落地；HXNativeApp 键盘导航/幽灵点击终局（push 化＋防抖体系全退役＋知识模块沉淀）；RDSS 错误 id 契约化跨三仓贯通并出包发布；agora done 拒收可见化、脏树三形分类、升级误报「内容落定」根治；日报邮件回退全文＋groom 夜报待办化。
+- 整体进度：maplibre 根治与自愈已合入（终验实例计时中）；键盘导航终局已合入（wrap 机制两项未闭环）；RDSS 契约化已完成（linux 预编译包入库发布）；agora 三项修复已合入（探针任务在途）；日报/夜报机制修正今晚起生效。
+- 风险阻塞：①30 号车机终验实例 22:02 起挂判定计时，结果未出；②d3000m-gpu 1.3.1-kylin53 工单包待验证安装（全栈更换、同系列有 hang 前科）；③客户现场 DM 数据库 -70019 连接失败待 runbook 执行；④ag-7d81e2（issue#375 QMessageBox 替换）在途未提交。
+- 明日重点：终验收判；1.3.1 驱动包验证方案执行；DM -70019 现场 runbook；键盘 wrap 两未闭环项真机观察。
+------------------------------------------------
+【工作详录】
+一、30 号车机地图渲染根治与崩溃自愈（4 仓 8 commits | 已完成——根治合入＋包发布，终验计时中）
+（maplibre-native 4＋lib-maplibre-native 1＋HXMapWidgetNative 2＋HXNativeApp 1）
+- 目标：30 号车机（飞腾 D3000M）地图反复 SIGSEGV/GPU hang 根治，并补子进程级韧性
+- 当日进展：
+  · 根治（ag-fef740）：getRenderTilesSortedByYPosition 改全序排序键＋range 哨兵——崩溃根因 cure（8238ea532）
+  · 快照对齐（ag-5414c3）：pin wrappers 引用的同一 render-tile 快照＋getAvailableImages() 死代码清理（a5f75111a/3dc5faa55）
+  · 启动竞争（ag-6778cd）：Settings 单例与 formatOperator 线程安全懒初始化（TSan startup races，cd9dd5415）
+  · 预编译包：lib-maplibre-native 更新（86eed28）——D3000M 上 2h ASan 验证，T+47 崩溃点通过＋120min 窗口通过
+  · HXMapWidgetNative：resizeGL 去冻结——Vivante 重建 FBO 空表面 200-470ms 黑窗，车机 60fps 实证（e2156e9，ag-1f2d54）；总线客户端线程安全——QString COW 跨线程改 move-capture＋zmq socket 线程封闭审计，arm64 容器 TSan 构建链接验证（3cada00，ag-75d3e9）
+  · HXNativeApp 子进程自愈（ag-624e9f）：地图子进程崩溃自动重启——指数退避 500ms→8s、连崩 5 次耗尽、崩溃瞬间相机恢复、MapRestartPolicy 纯函数 8 单测（TDD）、SIGTERM 伪装崩溃守卫（efb8b9f7；三分册终闸零发现）
+- 当前结果：根治＋韧性双层全部合入；HXMapWidgetNative 三面齐平（本地＝origin＝GitHub ff）
+- 产出依据：四仓 git log；lib 包 ASan 验证记录；ag-624e9f/ag-5414c3 终闸三分册
+- 遗留与下一步：终验实例 22:02 起挂判定计时（会话进行中），明晨收判
+
+二、HXNativeApp 键盘导航/幽灵点击终局（HXNativeApp 13 commits：自研 9＋wangfx 协作 4 | 已完成——两项未闭环）
+- 目标：键盘导航绿字/幽灵点击问题群终局收口
+- 当日进展：
+  · 幽灵点击终审（ag-d03e0e 评审环四轮）：移除回车冗余代点击（gdb 栈实证＝「进卫导后星空图变绿」「切焦点时页面切换」两症状根因）＋[R,P] 同批配对拦截收紧判据（51892cd9）→终审改判恢复回车代点击＋三层幽灵判别（24c4d2ff）→R2 代点击 AR 守卫（ebd4997b）→R3 收口（0bfca530）
+  · 防抖体系：幽灵回车防抖 v2 上移 qApp 全局过滤器＋smoke 直发断言（0e39bcee，ag-954d8c）→60ms 跨键防抖退役（14199430，ag-4f2b06）→侧边栏/菜单按钮 push 化终修——checkable/isOn 绿字与防抖三层全退役＋冒烟/gui-test push 断言＋设计终章（2b640f4b，ag-c3afff）
+  · 知识沉淀：keyboard-navigation 模块落盘——绿字/幽灵点击案终案四条目（3eb886a0，ag-70b05f）
+  · 出厂默认对齐（ag-ace078）：wangfx 改 self check geodefence false（b5cef9b2）后，出厂默认表 SelfCheck/monitorFence 对齐 false——FactoryReset 双源漂移修复（95873b8c）
+  · wangfx 协作：PR #377 issue/375-fix 合入（236b7bb8）；config.ini/reset 文件更新×2（269c62b6/a83b1e4a，出厂表/串口缺省对齐配套）
+  · 交互取证：方向键地图 wrap 机制 probe 定位复现（见会话调研节）
+- 当前结果：键盘导航问题群终局合入；知识模块四条目入册
+- 产出依据：HXNativeApp git log；多轮三分册终闸；设计文档终章；smoke/gui-test push 断言
+- 遗留与下一步：①wrap 机制两未闭环项（缩放钮路径虚拟屏不可达、迟滞 >60ms 副本边界真机观察）；②ag-7d81e2 issue#375 全局 QMessageBox→autoMessageBox 替换在途未提交
+
+三、RDSS 错误 id 契约化（3 仓 10 commits | 已完成）
+（HXRdssSendingQueue 4＋HXNativeApp 5＋lib-HXRdssSendingQueue 1）
+- 目标：RDSS 全链错误串从自由文本改稳定 id 契约，App 侧按 id 本地化显示
+- 当日进展：
+  · 队列仓：TBQ 频度错误串改稳定 id 契约（2a804f8，ag-e863df）→validate 与 budget 全量 id 契约化 25 组（28ac24e，ag-a4c7cc）→错误 id 常量上收随包公共头单一真源 30 个 HXRDSS_ERR_*＋30 条静态断言零漂移安全网（9ecc292，ag-bdbdf9）→linux 预编译 SDK 出包入库（a46ef69，ag-9465f4）
+  · App 侧：TBQ 频度错误 id 契约＋本地化显示（0258ed0d，ag-10d204）→SDK 错误 id 化＋rdssErrorText 统一词典（576aa063，ag-040c7d）→切预构建包常量单一真源＋FactoryReset 双源同步＋串口缺省迁移收口＋EPQ 断言测试（adc3e7db/5d2015b6/c16c5bd8，ag-ee291b）
+  · 插件发布：lib-HXRdssSendingQueue linux 发布入库（bfab650）
+- 当前结果：队列→插件→App 三层错误 id 契约贯通；线协议 id 值零变更；预编译包发布
+- 产出依据：三仓 git log；30 条静态断言；ctest 单测
+- 遗留与下一步：无
+
+四、agora 治理修复（opencode-agora 5 commits | 已完成——一项在途）
+- 目标：消化派发链三起事故家族＋升级误报复读轰炸
+- 当日进展：
+  · F111 双锚路径同步进 BOOT 与拒因文案（49b3548，agorad/ag-8d2c92）
+  · done 拒收可见化：锚校验改同步 400 报错＋拒因持久化落消息面——worker 三次 post(done) 被拒却收 200 的事故根治，v2/v3 双栈六拒统一出口（f269d74，ag-299a40；全量 2441 测试绿）
+  · local_target_dirty 三形分类（tracked/untracked-only/collision）＋派发前脏仓只读预警——gt-fc6fb2/ag-e35a42 等复发事故家族收口；diff_paths 改 -z 防 C 引号路径静默降级（e80e55c，ag-9a680b）
+  · 升级误报根治「内容落定」第三层：blob 落定＋新增行包含性双探针，rebase 孪生残留两形态判平——v3-runtime 复读轰炸结构性自愈（847be56，ag-b0efd4；全量 2479 测试绿）＋评审环 R1 加固：审计边沿触发＋cat-file 行数守卫（ccaee08）
+- 当前结果：三项修复全部合入 v2/v3 双面；误报停发机制在案
+- 产出依据：opencode-agora git log；tests 三件套新增；评审环三分册
+- 遗留与下一步：①ag-7c118f unpublished 探针可达性匹配在途（会话 20:46 后无提交）；②v2 legacy 交付面 _ensure_clean_auto 无撞面闸（e80e55c 遗留上报，待另行派发）
+
+五、日报/groom 夜报机制修正（Work 1＋.dotfiles 1 | 已完成）
+- 目标：修正 11-22 邮件对象错配——「待办摘要版」要求属 groom 夜报，日报邮件应发全文
+- 当日进展：日报邮件回退全文（369f737，ag-0370d1）；groom 夜报改纯待办清单——▶要拍板/▶等条件两类，agent 按新契约产 groom待办-$D.txt，无待办一行心跳＋兜底行（a7b7e9f，ag-e31bb1）；记忆库旧配方退役＋新裁定入册（uid 60c3071b02e942a5）
+- 当前结果：双任务 merged→closed、双远端已推；今晚 22:00 起日报邮件全文生效，明晚 02:00 起 groom 待办版生效
+- 产出依据：两仓 git log；wiki/orch/groom-todo-vs-daily-fulltext-2026-11-25.md
+- 遗留与下一步：groom 待办文件首轮产出质量依赖明晚 agent 履约（有兜底不发哑弹）
+
+六、经验库夜间治理与 tmux 插件（.dotfiles 12＋tmux-opencode-sessions 2 | 例行完成）
+- 当日进展：nightly groom/judge 报告（c94bb7c/28689d5）＋settle 收尾（768f8ba）；同义标签统一 verify-cmd（f2c7b85）；lint 机械修 3 findings（0957f2b）；memory capture 5 笔；.agent/README 小修（f68db88）；tmux-opencode-sessions：idle 会话 agora 派发状态标记 A/I*（75d3b2f，ag-844bb1）＋format.sh attached-client 检查 TERM 无关测试（73f06ba）；dotfiles 部署清单补 tmux 插件安装记录（3e98018，ag-18a3ca）
+- 当前结果：全部合入
+- 产出依据：两仓 git log
+- 遗留与下一步：无
+------------------------------------------------
+【会话调研工作（未提交）】
+- 30 号车机 GPU hang 终验——修复双件 22:02 就位、终验实例启动挂判定计时，操作者栈并行不冲突；结果未出（进行中）（产出位置：会话 ses_def99e7a9ffecNBMiUTuFtBFs4）
+- 车机 DM 数据库 -70019 连接失败——根因假设四选：实例未自启（部署验证系手动起服务，客户现场首次走上电自启链路）＞启动竞态（systemd started≠5236 LISTEN）＞MAX_SESSIONS=5 耗尽＞许可时钟偏差；按序分叉诊断 runbook 已成（产出位置：会话 ses_dee1268f8ffe3tY61isAQtIyt6）
+- d3000m-gpu 1.3.1-kylin53 安装必要性——判定为飞腾 11-20 闪烁工单回复包：须装以闭环工单（.30 定型栈唯一开放问题即驱动级图层闪烁），但属全栈更换（DKMS 内核模块＋xserver 连换），同系列 1.3.0 有 hang 前科，按有罪推定验证、勿只装单件（产出位置：会话 ses_dee3c055cffeilIuulWDvN4pTq）
+- hex 听写 Super+/ 键位——X11 键名白名单不收 slash（unsupported X11 hotkey key: slash）致不可用；已回滚 Ctrl+Alt+Space 并重启 hex.service 恢复，Qwen3-ASR 0.6B 正常；Super+字母键大概率可用（产出位置：会话 ses_deec13bafffends3it8DAuo1yg）
+- 方向键地图 wrap 机制——定位并三连复现：「→ 越界清焦进地图态＋同批幽灵回车走呼出分支拉回 m_lastNavButton」＝焦点回左侧按钮进不了地图；毒化源为实机 X 键流污染（每物理键＝同毫秒 Release+Press 对，疑 WM/显示服务层，另线未解决）；未闭环：缩放钮路径虚拟屏不可达、迟滞 >60ms 副本边界待真机（产出位置：会话 ses_ded64fcebffegSRFihObVi9Rx1）
+- v3-runtime 升级误报第 8 封呈报（一键裁决请求）——当日已结构性根治：ag-b0efd4 内容落定层合入（详录四），后续应停发（产出位置：会话 ses_e03fc0f14ffex7tQ24tK30nAcC）
+================================================
+数据来源：各仓 git log（2026-11-25 时窗，双轨遍历＋worktree 同 hash 去重）、commit body、opencode 会话 SQLite 直查（session_v2，当日 138 会话）
