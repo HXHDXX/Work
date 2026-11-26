@@ -25,10 +25,12 @@ SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 LOG=$(mktemp /tmp/provision206.XXXXXX)   # 日志落随机名：/tmp 固定名重定向会跟随预置软链（C 册判据）
 KREL=5.4.18-172-generic
 KVER=5.4.18-172.166
-FTG_VER=1.1.10-kylin43
-FTG_DEB=ftg340_1.1.10-kylin43_arm64.deb
-FTG_SRCVER=B41991B541BA938DD36A5E2
+FTG_VER=1.3.1-kylin53
+FTG_SRCVER=9060DE0FB02597E25A423CB
+# GPU 六件全栈＝飞腾工单回复包 d3000m-gpu-20261125.tar.gz（2026-11-26 .30 实测引入，验收走 srcversion 指纹）
+# GPU_DEBS 顺序即安装序：ftg340 1.3.1 硬依赖 xserver-core>=26.08，dkms 须在 ftg340 之前（headers 已在 KERN_DEBS 先行安装）
 # 严格按名取件（判例：ftg340*.deb 泛配曾连 1.3.0 一起装入）——名录与 debs/SHA256SUMS.txt 对齐
+GPU_DEBS="xserver-common_1.20.9-2kylin2.4k26.08_all.deb xserver-xorg-core_1.20.9-2kylin2.4k26.08_arm64.deb d3000m-graphic-v10-dkms_1.0-9_all.deb ftg340_1.3.1-kylin53_arm64.deb d3000m-ddx_1.0.22kylin31_arm64.deb ftv310-drv-video_1.0.28.kylin13_arm64.deb"
 KERN_DEBS="linux-image-5.4.18-172-generic_5.4.18-172.166_arm64.deb linux-modules-5.4.18-172-generic_5.4.18-172.166_arm64.deb linux-modules-extra-5.4.18-172-generic_5.4.18-172.166_arm64.deb linux-headers-5.4.18-172_5.4.18-172.166_all.deb linux-headers-5.4.18-172-generic_5.4.18-172.166_arm64.deb"
 KERN_PKGS="linux-image-5.4.18-172-generic linux-modules-5.4.18-172-generic linux-modules-extra-5.4.18-172-generic linux-headers-5.4.18-172 linux-headers-5.4.18-172-generic"
 
@@ -53,11 +55,22 @@ kern_pkgs_ok() {
   return 0
 }
 ftg_ok() { [ "$(dpkg-query -W -f'${Version}' ftg340 2>/dev/null)" = "$FTG_VER" ]; }
-# P3/P6 共用五条验证（定型表见 INSTALL.md「GPU 驱动栈定型记录」，2026-11-20 .30 全谱实测）
+# GPU 六件定型断言（P2 跳过门与 P3/P6 验证共用；版本表见 INSTALL.md「GPU 驱动栈定型记录」2026-11-26 节）
+# 先 Status 后 Version：iU 半配置包同样自报 Version，只比版本会让 P2 跳过门放行、绕过 dpkg -i 补配（终闸 B 册判例，写法对齐 kern_pkgs_ok）
+gpu_pkgs_ok() {
+  local pv p v
+  for pv in "xserver-common|2:1.20.9-2kylin2.4k26.08" "xserver-xorg-core|2:1.20.9-2kylin2.4k26.08" "d3000m-graphic-v10-dkms|1.0-9" "ftg340|$FTG_VER" "d3000m-ddx|1.0.22kylin31" "ftv310-drv-video|1.0.28.kylin13"; do
+    p=${pv%%|*}; v=${pv#*|}
+    dpkg-query -W -f'${Status}' "$p" 2>/dev/null | grep -q "install ok installed" || return 1
+    [ "$(dpkg-query -W -f'${Version}' "$p" 2>/dev/null)" = "$v" ] || return 1
+  done
+  return 0
+}
+# P3/P6 共用五条验证（定型表见 INSTALL.md「GPU 驱动栈定型记录」，2026-11-26 全栈升级 .30 实测）
 verify_kernel_gpu() {
   [ "$(uname -r)" = "$KREL" ] || { echo "uname -r=$(uname -r)（应 $KREL）"; return 1; }
-  ftg_ok || { echo "ftg340 版本非 $FTG_VER（dpkg: $(dpkg-query -W -f'${Version}' ftg340 2>/dev/null)）"; return 1; }
-  [ "$(modinfo -F srcversion ftg340 2>/dev/null)" = "$FTG_SRCVER" ] || { echo "modinfo ftg340 srcversion 非 $FTG_SRCVER（ko 非 1.1.7）"; return 1; }
+  gpu_pkgs_ok || { echo "GPU 六件有版本偏差（应 ftg340=$FTG_VER、xserver-common/xserver-xorg-core=2:1.20.9-2kylin2.4k26.08、d3000m-graphic-v10-dkms=1.0-9、d3000m-ddx=1.0.22kylin31、ftv310-drv-video=1.0.28.kylin13）"; return 1; }
+  [ "$(modinfo -F srcversion ftg340 2>/dev/null)" = "$FTG_SRCVER" ] || { echo "modinfo ftg340 srcversion 非 $FTG_SRCVER（ko 非 dkms 新栈）"; return 1; }
   # 内存中已加载版本须与盘上一致：dpkg 降级只换盘上 ko，旧模块服役到重启——modinfo 只读盘上文件（B 册判据）
   LOADED=$(cat /sys/module/ftg340/srcversion 2>/dev/null)
   [ -z "$LOADED" ] || [ "$LOADED" = "$FTG_SRCVER" ] || { echo "已加载 ftg340 srcversion=$LOADED（盘上已换，须重启加载新版）"; return 1; }
@@ -175,9 +188,9 @@ else
 fi
 fi
 if want P2; then
-stage 2 "内核/GPU 定型栈（$KVER 五件 + ftg340 $FTG_VER）"
-if [ "$(uname -r)" = "$KREL" ] && ftg_ok && kern_pkgs_ok; then
-  info "内核 $KREL × ftg340 $FTG_VER 已在位，跳过安装"
+stage 2 "内核/GPU 定型栈（$KVER 五件 + GPU 六件 $FTG_VER）"
+if [ "$(uname -r)" = "$KREL" ] && gpu_pkgs_ok && kern_pkgs_ok; then
+  info "内核 $KREL × GPU 六件 $FTG_VER 已在位，跳过安装"
 else
   TODO=()
   if ! kern_pkgs_ok; then
@@ -186,11 +199,14 @@ else
       TODO+=("$SCRIPT_DIR/debs/$d")
     done
   fi
-  if ! ftg_ok; then
-    [ -f "$SCRIPT_DIR/debs/$FTG_DEB" ] || fail "kit debs/ 缺件: $FTG_DEB"
-    TODO+=("$SCRIPT_DIR/debs/$FTG_DEB")
+  if ! gpu_pkgs_ok; then
+    for d in $GPU_DEBS; do
+      [ -f "$SCRIPT_DIR/debs/$d" ] || fail "kit debs/ 缺件: $d（介质制备见 INSTALL.md「GPU 驱动栈定型记录」）"
+      TODO+=("$SCRIPT_DIR/debs/$d")
+    done
   fi
   if [ "${#TODO[@]}" -gt 0 ]; then
+    command -v dkms >/dev/null 2>&1 || fail "缺 dkms 工具（OS 镜像应自带，无则先装）"
     dpkg -i "${TODO[@]}" >"$LOG" 2>&1 || { tail -5 "$LOG"; fail "dpkg 安装失败（$LOG）"; }
     info "已安装: $(basename -a "${TODO[@]}" | tr '\n' ' ')"
   fi

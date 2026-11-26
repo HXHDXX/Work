@@ -413,7 +413,8 @@ else
     [[ "$pn" =~ ^[a-z0-9][a-z0-9+.-]+$ ]] || { warn "跳过异常包名 deb: $(basename "$d")"; continue; }
     # 定型栈包不归 8b：内核五件/headers/ftg340 由 provision P2 按文件名 dpkg 精确安装——
     # apt 裸名对已装包取 repo 最新候选，曾把 ftg340 1.1.10 静默升到 1.3.0-kylin46（判例 2026-11-24 .30）
-    case "$pn" in linux-image-*|linux-modules-*|linux-headers-*|ftg340) continue;; esac
+    # GPU 六件全栈同属 provision P2 定型栈，apt 裸名禁碰——debs/ 入六件后不扩此清单＝重演 2026-11-24 版本偷换判例
+    case "$pn" in linux-image-*|linux-modules-*|linux-headers-*|ftg340|xserver-common|xserver-xorg-core|d3000m-graphic-v10-dkms|d3000m-ddx|ftv310-drv-video) continue;; esac
     DEV_PKGS="$DEV_PKGS $pn"
   done
   if [ -n "$DEV_PKGS" ] && ! pkgs_ensure $DEV_PKGS; then

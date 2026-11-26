@@ -424,6 +424,35 @@ python -c "import numpy, pandas, statsmodels, openpyxl; \
 
 > **补遗二（2026-11-20）**：原始升级包 `~/Downloads/5.4.18-172.166_arm64.tar.gz`（实为未压缩 tar）五件 deb 已全部入 kit：三件套 sha256 与池直链件**逐字节一致**（链路验证闭环），headers 两件（all 11.7M＋generic 1.3M）一并补入——若日后需在 172 上编任何核外模块（DKMS 类），headers 必备。新机复装按需五件或最小三件＋us。
 
+## GPU 驱动栈定型记录（2026-11-26 升级 1.3.1-kylin53 全栈，.30 实测）
+
+> 本节为现行定型；上方 11-20 旧记录（内核包 ko1.1.7×us1.1.10 单件）自本节起降级为历史参照。
+
+**定型配置（六件全栈）**，重复安装按此表（均出自飞腾 2026-11-25 工单回复包 `d3000m-gpu-20261125.tar.gz`，**不在 kylin 公开源**，重装取 kit `debs/`）：
+
+| 件 | 版本 | sha256 | 来源 |
+|---|---|---|---|
+| xserver-common | 1.20.9-2kylin2.4k26.08 | ef165498…e041d68d | 工单回复包 d3000m-gpu-20261125.tar.gz |
+| xserver-xorg-core | 1.20.9-2kylin2.4k26.08 | 3f7037fc…f71f69fa | 同上 |
+| d3000m-graphic-v10-dkms | 1.0-9 | 8a59e94f…79dc32d7 | 同上 |
+| ftg340 | 1.3.1-kylin53 | e0b4cf14…c64c18b9 | 同上 |
+| d3000m-ddx | 1.0.22kylin31 | b7f657b8…cfe70fac | 同上 |
+| ftv310-drv-video | 1.0.28.kylin13 | 2722d428…1dbd19ce | 同上 |
+
+**安装顺序**（＝provision_206.sh `GPU_DEBS` 序）：xserver-common → xserver-xorg-core → d3000m-graphic-v10-dkms → ftg340 → d3000m-ddx → ftv310-drv-video——ftg340 1.3.1 硬依赖 xserver-core ≥ 2.4k26.08；dkms 件安装时对 155/172 双内核各编译一套 ko（headers 两件必备，KERN_DEBS 已含）；六件 `dpkg -i` 完成后重启生效。
+
+**模块落位**：dkms 编译产物装在 `/lib/modules/<kver>/updates/`，同名覆盖内核包自带 ko——modprobe/modules.dep 按 updates/ 目录优先取新模块；initramfs 随 dkms 钩子重建时嵌入新模块。
+
+**版本编号陷阱（必读）**：ko 模块自报 `modinfo version`（ftg340 1.1.10／ftd330-drm-dc 1.1.18／ftv310_vpu_driver 1.0.11）与 deb 包版本（1.3.1-kylin53 等）是两套编号，验收断言一律走 `srcversion`（ftg340＝9060DE0FB02597E25A423CB），勿以 modinfo version 判代。飞腾 2026-11-26 答复：dkms 包含 gpu/vpu/dc 多个 ko，包版本仅标识包自身，不与任何单个 ko 的版本同步——此为官方设计而非错位。
+
+**.30 验证结论（2026-11-26 实测）**：`glmark2-es2`（EGL 路径）硬渲染 GL_VERSION＝OpenGL ES 3.2 V1.3.1（FTG340 renderer）；`glmark2`（GLX 直连路径）硬渲染 GL_VERSION＝OpenGL 4.6 V1.3.1、约 2900 FPS；9 分钟含双实例并发 EGL 压力零错误；3 小时真实模拟导航零异常。Xorg 日志 AIGLX dlopen 失败为**已知无害现象**（飞腾 2026-11-26 答复并经实测确认）——D3000M GPU 渲染不走 Mesa，AIGLX 只影响老旧服务端间接渲染接口（当前无应用使用），GLX 本地直连与 EGL 均为硬件渲染，无需处理（勿再当作遗留缺陷记录）。
+
+**维护方向（飞腾 2026-11-26 答复）**：新系统统一走 dkms 路径，内核中旧驱动不再使用——updates/ 覆盖内核包 ko 为官方意图而非变通手法；后续内核升级对 headers 的依赖为常态（KERN_DEBS 五件含 headers 即为此备）。
+
+**防线注记**：install_dm8_qt.sh 8b 排除清单已同步扩展至 GPU 六件全栈（apt 裸名禁碰定型栈——2026-11-24 版本偷换判例同型防线）。
+
+**回滚路径**：`dkms remove -m d3000m-graphic-v10-dkms -v 1.0 --all`；`dpkg -i debs/ftg340_1.1.10-kylin43_arm64.deb`（kit `debs/` 保留的回滚件，配内核包 ko1.1.7 即回旧定型栈）；重启。
+
 ## 车机电源策略定型（2026-11-20，高性能不休眠，五层）
 
 **背景事故链**：两次"卡死"（15:54/16:38）验尸同签名——journal 尾部 `kylin-process-manager: subCondition : idle_low_Load enter → suspendEffectEffects` → `kernel: ata1: SATA link down`（ata1＝系统盘 sda！）——模拟导航无人键鼠输入被判 idle，kpm 节能把**系统盘 SATA 链路**掐断，全系统 IO 冻死。与 GPU/驱动无关（两 boot 内核零 GPU hang）。
@@ -456,7 +485,7 @@ sudo bash provision_206.sh P5          # 只跑指定阶段（P0~P6）
 sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停在提示）
 ```
 
-- 阶段：P0 预检（KySec/时钟/g++）→ P1 五层电源防护 → P2 内核 172.166＋ftg340 1.1.10 → P3 五条验证 → P4 双 kit（`../qt5.14.2-env-deploy/install_qt_env.sh` ＋本目录 `install_dm8_qt.sh`）→ P5 PyCharm（tarball 未摆渡即跳过）→ P6 总验。
+- 阶段：P0 预检（KySec/时钟/g++）→ P1 五层电源防护 → P2 内核 172.166＋GPU 定型栈 1.3.1-kylin53 全六件 → P3 五条验证 → P4 双 kit（`../qt5.14.2-env-deploy/install_qt_env.sh` ＋本目录 `install_dm8_qt.sh`）→ P5 PyCharm（tarball 未摆渡即跳过）→ P6 总验。
 - 断点/重启续跑：全阶段幂等（已满足即 [OK] 跳过），fail 即停；P2 换内核或 GPU 驱动后须重启一次，重启后无参重跑自动从 P3 续。
 - g++ 缺失时自动借 apt 隧道安装；隧道未开则提示两步——工作站侧 `ssh -R 3142:archive.kylinos.cn:80 -R 3143:archive2.kylinos.cn:80 kylin@<设备IP>`（保持会话），设备侧 `sudo bash apt-tunnel.sh on`，再重跑。
 - `PYTHON_VENV` 缺省 `/home/kylin/venvs/phm`；`SYSDBA_PWD` 等环境变量原样透传（缺省同两 kit 头注）。
@@ -487,3 +516,5 @@ sudo bash provision_206.sh --reboot    # P2 装完内核直接重启（缺省停
 **安装**：`sudo cp can-setup.service phm.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now can-setup.service phm.service`
 
 **验证**：`systemctl is-active can-setup phm`（双 active）｜`ip -d link show can0`/`can1`（state UP＋bitrate 250000）｜`journalctl -u phm -n 20`（DM 库连接＋CAN 每秒写总线）。.30 实机验讫（2026-11-24 19:43）。
+
+> **⚠️ CAN 拉起触发 spi_phytium_v2 内核 Oops（2026-11-26 判例，缺陷报告已提交飞腾工单渠道）**：.30 实机 CAN 拉起＋总线流量会在 16~30 秒内触发 `spi_phytium_v2` 内核 Oops（错误码 96000005，故障点 `spi_phyt_transfer_one+0x1b8`，调用栈 mcp251x `spi_write`→`spi_sync`→`spi_phytium_v2`）；后果＝CAN 发送永久 ENOBUFS＋触碰 CAN/SPI 关闭路径的进程 D 状态 SIGKILL 杀不死＋关机拖死。修复确认前 can-setup.service/phm.service 维持「手动安装、不默认启用」；新机启用 CAN 前先试探：`ip link set can0 up type can bitrate 250000`，观察 dmesg 30 秒无 Oops 再启用。
