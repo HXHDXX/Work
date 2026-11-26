@@ -1,0 +1,99 @@
+工作日报 2026-11-26（周四）
+================================================
+【今日概览】共 103 次提交，涉及 9 仓：
+主线：HXNativeApp(28)、.dotfiles(28)、silicon-memory(17)、carkeyboard-KylinV10(14)、ProductDesign(11)、HXPRShell(2)、Work(1)、OSMDataCompiler(1)、opencode-agora(1)
+- 今日工作：HXNativeApp issue 群批量派发交付＋SDK 公共头治理三线并进（静态纯函数收敛 _p.h、零私有接口卫生门、多行感知硬化）；carkeyboard 输入法离线部署与开机弹键盘根因链根治＋b32/b33 增量收官并 FTP 交付；silicon-memory dream 记忆整理任务群 9 任务全绿；206 GPU 栈 1.3.1-kylin53 全供应商包落地＋环境全量 FTP 备份；notify-owner 并发丢信乱码根治。
+- 整体进度：issue 群 14 项派发中 6 项已合入、2 项工作树待合、6 项在途；SDK 治理三线全部合入主干；键盘适配 b32/b33 收官（新包 FTP 在位）；dream 任务群全绿过终闸；GPU 六件套入备份母本、整机验证未执行；昨日风险项「1.3.1 驱动包验证方案」已执行为包引入。
+- 风险阻塞：①GPU 1.3.1-kylin53 全栈整机验证未做（同系列有 hang 前科）；②HXNativeApp 8 项 issue 未收口（#395/#399 工作树待合 master，#379/#392/#393/#394/#396/#400 在途）；③HXPRShell B2 包发布决策待裁定（发包 vs 手动＋后续 HXNativeApp 全量部署）；④issue#294/#295 设计确认两问未答、升级邮件持续；⑤30 号车机 maplibre 终验实例判定今日无提交无会话证据，状态未确认。
+- 明日重点：在途 issue 收口与 #395/#399 合流；GPU 栈整机验证观察；HXPRShell B2 发包决策；maplibre 终验收判补证。
+------------------------------------------------
+【工作详录】
+一、HXNativeApp issue 群批量交付与 SDK 公共头治理（HXNativeApp 28＋OSMDataCompiler 1 | 29 commits；自研 21＋qinchuan1 5＋wangfx 3 | 主干已合，8 项 issue 在途）
+- 目标：issue-agent 链批量消化交互优化 backlog，并行推进 SDK 公共头架构治理收尾
+- 当日进展：
+  · SDK 治理三线：静态纯函数收敛（ag-34a734）——Route/SpatialMeasure/Rdss 与 Guidance/Navigation 纯函数收敛 src/services/*_p.h、parseEnvelopeInternal 随族搬入（2a907f99/bb64504f，派发方裁定 A）；公共头零私有接口（ag-530c39）——收尾＋container/check 静态函数白名单卫生门＋决策与基线 sha 口径沉淀（56e2e205/e4d44043/56690a2b）；卫生门硬化（ag-f3ddfa→ag-14e430）——多行感知＋三案自检探针＋p-h 文档计数修正（bf8a5204），ingest 门体条目 2 bullet＋log 行（d14cb1f8）
+  · 编组管理 issue#381（ag-f89039，qinchuan1 实现）：新增「离开组」与本地库清理、组长拦截＋ICR/GBI 组长标记落库（ff81c6ee）；终闸修复链——旧库补列失败显式拦截防 fail-open（093e4d94）、容器路径缺失 GTEST_SKIP 守卫（d54661bf）、GBI cat=1 回执按待分配行落位＋离组 status 反馈（fe22c4c8）、组号入口 isDigits 守卫（c46b6ea3）、知识沉淀（55359541）
+  · SMS 地形图要素图层（ag-f0254b＋ag-bab291 跨仓）：实施计划留痕（196050ca）→ mask→visibility/filter ops TDD（51d0ac17）→ SMSFeatureLayerService per-map 18 类显隐＋注册＋category-map 数据文件（f2897165）→ check tidy 门告警修复（37199bae）；OSMDataCompiler 导出 sms-category-map.json 带样式覆盖验证（3bdd915）
+  · RDSS wire 单测间歇红根因修复（ag-84e1a4）：init 前探活＋失败分级重建＋诊断钉（083b296e）
+  · 工作树在途两项：issue#399 补全导航/地形底图切换与栅格影像叠加＋知识沉淀 ZMQ addSource 数值坑/removeSource 拒删/样式重载自愈对账（fbef52e9/5fb1a4fd，ag-200b32）；issue#395 收发件箱勾选多行删除对齐航点模式（1fdc4029，ag-ed225f）
+  · 协作合入：qinchuan1——位置报告收件持久化（e062cef9，#382）、编组删除组撤组指令（6dffcca1，#383）、路径管理编辑按钮重命名联动 JSON（033358c4，#388）、css 文件（4de3a490）；wangfx——issue#386 固栏修复（b44efb2e，#397）、issue#387 快速导航修复（cf58ebc4，#398）、map change ui（b0561647）
+  · issue-agent router 全天派发 14 项：#378-#381、#384、#386、#387、#392-#396、#399、#400
+- 当前结果：主干合入 20 提交（SDK 治理/编组/SMS/RDSS）；6 项 issue 经 PR 合入；#395/#399 工作树完成待合
+- 产出依据：HXNativeApp/OSMDataCompiler git log；各任务三分册终闸；知识库 log 行
+- 遗留与下一步：#395/#399 合流；在途 6 项收口（含 #379 导入导出 JSON 说明文档交付）
+
+二、carkeyboard 输入法适配攻坚（carkeyboard-KylinV10 14 commits | 已完成——b32/b33 收官＋FTP 交付）
+- 目标：206 车机离线部署输入法可用性根治＋键盘 UI/交互三问题收官
+- 当日进展：
+  · 离线部署缺陷（ag-23c077）：打包缺库补齐＋lab 路径 symlink＋fcitx4 全量压制（e509e9f）
+  · 开机裸桌面弹键盘根因链（ag-3ff6da→ag-5df5b7→ag-37b21c→ag-09e599）：面板初始隐藏（6c588a2）→ 忽略桌面 dbus IC 焦点（6d0a4f1）→ 按程序名过滤 peony 桌面 IC、前端过滤可被绕过改卡端守卫（1c5176b）→ 关闭 fcitx5 内置 vk 自动弹出、show 策略 cardaemon 自持（cafd9e0，终极根因）
+  · 拼音历史与生命周期：保留 fcitx 用户数据 home 使拼音词典生效（61f8672，ag-cc50f8）；最后文本 IC 销毁亦隐藏键盘防滞留（af89f9a，ag-937c29）
+  · UI 打磨：面板贴底＋符号键加大（8df0954，ag-388bc9）；符号墨迹实测占比对齐——⇧26/⌫30/↵44（ac9c985，ag-5c82a3）
+  · 符号页与 b32/b33 增量：?123 符号页＋隐藏按钮＋手动隐藏抑制（ddba3f4，ag-c10ed2）；& 键 keycode 对齐自有数字行 15→16（c0b3edf）；非文本点击零弹出＋隐藏钮最左＋黑名单（0e25166，ag-e04359）；⇩ 入底排 Android 式＋空预编辑框自动隐藏＋text-only hide-cancel（1d40cfd）；无候选隐藏展开钮（daa1fb9，ag-0676bc）
+  · 验证与交付：多轮读屏/截图验证（护眼模式、双窗口、PHM/导航/快速导航输入框、UKUI 零弹出双闸 churn=1 denied=1）；FTP 传新包 carkeyboard-daa1fb9.tar.gz（sha256 633163d2…）删旧包（裸 DELE 550 坑已沉淀）；邮件发 7 张验证截图
+- 当前结果：三个问题全链收官；新包在 device-system-configs/206/ 在位
+- 产出依据：git log 14 提交；读屏验证会话记录；FTP 目录终态
+- 遗留与下一步：真机长时观察；「无法输入中文顿号」疑点收敛 PreeditEnabledByDefault（见调研节）
+
+三、silicon-memory dream 记忆整理任务群（silicon-memory 17 commits | 已完成——9 任务全绿＋终闸修复）
+- 目标：经验库 dream（记忆配对/蒸馏/遗忘/复活）全链落地，rc2 收口
+- 当日进展：
+  · 原语与算法：store 原语（翻转容许 supersede/复活候选/向量批取）＋设计稿落库（1aadb47）；同域配对＋遗忘限速＋日志 schema（b13ff85）；纯 LWW 定向＋平局留人（85add17）；蒸馏带取消裁决提问、≥pair_sim 自动新取旧（390f6fe）
+  · 编排与命令面：四相位编排＋report-only/--apply＋局部降级（8029fc4）；配置键＋管理子命令（1388681）；maintain hot 委托＋根命令面＋SKILL 命令表纪律 v2.2 砍根命令（8dff698/9c3f5c8）；/recall 注入前 LWW 折叠零存储写（cbc1dfd）
+  · 质量闸：capture 预检闸（收窄谓词＋related 链豁免，bcc6ec0）→ 关键词谓词收严（停用词/长度过滤＋CJK 二元组门＋阈值≥2，bc4e05c，评审 I-1）；notify 处置命令对齐 mjs retire 契约＋复活锚改 last_apply_ts（fa24d1b）；异维复活行局部降级＋CLI purge 测试 PYTHONPATH（1b41b0c）
+  · 收口：计划档案 9 任务 checkbox 逐项勾全绿（7e38878）；清尾（51b2773）；dream-retention 模块页 ingest（e02c26a）；终闸评审修复 PYTHONPATH 模式指针＋裁定日期照录注记（531a5bc）
+- 当前结果：dream 全链合入，终闸三分册零未决
+- 产出依据：git log 17 提交；计划档案 checkbox；dream-retention 知识页
+- 遗留与下一步：无
+
+四、ProductDesign MSC-26-RW033 车机交互设计（ProductDesign 11 commits | 已完成）
+- 目标：MSC-26-RW033 r2 界面交互优化——按键导航＋全屏地图设计变更
+- 当日进展：
+  · ag-4edcd2 设计链 10 提交：r2 需求（a928888）→ HMI-801~808 按键交互规范（973931f）→ ADR-008 全屏地图浮动控件（2bdd585）→ ADR-009 五键导航模型（67c974c）→ IA 增按键导航模型（6554ae1）→ 线框地图页重绘（2b6ce8a）→ UI 细则图标文案（3d95224）→ VV 映射增补（56172f8）→ 原型全屏地图与焦点系统（bb70426）→ 评审环修复工具菜单溢出与浮层遮挡（8ac1c3c）
+  · guangbin：AGENTS.md 补追溯校验命令/流程入口/编号陷阱、修正 scope 与原型自包含约束（ff71baa，ag-9d2c80）
+  · 视觉验证三张原型截图复检通过
+- 当前结果：r2 设计变更全部落盘
+- 产出依据：git log 11 提交；原型截图验证会话
+- 遗留与下一步：无
+
+五、HXPRShell 通信链修复（HXPRShell 2 commits | 已完成——B2 发包决策待定）
+- 目标：qhxprshell REQ 无超时回执＋服务端口 bind 冲突静默问题根治
+- 当日进展：
+  · 根修（ag-f031a1）：REQ 3s 超时回执＋socket 重建＋bind fail-fast 六端口预检拒启（90e7866）
+  · 补测＋沉淀（ag-0b9e0c）：REQ 超时钉＋bind fail-fast 钉＋知识沉淀（27eade2）
+- 当前结果：master 27eade2 已推同步；agora 任务全闭环
+- 产出依据：git log；终闸三分册
+- 遗留与下一步：B2 包发布决策（发包 vs 手动）＋后续 HXNativeApp 全量部署
+
+六、206 整机 GPU 栈升级与环境备份（Work 1 commit＋调研会话 | 已完成——包入母本，整机验证未执行）
+- 目标：206 kit GPU 栈升级到 ftg340 1.3.1-kylin53 全供应商栈；环境配置备份
+- 当日进展：
+  · GPU 栈引入（ag-5dcae7）：dkms＋xserver＋ddx 全供应商包（eaf6273）——昨日风险项「1.3.1 驱动包验证方案」执行落地
+  · 环境备份：12 文件上传 FTP device-system-configs/206/、HEAD 尺寸校验 12/12；全树 188 本地＝188 FTP 零缺失零陈旧（含 GPU 六件套）；netrc 凭据清理
+  · 监控收缩：d3000m-gpu 侧 mon30 7×24 监控取消（crontab 行移除，脚本惰性保留）
+- 当前结果：GPU 栈包在母本与备份双在位
+- 产出依据：Work git log eaf6273；FTP 同步核验记录；crontab 终态
+- 遗留与下一步：整机安装验证（同系列 hang 前科，需观察窗口）
+
+七、agora 治理与记忆基座运维（opencode-agora 1＋.dotfiles 28 | 已完成）
+- 目标：派发链 peer 协作引导落位；发信设施并发缺陷根治；夜间治理自动化
+- 当日进展：
+  · F172（ag-cbdec1 merged→closed）：peer 写法引导 BOOT 协作行＋dispatcher 账本检索纪律成文（86ea2e2）——四落位（BOOT/测试断言/SKILL 检索条目/reqs）＋verify 门绿＋origin 已推＋install.sh 幂等重跑 agorad 重启生效
+  · notify-owner 并发修复（ed12a01）：per-invocation 临时文件装配邮件——根治并发发信共享 .last 互踩（ag-9d2c80/ag-6de679 丢信＋乱码事故）；「邮件正文中文乱码排查」会话定位→修复→双测绿→经验沉淀→推送同步全闭环
+  · 夜间自动化 4 提交：groom 报告（12c7087/4d0da0e）、cold proposals（0615352）、nightly judge report（7238d7b）
+  · memory(capture) 23 提交（经验捕获自动化流水）
+  · 调研配套：Agora 实现方案与公开留言板类比（经验 uid ea1830cfb16b457c）；看板 art:verify:0 口径解读
+- 当前结果：两项治理修复全部合入并在线生效；夜间治理链当日全绿
+- 产出依据：opencode-agora/.dotfiles git log；wiki/reported.md F106 留痕；doctor 健康
+- 遗留与下一步：经验草稿 confirmed/rejected 人工裁决
+------------------------------------------------
+【会话调研工作（未提交）】
+- d3000m-gpu 安装必要性分析——结论：取消 mon30 7×24 监控（crontab 行移除、脚本惰性保留，SPI 修复后一行 cron 复启）（产出位置：会话 ses_dee3c055cffeilIuulWDvN4pTq）
+- 206 环境是否需要备份——结论：12 文件 FTP 上传＋188 全树同步零缺失＋GPU 六件套入母本＋凭据清理（产出位置：会话 ses_de8a3edb7ffeHdF5i9TPmyH0kA）
+- 无法输入中文顿号——结论：U+3001 全链 happy path 正常、fcitx5 反斜杠→顿号映射在位，疑点收敛到 PreeditEnabledByDefault 配置（产出位置：会话 ses_de9525fcbffeSzHsultAjyaNrt）
+- 项目名后 art:verify:0 含义——结论：看板 TUI note 列为 art:phase:rc 投影，rc=0 表末次 verify 门绿（产出位置：会话 ses_de993986fffeSdqPo5KMCxUl3S）
+- 对话历史只增不删的记录机制——结论：wiki/wiki/why 嵌套错位树属系统性路径映射坑（多会话同踩），自身两份误放件已清理（产出位置：会话 ses_dec9ace18ffea6Pll0cL0vzCSe）
+- hxnativeapp issues 295 和 294 进展——escalation 上限设计确认两问未答、升级邮件持续送达（产出位置：会话 ses_e03fc0f14ffex7tQ24tK30nAcC）
+- 企业版编程套餐售前咨询——售前邮件咨询交互完成（产出位置：会话 ses_dea5f7f74ffeThJ1KUr2CV0KCg）
+================================================
+数据来源：HXNativeApp、carkeyboard-KylinV10、silicon-memory、ProductDesign、HXPRShell、Work、OSMDataCompiler、opencode-agora、.dotfiles 九仓 git log（2026-11-26，工作树按 hash 去重聚类）、commit body、opencode 会话库（当日 199 会话，剔除终闸评审/vision 碎会话）

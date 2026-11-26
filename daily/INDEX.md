@@ -1,6 +1,6 @@
 # 日报索引
 
-> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 195 篇，2026-04-03 ~ 2026-11-25。
+> 自动生成：`python3 scripts/daily-index.py`（覆盖本文件）。共 196 篇，2026-04-03 ~ 2026-11-26。
 
 ## 主题索引（按工作线关联各日）
 
@@ -258,3 +258,4 @@
 - [2026-11-23](日报-2026-11-23.txt)：HXNativeApp issue 流水线；RDSS 预算队列与频度答疑；TitanNavi #384 REC 图标定案与双支发版；carkeyboard 生产化收口；GitStore 107 部署验证闭环与 agora 工具链；206 环境治理与 30 车机排查；经验记忆治理
 - [2026-11-24](日报-2026-11-24.txt)：binary-over-mixed 二进制车道；HXNativeApp issue 群修复与实测；opencode-agora v3 GitStore 后端迁移；tmux 状态栏 opencode 会话状态插件；206 设备部署与 CAN/PHM 自启；经验库夜间治理与杂项
 - [2026-11-25](日报-2026-11-25.txt)：30 号车机地图渲染根治与崩溃自愈；HXNativeApp 键盘导航/幽灵点击终局；RDSS 错误 id 契约化；agora 治理修复；日报/groom 夜报机制修正；经验库夜间治理与 tmux 插件
+- [2026-11-26](日报-2026-11-26.txt)：HXNativeApp issue 群批量交付与 SDK 公共头治理；carkeyboard 输入法适配攻坚；silicon-memory dream 记忆整理任务群；ProductDesign MSC-26-RW033 车机交互设计；HXPRShell 通信链修复；206 整机 GPU 栈升级与环境备份；agora 治理与记忆基座运维
