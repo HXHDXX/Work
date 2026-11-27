@@ -1,0 +1,162 @@
+工作日报 2026-11-27（自动兜底版）
+================================================
+
+【说明】agent 路径失败，此为脚本兜底档案版（按仓分组列提交）。
+
+### .dotfiles（52）
+  00:24 6bf6156 memory(capture): 20261127-002424-218e15:52
+  00:41 197776b memory(capture): 20261127-004114-c4a5
+  00:42 21b0f00 memory(capture): 20261127-004256-a3a5
+  01:09 80ab57a memory(capture): 20261127-010921-89f3
+  02:06 8b9d795 fix(agent-experience): mechanical fixes per lint (10 findings)
+  02:12 f27ca46 feat(agent-experience): add cold proposals 20261127
+  02:13 b488029 chore(agent-experience): unify synonymous tags (test-bridge→testbridge, 3 files)
+  02:15 da935b8 feat(agent-experience): weekly digest 20261123-1126
+  02:17 c3b4258 feat(agent-experience): nightly groom report 2026-11-27
+  02:19 05eca6f chore(agent-experience): skill-uses double-record for groom 2026-11-27
+  02:27 1e5231b feat(agent-experience): nightly judge report 2026-11-27
+  08:22 495c5a3 memory(capture): 20261127-082250-5669
+  08:25 5823d22 memory(capture): 20261127-082540-6d1a
+  09:11 08c5012 memory(capture): 20261127-091137-5d95
+  09:25 f9d1fb0 memory(capture): 20261127-092559-1b85
+  09:26 3c9b099 memory(capture): 20261127-092607-63a6
+  09:44 1fb3a87 memory(capture): 20261127-094315-a72f
+  09:53 6647b74 memory(capture): 20261127-095324-7e92
+  10:04 7bd86b2 memory(capture): 20261127-100404-b672
+  10:13 4e5cb3d memory(capture): 20261127-101347-06f7
+  10:14 f8873e5 memory(capture): 20261127-101430-937d
+  10:32 6668aa6 memory(capture): 20261127-103203-7d47
+  10:35 723096e memory(capture): 20261127-103547-6ef2
+  10:40 9a9e41b memory(capture): 20261127-104013-2938
+  11:18 e2968f7 memory(capture): 20261127-111847-7495
+  11:42 77ded6b memory(capture): 20261127-114201-73b5
+  12:26 fa3aa4d memory(capture): 20261127-112243-2ff9
+  12:42 781e638 memory(capture): 20261127-124236-81ed
+  14:17 9efcc1c memory(capture): 20261127-141751-d160
+  15:14 2fe28d3 memory(capture): 20261127-151405-ab88
+  15:29 ee31571 memory(capture): 20261127-152744-5ea8
+  15:57 4b7b2b4 memory(capture): 20261127-155756-01f6
+  15:57 9bc2ea2 memory(capture): 20261127-155756-cfa6
+  15:58 5e97ee3 memory(capture): 20261127-163000-a41f
+  16:15 4641866 memory(capture): 20261127-161537-3210
+  16:38 3b111ff memory(capture): 20261127-163808-331d
+  16:48 6286790 memory(capture): 20261127-164825-5983
+  16:48 ebf7a86 memory(capture): 20261127-164852-a931
+  16:49 6d03595 feat(tmux): add tmux-fzf window switcher on prefix+f
+  17:03 151c80e memory(capture): 20261127-170347-e093
+  17:03 b644549 memory(capture): 20261127-170347-e352
+  17:10 19a7bd3 memory(capture): 20261127-171034-82fe
+  17:24 6cd148f memory(capture): 20261127-172434-c1c0
+  17:31 284ebfd docs(agents): add midtask prior query rule
+  18:19 43b4579 memory(capture): 20261127-181935-9f05
+  18:30 ebe8162 memory(capture): 20261127-183023-6468
+  19:08 3679e44 memory(capture): 20261127-191200-4f7c
+  19:19 89f8d98 memory(capture): 20261127-191912-5e01
+  19:38 701bb69 memory(capture): 20261127-193827-195a
+  20:00 c2bc0b7 memory(capture): 20261127-203500-a7c2
+  20:10 5e0587e memory(capture): 20261127-201047-9dff
+  20:38 c58f406 memory(capture): 20261127-203831-f3ed
+
+### HXNativeApp（30）
+  00:37 8fbd0c16 fix(app): 评审环终闸修复——run 脚本 phase1 描述补新覆盖＋拉伸失败路径窗口还原
+  00:37 93d9336a fix(app): 电子围栏列表列宽铺满背景页面＋渐进渲染/列表宽度断言面19:46
+  00:38 da28ca78 issue/396-fix (#402)
+  00:39 c7c925b0 docs(issue-agent): 电子围栏 issue#386 二轮沉淀——列宽铺满决策与四环境坑
+  01:41 0e930def modif shortmess1126-2 (#412)
+  02:19 86b95336 issue/387-fix (#405)
+  03:26 8c23a20c issue/411-fix (#413)
+  05:07 8903d94d issue/393-fix (#407)
+  05:46 3e8d3980 issue/399-fix (#415)
+  07:21 f812d40a feat(sdk): sms-category-map QRC 内嵌——SDK 发布自足＋外部路径可选覆盖 (ag-37d5bb)
+  07:44 9bb0b82c fix(sdk): OCR 终审 2 项——外部覆盖生效探针 loadedCategoryCount＋头注释资源路径全角冒号 (ag-37d5bb)
+  08:00 f8d04972 test(gui): conftest 并行互杀根治——进程组收口＋端口按会话避让 (ag-1eeb3e) (#419)
+  08:51 71ce8728 Merge branch 'issue/386-fix' into MSC-26-RW033
+  08:53 f21097db Merge branch 'issue/392-fix' into MSC-26-RW033
+  08:56 b8e81b24 Merge branch 'issue/399-fix' into MSC-26-RW033
+  09:08 b2d5ccce add shortmessage 长度 1126-2
+  09:34 67e30e56 feat(rds): 主菜单一键告警按钮按 [OneKeyAlarm] 配置发送 TCQ 短报文 (ag-16f4bf)
+  15:00 b13a08de add coortranswdget
+  15:54 886c87f3 feat(app): F1/F2/F3 快速稳定切换——WM 级激活＋ADAS 常驻不撤窗 (ag-b297b0)
+  16:01 f6a51f57 fix(app): e2e 自建步骤瞬时资源杀重试恰一次 (ag-b297b0)
+  16:33 7664934f fix(app): e2e 断言级瞬态 spawn 恢复重按＋失败留证 (ag-b297b0)
+  16:35 6320cf14 fix(gui-test): isolate virtual-screen tests from host input method
+  16:50 8c06039f fix(app): e2e 恢复重按完整重演首启场景＋A3 等待边距修正 (ag-b297b0)
+  17:17 cd67f4e2 feat(rdss): TBQ 地理围栏字段放开＋areaFlag 语义修正 (ag-6c52fd)
+  18:34 641abee6 fix(app): 输入法焦点重建 100ms 去抖——触摸双触发尾随 FocusOut 吞键盘 (ag-a7500e)
+  19:19 db4c7691 fix(app): 坐标转换 6 纯函数 static 化——集成 tidy 解锁 (ag-6c52fd)
+  19:46 1f297148 feat(rdss): 动态编组新增「编组信息查询」按钮＋ICR 应答日志格式化回显 (ag-172258)
+  19:58 7cf4bf15 docs(issue-agent): 一键告警链与 TestBridge 构建门知识沉淀 (ag-16f4bf)
+  21:54 a1d4023b fix(rdss): 收发件箱勾选多行删除——对齐航点模式 (ag-ed225f)
+  22:05 41b50b05 docs(issue-agent): 收发件箱勾选批量删除知识沉淀 ingest (ag-ed225f)
+
+### carkeyboard-KylinV10（24）
+  08:12 39fc67e fix: drop churn suppression - it eats hx force-refocus popups; denylist carries UKUI14:44
+  09:10 a9d0ab2 feat: pointer-position-gated auto-show (CARKEYBOARD_AUTOPOP tri-state)
+  09:24 faf5031 fix: survive mid-run X death in the click gate (per-query X connection)
+  09:51 e00a988 fix: strict no-rect gate + empty default denylist
+  10:31 a3ac6aa fix: drop manual-hide suppression - it locks out re-summon; norect gate covers UKUI
+  10:52 4e6526c feat: aligned symbols row3, pop zones for rect-less widgets
+  11:12 297aafb fix: capture zoneHit in focusInHandler lambda (b38 build fix)
+  11:47 9b26fed perf: gate board repeater + strip cacheBuffer (typing latency)
+  12:24 685613d feat: XI2 click sniffing + zone-click show for focused rect-less widgets
+  12:45 fc33012 fix: XIAllDevices for raw events + click diagnostics
+  13:46 0b09ca6 fix: XIQueryVersion handshake — raw touch delivery requires 2.2
+  13:53 e21e966 fix: hoist IO source handle outlive exec — block-scope dtor unregistered the sniffer
+  14:00 cc82050 fix: widen default ukcc search zone (tap landed 5px outside)
+  14:32 410a7e4 feat: long-press key repeat + zone widened to measured bounds
+  14:52 bf02f5c feat: click path uses live cursor rect — same-field re-summon for rect-reporting apps
+  15:35 49e7a4e fix: disable built-in autoHide (flicker) + late-rect recheck gate
+  16:01 67a3168 fix: widen X gate tolerance for wide empty fields
+  16:20 8e9857d fix: X tolerance 1600 — row-based gating in effect
+  16:37 1c99d9b fix: comma/period keyvals were KP_Separator/KP_Decimal, not ASCII — engine drops keypad keyvals; ASCII 44/46 convert to fullwidth on commit
+  16:40 668df32 feat: trusted-app fast path (focus + click corroboration -> instant show)
+  16:53 73514d6 fix: cancel pending hide/show timers in trusted fast path (review B-1)
+  17:14 bb0ff40 feat: invert trust semantics — trusted by default, UKUI family opts out
+  17:21 e952731 fix: empty CARKEYBOARD_UNTRUSTED_APPS now trusts everything (review round 1)
+  17:47 7a39cfb feat: focusout/hide diagnostics + EN-mode punctuation labels
+
+### opencode-agora（10）
+  10:29 df9394a fix(health): content-settled memo persistence + delivery-time window anchor (ag-0bdf33)16:44
+  10:39 3a22a6f feat(peer): 留言类型化（认领/此路不通/确认）＋认领撞车回执（Req: F173）
+  11:26 8e988fd feat(prompt): F173 协同能力提示词三处同步（BOOT/skill/工具描述）（Req: F173）
+  12:46 fd73532 feat(noop): no-op 申报自动归档（零提交＋前缀判定，通知保翻案）（Req: F174）
+  13:06 06544df feat(verify): 提案机械预检——F99 闸前移，脏提案自动打回（Req: F175）
+  13:26 414b2e2 fix(review R1): verify 预检补 worker 守卫——跨链脏提案回链边闸 400 零写入（Req: F175）
+  14:56 d711945 docs(skill): agora-dispatch 补跨会话交付物就绪模式行（out_of_band+task_wait 或 wiki 交接；溯源 2026-11-27 ag-00a5fe 非链边拒）
+  15:54 1b8477d docs(readme): 双语同步 F172-F175 口径——16 工具/3 skills/repo_board/no-op 自动归档/verify 预检
+  18:27 4881329 fix(tui): draw_board 矮窗 h≤2 提示行守卫——addnwstr ERR 崩溃根除＋_TinyStdscr/TestTinyGeometry 两锚＋F177 条目（Req: F177）
+  19:01 a2be033 fix(tui): draw_page 渲染前 _flat 拍平——tail 页内嵌换行 addnwstr ERR 全屏崩根除＋NUL 剔除＋_NoCtlStdscr 契约桩两锚＋F178 条目（Req: F178）
+
+### lib-plugin-HXGISServer（5）
+  03:20 2e025524 Merge pull request 'issue/393-fix' (#394) from issue/393-fix into master
+  08:57 647a4e58 docs(issue-agent): ins-module-gate 增补 issue#393 编译期开关取值语义
+  08:57 a7c84dc5 feat(ins): 惯组模块编译期写死隐藏开关（issue #393）14:45
+  09:56 09e5d938 feat(ins): INS 编译开关兼控「关于系统」十连击门禁（issue #393）
+  09:56 44880aa9 docs(issue-agent): ins-module-gate 增补门禁改挂惯组总开关条目
+
+### issue-agent（4）
+  12:14 a8546cd fix(sweep): local-behind stale fix branch is not push debt — self-heal FF (ag-f983f1)18:52
+  14:28 202c212 feat(fsm): command author gate + router merge-grafting hard rules (ag-464a1b)
+  14:44 e149163 docs(knowledge): command author gate + router conflict resolution rules (ag-664d99)
+  20:43 ffb6e7b docs(readme): align max_parallel legal domain 1..4 -> 1..16
+
+### silicon-memory（3）
+  15:55 5731cd8 docs(readme): server README 补 v2.2 dream 配置键与维护子命令（EN/zh）18:52
+  15:58 9678713 fix(server): strip lone surrogates at REST boundary and keep non-hardware embed errors from tripping the global GPU breaker
+  16:09 98a34fa fix(server): strip lone surrogates from remaining REST wire fields and make embed data-error fail-open device-agnostic
+
+### lib-HXNmeaParser（3）
+  14:45 2458661 chore(release): publish HXNmeaParser oh 4746c3a (source 4746c3a)
+  14:45 80352c6 chore(release): publish HXNmeaParser android 4746c3a (source 4746c3a)14:11
+  14:45 eb65477 chore(release): publish HXNmeaParser linux 4746c3a (source 4746c3a)
+
+### OSMDataCompiler（2）
+  00:34 602997e feat(package): gjb-sms-lhzz 分发包携带 sms-category-map.json20:06
+  06:42 6825a35 docs(knowledge): REGIONAL 中国范围重建记录——11-02 全球范围失控修正
+
+### TitanNavi（1）
+  11:23 a01bc312 master show INS
+
+### HXNmeaParser（1）
+  11:59 591f303 docs(knowledge): TBQ 通播申请知识沉淀——字段表按用户裁定 12 字段口径、enc1 对称裁定收编17:09
+
