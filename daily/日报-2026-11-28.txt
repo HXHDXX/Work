@@ -1,0 +1,61 @@
+工作日报 2026-11-28（周六）
+================================================
+【今日概览】共 38 次提交，涉及 7 仓：
+主线：.dotfiles(16)、opencode-agora(7)、Work(5)、lib-HXRdssSendingQueue(4)、carkeyboard-KylinV10(3)、HXRdssSendingQueue(2)、HXNativeApp(1)
+- 今日工作：agora 容器化 worker 链路收官三连（dsh 服务侧集成→git 面收口→生产 e2e、pi shim 产品化）＋wiki 原子追加面与 TUI 单列窗根修；分布式 issue-agent 部署方案全链闭环并录入 107 首机部署实录；HXAppPlatform 侧 TBQ rate 终态退役、E2E 观测竞态假红根修、Queue 四平台包发布；notify-owner 上线 PDF 附件能力并四连加固。
+- 整体进度：dsh/pi 容器 worker 均过容器级验证与生产 e2e（证据归档）；部署方案终态入档（初版＋修订1-4）、107 实装与两仓最新 main 对齐；TBQ 全链终态、两仓包全量发布、F106 记账闭环；issue#417/#418 派发评审中未合入母仓。
+- 风险阻塞：①107 看护误报第 8 轮升级、每日发信 icloud 邮箱（v3-runtime 撤销残留机械误报），消音方案两次呈报未获裁定；②107 身份激活命令未执行（六服务最后一项，issue#6 在等）；③Upwork 工作检索被 CF 硬拦待人工交互。
+- 明日重点：issue#417/#418 合入收口；看护消音方案裁定后派单；107 身份激活与 issue#6 启动。
+------------------------------------------------
+【工作详录】
+一、agora 容器化 worker 链路（opencode-agora 7 commits | 已完成——dsh 全链＋pi shim 双线落地）
+- 目标：dsh/pi 两类 worker 以容器形态产品化接入 agorad 派发面（写闸/附牌/审计/容器验证），并收口 wiki 追加面与 TUI 单列窗缺陷
+- 当日进展：
+  · F180 wiki 原子追加面（fe113bf）：wiki_write mode=append 服务端写锁内读-拼-写＋expected_hash CAS（不匹配 409 拒写、页零改动）＋wiki_read 返回页文本 sha256；空文本 append 零追加幂等；14 锚测试＋全量 2549＋107 subtests 零回归
+  · F182 dsh worker shim 产品化（1db51d9）：boot.ts＋ts-hooks.mjs 装载桥（node module 钩子补 .ts＋import.meta.dir 改写，共享核心源级直载、core 零污染零拷贝）；agora-shim.ts pre-execute 写闸判定链＋同步 guard 兜底 fail-closed＋mcp__agora__* scoped shadow 逐调用注入 _token/_sid/audit 上报；cordis.worker.yml＋Dockerfile＋run-worker.sh 容器配方（AGORA_HOME :ro 信任锚）；mock-agorad＋verify.sh 六项容器级验证（V1-V4＋P4R＋P6B 全 PASS）；评审环两轮（R1 warning 3 全修＋suggestion 3 修 2 记录）
+  · F184 dsh 服务侧集成＋评审环 round2（2e16425＋4a06a3a）：access/dsh.py 北向适配器（docker run -i＋sdk profile JSON-RPC over stdio）＋HarnessRouter v2/v3 双代分流；task_create 增 harness 字段（storage v7 迁移＋migrator 显式映射）；22 锚单测＋双场景 e2e ALL PASS（主链 merged/closed＋越界写被 shim 拒 gate_deny 实证）；round2 OCR 15 findings 裁决 14 修 1 拒（client_key 幂等冲突元组、_rpc 帧写锁内原子化、storage 迁移标记钉版本 6/7、e2e 健壮性收口）
+  · F187 dsh git 面收口（321d352）：gitdir 同路径 rw 挂载（env/.git 指针→主仓 .git 绝对路径）＋防投毒 fail-closed 全链（同 inode 守卫/NUL 拒/落域拒/注册区回指绑定）；基础镜像 apt 并入 git；生产真形态 e2e（容器 worker 自主 commit→F111 双件锚→门绿→merge，测试侧零 git 代行）；评审环 3 轮（终闸三分册 blocker×1＋ocr 两轮 6 findings）全闭环
+  · F188 TUI 单列窗修复（3b6ec2c）：draw_board/draw_page w<2 守卫根除 addnwstr ERR（pty 实证 1x24/2x1/5x1/24x1 全崩、w≥2 全过，根因 n=w-1=0＝waddnwstr 不限长全串溢出）；两守卫早退＋4 锚先红后绿（直调锚 RuntimeError＋pty 锚 rc==2）
+  · F189 pi worker shim 产品化（67bf67e）：pi-shim-bridge.mjs 逃逸桥（jiti 转译语境两跳逃逸 require(esm) 内原生 import()）＋Bun polyfill 打通共享核心源级直载；pi-shim-core.ts 写闸判定链/附牌前缀快筛＋namespace 归属精确回查/audit 上报/question 闸 P6 选型/project_trust 恒拒；容器配方 pi-home rw＋四点 ro 钉死（models/settings/mcp.json/extensions）＋--no-approve＋gitdir 挂载位预留；driver.mjs 字节 0x0A 严格切帧 RPC；verify.sh 六项容器级验证 V1-V6 全 PASS；评审环两轮（轮 1 W-1 附牌前缀抢注牌外泄链三层修复；轮 2 A/C 册零 finding、B 册 1 LOW 已修）
+- 当前结果：dsh 全链（shim→服务侧→git 面→生产 e2e）与 pi shim 均落地；e2e 证据归档 dsh_delivery_out/e2e-report.json、pi-shim/verify-out/
+- 产出依据：opencode-agora git log fe113bf/1db51d9/2e16425/4a06a3a/321d352/3b6ec2c/67bf67e（Req: F180/F182/F184/F187/F188/F189）；verify-out 证据目录
+- 遗留与下一步：宿主冒烟会经 agora_mcp.py 启动桥污染 ~/.agora-home 指针（容器面天然免疫，已录部署注记）
+
+二、分布式 issue-agent 部署方案与 107 首机部署（Work 5 commits | 已完成——方案全链闭环）
+- 目标：双机分布式 issue-agent 部署方案落档，并完成 107 首机部署实录
+- 当日进展：方案初版（dual-machine claim v2）落档（a062669，ag-15e2c1）；修订1 显存判据＋本地 groom（4a643f2，ag-e01232）；修订2 勘误为共享＋分工模式（ac7217d，ag-eae662）；修订3 opencode.json 收编 dotfiles 管理（8a0807b，ag-1b44de）；修订4 录入 107 首机部署实录（973e5a4，ag-79bb7a）——十节实录＋九坑处置表＋待核五项落定＋watch 三项
+- 当前结果：方案文档终态＝初版＋修订1-4 全链闭环；双远端齐推（8a0807b..973e5a4 双侧同、无积压）、终态指纹 sha256 命中、F106 记账完成；维护窗实装核验 issue-agent（7d2764d）/opencode-agora（9f8213b）均为两仓最新 main（安装盘标记＋服务 active＋CLI 冒烟全过）
+- 产出依据：docs/solutions/分布式issue-agent环境部署方案-20261128.md；Work git log 五提交；会话 ses_de361517c 收口核验
+- 遗留与下一步：107 身份激活命令（ssh -t guangbin@192.168.1.107 后执行 secret-tool store --label="ssh id_rsa" ssh-identity id_rsa）待用户执行——跑完即六服务全功能上线，issue#6 在等待
+
+三、HXAppPlatform RDSS 线（HXRdssSendingQueue 2＋lib-HXRdssSendingQueue 4＋HXNativeApp 1＋carkeyboard-KylinV10 3 | 10 commits | 已完成——TBQ 终态＋四平台发布＋E2E 根修）
+- 目标：TBQ rate 字段按 12 键契约终态退役；E2E 观测竞态假红根修；Queue 四平台包全量发布
+- 当日进展：
+  · TBQ rate 终态退役（ag-c8f744，HXNativeApp 226042d2）：TbqParams.rate 字段删除＋sendTbq 撤 extra["rate"] 键＋shortmessagewidget 两处赋值删＋测试键集断言 6→5（2026-11-27 用户裁定 12 字段终态：队列传入的 rate 自 lib-HXNmeaParser 4746c3a 起被解析器忽略）；围栏五字段/EPQ rate/12 字段 golden/wire 契约不动（设计裁定：围栏字段属 extra_params 字符串袋，Queue 只路由不解释，与 area_flag/sat_no/beam_no 同物种）；知识三件同步（rdss-service-usage.md rate 行改已删、git-workflow.md 直推 033 绕门实证、log.md ingest）
+  · E2E 观测竞态假红根修（ag-1514bd，HXRdssSendingQueue e6deba8）：根因＝wire REQ 经 zmq_client_async 线程池投递、ambient churn 可延迟池取件数百 ms，poll 环一次性判定 wire_checked 即假红（失败点逐次漂移、零 submit/reply warn——观测竞态非产品缺陷）；修复＝observation_complete/WireGrace 序列完成后有界宽限轮询 ≤3s（condition-based waiting）＋status_seq_contains 有序子序列判定（0→1→5 语义路径锁死、容忍设计性 -1/0 重试帧）；姊妹用例同族一致（6 捕获环＋11 状态断言点）；修复前同机 4/5 红→修复后 10 连绿（并发评审负载 3 次＋独立 5 次＋全量 pipeline 2 次 6/6）；知识沉淀 testing-and-verification.md Bug Experience＋log.md（f4e8ff2，ag-3237b3）
+  · Queue 四平台包发布（source e6deba8，ag-e7ddbc/ag-f520f9）：linux（fc6c866 10:24）→oh（0911c63 11:50）→android（944da3a 11:50）→windows（fc5a13c 12:03）
+  · carkeyboard b51 测试用例文档（ag-2e1b47）：96 用例 12 类综合文档入仓（58d2b42）＋ocr round-1 b51 断言守卫（65e37c0）＋README 用例计数 96→47 按派发方裁定 A-book（1b242a4）
+- 当前结果：TBQ 全链终态、两仓包全量已发布、闭合审计完毕、F106 全程记账
+- 产出依据：四仓 git log 十提交；e2e 复跑记录（10 连绿）；知识库 ingest 行
+- 遗留与下一步：issue#417（动态编组页新增编组信息查询按钮，ag-172258）与 issue#418（坐标转换退出错显设备状态与重入失效，ag-03b51e，评审轮 2 完成）派发评审中，截至日报时点未见并入母仓
+
+四、dotfiles 工具链（.dotfiles 16 commits | 已完成——notify-owner 附件能力＋opencode.json 收编）
+- 目标：notify-owner 支持邮件附件；全局 opencode.json 纳入 dotfiles 单源管理
+- 当日进展：
+  · notify-owner 附件系列 4 提交：feat NOTIFY_ATTACH PDF 附件支持（b52777a）→ASCII 文件名强制＋附件读取守卫（58fbe2c）→附件文件名检查强制字节序 locale（dedc88b）→反斜杠文件名拒绝＋诊断净化＋stdin 前 pre-validate（f0ef767）
+  · feat(opencode)：install_repo_link 纳管全局 opencode.json（8e8b8e3，配合部署方案修订3 收编）
+  · memory(capture) 11 提交（经验捕获自动化流水，含 issue#418/f188 等并发会话经验收编）
+- 当前结果：notify-owner 附件路径全绿；opencode.json 进入 dotfiles 单源管理
+- 产出依据：.dotfiles git log 16 提交
+- 遗留与下一步：无
+------------------------------------------------
+【会话调研工作（未提交）】
+- 107 看护误报诊断（续）——第 7/8 轮升级仍每日发信 icloud 邮箱；根因确认为 v3-runtime 撤销残留的机械误报（内容实已发布于 origin/main d3d86a8）；消音方案（closed 任务 unpublished 升级加 3 轮上限后自动退役并留终局审计事件，纯 healthsvc 逻辑 ~50 行＋测试，无新权限面无 LLM）已两次呈报待用户裁定（产出位置：会话 ses_e03fc0f14ffex7tQ24tK30nAcC）
+- 北京 token 补贴政策调研——海淀模型券（经智谱平台下单自动抵扣 50%、单家企业年上限 200 万、零材料零审批）为最短路径；小巨人对 token 补贴本身不加成（市级 30% max 1000 万、海淀 50%、亦庄词元 50% max 500 万均一刀切），其加成在一次性认定奖励（经开区/丰台 ≤50 万）与申报白名单/金融培育红利；另有市级 OPC 中小企业服务券（≤10 人企业连续 3 个月 token/算力/数据费用全额补贴 max 10 万）（产出位置：会话 ses_ddf63e01dffejTd15vQo9zqshg）
+- harness shell 方言错配诊断——shell 工具以宿主登录 shell zsh 5.9 执行而仓内脚本均 bash shebang、/bin/sh→dash，为方言错配结构性根源；记忆库聚类多起 zsh 事故（不分词/echo 转义/export 自引用/parse error near for）；防再犯约束拟落 Work AGENTS.md，截至日报时点未落仓（产出位置：会话 ses_ddfc75fcdffe0n7MljBpeXp5a6）
+- 车机界面全量目检——HXNativeApp 主树会话约 40 次 vision 判定（导航/航迹/路径/测量/夜间/围栏坐标/六页签/自检/复位等）逐项完成（产出位置：会话 ses_de3787a8bffedX1nCGiWWeL5gZ 及其 vision 子会话）
+- 输入法三问题修复验证——carkeyboard 会话完成三问题修复并视觉复核（7 张截图全检＋4 张重拍复判）（产出位置：会话 ses_de89605a2ffeYgQFVb6X6nE7）
+- Upwork 工作检索——CF 对 VPN 出口 IP 硬拦（原地等待 60 秒无效），待人工在 Playwright 窗口交互解锁后接管，未获检索结果（产出位置：会话 ses_dddf55930ffeb2xZEsgu06Xcl9）
+- rdss 围栏字段设计判准——五个围栏字段裁定维持 extra_params 字符串袋透传（Queue 只路由不解释、值域校验归板卡固件、filled-fence golden 端到端钉死全键集），不为新增而升级类型化字段（产出位置：会话 ses_dea3cea2fffeRLIbVtf6pJI4U3，已体现在 HXNativeApp 226042d2 提交注记）
+================================================
+数据来源：.dotfiles、opencode-agora、Work、HXAppPlatform 仓群（HXRdssSendingQueue/lib-HXRdssSendingQueue/HXNativeApp/carkeyboard-KylinV10）七仓 git log（2026-11-28；opencode-agora__wt-ag-84eecd 工作树 7 提交与母仓同 hash 去重）、commit body、opencode 会话库 session_v2 直查（当日 95 会话，剔除终闸评审/vision 碎会话）
