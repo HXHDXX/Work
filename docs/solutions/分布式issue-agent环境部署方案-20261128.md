@@ -119,12 +119,34 @@
 
 | 项 | 状态 |
 |---|---|
-| 107 GPU 型号/显存 | 待核（按四节显存判据执行：空闲 ≥8G 三模型，不足去 ranker） |
-| 镜像与 /opt 的传输通道（save/load vs frpc vs 源重建） | 待定 |
-| browse MCP 面取舍（headless 无真实浏览器） | 待定 |
-| semantic-memory 自启方式（现役＝会话按需拉起） | 待优化 |
-| manifest `default` 分支与两实例基线（MSC-26-RW033/master）对齐 | 待核（repo sync 出的分支须能 checkout 到基线） |
-| F160 僵死梯子 `dispatched` 态无自动重派边（worker 冻死只能人工取消重立） | 上游改进项（2026-11-28 判例 ag-c99eb2） |
+| 107 GPU 型号/显存 | **已核**（RTX 3060 6G→auto 两模型：1.7B 蒸馏＋无 ranker，2026-11-28 实证） |
+| 镜像与 /opt 的传输通道 | **已定**（LAN：docker save/load＋rsync 暂存后 sudo mv 落位） |
+| browse MCP 面取舍 | 未装（headless 无真实浏览器——按需后补，非核心链路） |
+| semantic-memory 自启方式 | **已定**（systemd user 单元 `semantic-memory.service`，MEMORY_DATA_DIR 注入） |
+| manifest 基线对齐 | **已核**（`.repo` 15G LAN 传＋`repo sync -l` 物化；HXNativeApp checkout MSC-26-RW033） |
+| F160 僵死梯子 `dispatched` 态无自动重派边 | 上游改进项（2026-11-28 判例 ag-c99eb2） |
+
+## 十、部署实录（2026-11-28，首机 107）
+
+**完成态**：六服务 active（issue-agent×2／agorad／opencode-serve／semantic-memory／ssh-agent）；**双机认领协议双向实测**（107 认领 issue#6＋对 108 已认领的 issue#393 正确让位）；GPU auto 两模型自动生效；唯一遗留＝用户一步身份激活（`secret-tool store` 存 id_rsa 口令→keyring）。
+
+**新机网络画像（必探项）**：github:443 与 google-storage 被堵；一般 HTTPS（astral／pypi／npm／micro.mamba／tuna 镜像）通；SSH 出站握手通。策略＝大件与二进制全走 LAN（108 scp/rsync：opencode 二进制／repo launcher／wheelhouse 949M／模型 4.6G／`.repo` 15G／docker save-load 3.2G／Qt 与 /opt 34G）；git 走 SSH；HTTPS github 经 108 mihomo（`*:7897` LAN 监听实证）。
+
+**偏差与坑（按处置）**：
+
+| 坑 | 处置 |
+|---|---|
+| netcat-openbsd(24.04) `-X connect` 代理模式 stdin 写入即断 | github ProxyCommand 改 `ssh -W %h:%p guangbin@192.168.1.108`（跳板，去 nc 依赖） |
+| gcr/gnome-keyring ssh-agent 能列钥匙、签名要从锁着的 keyring 取私料（headless 无解锁 UI→挂死） | 常驻纯 ssh-agent 单元（`%t/ssh-agent-git.sock`）＋PAM 自愈链（pam_exec→keyload.sh→secret-tool askpass）；四服务单元与 cron 行全注 `SSH_AUTH_SOCK` |
+| dotfiles 共享 gitconfig 烘焙 `127.0.0.1:7897` 对新机失效 | install 期 `GIT_CONFIG_COUNT` 环境注入绕开；持久修复＝dotfiles 侧机器条件化（待派） |
+| uv 两大坑：非 tty 静默长下载误判挂死；并发实例锁死 | 轮询子进程判活＋杀尸重跑即过 |
+| llama-cpp CUDA 不可跨机移植（108 轮＝sm_120，3060＝sm_86） | 本机源码编译：micromamba＋conda-forge nvcc 12.9＋`CMAKE_CUDA_ARCHITECTURES=86`（配方＝热记忆 aa98ffab）；4m52s 成；补 diskcache/jinja2 |
+| agorad 依赖 opencode-serve（`~/.local/state/opencode/service.json` 注册面） | 新机加 `opencode-serve.service` 单元；`agorad.service`＋`start-agorad.sh` 照抄 108 |
+| issue-agent 安装非 tty 坑 | `ISSUE_AGENT_REPO` 必须显式传（否则交互 read 静默亡）；verify_command 走 `.issue-agent.json` 字段（非 env）；xdotool 漏预装时 install 幂等自补 |
+| HXAppPlatform 94G 不可整搬（含构建产物） | 只传 15G `.repo`＋`repo sync -l` 本地物化工作树（免身份免网络、零构建产物），再 checkout 基线分支 |
+| dotfiles install 尾段 vim-plug 走 github:443 中断 | 重跑幂等（tmux 插件已过）；crontab/role 由 `cron-role set local` 手动补挂 |
+
+**watch 项**：issue#418 评论>50 页致每轮 reconcile 中止（非致命）；107 hot 层只收集不治理的口径待时间检验；登录 shell 仍 bash（非阻塞）。
 
 ## 修订记录
 
@@ -132,3 +154,4 @@
 - 2026-11-28 修订1：silicon-memory 装载策略由固定「去 ranker」改为显存条件判定（空闲 ≥8G 三模型，不足去 ranker；连两模型都不够先报人）。
 - 2026-11-28 修订2（勘误后定稿）：经验库定为**共享＋分工**——本机提炼（夜 groom/judge/practice 宿主单跑）、107 只收集（既有参数 `CRON_DISPATCH_ROLE=local` 滤除 maintain/practice/daily-report；dotfiles 接 origin 双向同步共享库；capture 保持 draft，确认与升格归宿主）。初稿曾误读为「本地隔离不接 origin＋role_filter 放行 maintain」，同日发现即勘误（放行单已 force 取消，role_filter 原样零落地）。
 - 2026-11-28 修订3：harness 面 opencode.json 收编 dotfiles 管理（`8e8b8e3`：仓内 `.config/opencode/opencode.json`＋install.sh `install_repo_link`，本机已 symlink）——`shell: /usr/bin/bash` 内置其中；新机勿手工拼装/覆写该文件（会砸掉 symlink 脱离管理）。
+- 2026-11-28 修订4：107 首机部署实录入档（网络画像／九坑处置表／六服务完成态／双机认领双向实测）；九节待核表五项落定；新增 watch 三项；唯一遗留＝用户一步身份激活（keyring 存 id_rsa 口令）。
