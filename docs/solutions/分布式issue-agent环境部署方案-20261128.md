@@ -52,7 +52,7 @@
 
 **经验库定案（本地经验，不做宿主）**：新机 `.agent-experiences`＝本地单机沉淀——dotfiles clone 带走初始快照即止，此后不跨机同步、不回推宿主。落地＝新机 dotfiles 仓**不接 origin**（纯本地仓），capture 天然留在本机。
 
-**cron-dispatch 约束（2026-11-19 判例，仍然有效）**：`0,15,30 * * * * ~/.dotfiles/bin/cron-dispatch` **只保留在一台机**（现役 108）。新机**不装**该 crontab——双开会导致 daily-report/maintain 双跑（`.agent-experiences` 并发回写冲突已被本地化决策消解，但报表/维护面仍会重复）。
+**cron-dispatch 与每日 groom（本地模式，2026-11-28 修订）**：`0,15,30 * * * * ~/.dotfiles/bin/cron-dispatch` 两机都装，新机以 `CRON_DISPATCH_ROLE=local` 运行。**每日 groom（02:00 maintain）采用本地模式**：role_filter 放行 maintain——各机只 groom 本机 store（经验库本地化后无共享态，双跑无害），不用宿主模式（不指向 108、不推远端）。**仍滤除**：practice（推 dotfiles origin——宿主专属）与 daily-report（Work 仓共享，双跑重复）。dotfiles-sync 在无远端本地克隆上为无害噪音（后续可收口）。前置：dotfiles role_filter 变更放行 maintain（2026-11-28 落地）。
 
 ## 四、silicon-memory GPU 面（新机装载策略）
 
@@ -62,7 +62,7 @@
 | CUDA 注册 | `sudo` 写 `/etc/ld.so.conf.d/semem-nvidia-venv.conf`（指向 venv 内 nvidia lib 目录）→ `ldconfig` |
 | llama-cpp-python | 须 **CUDA 编译版**（判例：CPU 结论被当日 CUDA 重编＋device=cuda＋重启推翻） |
 | GPU 硬件前置 | NVIDIA GPU＋驱动；**部署前核显存**——embedder 2.0G＋distiller（Qwen3-4B Q4）约 3G |
-| **装载策略（新机专属）** | **embedder＋distiller 上 GPU**（device=cuda＋n_gpu_layers=-1＋`_preload_cuda_libs`＋PID 显存校验判据）；**ranker 不占 GPU/不加载**——省 1.0G，ranker 本就 lazy 链路，缺席走 BM25＋向量混合召回 |
+| **装载策略（显存条件判定）** | **embedder＋distiller 必上 GPU**（device=cuda＋n_gpu_layers=-1＋`_preload_cuda_libs`＋PID 显存校验判据）；**ranker 视显存**：部署时 `nvidia-smi` 空闲显存 **≥8G → 三模型全上**（reranker 1.0G 驻留；对齐 108 实测口径：空闲 8.8G 足三模型）；**不足 → 不部署 ranker**（省 1.0G，ranker 本就 lazy 链路，缺席走 BM25＋向量混合召回）。显存连两模型（约 5~6G）都不够时先报人再定（降 CPU 属待议） |
 | 服务进程 | `~/.local/bin/semantic-memory`（server venv 直跑）；108 无 systemd 单元＝会话按需拉起形态，新机部署时定自启方式（待优化项） |
 | 运维判例 | grep 再深再慢也别用 OCR 单元断言判绿（OCR 空响应坑已有判例） |
 
@@ -119,7 +119,7 @@
 
 | 项 | 状态 |
 |---|---|
-| 107 GPU 型号/显存 | 待核（决定 ranker 策略余量） |
+| 107 GPU 型号/显存 | 待核（按四节显存判据执行：空闲 ≥8G 三模型，不足去 ranker） |
 | 镜像与 /opt 的传输通道（save/load vs frpc vs 源重建） | 待定 |
 | browse MCP 面取舍（headless 无真实浏览器） | 待定 |
 | semantic-memory 自启方式（现役＝会话按需拉起） | 待优化 |
@@ -129,3 +129,5 @@
 ## 修订记录
 
 - 2026-11-28 初版：方案经 2026-11-27/28 会话逐轮收敛（X11 底座／harness gate 齐备／google repo 全家／GPU 装载策略／经验库本地化／MCP 面），全部配置面对 108 现役部署核实后落档。
+- 2026-11-28 修订1：silicon-memory 装载策略由固定「去 ranker」改为显存条件判定（空闲 ≥8G 三模型，不足去 ranker；连两模型都不够先报人）。
+- 2026-11-28 修订2：每日 groom 定为本地模式（各机 groom 本机 store，dotfiles role_filter 放行 maintain；practice/daily-report 保持宿主单跑）；cron-dispatch 约束由「新机不装」改为「新机 CRON_DISPATCH_ROLE=local」。
