@@ -35,7 +35,7 @@
 
 | 组件 | 安装 |
 |---|---|
-| opencode CLI | **v2.4.1 对齐**＋登录（provider 凭据覆盖 zai-coding-plan：glm-5.3＋flash） |
+| opencode CLI | **v2.4.1 对齐**＋登录（provider 凭据覆盖 zai-coding-plan：glm-5.3＋flash）；opencode.json 顶层建议 `shell: /usr/bin/bash`（根治 shell 工具 zsh 方言坑——echo 转义污染管道等判例在案） |
 | `~/.dotfiles` | clone → `bash install.sh`（apt 基础包＋虚拟屏工具链 xvfb/x11vnc/tigervnc-viewer/x11-utils/imagemagick、zsh、`AGENTS.global.md` 自动 symlink） |
 | `~/.config/opencode` | opencode.json（providers/models＋mcp 节）＋`agents/`＋`commands/`＋`skills/`（review-loop／req-gate／agora-dispatch-gate 等门）＋目录内 `npm install`（node_modules 插件） |
 | ocr | `npm i -g @alibaba-group/open-code-review`＋LLM 连接配置，装完自检连通 |
@@ -50,9 +50,9 @@
 | browse | `~/.local/bin/browse`（挂真实浏览器扩展——headless worker 机按需取舍） |
 | agora | `python3 ~/opencode-agora/agora_mcp.py`（随源仓走） |
 
-**经验库定案（本地经验，不做宿主）**：新机 `.agent-experiences`＝本地单机沉淀——dotfiles clone 带走初始快照即止，此后不跨机同步、不回推宿主。落地＝新机 dotfiles 仓**不接 origin**（纯本地仓），capture 天然留在本机。
+**经验库定案（共享＋分工模式，2026-11-28 勘误后定稿）**：本机与 107 **共享同一经验库**——`.agent-experiences` 随 dotfiles 仓经 origin 双向同步（post-commit 即时发布＋dotfiles-sync 兜底；`git-sync-dotfiles` 保守原语：不 rebase 不 force）。分工：**本机（108）＝宿主，负责提炼**（夜间 groom Wave 0-7＋judge 夜裁判＋practice，宿主单跑）；**107 只负责收集**（任务会话 capture/recorder 面落共享库，保持 draft 态、不经 107 侧确认——「本地经验不做宿主经验」即此义：收集态不自动升宿主经验，提炼与确认归宿主）。
 
-**cron-dispatch 与每日 groom（本地模式，2026-11-28 修订）**：`0,15,30 * * * * ~/.dotfiles/bin/cron-dispatch` 两机都装，新机以 `CRON_DISPATCH_ROLE=local` 运行。**每日 groom（02:00 maintain）采用本地模式**：role_filter 放行 maintain——各机只 groom 本机 store（经验库本地化后无共享态，双跑无害），不用宿主模式（不指向 108、不推远端）。**仍滤除**：practice（推 dotfiles origin——宿主专属）与 daily-report（Work 仓共享，双跑重复）。dotfiles-sync 在无远端本地克隆上为无害噪音（后续可收口）。前置：dotfiles role_filter 变更放行 maintain（2026-11-28 落地）。
+**cron-dispatch 与每日 groom（宿主提炼模式，既有参数）**：`0,15,30 * * * * ~/.dotfiles/bin/cron-dispatch` 两机都装，新机以 **`CRON_DISPATCH_ROLE=local`** 运行——这正是该模式**此前已定义好的参数**：role=local 由 role_filter 滤除 maintain/practice/daily-report（宿主单跑、防语义双跑），仅保留 dotfiles-sync（＝共享同步通道）。**每日 groom（02:00 maintain）只在宿主 108 跑**——提炼归本机；107 的 role_filter **维持原样，勿放行 maintain**（2026-11-28 曾误派放行单，当日取消，零落地）。
 
 ## 四、silicon-memory GPU 面（新机装载策略）
 
@@ -113,7 +113,7 @@
 4. **agora 服务层** → install＋systemd｜验证：doctor 200 含 router_model
 5. **项目仓与构建栈** → repo sync 19 仓＋/opt＋Qt＋docker load｜验证：`repo status` 干净、两 verify_command 各真跑一次绿
 6. **issue-agent 两实例** → PAT＋install×2｜验证：journalctl 认领日志、issue 评论秒级 claim、双机不双吃（108 在飞时新机让位记账）
-7. **收尾** → 确认新机**未装** cron-dispatch、dotfiles 不接 origin
+7. **收尾** → 新机 crontab 装 cron-dispatch 但置 `CRON_DISPATCH_ROLE=local`（只收集不提炼）；dotfiles 接 origin（共享同步通道）
 
 ## 九、待核／待优化清单
 
@@ -130,4 +130,4 @@
 
 - 2026-11-28 初版：方案经 2026-11-27/28 会话逐轮收敛（X11 底座／harness gate 齐备／google repo 全家／GPU 装载策略／经验库本地化／MCP 面），全部配置面对 108 现役部署核实后落档。
 - 2026-11-28 修订1：silicon-memory 装载策略由固定「去 ranker」改为显存条件判定（空闲 ≥8G 三模型，不足去 ranker；连两模型都不够先报人）。
-- 2026-11-28 修订2：每日 groom 定为本地模式（各机 groom 本机 store，dotfiles role_filter 放行 maintain；practice/daily-report 保持宿主单跑）；cron-dispatch 约束由「新机不装」改为「新机 CRON_DISPATCH_ROLE=local」。
+- 2026-11-28 修订2（勘误后定稿）：经验库定为**共享＋分工**——本机提炼（夜 groom/judge/practice 宿主单跑）、107 只收集（既有参数 `CRON_DISPATCH_ROLE=local` 滤除 maintain/practice/daily-report；dotfiles 接 origin 双向同步共享库；capture 保持 draft，确认与升格归宿主）。初稿曾误读为「本地隔离不接 origin＋role_filter 放行 maintain」，同日发现即勘误（放行单已 force 取消，role_filter 原样零落地）。
