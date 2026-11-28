@@ -35,9 +35,9 @@
 
 | 组件 | 安装 |
 |---|---|
-| opencode CLI | **v2.4.1 对齐**＋登录（provider 凭据覆盖 zai-coding-plan：glm-5.3＋flash）；opencode.json 顶层建议 `shell: /usr/bin/bash`（根治 shell 工具 zsh 方言坑——echo 转义污染管道等判例在案） |
+| opencode CLI | **v2.4.1 对齐**＋登录（provider 凭据覆盖 zai-coding-plan：glm-5.3＋flash）；shell 解释器已由 dotfiles 管理的 opencode.json 内置 `/usr/bin/bash`（根治 shell 工具 zsh 方言坑——echo 转义污染管道等判例在案） |
 | `~/.dotfiles` | clone → `bash install.sh`（apt 基础包＋虚拟屏工具链 xvfb/x11vnc/tigervnc-viewer/x11-utils/imagemagick、zsh、`AGENTS.global.md` 自动 symlink） |
-| `~/.config/opencode` | opencode.json（providers/models＋mcp 节）＋`agents/`＋`commands/`＋`skills/`（review-loop／req-gate／agora-dispatch-gate 等门）＋目录内 `npm install`（node_modules 插件） |
+| `~/.config/opencode` | opencode.json（providers/models＋mcp 节）**随 dotfiles 走**（`install_repo_link` symlink，勿手工拼装/覆写该文件）＋`agents/`＋`commands/`＋`skills/`（review-loop／req-gate／agora-dispatch-gate 等门）＋目录内 `npm install`（node_modules 插件） |
 | ocr | `npm i -g @alibaba-group/open-code-review`＋LLM 连接配置，装完自检连通 |
 
 **MCP 面**（照抄 108 的 opencode.json mcp 节）：
@@ -131,3 +131,4 @@
 - 2026-11-28 初版：方案经 2026-11-27/28 会话逐轮收敛（X11 底座／harness gate 齐备／google repo 全家／GPU 装载策略／经验库本地化／MCP 面），全部配置面对 108 现役部署核实后落档。
 - 2026-11-28 修订1：silicon-memory 装载策略由固定「去 ranker」改为显存条件判定（空闲 ≥8G 三模型，不足去 ranker；连两模型都不够先报人）。
 - 2026-11-28 修订2（勘误后定稿）：经验库定为**共享＋分工**——本机提炼（夜 groom/judge/practice 宿主单跑）、107 只收集（既有参数 `CRON_DISPATCH_ROLE=local` 滤除 maintain/practice/daily-report；dotfiles 接 origin 双向同步共享库；capture 保持 draft，确认与升格归宿主）。初稿曾误读为「本地隔离不接 origin＋role_filter 放行 maintain」，同日发现即勘误（放行单已 force 取消，role_filter 原样零落地）。
+- 2026-11-28 修订3：harness 面 opencode.json 收编 dotfiles 管理（`8e8b8e3`：仓内 `.config/opencode/opencode.json`＋install.sh `install_repo_link`，本机已 symlink）——`shell: /usr/bin/bash` 内置其中；新机勿手工拼装/覆写该文件（会砸掉 symlink 脱离管理）。
